@@ -631,6 +631,63 @@ html[data-contrast=high] #nav .tab.sel .cg{color:#000}
 }
 </style>
 
+<style id="hz-motion">
+/* ===== Huddle motion + finish pass: additive only, themes and reduced-motion settings still apply ===== */
+:root{--hz:cubic-bezier(.22,1,.36,1)}
+@keyframes hz-in{from{opacity:0;transform:translateY(12px) scale(.985)}}
+@keyframes hz-fade{from{opacity:0}}
+@keyframes hz-slide{from{opacity:0;transform:translateY(8px)}}
+@keyframes hz-pop{0%{transform:scale(.55);opacity:0}60%{transform:scale(1.14)}100%{transform:scale(1);opacity:1}}
+@keyframes hz-mine{from{opacity:0;transform:translate(16px,8px) scale(.97)}}
+@keyframes hz-theirs{from{opacity:0;transform:translate(-16px,8px) scale(.97)}}
+@keyframes hz-mark{from{scale:1 0;opacity:0}}
+@keyframes hz-tile{from{opacity:0;scale:.92}}
+/* messages: new ones glide in, bubbles react to hover, images and links get life */
+.m.new .bub{animation:hz-theirs .4s var(--hz) both}.m.mine.new .bub{animation:hz-mine .4s var(--hz) both}
+.m.new .meta{animation:hz-fade .35s ease both}
+.bub{box-shadow:0 8px 18px -14px #000,inset 0 1px 0 #ffffff08}
+.m:hover .bub{border-color:color-mix(in srgb,var(--tx) 18%,var(--line))}
+.m.mine:hover .bub{border-color:color-mix(in srgb,var(--ac) 55%,var(--line))}
+.m:hover .act,.m:focus-within .act{animation:hz-slide .16s var(--hz) both}
+.act button{transition:color .15s,background-color .15s,transform .15s var(--hz)}.act button:hover{transform:scale(1.15)}
+.rx{transition:transform .16s var(--hz),background-color .15s,border-color .15s}.rx:hover{transform:translateY(-1px) scale(1.07)}.rx:active{transform:scale(.92)}
+.rx.me{animation:hz-pop .32s var(--hz)}
+.t a{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .28s var(--hz),color .15s}.t a:hover{background-size:100% 1px}
+.bub>a>img{transition:transform .28s var(--hz),box-shadow .28s}.bub>a>img:hover{transform:scale(1.02);box-shadow:0 12px 28px -12px #000}
+.file{transition:transform .18s var(--hz),border-color .18s,background-color .18s}.file:hover{transform:translateY(-1px);border-color:var(--dim)}
+.wlc,.empty:not(.up){animation:hz-slide .45s var(--hz) both}
+#msgs{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 14px);mask-image:linear-gradient(to bottom,transparent,#000 14px)}
+/* header, reply bar, @mention list, composer */
+#chtitle>*{animation:hz-slide .3s var(--hz) both}
+#rbar:not([hidden]){animation:hz-slide .24s var(--hz)}
+#mp:not([hidden]){animation:hz-slide .16s var(--hz)}#mp div{transition:background-color .12s,padding-left .16s var(--hz)}#mp .sel,#mp div:hover{padding-left:18px}
+#bar button{transition:transform .16s var(--hz),background-color .15s,border-color .15s,box-shadow .2s}
+#bar button:hover{transform:translateY(-1px) scale(1.07)}#bar button:active{transform:scale(.92)}
+#txt::placeholder{transition:opacity .2s}#txt:focus::placeholder{opacity:.4}
+/* sidebar + people */
+#nav .tab .cn,#nav .vr .cnm{transition:transform .22s var(--hz)}
+#nav .tab:not(.sel):hover .cn,#nav .vr:not(.in):hover .cnm{transform:translateX(3px)}
+#nav .ci{transition:transform .22s var(--hz),opacity .2s}#nav .tab:hover .ci,#nav .vr:hover .ci{transform:scale(1.1)}
+#nav .tab.sel::before{animation:hz-mark .32s var(--hz)}
+.pa{transition:background-color .15s,transform .22s var(--hz),opacity .2s}.pa:hover{transform:translateX(2px)}#offline .pa:hover{opacity:1}
+:is(.m,.pa,.vm,#meBtn) .av{transition:transform .22s var(--hz),filter .2s}
+:is(.m,.vm) .av[data-o]:hover,.pa:hover .av{transform:scale(1.08);filter:brightness(1.1)}
+.sd{transition:background-color .35s}
+.cat-t i{transition:transform .22s var(--hz)}
+#bellN:not([hidden]){animation:hz-pop .42s var(--hz)}
+/* panels, cards, call tiles */
+.ni{animation:hz-slide .24s var(--hz) both}.ni:nth-child(2){animation-delay:.03s}.ni:nth-child(3){animation-delay:.06s}.ni:nth-child(4){animation-delay:.09s}.ni:nth-child(n+5){animation-delay:.12s}
+#lfgL>*{animation:hz-in .4s var(--hz) both}#lfgL>:nth-child(2){animation-delay:.05s}#lfgL>:nth-child(3){animation-delay:.1s}#lfgL>:nth-child(n+4){animation-delay:.15s}
+.th{transition:transform .2s var(--hz),border-color .2s,box-shadow .25s}.th:hover{transform:translateY(-3px)}.th:active{transform:scale(.96)}
+.smi,.mrow,.rli{transition:background-color .15s,border-color .15s,transform .18s var(--hz)}.smi:hover:not(:disabled){transform:translateX(3px)}
+.pact button,.ppAct button,.pbtns button{transition:transform .16s var(--hz),background-color .15s,border-color .15s,filter .15s}.pact button:hover,.ppAct button:hover,.pbtns button:hover{transform:translateY(-1px)}
+.tile{animation:hz-tile .4s var(--hz) both}
+.vmem .vm,#nav .vmem .vm{transition:background-color .15s,color .15s,transform .2s var(--hz)}#nav .vmem .vm:hover{transform:translateX(2px)}
+/* sign-in */
+#login form{animation:hz-in .75s var(--hz) both}
+#login input{transition:border-color .16s,box-shadow .2s,transform .2s var(--hz)}#login input:focus{transform:translateY(-1px)}
+#jb{transition:transform .18s var(--hz),box-shadow .25s,filter .16s}#jb:hover{transform:translateY(-2px);box-shadow:0 12px 28px -10px var(--glow)}#jb:active{transform:scale(.98)}
+</style>
 </head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
   <h1>Huddle</h1><p class="tag">Everyone, together.</p>
@@ -1643,4 +1700,9 @@ $('#prof').addEventListener('mousedown',e=>{if(e.target.id=='prof')closeProfile(
 addEventListener('keydown',e=>{if(e.key=='Escape'){if(window.popEl)closeCard();else if($('#prof').style.display=='grid')closeProfile()}});
 $('#plist').onclick=e=>{const b=e.target.closest('.pa');if(b)openProfile(b.dataset.o,false,b)};$('#meBtn').onclick=()=>openProfile(oid,true);
 (async()=>{const s=await window.api.get();showForm(!s.invite);const t=tokGet();if(t&&s.invite){CRED={mode:'token',token:t};connect('')}})(); // signs in automatically only if “Remember me” was ticked
-</script></body></html>
+</script><script>/* Huddle motion: animate only live messages, never a whole-channel repaint */
+(()=>{const box=document.getElementById('msgs');if(!box||!window.MutationObserver)return;
+new MutationObserver(rs=>{const n=[];rs.forEach(r=>r.addedNodes.forEach(x=>{if(x.nodeType==1&&x.classList.contains('m'))n.push(x)}));
+if(n.length&&n.length<=2)n.forEach(x=>{x.classList.add('new');setTimeout(()=>x.classList.remove('new'),700)})}).observe(box,{childList:true})})();
+</script>
+</body></html>
