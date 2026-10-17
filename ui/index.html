@@ -570,13 +570,11 @@ button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent
 </style>
 <style id="chlist">
 /* ===== refined channel lists: same rows, same buttons, nicer look. Desktop sidebar only; the phone strip is left alone ===== */
-.mt,.cat-n,.cat-u{font-style:normal}
-#dmMute{width:38px;height:38px;padding:0;display:grid;place-items:center;margin-right:8px}#dmMute[hidden]{display:none}#dmMute .ic{width:19px;height:19px}
-#dmMute.muted{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--line))}
+.cat-n,.cat-u{font-style:normal}
 /* muted server in the rail: dimmed, with a small bell-off mark */
 .ri.muted{filter:saturate(.35) brightness(.8)}.ri.muted:hover{filter:saturate(.6) brightness(.95)}
 .ri.muted::after{content:"";position:absolute;right:-3px;top:-3px;width:17px;height:17px;border-radius:50%;background:#16161c url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23e8e8ee'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%208a6%206%200%200%201%2012%200c0%207%203%208%203%208H3s3-1%203-8'/%3E%3Cpath%20d='M10.3%2020a1.9%201.9%200%200%200%203.4%200'/%3E%3Cpath%20d='M3%203l18%2018'/%3E%3C/svg%3E") center/11px no-repeat;border:1.5px solid #3a3a46;box-shadow:0 0 0 2px #030304;pointer-events:none}
-@media(max-width:700px){.mt,.cat-n,.cat-u{display:none}}
+@media(max-width:700px){.cat-n,.cat-u{display:none}}
 @media(min-width:701px){
 aside{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--tx) 18%,transparent) transparent}
 /* server / DM header */
@@ -602,13 +600,11 @@ aside{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--tx) 18%,trans
 #nav .tab.sel .cn{font-weight:650}
 #nav .tab.sel::before{content:"";position:absolute;left:-1px;top:10px;bottom:10px;width:3px;border-radius:0 4px 4px 0;background:var(--ac);box-shadow:0 0 10px color-mix(in srgb,var(--ac) 80%,transparent)}
 #nav .tab.muted{opacity:.55}#nav .tab.muted:hover,#nav .tab.muted.sel,#nav .tab.muted.ringing{opacity:1}
-/* little action buttons at the right of a row: edit channel (gear), mute conversation (bell) */
-#nav .cg,#nav .mt{display:grid;place-items:center;flex:none;width:26px;height:26px;margin:0 0 0 2px;border-radius:8px;color:var(--dim);font-size:14px;line-height:1;opacity:0;transition:opacity .12s,background-color .12s,color .12s}
-#nav .cg,#nav .mt:not(.on){width:0;margin:0;overflow:hidden}
-#nav .tab:hover .cg,#nav .vr:hover .cg,#nav .tab:hover .mt{width:26px;margin-left:2px;opacity:.9}
-#nav .mt.on{opacity:.8}
-#nav .cg:hover,#nav .mt:hover{opacity:1;color:var(--tx);background:color-mix(in srgb,var(--tx) 12%,transparent)}
-#nav .mt .ic{width:15px;height:15px;opacity:1}
+/* little action buttons at the right of a row: edit channel (gear) */
+#nav .cg{display:grid;place-items:center;flex:none;width:26px;height:26px;margin:0 0 0 2px;border-radius:8px;color:var(--dim);font-size:14px;line-height:1;opacity:0;transition:opacity .12s,background-color .12s,color .12s}
+#nav .cg{width:0;margin:0;overflow:hidden}
+#nav .tab:hover .cg,#nav .vr:hover .cg{width:26px;margin-left:2px;opacity:.9}
+#nav .cg:hover{opacity:1;color:var(--tx);background:color-mix(in srgb,var(--tx) 12%,transparent)}
 /* voice channels */
 #nav .vr.in{background:linear-gradient(90deg,color-mix(in srgb,var(--live) 18%,transparent),color-mix(in srgb,var(--live) 5%,transparent) 85%);border-color:color-mix(in srgb,var(--live) 45%,transparent);color:var(--live)}
 #nav .vi .ctm{margin:-1px 0 3px 46px}
@@ -631,7 +627,7 @@ aside{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--tx) 18%,trans
 /* high-contrast mode keeps its own selected look */
 html[data-contrast=high] #nav .tab.sel,html[data-contrast=high] #nav .tab.sel.hasg{background:#fff;color:#000;border-color:#fff;box-shadow:none}
 html[data-contrast=high] #nav .tab.sel::before{display:none}
-html[data-contrast=high] #nav .tab.sel :is(.cg,.mt){color:#000}
+html[data-contrast=high] #nav .tab.sel .cg{color:#000}
 }
 </style>
 
@@ -664,7 +660,7 @@ html[data-contrast=high] #nav .tab.sel :is(.cg,.mt){color:#000}
       </div><button id="meBtn" title="Edit your profile" aria-label="Edit your profile"></button><button id="stBtn" aria-label="Set your status" aria-haspopup="menu"><i class="sd2"></i><span id="stLb">Online</span></button><button id="setBtn" title="Settings" aria-label="Settings"><b>⚙</b><span>Settings</span></button></div>
   </aside>
   <main>
-    <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>Call</button><button id="dmMute" type="button" hidden aria-pressed="false"></button><button id="bell" aria-label="Notifications" title="Notifications"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg><span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
+    <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>Call</button><button id="bell" aria-label="Notifications" title="Notifications"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg><span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
     <section id="stage" aria-label="Voice call"><div id="sinfo" class="sov"></div><div id="sbar" class="sov" role="toolbar" aria-label="Call controls"><button id="sMic" class="sb" type="button"></button><button id="sDeaf" class="sb" type="button"></button><button id="sCam" class="sb" type="button"></button><button id="sScr" class="sb" type="button"></button><button id="sLeave" class="sb" type="button" title="Hang up" aria-label="Hang up"></button></div></section>
     <div id="split" role="separator" aria-orientation="horizontal" aria-label="Resize call area" title="Drag to resize · double-click to reset"></div>
     <div id="msgs"></div>
@@ -715,15 +711,36 @@ let callT=0;const ccPaint=()=>{const n=$('#txt').value.length,c=$('#cc');c.textC
 const tmr=()=>{const s=Math.floor((Date.now()-callT)/1000),p=n=>String(n).padStart(2,'0'),h=Math.floor(s/3600);return(h?h+':':'')+p(Math.floor(s%3600/60))+':'+p(s%60)};
 setInterval(()=>{if(voice)document.querySelectorAll('.ctm').forEach(e=>e.textContent=tmr())},1000);
 const dmRing=()=>{if(vch&&vch.startsWith('dm:'))return users.some(x=>x.id!=me&&x.voice==vch)?'':'o'+vch;if(vch||myStatus=='dnd'||myStatus=='sleep')return '';const u=users.find(x=>x.id!=me&&x.voice&&x.voice.startsWith('dm:')&&x.voice.split(':').includes(oid));return u?'i'+u.voice:''};
-function ringSync(){const k=dmRing();if(k==ringK)return;RI.pause();RB.pause();clearTimeout(ringT);ringK=k;if(!k)ringX='';else if(k!=ringX){if(k[0]=='i'&&MUTE.dm[k.slice(1)])ringX=k;else{const a=k[0]=='i'?RI:RB;a.currentTime=0;a.play().catch(()=>{});ringT=setTimeout(()=>{a.pause();ringX=k},40000)}}side()} // 'i<dm>' = they ring you, 'o<dm>' = you ring them; stops after 40 s
-/* mute: per account, kept on this device. dm: { 'dm:a:b': 1 }  g: { serverId: 1 } */
+function ringSync(){const k=dmRing();if(k==ringK)return;RI.pause();RB.pause();clearTimeout(ringT);ringK=k;if(!k)ringX='';else if(k!=ringX){if(k[0]=='i'&&mDm(k.slice(1)))ringX=k;else{const a=k[0]=='i'?RI:RB;a.currentTime=0;a.play().catch(()=>{});ringT=setTimeout(()=>{a.pause();ringX=k},40000)}}side()} // 'i<dm>' = they ring you, 'o<dm>' = you ring them; stops after 40 s
+/* mute: per account, kept on this device.
+   dm: { 'dm:a:b': until }   g: { serverId: until }
+   until = the time (ms) the mute ends, or -1 = until you turn it back on. Older saves stored 1 for that. */
 let MUTE={dm:{},g:{}};const muteKey=()=>'huddle.mute.'+(oid||'x'),muteSave=()=>LS.set(muteKey(),JSON.stringify(MUTE)),
-  muteLoad=()=>{try{const m=JSON.parse(LS.get(muteKey())||'{}');MUTE={dm:m.dm&&typeof m.dm=='object'?m.dm:{},g:m.g&&typeof m.g=='object'?m.g:{}}}catch{MUTE={dm:{},g:{}}}},
-  isMutedCh=ch=>String(ch).startsWith('dm:')?!!MUTE.dm[ch]:!!(gOf(ch)&&MUTE.g[gOf(ch).id]);
-function muteApply(){if(ringK&&ringK[0]=='i'&&MUTE.dm[ringK.slice(1)]){RI.pause();clearTimeout(ringT);ringX=ringK}rail();side()}
-function toggleMuteDm(ch){if(!ch||!ch.startsWith('dm:'))return;const on=!MUTE.dm[ch];on?MUTE.dm[ch]=1:delete MUTE.dm[ch];muteSave();muteApply();const n=(P[dmO(ch)]||{}).name||'this person';toast(on?'Muted '+n+'. No sounds or notifications from this conversation.':'Unmuted '+n+'.',true)}
-function toggleMuteG(id){const g=G[id];if(!g)return;const on=!MUTE.g[id];on?MUTE.g[id]=1:delete MUTE.g[id];muteSave();muteApply();toast(on?'Muted '+g.name+'. No sounds, notifications or unread counts from this server.':'Unmuted '+g.name+'.',true)}
-const syncMuteBtn=dm=>{const b=$('#dmMute');if(!b)return;b.hidden=!dm;if(!dm)return;const m=!!MUTE.dm[cur];b.innerHTML=m?IC.bellOff:IC.bell;b.classList.toggle('muted',m);b.setAttribute('aria-pressed',m);b.title=m?'Unmute this conversation':'Mute this conversation';b.setAttribute('aria-label',b.title)};
+  muteOn=v=>v===-1||(typeof v=='number'&&v>Date.now()),mDm=ch=>muteOn(MUTE.dm[ch]),mG=id=>muteOn(MUTE.g[id]),
+  muteFix=o=>{const r={};if(o&&typeof o=='object')for(const k in o){const v=o[k]===1||o[k]===true?-1:o[k];if(muteOn(v))r[k]=v}return r},
+  muteLoad=()=>{try{const m=JSON.parse(LS.get(muteKey())||'{}');MUTE={dm:muteFix(m.dm),g:muteFix(m.g)}}catch{MUTE={dm:{},g:{}}}},
+  isMutedCh=ch=>String(ch).startsWith('dm:')?mDm(ch):!!(gOf(ch)&&mG(gOf(ch).id));
+function muteApply(){if(ringK&&ringK[0]=='i'&&mDm(ringK.slice(1))){RI.pause();clearTimeout(ringT);ringX=ringK}rail();side()}
+/* a timed mute switches itself off: checked every few seconds and when the tab comes back (isMutedCh also reads the clock on every message) */
+function muteTick(){let c=false;for(const k of ['dm','g'])for(const id in MUTE[k])if(!muteOn(MUTE[k][id])){delete MUTE[k][id];c=true}if(c){muteSave();muteApply()}}
+setInterval(muteTick,10000);document.addEventListener('visibilitychange',muteTick);
+const MUTE_OPTS=[[15*6e4,'15 minutes'],[36e5,'1 hour'],[3*36e5,'3 hours'],[8*36e5,'8 hours'],[864e5,'24 hours'],[-1,'Until I turn it back on']],
+  durTxt=ms=>{const m=Math.max(1,Math.round(ms/6e4));return [[Math.floor(m/1440),'day'],[Math.floor(m%1440/60),'hour'],[m%60,'minute']].filter(x=>x[0]).map(x=>x[0]+' '+x[1]+(x[0]>1?'s':'')).join(' ')},
+  muteEnd=v=>{const d=new Date(v),t=d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});return d.toDateString()==new Date().toDateString()?t:d.toLocaleDateString([],{month:'short',day:'numeric'})+', '+t},
+  muteTag=v=>v>0?' (until '+muteEnd(v)+')':'',
+  parseDur=s=>{const m=/^\s*(\d+(?:\.\d+)?)\s*(m|mins?|minutes?|h|hrs?|hours?|d|days?)?\s*$/i.exec(s||'');return m?Math.round(parseFloat(m[1])*{m:6e4,h:36e5,d:864e5}[(m[2]||'m')[0].toLowerCase()]):0},
+  muteName=(k,id)=>(k=='g'?(G[id]||{}).name:(P[dmO(id)]||{}).name)||(k=='g'?'this server':'this person');
+function muteSet(kind,id,ms,label){if(kind=='g'?!G[id]:!(id&&id.startsWith('dm:')))return;MUTE[kind][id]=ms<0?-1:Date.now()+ms;muteSave();muteApply();
+  toast('Muted '+muteName(kind,id)+(ms<0?'':' for '+(label||durTxt(ms)))+'. '+(kind=='g'?'No sounds, notifications or unread counts from this server.':'No sounds or notifications from this conversation.'),true)}
+function muteClear(kind,id){delete MUTE[kind][id];muteSave();muteApply();toast('Unmuted '+muteName(kind,id)+'.',true)}
+/* timed mute: swaps the open context menu for a list of durations. kind: 'dm' or 'g'. back() re-opens the menu it came from. */
+function mutePick(kind,id,name,back){
+  cm.innerHTML='<div style="padding:6px 12px 2px;font-size:12px;color:var(--dim);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Mute '+esc(name)+' for…</div>'+MUTE_OPTS.map(x=>`<button data-ms="${x[0]}">${x[1]}</button>`).join('')+'<button data-ms="x">Custom…</button><button data-ms="b">← Back</button>';
+  cm.style.left=Math.max(4,Math.min(parseFloat(cm.style.left)||4,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(parseFloat(cm.style.top)||4,innerHeight-cm.offsetHeight-8))+'px';
+  cm.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const v=b.dataset.ms;if(v=='b')return back();cmClose();if(v=='x')return muteCustom(kind,id,name);const o=MUTE_OPTS.find(x=>String(x[0])==v);if(o)muteSet(kind,id,o[0],o[1])}}
+function muteCustom(kind,id,name){modal('<h3>Mute '+esc(name)+'</h3><input id="mdv" placeholder="e.g. 45m, 2h or 3d" maxlength="12" value="1h"><button class="on" id="mdg">Mute</button><button id="gx">Cancel</button>',()=>{
+  const i=$('#mdv'),go=()=>{const ms=parseDur(i.value);if(ms<6e4)return toast('Enter a time like 45m, 2h or 3d (at least 1 minute).');closeM();muteSet(kind,id,Math.min(ms,365*864e5))};
+  i.focus();i.select();$('#mdg').onclick=go;i.onkeydown=e=>{if(e.key=='Enter')go()};$('#gx').onclick=closeM})}
 const snd=a=>{try{a.currentTime=0;a.volume=.6;a.play().catch(()=>{})}catch{}}; // SB = connect, SD = disconnect
 const ding=a=>{try{a.currentTime=0;a.play().catch(()=>{})}catch{}}, quiet=()=>myStatus=='dnd'||myStatus=='sleep'; // SM = message, SP = ping
 const send=o=>{if(ws&&ws.readyState==1){ws.send(JSON.stringify(o));return true}return false}, nameOf=id=>(users.find(u=>u.id==id)||{}).name||'?';
@@ -836,8 +853,7 @@ function side(){const g=G[sel],home=!g;
   const cats=home?[]:(g.categories||[]),inCat=c=>cats.some(k=>k.id==c.cat),own=!home&&hasP(g,'channels');
   const mixH=c=>c.type=='voice'?vocH(c):tabH(c.id);
   const dmRow=i=>{const o=dmO(i),n=(P[o]||{}).name||'?';return `<span class="dmr">${av(o,n)}<span class="nn">${esc(n)}</span></span>`},
-  muteI=i=>{const m=!!MUTE.dm[i];return `<i class="mt${m?' on':''}" data-mu="${i}" title="${m?'Unmute':'Mute'} conversation">${m?IC.bellOff:IC.bell}</i>`},
-  tabH=i=>`<button class="tab${i==cur?' sel':''}${ringK=='i'+i?' ringing':''}${i.startsWith('dm:')&&MUTE.dm[i]?' muted':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+'<span class="cnm">'+esc(chLabel(i).replace(/^#\s*/,''))+'</span>'}</span>${cg(i)}${i.startsWith('dm:')?muteI(i):''}<span class="badge" hidden></span></button>`;
+  tabH=i=>`<button class="tab${i==cur?' sel':''}${ringK=='i'+i?' ringing':''}${i.startsWith('dm:')&&mDm(i)?' muted':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+'<span class="cnm">'+esc(chLabel(i).replace(/^#\s*/,''))+'</span>'}</span>${cg(i)}<span class="badge" hidden></span></button>`;
   const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}<span class="cnm">${esc(c.name)}</span>${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
   const ids=home?(()=>{const k=dmKeys();return cur.startsWith('dm:')&&!k.includes(cur)?[cur,...k]:k})():g.channels.filter(c=>!inCat(c)).map(c=>c.id);
   $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn">${IC.fr}Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn">${IC.com}Community</span><small class="num" id="comN">${LFG.length||''}</small></button>`:'')+(home&&!ids.length?'<div class="empty">No conversations yet.</div>':ids.map(i=>home?tabH(i):mixH(chObj(i))).join(''));
@@ -845,7 +861,7 @@ function side(){const g=G[sel],home=!g;
   const shut=home?[]:colGet(g.id);
   $('#cats').innerHTML=cats.map(k=>{const mine=g.channels.filter(c=>c.cat==k.id),isC=shut.includes(k.id);
     return `<div class="cat${isC?' col':''}" data-cat="${k.id}"><div class="cat-h"><button class="cat-t" data-ct="${k.id}" aria-expanded="${!isC}"><i>▾</i><span>${esc(k.name)}</span><em class="cat-n">${mine.length}</em><em class="cat-u badge" hidden></em></button>${own?`<span class="cat-act"><button data-cadd="${k.id}" title="Create channel here">＋</button><button data-cedit="${k.id}" title="Edit category">⚙</button></span>`:''}</div><div class="cat-b">${mine.map(mixH).join('')}${mine.length?'':'<div class="cat-e">No channels yet</div>'}</div></div>`}).join('');
-  const cb=$('#callBtn'),dm=cur.startsWith('dm:');cb.hidden=!dm;syncMuteBtn(dm);if(dm){const inC=vch==cur;const ringIn=ringK=='i'+cur,ringOut=ringK=='o'+cur,other=users.some(u=>u.voice==cur&&u.id!=me);cb.disabled=inC;cb.dataset.st=ringOut?'out':inC?'in':ringIn?'ring':other?'join':'';cb.innerHTML=IC.call+(ringOut?'Calling…':inC?'In call':ringIn?'Answer':other?'Join call':'Call')}
+  const cb=$('#callBtn'),dm=cur.startsWith('dm:');cb.hidden=!dm;if(dm){const inC=vch==cur;const ringIn=ringK=='i'+cur,ringOut=ringK=='o'+cur,other=users.some(u=>u.voice==cur&&u.id!=me);cb.disabled=inC;cb.dataset.st=ringOut?'out':inC?'in':ringIn?'ring':other?'join':'';cb.innerHTML=IC.call+(ringOut?'Calling…':inC?'In call':ringIn?'Answer':other?'Join call':'Call')}
   {const cc=g&&g.channels.find(x=>x.id==cur);$('#chtitle').innerHTML=cur?`<span class="tn">${chTitle(cur)}</span>`+(cc&&cc.topic?`<small class="td">${emo(esc(cc.topic))}</small>`:'')+(cur.startsWith('dm:')&&vch==cur?`<span class="ctm">${tmr()}</span>`:''):''}
   badges();dndMark(own);tmoPaint()}
 /* drag to reorder channels, only inside their own list (owner / 'Manage channels' role) */
@@ -866,9 +882,9 @@ dn.addEventListener('dragover',e=>{if(!dnd)return;const g=G[sel],me=g&&g.channel
   if(e.target.closest('#chs')){dnd.t={before:'',cat:''};e.preventDefault();e.dataTransfer.dropEffect='move'}}); // empty space in the main list: end of the uncategorised channels
 dn.addEventListener('drop',e=>{if(!dnd||!dnd.t)return;e.preventDefault();const m={t:'chmove',g:sel,id:dnd.id,before:dnd.t.before,cat:dnd.t.cat};dndClear();dnd=null;if(!send(m))toast('Not connected. Try again in a moment.')});
 dn.addEventListener('dragend',()=>{dndClear();dnd=null});
-function badges(){document.querySelectorAll('#nav [data-c]').forEach(r=>{const c=r.dataset.c,b=r.querySelector('.badge'),mu=!!MUTE.dm[c];b.hidden=mu||!unread[c];b.textContent=unread[c]||'';b.classList.toggle('men',!!mentioned[c])});
+function badges(){document.querySelectorAll('#nav [data-c]').forEach(r=>{const c=r.dataset.c,b=r.querySelector('.badge'),mu=mDm(c);b.hidden=mu||!unread[c];b.textContent=unread[c]||'';b.classList.toggle('men',!!mentioned[c])});
   document.querySelectorAll('#cats .cat').forEach(c=>{let n=0,m=false;c.querySelectorAll('.tab[data-c]').forEach(t=>{const k=t.dataset.c;n+=unread[k]||0;if(unread[k]&&mentioned[k])m=true});const u=c.querySelector('.cat-u');if(u){u.hidden=!n||!c.classList.contains('col');u.textContent=n>99?'99+':n;u.classList.toggle('men',m)}}); // a collapsed category still shows what is waiting inside it
-  document.querySelectorAll('#rail .ri[data-g]').forEach(r=>{const g=G[r.dataset.g],mg=!!(g&&MUTE.g[g.id]),n=mg?0:(g?g.channels.map(c=>c.id):dmKeys().filter(k=>!MUTE.dm[k])).reduce((a,k)=>a+(unread[k]||0),0),b=r.querySelector('.badge');b.hidden=!n;b.textContent=n;r.classList.toggle('muted',mg);if(g)r.title=g.name+(mg?' (muted)':'')})}
+  document.querySelectorAll('#rail .ri[data-g]').forEach(r=>{const g=G[r.dataset.g],mg=!!(g&&mG(g.id)),n=mg?0:(g?g.channels.map(c=>c.id):dmKeys().filter(k=>!mDm(k))).reduce((a,k)=>a+(unread[k]||0),0),b=r.querySelector('.badge');b.hidden=!n;b.textContent=n;r.classList.toggle('muted',mg);if(g)r.title=g.name+(mg?' (muted'+(MUTE.g[g.id]>0?' until '+muteEnd(MUTE.g[g.id]):'')+')':'')})}
 const fmt=n=>n>1e6?(n/1e6).toFixed(1)+' MB':Math.max(1,Math.round(n/1e3))+' KB';
 /* formatting: # ## ### headings, > quote, **bold**, *italic*, ~~strike~~, `code`, ```block```, links, @mentions */
 const seen=new Set(['everyone']);let menRe=null;
@@ -1168,16 +1184,18 @@ $('#rail').addEventListener('contextmenu',e=>{const b=e.target.closest('button[d
   const r=b.getBoundingClientRect(),kb=!e.clientX&&!e.clientY; // keyboard (menu key / Shift+F10) opens beside the icon
   gMenu(b,g,kb?{left:r.right+4,bottom:r.top}:{left:e.clientX,bottom:e.clientY-4})});
 $('#rail').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.id=='gadd')return gDialog();selG(b.dataset.g)};
-$('#chs').addEventListener('contextmenu',e=>{const b=e.target.closest('.tab[data-c^="dm:"]');if(!b||G[sel])return;e.preventDefault();const ch=b.dataset.c,o=dmO(ch),m=!!MUTE.dm[ch];
-  cm.innerHTML='<button data-a="view">View profile</button><button data-a="mute">'+(m?'Unmute conversation':'Mute conversation')+'</button>';cm.hidden=false;
+function dmRowMenu(e,ch){const o=dmO(ch),on=mDm(ch);
+  cm.innerHTML='<button data-a="view">View profile</button><button data-a="mute">'+(on?'Unmute conversation'+muteTag(MUTE.dm[ch]):'Mute conversation…')+'</button>';cm.hidden=false;
   cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY,innerHeight-cm.offsetHeight-8))+'px';
-  cm.onclick=ev=>{const k=ev.target.closest('button');if(!k)return;cmClose();if(k.dataset.a=='mute')toggleMuteDm(ch);else if(P[o])openProfile(o,false,{x:e.clientX,y:e.clientY})}});
-$('#dmMute').onclick=()=>{if(cur&&cur.startsWith('dm:'))toggleMuteDm(cur)};
+  cm.onclick=ev=>{const k=ev.target.closest('button');if(!k)return;
+    if(k.dataset.a=='mute'){if(on){cmClose();return muteClear('dm',ch)}return mutePick('dm',ch,muteName('dm',ch),()=>dmRowMenu(e,ch))}
+    cmClose();if(P[o])openProfile(o,false,{x:e.clientX,y:e.clientY})}}
+$('#chs').addEventListener('contextmenu',e=>{const b=e.target.closest('.tab[data-c^="dm:"]');if(!b||G[sel])return;e.preventDefault();dmRowMenu(e,b.dataset.c)});
 $('#cats').onclick=e=>{const g=G[sel];if(!g)return;const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);
   const t=e.target.closest('[data-ct]');if(t){const a=colGet(g.id),i=t.dataset.ct,n=a.includes(i)?a.filter(x=>x!=i):[...a,i];colSet(g.id,n);return side()}
   const ad=e.target.closest('[data-cadd]');if(ad)return chDialog(g,ad.dataset.cadd);const ed=e.target.closest('[data-cedit]');if(ed)return catDialog(g,ed.dataset.cedit);
   const c=e.target.closest('[data-c]');if(c)return openCh(c.dataset.c);const v=e.target.closest('[data-v]');if(v&&vch!=v.dataset.v&&!v.classList.contains('joining'))joinVoice(v.dataset.v)};
-$('#chs').onclick=e=>{const mt=e.target.closest('[data-mu]');if(mt)return toggleMuteDm(mt.dataset.mu);const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);const b=e.target.closest('[data-c]');if(b)return openCh(b.dataset.c);const v=e.target.closest('[data-v]');if(v&&vch!=v.dataset.v&&!v.classList.contains('joining'))joinVoice(v.dataset.v)};
+$('#chs').onclick=e=>{const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);const b=e.target.closest('[data-c]');if(b)return openCh(b.dataset.c);const v=e.target.closest('[data-v]');if(v&&vch!=v.dataset.v&&!v.classList.contains('joining'))joinVoice(v.dataset.v)};
 $('#gh').onclick=e=>{const b=e.target.closest('button');if(b)b.id=='newdm'?dmDialog():gMenu(b)};
 function gDialog(){modal('<h3>Add a server</h3><input id="gn" placeholder="New server name" maxlength="32"><button class="on" id="gc">Create server</button><input id="gj" placeholder="…or paste an invite code" maxlength="16"><button id="gjb">Join server</button><button id="gx">Cancel</button>',()=>{
   $('#gn').focus();$('#gc').onclick=()=>{const n=$('#gn').value.trim();if(n&&send({t:'gcreate',name:n}))closeM()};$('#gjb').onclick=()=>{const c=$('#gj').value.trim();if(c&&send({t:'gjoin',code:c}))closeM()};$('#gx').onclick=closeM;
@@ -1338,11 +1356,11 @@ const catOpts=(g,sel)=>'<option value="">No category</option>'+(g.categories||[]
 function chDialog(g,pre){modal('<h3>Create channel</h3><input id="cn" placeholder="channel-name" maxlength="24"><select id="ct"><option value="text">Text channel</option><option value="voice">Voice channel</option></select>'+((g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':'')+'<button class="on" id="chc">Create</button><button id="gx">Cancel</button>',()=>{
   $('#cn').focus();$('#chc').onclick=()=>{const n=$('#cn').value.trim();if(n&&send({t:'chadd',g:g.id,name:n,type:$('#ct').value,cat:$('#cc')?$('#cc').value:''}))closeM()};$('#cn').onkeydown=e=>{if(e.key=='Enter')$('#chc').click()};$('#gx').onclick=closeM})}
 function gMenu(btn,g0,pt){const g=g0||G[sel],r=pt||btn.getBoundingClientRect(),own=g.owner==oid,mc=hasP(g,'channels'),sv=hasP(g,'server'),rl=hasP(g,'roles');
-  cm.innerHTML=[['mute',MUTE.g[g.id]?'Unmute server':'Mute server'],['inv','Copy invite code'],...(sv?[['gen','New invite code'],['name','Name, icon & colour']]:[]),...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':''}>${t}</button>`).join('');cm.hidden=false;
+  cm.innerHTML=[['mute',mG(g.id)?'Unmute server'+muteTag(MUTE.g[g.id]):'Mute server…'],['inv','Copy invite code'],...(sv?[['gen','New invite code'],['name','Name, icon & colour']]:[]),...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':''}>${t}</button>`).join('');cm.hidden=false;
   cm.style.left=Math.max(4,Math.min(r.left,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(r.bottom+4,innerHeight-cm.offsetHeight-8))+'px';
   cm.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const a=b.dataset.a;
     if((a=='del'||a=='leave')&&!b.dataset.sure){b.dataset.sure=1;b.textContent='Click again to confirm';return}
-    cmClose();if(a=='mute')return toggleMuteG(g.id);if(a=='inv'){copyText(g.code);toast('Invite code copied: '+g.code+'\nShare it so friends can join.',true)}else if(a=='name'||a=='roles'||a=='mem')sDialog(g,{name:'o',roles:'r',mem:'m'}[a]);else if(a=='gen'){if(confirm('Old invite code will stop working. Make a new one?')){send({t:'gcode',g:g.id});toast('New invite code made. Open this menu again to copy it.',true)}}else if(a=='ch')chDialog(g);else if(a=='cat')catDialog(g);else if(a=='bans')banDialog(g);else send({t:a=='del'?'gdel':'gleave',g:g.id})}}
+    if(a=='mute'){if(mG(g.id)){cmClose();return muteClear('g',g.id)}return mutePick('g',g.id,g.name,()=>gMenu(btn,g0,pt))}cmClose();if(a=='inv'){copyText(g.code);toast('Invite code copied: '+g.code+'\nShare it so friends can join.',true)}else if(a=='name'||a=='roles'||a=='mem')sDialog(g,{name:'o',roles:'r',mem:'m'}[a]);else if(a=='gen'){if(confirm('Old invite code will stop working. Make a new one?')){send({t:'gcode',g:g.id});toast('New invite code made. Open this menu again to copy it.',true)}}else if(a=='ch')chDialog(g);else if(a=='cat')catDialog(g);else if(a=='bans')banDialog(g);else send({t:a=='del'?'gdel':'gleave',g:g.id})}}
 addEventListener('contextmenu',e=>{const kh=e.target.closest('#cats .cat-h'),gk=G[sel];if(kh&&hasP(gk,'channels')){e.preventDefault();return catDialog(gk,kh.parentNode.dataset.cat)}const b=e.target.closest('#nav [data-c],#nav [data-v]'),g=G[sel];if(!b||!g||!(hasP(g,'channels')||hasP(g,'roles')))return;e.preventDefault();
   const id=b.dataset.c||b.dataset.v;
   cm.innerHTML=(hasP(g,'channels')?'<button data-a="edit">✎ Edit channel</button>':'')+(hasP(g,'roles')?'<button data-a="perm">🔒 Permissions</button>':'')+(hasP(g,'channels')&&g.channels.length>1?'<button class="danger" data-a="del">Delete channel</button>':'');cm.hidden=false;
@@ -1370,15 +1388,15 @@ stPaint();
 // right-click a person (members list or chat avatar): view profile, message, and (server owner) toggle roles
 function userMenu(e,o){const g=G[sel];if(!o||!P[o])return false;e.preventDefault();
   const own=g&&g.owner==oid&&g.members.includes(o),rs=(g&&g.roles)||[],cur=((g&&g.mroles)||{})[o]||[];
-  cm.innerHTML='<button data-a="view">View profile</button>'+(o!=oid?'<button data-a="dm">Message</button><button data-a="mute">'+(MUTE.dm[dmId(o)]?'Unmute messages':'Mute messages')+'</button>':'')+(canFr(o)?`<button data-a="fr"${frSt(o)=='friend'?' class="danger"':''}>${FRL[frSt(o)]}</button>`:'')+
+  cm.innerHTML='<button data-a="view">View profile</button>'+(o!=oid?'<button data-a="dm">Message</button><button data-a="mute">'+(mDm(dmId(o))?'Unmute messages'+muteTag(MUTE.dm[dmId(o)]):'Mute messages…')+'</button>':'')+(canFr(o)?`<button data-a="fr"${frSt(o)=='friend'?' class="danger"':''}>${FRL[frSt(o)]}</button>`:'')+
     (own?'<div style="padding:6px 12px 2px;font-size:12px;color:var(--dim)">Roles</div>'+(rs.length?rs.map(r=>`<button data-a="role" data-r="${esc(r.id)}"><i class="dot" style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:${esc(r.color)}"></i>${cur.includes(r.id)?'✓ ':''}${esc(r.name)}</button>`).join(''):'<div style="padding:4px 12px 6px;font-size:12px;color:var(--dim)">No roles yet. Create some in Server settings.</div>'):'');
   cm.hidden=false;cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY,innerHeight-cm.offsetHeight-8))+'px';
   cm.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const a=b.dataset.a;
     if(a=='role'){const now=((G[sel].mroles||{})[o]||[]),r=b.dataset.r;send({t:'roleset',g:sel,o,roles:now.includes(r)?now.filter(x=>x!=r):[...now,r]});cmClose();return}
-    cmClose();if(a=='view')openProfile(o,false,{x:e.clientX,y:e.clientY});else if(a=='dm')openDm(o);else if(a=='mute')toggleMuteDm(dmId(o));else if(a=='fr')frAct(FRA[frSt(o)],o)};
+    if(a=='mute'){const ch=dmId(o);if(mDm(ch)){cmClose();return muteClear('dm',ch)}return mutePick('dm',ch,(P[o]||{}).name||'this person',()=>userMenu(e,o))}cmClose();if(a=='view')openProfile(o,false,{x:e.clientX,y:e.clientY});else if(a=='dm')openDm(o);else if(a=='fr')frAct(FRA[frSt(o)],o)};
   return true}
 $('#plist').addEventListener('contextmenu',e=>{const b=e.target.closest('.pa');if(b)userMenu(e,b.dataset.o)});
-$('#msgs').addEventListener('contextmenu',e=>{const a=e.target.closest('.av[data-o]');if(a&&userMenu(e,a.dataset.o))e.stopImmediatePropagation()},true);
+$('#msgs').addEventListener('contextmenu',e=>{const a=e.target.closest('.av[data-o],.mn[data-o]');if(a&&userMenu(e,a.dataset.o))e.stopImmediatePropagation()},true);
 
 const colOf=(o,n)=>(P[o]&&P[o].color)||`hsl(${hue(n)} 70% 68%)`, oidOf=id=>(users.find(u=>u.id==(id=='me'?me:id))||{}).oid;
 const avh=(n,c,img,x='')=>`<span class="av ${x}" style="background:${esc(c)}">${img?`<img src="${esc(img)}" alt="">`:esc((n[0]||'?').toUpperCase())}</span>`;
