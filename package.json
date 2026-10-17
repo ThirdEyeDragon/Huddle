@@ -1,6 +1,6 @@
 {
   "name": "huddle",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Huddle App",
   "author": "ThirdEyeDragon",
   "main": "main.js",
@@ -8,7 +8,9 @@
     "start": "electron .",
     "build": "electron-builder"
   },
-  "dependencies": {},
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
   "devDependencies": {
     "electron": "^33.0.0",
     "electron-builder": "^25.1.8"
