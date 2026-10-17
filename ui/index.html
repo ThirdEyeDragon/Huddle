@@ -616,7 +616,7 @@ function on(d){
     if(document.activeElement)document.activeElement.blur();
     $('#login').style.display='none';$('#app').style.display='grid';
     sel=G[sel]?sel:'home';selG(sel);applyStage();send({t:'status',s:myStatus});setTimeout(()=>$('#txt').focus(),100)}
-  else if(d.t=='users'){const wasV=new Set(users.filter(u=>u.voice).map(u=>u.id));d.users.forEach(u=>{if(me&&u.voice&&!wasV.has(u.id)&&u.id!=me&&(gOf(u.voice)||u.voice.includes(oid)))addNote({k:'voice',who:u.name,ch:u.voice.startsWith('dm:')?u.voice:undefined})});if(vch){const a=new Set(users.filter(u=>u.voice==vch&&u.id!=me).map(u=>u.id)),b=new Set(d.users.filter(u=>u.voice==vch&&u.id!=me).map(u=>u.id));if([...b].some(i=>!a.has(i)))snd(SB);else if([...a].some(i=>!b.has(i)))snd(SD)}
+  else if(d.t=='users'){if(vch){const a=new Set(users.filter(u=>u.voice==vch&&u.id!=me).map(u=>u.id)),b=new Set(d.users.filter(u=>u.voice==vch&&u.id!=me).map(u=>u.id));if([...b].some(i=>!a.has(i)))snd(SB);else if([...a].some(i=>!b.has(i)))snd(SD)}
     users=d.users;users.forEach(u=>noteName(u.name));
     const mu=users.find(u=>u.id==me);if(mu&&mu.name!=myName){myName=mu.name;try{window.api.set({name:myName})}catch{}}
     roster();syncPeers();refreshTiles();forceSync()}
@@ -965,7 +965,7 @@ $('#bCam').addEventListener('contextmenu',async e=>{e.preventDefault();const x=e
     cm.onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;cmClose();camId=b.dataset.d;LS.set('huddle.cam',camId);await startCam()}}
   catch(er){toast('Could not list cameras: '+er.message)}});
 /* notifications: @mentions, replies to you, people joining the lounge */
-let notes=[];try{notes=JSON.parse(LS.get('huddle.notes')||'[]')}catch{}
+let notes=[];try{notes=JSON.parse(LS.get('huddle.notes')||'[]')}catch{}notes=notes.filter(n=>n&&n.k!='voice'); // old join announcements are dropped too
 const saveNotes=()=>LS.set('huddle.notes',JSON.stringify(notes));
 function addNote(n){n.ts=Date.now();n.read=!!n.read;notes.unshift(n);notes=notes.slice(0,50);saveNotes();bellPaint();if(!$('#np').hidden)npPaint()}
 function bellPaint(){const u=notes.filter(n=>!n.read).length,b=$('#bellN');b.hidden=!u;b.textContent=u>9?'9+':u}
@@ -983,6 +983,9 @@ bellPaint();
 const modal=(h,f)=>{const m=$('#modal');m.innerHTML='<div class="pk" style="width:min(420px,92vw);display:grid;gap:10px">'+h+'</div>';m.style.display='grid';f()},closeM=()=>{$('#modal').style.display='none'};
 $('#modal').addEventListener('mousedown',e=>{if(e.target.id=='modal')closeM()});addEventListener('keydown',e=>{if(e.key=='Escape')closeM()});
 $('#msgs').addEventListener('click',e=>{const b=e.target.closest('.rx');if(b)rxSend({t:'react',ch:cur,id:b.closest('.m').dataset.id,e:b.dataset.e})});
+$('#rail').addEventListener('contextmenu',e=>{const b=e.target.closest('button[data-g]'),g=b&&G[b.dataset.g];if(!g)return;e.preventDefault();e.stopPropagation();
+  const r=b.getBoundingClientRect(),kb=!e.clientX&&!e.clientY; // keyboard (menu key / Shift+F10) opens beside the icon
+  gMenu(b,g,kb?{left:r.right+4,bottom:r.top}:{left:e.clientX,bottom:e.clientY-4})});
 $('#rail').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.id=='gadd')return gDialog();selG(b.dataset.g)};
 $('#cats').onclick=e=>{const g=G[sel];if(!g)return;const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);
   const t=e.target.closest('[data-ct]');if(t){const a=colGet(g.id),i=t.dataset.ct,n=a.includes(i)?a.filter(x=>x!=i):[...a,i];colSet(g.id,n);return side()}
@@ -1104,7 +1107,7 @@ const roleSt=o=>{const r=roleTop(o);if(!r)return'';const c1=r.color,c2=r.color2|
   return s+(r.style=='bold'?';font-weight:700':r.style=='italic'?';font-style:italic':'')};
 const rbadge=(o,ch)=>{const r=roleTop(o,ch);if(!r)return'';return r.badge?`<span class="rbg" data-gl="${esc(r.glow||'')}" style="--rc:${esc(r.color)}">${esc(r.name)}</span>`:''};
 let sRefresh=null;
-function sDialog(g){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g.color||'',rid='',dr=null;
+function sDialog(g,tab){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g.color||'',rid='',dr=null;
   modal(`<div class="sdlg"><h3>Server settings</h3><div class="tabs2" role="tablist">${[...(g.owner==oid||hasP(g,'server')?[['o','Overview']]:[]),...(g.owner==oid||hasP(g,'roles')?[['r','Roles'],['m','Members']]:[])].map(([k,t])=>`<button role="tab" data-t="${k}">${t}</button>`).join('')}</div>
   <section data-p="o"><div style="display:flex;gap:8px;align-items:center"><span id="si" class="ri" style="pointer-events:none;--h:${hue(g.name)}"></span><button id="su">Upload icon</button><button id="sr">Remove</button><input type="color" id="sc" value="${col||'#3a1b2c'}" title="Server colour" style="width:46px;padding:2px"></div>
   <input id="sn" maxlength="32" value="${esc(g.name)}" aria-label="Server name"><textarea id="sd" rows="2" maxlength="200" placeholder="Description">${esc(g.desc||'')}</textarea>
@@ -1144,16 +1147,16 @@ function sDialog(g){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g.col
     $('#sf').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{ic=await toAvatar(f);pi()}catch{toast('That image could not be read.')}};
     $('#sg').onclick=()=>{if(confirm('Old invite code will stop working. Continue?')){send({t:'gcode',g:gid});closeM();toast('New invite code made. Reopen settings to copy it.',true)}};
     $('#ss').onclick=()=>{const n=$('#sn').value.trim();if(n&&send({t:'gset',g:gid,name:n,desc:$('#sd').value,color:col,icon:ic}))closeM()};$('#gx').onclick=closeM;
-    show(g.owner==oid||hasP(g,'server')?'o':'r');pi();drawR();drawM()})}
+    show(tab&&box.querySelector('[data-t="'+tab+'"]')?tab:(g.owner==oid||hasP(g,'server')?'o':'r'));pi();drawR();drawM()})}
 const catOpts=(g,sel)=>'<option value="">No category</option>'+(g.categories||[]).map(k=>`<option value="${k.id}"${k.id==sel?' selected':''}>${esc(k.name)}</option>`).join('');
 function chDialog(g,pre){modal('<h3>Create channel</h3><input id="cn" placeholder="channel-name" maxlength="24"><select id="ct"><option value="text">Text channel</option><option value="voice">Voice channel</option></select>'+((g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':'')+'<button class="on" id="chc">Create</button><button id="gx">Cancel</button>',()=>{
   $('#cn').focus();$('#chc').onclick=()=>{const n=$('#cn').value.trim();if(n&&send({t:'chadd',g:g.id,name:n,type:$('#ct').value,cat:$('#cc')?$('#cc').value:''}))closeM()};$('#cn').onkeydown=e=>{if(e.key=='Enter')$('#chc').click()};$('#gx').onclick=closeM})}
-function gMenu(btn){const g=G[sel],r=btn.getBoundingClientRect(),own=g.owner==oid,mc=hasP(g,'channels');
-  cm.innerHTML=[['inv','Copy invite code'],...(own||hasP(g,'roles')||hasP(g,'server')?[['set','Server settings']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':''}>${t}</button>`).join('');cm.hidden=false;
-  cm.style.left=Math.max(4,Math.min(r.left,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=r.bottom+4+'px';
+function gMenu(btn,g0,pt){const g=g0||G[sel],r=pt||btn.getBoundingClientRect(),own=g.owner==oid,mc=hasP(g,'channels'),sv=hasP(g,'server'),rl=hasP(g,'roles');
+  cm.innerHTML=[['inv','Copy invite code'],...(sv?[['gen','New invite code'],['name','Name, icon & colour']]:[]),...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':''}>${t}</button>`).join('');cm.hidden=false;
+  cm.style.left=Math.max(4,Math.min(r.left,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(r.bottom+4,innerHeight-cm.offsetHeight-8))+'px';
   cm.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const a=b.dataset.a;
     if((a=='del'||a=='leave')&&!b.dataset.sure){b.dataset.sure=1;b.textContent='Click again to confirm';return}
-    cmClose();if(a=='inv'){copyText(g.code);toast('Invite code copied: '+g.code+'\nShare it so friends can join.',true)}else if(a=='set')sDialog(g);else if(a=='ch')chDialog(g);else if(a=='cat')catDialog(g);else if(a=='bans')banDialog(g);else send({t:a=='del'?'gdel':'gleave',g:g.id})}}
+    cmClose();if(a=='inv'){copyText(g.code);toast('Invite code copied: '+g.code+'\nShare it so friends can join.',true)}else if(a=='name'||a=='roles'||a=='mem')sDialog(g,{name:'o',roles:'r',mem:'m'}[a]);else if(a=='gen'){if(confirm('Old invite code will stop working. Make a new one?')){send({t:'gcode',g:g.id});toast('New invite code made. Open this menu again to copy it.',true)}}else if(a=='ch')chDialog(g);else if(a=='cat')catDialog(g);else if(a=='bans')banDialog(g);else send({t:a=='del'?'gdel':'gleave',g:g.id})}}
 addEventListener('contextmenu',e=>{const kh=e.target.closest('#cats .cat-h'),gk=G[sel];if(kh&&hasP(gk,'channels')){e.preventDefault();return catDialog(gk,kh.parentNode.dataset.cat)}const b=e.target.closest('#nav [data-c],#nav [data-v]'),g=G[sel];if(!b||!g||!(hasP(g,'channels')||hasP(g,'roles')))return;e.preventDefault();
   const id=b.dataset.c||b.dataset.v;
   cm.innerHTML=(hasP(g,'channels')?'<button data-a="edit">✎ Edit channel</button>':'')+(hasP(g,'roles')?'<button data-a="perm">🔒 Permissions</button>':'')+(hasP(g,'channels')&&g.channels.length>1?'<button class="danger" data-a="del">Delete channel</button>':'');cm.hidden=false;
