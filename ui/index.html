@@ -506,7 +506,41 @@ img.cem,.m img.cem{height:1.375em;width:auto;max-width:6em;max-height:none;objec
 #bLeave:hover{filter:brightness(1.12);transform:translateY(-1px)}#bLeave:active{transform:none;filter:brightness(.92)}#bLeave svg{transform:rotate(0deg)}
 .meRow #ctrl{order:0;grid-column:1/-1;margin:0 0 2px}
 @media(max-width:700px){#ctrl{display:flex;gap:4px;padding:0;margin:0;border:0;background:none;animation:none}#cth{display:none}#ctrl .cb{width:36px;height:36px;padding:0;border-radius:50%}#ctrl .cb span,#bLeave span{display:none}#bLeave{width:36px;height:36px;padding:0;margin:0;border-radius:50%;order:0}}
-</style><style>.pr{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:9px 0;border-top:1px solid var(--line)}.pr small{display:block;color:var(--dim);font-size:12px;line-height:1.35}.tri{display:inline-flex;flex:none;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}.tri button{border:0;border-radius:0;background:transparent;color:var(--dim);padding:6px 12px;min-width:40px;cursor:pointer}.tri button[aria-pressed=true][data-v="-1"]{background:var(--bad);color:#fff}.tri button[aria-pressed=true][data-v="0"]{background:var(--hi);color:var(--tx)}.tri button[aria-pressed=true][data-v="1"]{background:var(--live);color:#000}#bCam:disabled,#bScr:disabled{opacity:.45;cursor:not-allowed}</style><style>.rli.sel{background:transparent;border-color:var(--ac);box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 38%,transparent),0 0 12px color-mix(in srgb,var(--ac) 50%,transparent),inset 0 0 9px color-mix(in srgb,var(--ac) 30%,transparent)}html[data-contrast=high] .tab.sel,html[data-contrast=high] .ri.sel,html[data-contrast=high] .rli.sel{box-shadow:none}</style></head><body>
+</style><style>.pr{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:9px 0;border-top:1px solid var(--line)}.pr small{display:block;color:var(--dim);font-size:12px;line-height:1.35}.tri{display:inline-flex;flex:none;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}.tri button{border:0;border-radius:0;background:transparent;color:var(--dim);padding:6px 12px;min-width:40px;cursor:pointer}.tri button[aria-pressed=true][data-v="-1"]{background:var(--bad);color:#fff}.tri button[aria-pressed=true][data-v="0"]{background:var(--hi);color:var(--tx)}.tri button[aria-pressed=true][data-v="1"]{background:var(--live);color:#000}#bCam:disabled,#bScr:disabled{opacity:.45;cursor:not-allowed}</style><style>.rli.sel{background:transparent;border-color:var(--ac);box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 38%,transparent),0 0 12px color-mix(in srgb,var(--ac) 50%,transparent),inset 0 0 9px color-mix(in srgb,var(--ac) 30%,transparent)}html[data-contrast=high] .tab.sel,html[data-contrast=high] .ri.sel,html[data-contrast=high] .rli.sel{box-shadow:none}</style><style id="sleek">
+/* polish layer: built only on the theme variables, so every theme keeps working */
+:root{--ez:cubic-bezier(.2,.8,.2,1);--glow:color-mix(in srgb,var(--ac) 55%,transparent)}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:color-mix(in srgb,var(--ac) 38%,transparent)}
+*{scrollbar-color:color-mix(in srgb,var(--dim) 32%,transparent) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--dim) 30%,transparent);border-radius:99px;border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:color-mix(in srgb,var(--dim) 55%,transparent);background-clip:content-box}
+:where(button){transition:background-color .16s,border-color .16s,color .16s,box-shadow .22s,transform .14s var(--ez),filter .16s;box-shadow:inset 0 1px 0 #ffffff0f}
+:where(button):active{transform:scale(.97)}
+button.on{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 62%,var(--ac2)));border-color:transparent;font-weight:600;box-shadow:0 6px 20px -8px var(--glow),inset 0 1px 0 #ffffff40}
+button.off{border-color:transparent;font-weight:600;box-shadow:0 6px 20px -8px color-mix(in srgb,var(--bad) 55%,transparent),inset 0 1px 0 #ffffff30}
+button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent}
+:where(select,input,textarea){transition:border-color .16s,box-shadow .2s,background-color .16s}
+.pk :is(input,textarea,select):focus,#login :is(input,textarea):focus{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 20%,transparent);outline:none}
+#rail{background:linear-gradient(180deg,#060609,#020203);gap:10px}
+.ri{box-shadow:inset 0 1px 0 #ffffff1f,0 3px 10px -3px #000;transition:border-radius .25s var(--ez),transform .2s var(--ez),filter .2s,box-shadow .25s}
+.ri:hover{transform:translateY(-1px);filter:brightness(1.12)}
+.tab{transition:background-color .15s,color .15s,border-color .15s,box-shadow .2s}
+.tab:hover{background:color-mix(in srgb,var(--tx) 6%,transparent)}
+.pa{border-radius:14px;transition:background-color .15s}.pa:hover{background:color-mix(in srgb,var(--tx) 6%,transparent)}
+.badge{box-shadow:0 0 0 2px var(--panel),0 3px 10px -3px var(--glow)}
+.pk{background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 93%,var(--tx)),var(--panel));border-color:color-mix(in srgb,var(--tx) 11%,var(--line));border-radius:22px;box-shadow:0 30px 80px -20px #000,0 0 0 1px #ffffff08,inset 0 1px 0 #ffffff0d}
+.pk :is(h3){letter-spacing:-.01em}
+#picker,#prof,#modal{background:radial-gradient(120% 90% at 50% 0,color-mix(in srgb,var(--ac) 10%,#000c),#000d);backdrop-filter:blur(10px) saturate(1.2)}
+#cm,#np{background:color-mix(in srgb,var(--hi) 88%,transparent);backdrop-filter:blur(16px) saturate(1.3);border-color:color-mix(in srgb,var(--tx) 12%,var(--line));border-radius:16px;box-shadow:0 18px 50px -12px #000,inset 0 1px 0 #ffffff0d}
+#cm button{border-radius:10px}
+#toast{background:color-mix(in srgb,var(--hi) 90%,transparent);backdrop-filter:blur(14px);border-radius:16px;box-shadow:0 14px 40px -10px #000}
+#bar{background:color-mix(in srgb,var(--raise) 85%,transparent);backdrop-filter:blur(12px);border-radius:26px;box-shadow:0 10px 30px -14px #000,inset 0 1px 0 #ffffff0a;transition:border-color .2s,box-shadow .25s}
+#bar:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 16%,transparent),0 10px 30px -14px #000}
+.tile{border-radius:20px;box-shadow:0 8px 28px -12px #000,inset 0 0 0 1px #ffffff0f}
+@media(prefers-reduced-motion:reduce){:where(button),.ri,.tab,#bar{transition:none}:where(button):active,.ri:hover{transform:none}}
+</style>
+</head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
   <h1>Huddle</h1><p class="tag">Everyone, together.</p>
   <div class="fld">
