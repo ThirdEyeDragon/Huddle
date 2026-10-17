@@ -539,6 +539,9 @@ button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent
 #bar:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 16%,transparent),0 10px 30px -14px #000}
 .tile{border-radius:20px;box-shadow:0 8px 28px -12px #000,inset 0 0 0 1px #ffffff0f}
 @media(prefers-reduced-motion:reduce){:where(button),.ri,.tab,#bar{transition:none}:where(button):active,.ri:hover{transform:none}}
+#frBtn .cn,#comBtn .cn{display:inline-flex;align-items:center;gap:9px}.tab .ic{flex:none;opacity:.8;transition:opacity .15s}.tab:hover .ic,.tab.sel .ic{opacity:1}
+#bell .ic{width:19px;height:19px;transition:transform .2s var(--ez)}#bell:hover .ic{transform:rotate(-10deg)}#bell:has(#bellN:not([hidden])){color:var(--ac);border-color:color-mix(in srgb,var(--ac) 45%,var(--line))}
+.incall{display:inline-flex;align-items:center;gap:4px;align-self:center;font-size:11px;font-weight:600;line-height:17px;padding:0 8px 0 6px;border-radius:99px;color:var(--live);background:color-mix(in srgb,var(--live) 14%,transparent);border:1px solid color-mix(in srgb,var(--live) 35%,transparent)}
 </style>
 </head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
@@ -569,7 +572,7 @@ button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent
       </div><button id="meBtn" title="Edit your profile" aria-label="Edit your profile"></button><button id="stBtn" aria-label="Set your status" aria-haspopup="menu"><i class="sd2"></i><span id="stLb">Online</span></button><button id="setBtn" title="Settings" aria-label="Settings"><b>⚙</b><span>Settings</span></button></div>
   </aside>
   <main>
-    <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>📞 Call</button><button id="bell" aria-label="Notifications" title="Notifications">🔔<span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
+    <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>📞 Call</button><button id="bell" aria-label="Notifications" title="Notifications"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg><span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
     <section id="stage" aria-label="Voice call"></section>
     <div id="split" role="separator" aria-orientation="horizontal" aria-label="Resize call area" title="Drag to resize · double-click to reset"></div>
     <div id="msgs"></div>
@@ -587,6 +590,8 @@ button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent
 <div id="drop">Drop files to share</div>
 
 <script>
+const ICO=p=>`<svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`,IC={bell:ICO('<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/>'),fr:ICO('<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18 14.8c1.9.7 3 2.4 3 5.2"/>'),com:ICO('<path d="M6 9h12a4 4 0 0 1 3.9 4.9l-.8 3.4a2.3 2.3 0 0 1-3.8 1.1L15 16.5H9l-2.3 1.9a2.3 2.3 0 0 1-3.8-1.1l-.8-3.4A4 4 0 0 1 6 9z"/><path d="M8 11v3M6.5 12.5h3"/><circle cx="15.3" cy="12" r=".7" fill="currentColor"/><circle cx="17.3" cy="13.8" r=".7" fill="currentColor"/>')};
+
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LS={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch{}}};
 const THEMES=[['midnight','Midnight','#000000','#121216','#ff5c93'],['graphite','Graphite','#121214','#212125','#ff5c93'],['light','Light','#f6f5f2','#ffffff','#e0356f'],['ocean','Ocean','#050b14','#101c2c','#6cc4ff'],['forest','Forest','#060b08','#121c16','#8ee06a'],['sunset','Sunset','#0e0709','#20121a','#ff8a5c']];
@@ -651,7 +656,7 @@ function on(d){
     $('#login').style.display='none';$('#app').style.display='grid';
     sel=G[sel]?sel:'home';selG(sel);applyStage();send({t:'status',s:myStatus});setTimeout(()=>$('#txt').focus(),100)}
   else if(d.t=='users'){if(vch){const a=new Set(users.filter(u=>u.voice==vch&&u.id!=me).map(u=>u.id)),b=new Set(d.users.filter(u=>u.voice==vch&&u.id!=me).map(u=>u.id));if([...b].some(i=>!a.has(i)))snd(SB);else if([...a].some(i=>!b.has(i)))snd(SD)}
-    users=d.users;users.forEach(u=>noteName(u.name));
+    users=d.users;users.forEach(u=>noteName(u.name));callMarks();
     const mu=users.find(u=>u.id==me);if(mu&&mu.name!=myName){myName=mu.name;try{window.api.set({name:myName})}catch{}}
     roster();syncPeers();refreshTiles();forceSync()}
   else if(d.t=='profiles'){Object.assign(P,d.p);Object.values(d.p).forEach(p=>noteName(p.name));roster();refreshTiles();repaint();
@@ -711,7 +716,7 @@ function side(){const g=G[sel],home=!g;
   tabH=i=>`<button class="tab${i==cur?' sel':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+esc(chLabel(i).replace(/^#\s*/,''))}</span>${cg(i)}<span class="badge" hidden></span></button>`;
   const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}${esc(c.name)}${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
   const ids=home?(()=>{const k=dmKeys();return cur.startsWith('dm:')&&!k.includes(cur)?[cur,...k]:k})():g.channels.filter(c=>!inCat(c)).map(c=>c.id);
-  $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn">👥 Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn">🎮 Community</span><small class="num" id="comN">${LFG.length||''}</small></button>`:'')+(home&&!ids.length?'<div class="empty">No conversations yet.</div>':ids.map(i=>home?tabH(i):mixH(chObj(i))).join(''));
+  $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn">${IC.fr}Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn">${IC.com}Community</span><small class="num" id="comN">${LFG.length||''}</small></button>`:'')+(home&&!ids.length?'<div class="empty">No conversations yet.</div>':ids.map(i=>home?tabH(i):mixH(chObj(i))).join(''));
   $('#vlist').innerHTML='';
   const shut=home?[]:colGet(g.id);
   $('#cats').innerHTML=cats.map(k=>{const mine=g.channels.filter(c=>c.cat==k.id),isC=shut.includes(k.id);
@@ -770,6 +775,8 @@ function render(text){const keep=[],hold=x=>'\u0000'+(keep.push(x)-1)+'\u0000';l
   return out.replace(/\u0000(\d+)\u0000/g,(_,i)=>keep[i])}
 const mine=m=>m.o?m.o==oid:m.uid==me;
 const rxHtml=m=>Object.entries(m.rx||{}).filter(([,v])=>v.length).map(([e,v])=>`<button class="rx${v.includes(oid)?' me':''}" data-e="${e}">${emo(e)} ${v.length}</button>`).join('');
+const inCall=o=>!!o&&users.some(u=>u.oid==o&&u.voice),callB=o=>inCall(o)?'<span class="incall" title="In a voice call"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>In call</span>':'';
+function callMarks(){document.querySelectorAll('#msgs .mn[data-o]').forEach(n=>{const o=n.dataset.o,x=n.nextElementSibling,has=!!x&&x.classList.contains('incall'),on=inCall(o);if(on&&!has)n.insertAdjacentHTML('afterend',callB(o));else if(!on&&has)x.remove()})}
 function addMsg(m){const box=$('#msgs');box.querySelector('.empty:not(.up)')?.remove();
   const near=box.scrollHeight-box.scrollTop-box.clientHeight<120,el=document.createElement('div'),mn=mine(m),k=m.o||m.uid,cont=false,
     nm=nickOf(m.o,m.ch)||(m.o&&P[m.o]?P[m.o].name:m.from),tm=new Date(m.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
@@ -778,7 +785,7 @@ function addMsg(m){const box=$('#msgs');box.querySelector('.empty:not(.up)')?.re
     f=ty.startsWith('image/')?`<a href="${u}" target="_blank"><img src="${u}" alt=""></a>`:ty.startsWith('video/')?`<video src="${u}" controls></video>`:ty.startsWith('audio/')?`<audio src="${u}" controls></audio>`:'';
     f+=`<a class="file" href="${u}?dl" download>📎 ${esc(m.file.name)} <span style="color:var(--dim)">${fmt(m.file.size)}</span></a>`}
   const rp=m.r?`<div class="rep" data-j="${esc(m.r.id)}" title="Jump to message">↪ <b>${esc(m.r.from)}</b>${emo(esc(m.r.text))}</div>`:'';
-  el.innerHTML=`<div class="bd"><div class="meta">${avs(m.o,nm,'s22')}<b class="mn" data-o="${esc(m.o||'')}" style="${nameSt(m.o,nm)}">${esc(nm)}</b>${rbadge(m.o,m.ch)}<time>${tm}</time></div>${rp}<div class="bw"><div class="bub" title="${tm}"><div class="t${jumbo(m.text)?' big':''}">${render(m.text)}</div>${f}<span class="ed"${m.edited?'':' hidden'}>(edited)</span></div><div class="rxs">${rxHtml(m)}</div></div></div>`;
+  el.innerHTML=`<div class="bd"><div class="meta">${avs(m.o,nm,'s22')}<b class="mn" data-o="${esc(m.o||'')}" style="${nameSt(m.o,nm)}">${esc(nm)}</b>${callB(m.o)}${rbadge(m.o,m.ch)}<time>${tm}</time></div>${rp}<div class="bw"><div class="bub" title="${tm}"><div class="t${jumbo(m.text)?' big':''}">${render(m.text)}</div>${f}<span class="ed"${m.edited?'':' hidden'}>(edited)</span></div><div class="rxs">${rxHtml(m)}</div></div></div>`;
   box.append(el);if(near||mn)box.scrollTop=1e9;
   el.querySelectorAll('img').forEach(i=>i.onload=()=>near&&(box.scrollTop=1e9))}
 function repaint(){const b=$('#msgs'),s=b.scrollTop,h=hist[cur]||[];last=null;b.innerHTML=welcomeH(cur);
