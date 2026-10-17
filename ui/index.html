@@ -554,6 +554,19 @@ button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent
 .cvs{display:flex;gap:4px}.cvs i{font-style:normal;font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:0 7px}.cvn{margin:0;font-size:12px;color:var(--dim)}
 .vflash{animation:vfl 1.4s ease-out}@keyframes vfl{0%{box-shadow:0 0 0 0 var(--live)}100%{box-shadow:0 0 0 12px transparent}}
 @media(prefers-reduced-motion:reduce){#callBtn,.tab.ringing,.vflash{animation:none!important}}
+#stage{background:radial-gradient(130% 110% at 50% 0,#17141f 0,#07070a 62%);border-radius:22px;box-shadow:inset 0 0 0 1px #ffffff0d,0 20px 60px -30px #000}
+.tile{background:linear-gradient(160deg,#15141c,#0a0a0e)}.tile .nm{background:#0b0b10c8;border:1px solid #ffffff14;font-weight:600}
+.tile .mi{width:24px;height:24px;padding:0;place-items:center;background:var(--bad);color:#fff;border:0}.tile.mut .mi{display:grid}.tile .mi svg{width:14px;height:14px}
+.sov{position:absolute;z-index:6;opacity:0;pointer-events:none;translate:0 8px;transition:opacity .35s ease 1.6s,translate .35s var(--ez) 1.6s}
+#stage:hover .sov,#stage:focus-within .sov,#stage.peek .sov{opacity:1;translate:0 0;pointer-events:auto;transition-delay:0s}
+@media(hover:none){.sov{opacity:1;translate:0 0;pointer-events:auto}}
+#sbar{left:0;right:0;bottom:14px;margin:0 auto;width:max-content;max-width:calc(100% - 20px);display:flex;gap:10px;padding:8px 10px;border-radius:999px;background:#0a0a0ee6;border:1px solid #ffffff1f;box-shadow:0 14px 40px -10px #000}
+#sinfo{left:14px;top:12px;display:flex;align-items:center;gap:8px;padding:5px 13px;border-radius:999px;background:#0a0a0ee6;border:1px solid #ffffff1f;font-size:13px;max-width:calc(100% - 28px)}#sinfo:empty{display:none}
+#sinfo i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 8px var(--live)}#sinfo b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#sinfo span{color:var(--dim);font-variant-numeric:tabular-nums}
+.sb{width:46px;height:46px;padding:0;border-radius:50%;display:grid;place-items:center;background:#ffffff14;border-color:#ffffff1f}.sb svg{width:21px;height:21px}
+.sb:hover{background:#ffffff26;translate:0 -2px}.sb:active{scale:.94}.sb[data-st=off]{background:var(--bad);border-color:transparent;color:#1c0600}.sb[data-st=on]{background:var(--live);border-color:transparent;color:#00201a}.sb:disabled{opacity:.4;cursor:not-allowed}
+#sLeave{width:60px;border-radius:999px;background:var(--bad);border-color:transparent;color:#fff}#sLeave:hover{background:color-mix(in srgb,var(--bad) 85%,#fff)}
+@media(prefers-reduced-motion:reduce){.sov,.sb{transition:none}}
 </style>
 </head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
@@ -585,7 +598,7 @@ button.on:hover,button.off:hover{filter:brightness(1.1);border-color:transparent
   </aside>
   <main>
     <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>Call</button><button id="bell" aria-label="Notifications" title="Notifications"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg><span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
-    <section id="stage" aria-label="Voice call"></section>
+    <section id="stage" aria-label="Voice call"><div id="sinfo" class="sov"></div><div id="sbar" class="sov" role="toolbar" aria-label="Call controls"><button id="sMic" class="sb" type="button"></button><button id="sDeaf" class="sb" type="button"></button><button id="sCam" class="sb" type="button"></button><button id="sScr" class="sb" type="button"></button><button id="sLeave" class="sb" type="button" title="Hang up" aria-label="Hang up"></button></div></section>
     <div id="split" role="separator" aria-orientation="horizontal" aria-label="Resize call area" title="Drag to resize · double-click to reset"></div>
     <div id="msgs"></div>
     <div id="typing" role="status" aria-live="polite"></div>
@@ -960,7 +973,7 @@ function marks(){document.querySelectorAll('#stage .tile').forEach(t=>{const id=
 function tile(id,stream,label){const src=stream||(pcs[id]&&pcs[id].stream);if(!src)return;let t=$('#t-'+id);
   if(!t){const nm=id=='me'?nameOf(me):nameOf(id);
     t=document.createElement('div');t.className='tile';t.id='t-'+id;t.title='Click to pin / unpin · click a name or avatar to view their profile';
-    t.innerHTML=`${av(oidOf(id),nm)}<i class="ring"></i><video autoplay playsinline></video><div class="nm">${esc(label||nm)}</div><div class="mi">🔇</div>`;
+    t.innerHTML=`${av(oidOf(id),nm)}<i class="ring"></i><video autoplay playsinline></video><div class="nm">${esc(label||nm)}</div><div class="mi">${SV(CIC.mic+CIC.slash)}</div>`;
     const v=t.querySelector('video');v.srcObject=src;v.muted=id=='me'||eD();applySink(v);
     t.onclick=e=>{const p=e.target.closest('.av[data-o],.nm');if(p){const o=oidOf(id);if(o)return openProfile(o,false,p)}pinned=pinned==id?null:id;layoutStage()};
     $('#stage').append(t);layoutStage();marks()}
@@ -973,9 +986,9 @@ function watch(id,stream){try{ac=ac||new AudioContext();if(ac.state=='suspended'
 async function joinVoice(id){if(!canVc(id))return toast('You do not have permission to join this voice channel.');if(voice)leaveVoice();const vr=document.querySelector('[data-v="'+id+'"]')||document.body;vr.classList.add('joining');
   try{local=new MediaStream();const a=await getMic();local.addTrack(a.getAudioTracks()[0])}
   catch(e){toast('Microphone unavailable: '+e.message+'\nMake sure you opened the https:// link and allowed mic access.');vr.classList.remove('joining');return}
-  vr.classList.remove('joining');vr.classList.add('pop');setTimeout(()=>vr.classList.remove('pop'),2000);voice=true;vch=id;callT=Date.now();muted=false;deaf=false;fm=fd=false;collapsed=false;send({t:'voice',on:true,ch:id});snd(SB);side();ctrls();applyStage();tile('me',local,'You');watch('me',local);syncPeers();ringSync()}
+  vr.classList.remove('joining');vr.classList.add('pop');setTimeout(()=>vr.classList.remove('pop'),2000);voice=true;vch=id;callT=Date.now();muted=false;deaf=false;fm=fd=false;collapsed=false;send({t:'voice',on:true,ch:id});snd(SB);side();ctrls();applyStage();tile('me',local,'You');watch('me',local);syncPeers();ringSync();{const st=$('#stage');st.classList.add('peek');setTimeout(()=>st.classList.remove('peek'),3500)}}
 function leaveVoice(){fm=fd=false;if(voice)snd(SD);vch='';Object.values(pcs).forEach(o=>o.pc.close());pcs={};local?.getTracks().forEach(t=>t.stop());vtrack=null;local=null;voice=false;
-  $('#stage').innerHTML='';pinned=null;collapsed=false;send({t:'voice',on:false});ctrls();applyStage();ringSync();side()}
+  $('#stage').querySelectorAll('.tile').forEach(t=>t.remove());pinned=null;collapsed=false;send({t:'voice',on:false});ctrls();applyStage();ringSync();side()}
 let fm=false,fd=false,fns=false;const eM=()=>muted||fm,eD=()=>deaf||fd; // fm / fd: muted / deafened by a moderator
 function forceSync(){if(!voice)return;const u=users.find(x=>x.id==me),nm=!!(u&&(u.sm||u.ns)),nd=!!(u&&u.sd);fns=!!(u&&u.ns&&!u.sm);if(nm==fm&&nd==fd)return;
   if(nm&&!fm)toast(fns?'You do not have permission to speak in this channel.':'A moderator muted you.');if(nd&&!fd)toast('A moderator deafened you.');
@@ -986,13 +999,19 @@ const SV=p=>`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke=
     cam:'<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3"/>',
     scr:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',slash:'<path d="M4 4l16 16"/>'};
 function cBtn(id,ic,label,st,title,pressed){const b=$(id);b.innerHTML=SV(ic)+'<span>'+label+'</span>';if(st)b.dataset.st=st;else delete b.dataset.st;b.title=title||label;b.setAttribute('aria-label',title||label);b.setAttribute('aria-pressed',!!pressed)}
+function sbSync(){[['bMic','sMic'],['bDeaf','sDeaf'],['bCam','sCam'],['bScr','sScr']].forEach(([a,b])=>{const x=$('#'+a),y=$('#'+b);y.innerHTML=x.innerHTML.replace(/<span>.*?<\/span>/,'');if(x.dataset.st)y.dataset.st=x.dataset.st;else delete y.dataset.st;y.title=x.title;y.setAttribute('aria-label',x.title||'');y.setAttribute('aria-pressed',x.getAttribute('aria-pressed')||'false');y.disabled=x.disabled});
+  const l=$('#sLeave');if(!l.firstChild)l.innerHTML=$('#bLeave svg').outerHTML;infoPaint()}
+function infoPaint(){const f=$('#sinfo');if(!f)return;if(!voice||!vch){f.innerHTML='';return}const e=Math.max(0,Math.floor((Date.now()-callT)/1000)),h=Math.floor(e/3600),t=(h?h+':':'')+String(Math.floor(e/60)%60).padStart(h?2:1,'0')+':'+String(e%60).padStart(2,'0');f.innerHTML='<i></i><b>'+esc(chLabel(vch))+'</b><span>'+t+'</span>'}
+setInterval(()=>{if(voice)infoPaint()},1000);
+$('#sMic').onclick=()=>$('#bMic').click();$('#sDeaf').onclick=()=>$('#bDeaf').click();$('#sCam').onclick=()=>$('#bCam').click();$('#sScr').onclick=()=>$('#bScr').click();$('#sLeave').onclick=()=>leaveVoice();
+$('#sCam').addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();$('#bCam').dispatchEvent(new MouseEvent('contextmenu',{clientX:e.clientX,clientY:e.clientY,bubbles:true,cancelable:true}))});
 function ctrls(){$('#ctrl').hidden=!voice;
   {const t=$('#cth span');if(t&&voice&&typeof vch!='undefined'&&vch)t.textContent='Connected · '+chLabel(vch)}
   cBtn('#bMic',eM()?CIC.mic+CIC.slash:CIC.mic,eM()?'Unmute':'Mute',eM()?'off':'',fm?(fns?'You do not have permission to speak here':'Muted by a moderator'):eM()?'Unmute':'Mute',eM());
   cBtn('#bDeaf',eD()?CIC.hp+CIC.slash:CIC.hp,eD()?'Undeafen':'Deafen',eD()?'off':'',fd?'Deafened by a moderator':eD()?'Undeafen':'Deafen',eD());
   {const c=!!vtrack&&!vtrack._scr,sc=!!vtrack&&!!vtrack._scr;cBtn('#bCam',CIC.cam,'Camera',c?'on':'',c?'Turn camera off (right-click to choose a camera)':'Turn camera on (right-click to choose a camera)',c);cBtn('#bScr',CIC.scr,'Screen',sc?'on':'',sc?'Stop sharing your screen':'Share your screen',sc)}
   if(voice){const nc=!chCan(vch,'video'),ns=!chCan(vch,'screen'),cOn=!!vtrack&&!vtrack._scr,sOn=!!vtrack&&!!vtrack._scr;$('#bCam').disabled=nc&&!cOn;$('#bScr').disabled=ns&&!sOn;if(nc&&!cOn)$('#bCam').title='You do not have permission to use a camera in this channel';if(ns&&!sOn)$('#bScr').title='You do not have permission to share your screen in this channel'}
-  if(voice)send({t:'state',muted:eM(),video:!!vtrack,scr:!!(vtrack&&vtrack._scr)})}
+  if(voice)send({t:'state',muted:eM(),video:!!vtrack,scr:!!(vtrack&&vtrack._scr)});sbSync()}
 function tuneV(o){const s=o&&o.vs;if(!s||!vtrack)return;try{const sc=!!vtrack._scr,p=s.getParameters();if(!p.encodings||!p.encodings.length)p.encodings=[{}];
     p.encodings[0].maxBitrate=sc?6e6:2.5e6;p.encodings[0].maxFramerate=sc?60:30;p.degradationPreference=sc?'maintain-framerate':'balanced';s.setParameters(p).catch(()=>{})}catch{}}
 function setVideo(t){ // one outgoing video track at a time: camera or screen
