@@ -1,0 +1,14 @@
+"build": {
+  "appId": "com.huddle.app",
+  "mac": {
+    "target": [
+      "dmg",
+      "zip"
+    ]
+  },
+  "win": {
+    "target": [
+      "nsis"
+    ]
+  }
+}
