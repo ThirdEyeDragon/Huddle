@@ -621,6 +621,7 @@ function on(d){
     const mu=users.find(u=>u.id==me);if(mu&&mu.name!=myName){myName=mu.name;try{window.api.set({name:myName})}catch{}}
     roster();syncPeers();refreshTiles();forceSync()}
   else if(d.t=='profiles'){Object.assign(P,d.p);Object.values(d.p).forEach(p=>noteName(p.name));roster();refreshTiles();repaint();
+    if($('#modal').style.display=='grid'){if($('#fl')&&window.frDraw)frDraw();if($('#dl')&&window.dmDraw)dmDraw()}
     if(saving&&d.p[oid]){saving=false;closeProfile();toast('Profile saved',true)}}
   else if(d.t=='emojis'){EM=d.e||{};if(cur)repaint();if(window.EMP&&!EMP.hidden)emDraw();if(window.emDlgDraw)emDlgDraw()}
   else if(d.t=='typing'){typers[d.ch+'|'+d.uid]=Date.now();typingPaint()}
@@ -634,7 +635,7 @@ function on(d){
     try{if(myStatus!='dnd'&&myStatus!='sleep'&&!mine(d.m)&&(!document.hasFocus()||(men&&d.m.ch!=cur)))new Notification((men?'@mention from ':'')+d.m.from+' in '+chLabel(d.m.ch),{body:d.m.text||(d.m.file&&d.m.file.name)||''})}catch{}
     if(d.m.ch.startsWith('dm:'))side();if(d.m.ch==cur)addMsg(d.m,true);else{unread[d.m.ch]=(unread[d.m.ch]||0)+1;if(men||d.m.ch.startsWith('dm:'))mentioned[d.m.ch]=true;badges()}}
   else if(d.t=='guild'){tmoNote(d.g);G[d.g.id]=d.g;rail();if(sRefresh)sRefresh(d.g.id);nickRefresh();permSync();if(sel==d.g.id){if(!d.g.channels.some(c=>c.id==cur))selG(sel);else{side();roster()}}}
-  else if(d.t=='rel'){const old=REL;REL=d.r;
+  else if(d.t=='rel'){const old=REL;REL=d.r;if(d.p){Object.assign(P,d.p);Object.values(d.p).forEach(p=>noteName(p.name))}
     d.r.i.filter(x=>!old.i.includes(x)).forEach(x=>toast(((P[x]||{}).name||'Someone')+' sent you a friend request.',true));
     d.r.f.filter(x=>!old.f.includes(x)&&old.o.includes(x)).forEach(x=>toast(((P[x]||{}).name||'Someone')+' accepted your friend request.',true));
     side();if(window.popEl)cardRefresh();if($('#modal').style.display=='grid'){if($('#fl')&&window.frDraw)frDraw();if($('#dl')&&window.dmDraw)dmDraw()}}
@@ -675,7 +676,7 @@ function side(){const g=G[sel],home=!g;
   const dmRow=i=>{const o=dmO(i),n=(P[o]||{}).name||'?';return `<span class="dmr">${av(o,n)}<span class="nn">${esc(n)}</span></span>`},
   tabH=i=>`<button class="tab${i==cur?' sel':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+esc(chLabel(i).replace(/^#\s*/,''))}</span>${cg(i)}<span class="badge" hidden></span></button>`;
   const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}${esc(c.name)}${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
-  const ids=home?[...new Set([...(cur.startsWith('dm:')?[cur]:[]),...dmKeys()])]:g.channels.filter(c=>!inCat(c)).map(c=>c.id);
+  const ids=home?(()=>{const k=dmKeys();return cur.startsWith('dm:')&&!k.includes(cur)?[cur,...k]:k})():g.channels.filter(c=>!inCat(c)).map(c=>c.id);
   $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn">👥 Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn">🎮 Community</span><small class="num" id="comN">${LFG.length||''}</small></button>`:'')+(home&&!ids.length?'<div class="empty">No conversations yet.</div>':ids.map(i=>home?tabH(i):mixH(chObj(i))).join(''));
   $('#vlist').innerHTML='';
   const shut=home?[]:colGet(g.id);
@@ -857,6 +858,7 @@ function makePc(id){if(pcs[id])return pcs[id];
   local.getTracks().forEach(t=>o.senders.push(pc.addTrack(t,local)));
   pc.ontrack=e=>{o.stream.addTrack(e.track);e.track.onmute=e.track.onunmute=()=>tile(id);tile(id);if(e.track.kind=='audio')watch(id,o.stream)};
   pc.onicecandidate=e=>e.candidate&&send({t:'sig',to:id,d:{c:e.candidate}});
+  pc.onsignalingstatechange=()=>{if(pc.signalingState=='stable')tuneV(o)};
   pc.onnegotiationneeded=async()=>{try{o.making=true;await pc.setLocalDescription();send({t:'sig',to:id,d:{s:pc.localDescription}})}catch(e){console.warn(e)}finally{o.making=false}};
   return o}
 async function signal(from,d){if(!voice)return;const o=makePc(from),pc=o.pc;
@@ -904,9 +906,11 @@ function ctrls(){$('#ctrl').hidden=!voice;
   {const c=!!vtrack&&!vtrack._scr,sc=!!vtrack&&!!vtrack._scr;cBtn('#bCam',CIC.cam,'Camera',c?'on':'',c?'Turn camera off (right-click to choose a camera)':'Turn camera on (right-click to choose a camera)',c);cBtn('#bScr',CIC.scr,'Screen',sc?'on':'',sc?'Stop sharing your screen':'Share your screen',sc)}
   if(voice){const nc=!chCan(vch,'video'),ns=!chCan(vch,'screen'),cOn=!!vtrack&&!vtrack._scr,sOn=!!vtrack&&!!vtrack._scr;$('#bCam').disabled=nc&&!cOn;$('#bScr').disabled=ns&&!sOn;if(nc&&!cOn)$('#bCam').title='You do not have permission to use a camera in this channel';if(ns&&!sOn)$('#bScr').title='You do not have permission to share your screen in this channel'}
   if(voice)send({t:'state',muted:eM(),video:!!vtrack,scr:!!(vtrack&&vtrack._scr)})}
+function tuneV(o){const s=o&&o.vs;if(!s||!vtrack)return;try{const sc=!!vtrack._scr,p=s.getParameters();if(!p.encodings||!p.encodings.length)p.encodings=[{}];
+    p.encodings[0].maxBitrate=sc?6e6:2.5e6;p.encodings[0].maxFramerate=sc?60:30;p.degradationPreference=sc?'maintain-framerate':'balanced';s.setParameters(p).catch(()=>{})}catch{}}
 function setVideo(t){ // one outgoing video track at a time: camera or screen
   if(vtrack){vtrack.stop();local.removeTrack(vtrack);Object.values(pcs).forEach(o=>{if(o.vs){try{o.pc.removeTrack(o.vs)}catch{}o.vs=null}})}
-  vtrack=t;if(t){local.addTrack(t);Object.values(pcs).forEach(o=>o.vs=o.pc.addTrack(t,local));t.onended=()=>{if(vtrack==t){setVideo(null)}}}
+  vtrack=t;if(t){if(t._scr)t.contentHint='motion';local.addTrack(t);Object.values(pcs).forEach(o=>{o.vs=o.pc.addTrack(t,local);tuneV(o);setTimeout(()=>{if(vtrack==t)tuneV(o)},1500)});t.onended=()=>{if(vtrack==t){setVideo(null)}}}
   tile('me',local,'You');ctrls()}
 $('#vlist').onclick=e=>{const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);const b=e.target.closest('[data-v]');if(b&&vch!=b.dataset.v&&!b.classList.contains('joining'))joinVoice(b.dataset.v)};$('#callBtn').onclick=()=>{if(vch!=cur)joinVoice(cur)};$('#bLeave').onclick=leaveVoice;
 $('#bMic').onclick=()=>{if(fm)return toast(fns?'You do not have permission to speak in this channel.':'A moderator muted you.');muted=!muted;local.getAudioTracks().forEach(t=>t.enabled=!muted);ctrls()};
@@ -915,7 +919,7 @@ $('#bCam').onclick=async()=>{if(vtrack&&!vtrack._scr)return setVideo(null);if(!c
   await startCam()};
 $('#bScr').onclick=async()=>{if(vtrack&&vtrack._scr)return setVideo(null);if(!chCan(vch,'screen'))return toast('You do not have permission to share your screen in this channel.');
   const id=await pickScreen();if(!id)return;window.api.pick(id);
-  try{const s=await navigator.mediaDevices.getDisplayMedia({video:true});const t=s.getVideoTracks()[0];t._scr=true;setVideo(t)}catch(e){toast('Screen share failed: '+e.message)}};
+  try{const s=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:60,max:60},width:{ideal:1920},height:{ideal:1080}},audio:false});const t=s.getVideoTracks()[0];t._scr=true;setVideo(t)}catch(e){toast('Screen share failed: '+e.message)}};
 async function pickScreen(){const list=await window.api.sources(),m=$('#picker'),isS=x=>String(x.id).startsWith('screen');
   return new Promise(res=>{let tab=list.some(isS)?'screen':'window';const done=v=>{m.style.display='none';res(v)};
     const draw=()=>{const items=list.filter(x=>tab=='screen'?isS(x):!isS(x));
