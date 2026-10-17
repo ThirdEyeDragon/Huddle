@@ -618,21 +618,23 @@ wav=(dur,fn,vol,sr=22050)=>{const n=Math.floor(dur*sr),b=new Uint8Array(44+n*2),
   w(0,'RIFF');d.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);d.setUint32(24,sr,true);d.setUint32(28,sr*2,true);d.setUint16(32,2,true);d.setUint16(34,16,true);w(36,'data');d.setUint32(40,n*2,true);
   for(let i=0;i<n;i++)d.setInt16(44+i*2,Math.max(-1,Math.min(1,fn(i/sr)))*32767,true);
   let s='';for(let i=0;i<b.length;i+=8192)s+=String.fromCharCode.apply(null,b.subarray(i,i+8192));const a=new Audio('data:audio/wav;base64,'+btoa(s));a.volume=vol;return a};
-const MID=n=>440*2**((n-69)/12),pl=(x,f,duty)=>(f*x)%1<duty?1:-1,tri=(x,f)=>Math.abs(((f*x)%1)*4-2)-1,
+const MID=n=>440*2**((n-69)/12),pl=(x,f,duty)=>(f*x)%1<duty?1:-1,plp=(p,duty)=>(p%1)<duty?1:-1,tri=(x,f)=>Math.abs(((f*x)%1)*4-2)-1,
 nz=(()=>{let r=1;return()=>(r=(r*1664525+1013904223)>>>0)/2147483648-1})(),
-LEAD=[76,76,0,79,81,0,81,83,84,0,83,81,79,0,76,0, 74,74,0,77,79,0,79,81,83,0,81,79,79,83,86,91], // 2 bars of 16th notes, A minor arcade riff
-BASS=[45,45,41,43,45,41,43,40],
-RING=t=>{const st=60/160/4,i=Math.floor(t/st),x=t-i*st,k=i%32,bar=k>>4;let v=0,n=LEAD[k]; // 160 bpm chiptune loop: pulse lead, triangle bass, kick, snare, hats
-  if(n&&x<st*.9)v+=.2*Math.min(1,x/.002)*(1-.35*x/st)*pl(x,MID(n)*(1+.004*Math.sin(x*50)),bar?.5:.25);
-  if(x<st*.9)v+=.28*Math.min(1,x/.002)*(k%2?.7:1)*tri(x,MID(BASS[k>>2]));
-  if(k%8==0&&x<.14)v+=.55*Math.sin(6.2832*(55*x+100*(1-Math.exp(-30*x))/30))*Math.exp(-x*18);
-  if(k%8==4&&x<.12)v+=.22*nz()*Math.exp(-x*30);
-  if(k%2&&x<.03)v+=.07*nz()*Math.exp(-x*120);
+HOOK=('76 - - 76 81 - 79 - 76 - 74 - 72 - - -  77 - - 77 81 - 79 - 77 - 76 - 74 - - -  79 - - 79 84 - 83 - 79 - 76 - 79 - - -  83 - 81 - 79 - 81 - 83 - 86 - 88 - - .').split(/\s+/).map(v=>v=='-'?-1:v=='.'?0:+v), // melody, 16th-note grid: number = new note, - = hold, . = rest
+LD=HOOK.map((v,i)=>{let q=i,e=i+1;while(q>0&&HOOK[q]==-1)q--;while(e<HOOK.length&&HOOK[e]==-1)e++;return{n:HOOK[q],s:q,len:e-q}}),
+ROOT=[45,41,48,43],ARP=[[57,60,64,60],[53,57,60,57],[60,64,67,64],[55,59,62,59]], // chords: Am - F - C - G
+RING=t=>{const st=.1,i=Math.floor(t/st),x=t-i*st,k=i%64,b=k>>4,j=k&15,L=LD[k];let v=0; // 150 bpm, 4 bars: hook + arpeggios + bass + drums, fill into the loop
+  if(L.n){const xx=(k-L.s)*st+x,f=MID(L.n),ph=f*xx+(xx>.12?.005*f/37.7*(1-Math.cos(37.7*(xx-.12))):0);if(xx<L.len*st-.012)v+=.2*Math.min(1,xx/.002)*(1-.3*Math.min(1,xx/(L.len*st)))*(.7*plp(ph,.25)+.3*plp(ph*1.004,.5))}
+  if(x<st*.85)v+=.09*Math.min(1,x/.002)*(1-.6*x/st)*pl(x,MID(ARP[b][j&3]),.125);
+  if(j%2==0&&x<st*.85)v+=.28*Math.min(1,x/.002)*tri(x,MID(ROOT[b]+(j%4?12:0)));
+  if((j==0||j==8||j==10)&&x<.14)v+=.45*Math.sin(6.2832*(55*x+100*(1-Math.exp(-30*x))/30))*Math.exp(-x*18);
+  if((j==4||j==12||k>=60)&&x<.12)v+=(k>=60?.1+.04*(k-60):.18)*nz()*Math.exp(-x*30);
+  if(j%2&&x<.03)v+=.06*nz()*Math.exp(-x*120);
   return v*.85};
 const SB=wav(.4,t=>tn(t,0,523.25,.22,.5)+tn(t,.07,659.25,.22,.5)+tn(t,.14,783.99,.24,.55),.6), // joined: rising chime
   SD=wav(.4,t=>tn(t,0,783.99,.22,.45)+tn(t,.07,659.25,.22,.45)+tn(t,.14,523.25,.24,.4),.6), // left: falling chime
-  RI=wav(3,RING,.75,32000), // incoming call: chiptune loop
-  RB=wav(2.4,t=>{let v=0;for(const p of[0,.4])for(const[o,f]of[[0,880],[.11,1318.5]]){const x=t-p-o;if(x>=0&&x<.1)v+=.2*Math.min(1,x/.003)*Math.min(1,(.1-x)/.01)*pl(x,f,.5)}return v},.5,32000); // you are calling: two 8-bit blips
+  RI=wav(6.4,RING,.75,32000), // incoming call: 4-bar chiptune song
+  RB=wav(2.4,t=>{let v=0;for(const p of[0,.5])for(const[o,f]of[[0,659.25],[.12,880],[.24,783.99]]){const x=t-p-o;if(x>=0&&x<.1)v+=.2*Math.min(1,x/.003)*Math.min(1,(.1-x)/.01)*pl(x,f,.5)}return v},.5,32000); // you are calling: the hook's first three notes, twice
 RI.loop=RB.loop=true;
 let callT=0;const ccPaint=()=>{const n=$('#txt').value.length,c=$('#cc');c.textContent=n>=800?n+'/1000':'';c.classList.toggle('max',n>=1000)};
 const tmr=()=>{const s=Math.floor((Date.now()-callT)/1000),p=n=>String(n).padStart(2,'0'),h=Math.floor(s/3600);return(h?h+':':'')+p(Math.floor(s%3600/60))+':'+p(s%60)};
