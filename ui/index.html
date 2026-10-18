@@ -1012,6 +1012,44 @@ html:not([data-theme=light]){--tx:#fff!important}
 .pbtns .bi,.bbtns .bi{width:15px;height:15px}
 .pc .pact{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding-top:4px}.pc .pact button{height:42px;padding:0 24px;border-radius:14px;font-weight:600}
 </style>
+<style id="polish">
+/* ===== channel section + polish ===== */
+@media(min-width:701px){
+#side{background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 90%,var(--ac)) 0,var(--panel) 240px)}
+#gh{border-bottom:1px solid transparent;border-radius:14px 14px 0 0;background:radial-gradient(120% 150% at 0 0,color-mix(in srgb,var(--ac) 17%,transparent),transparent 66%),linear-gradient(90deg,transparent,color-mix(in srgb,var(--tx) 15%,transparent),transparent) bottom/100% 1px no-repeat}
+#gh>b,#gh .ghGuild>b{font:italic 600 19px/32px var(--serif);letter-spacing:-.01em}
+#gh .server-rep{padding:3px 3px 3px 10px;background:color-mix(in srgb,var(--tx) 5%,transparent);border-color:color-mix(in srgb,var(--tx) 9%,transparent)}
+#gh .repTrack i{background:linear-gradient(90deg,var(--ac),var(--ac2));box-shadow:0 0 10px -2px var(--ac)}
+#nav .tab,#nav .vr{min-height:38px;border-radius:10px;color:color-mix(in srgb,var(--tx) 62%,var(--dim))}
+#nav .tab:hover,#nav .vr:hover{color:var(--tx);background:color-mix(in srgb,var(--tx) 6%,transparent)}
+#nav .ci.d{opacity:.55;transition:opacity .15s,color .15s,transform .2s}
+#nav .tab:hover .ci.d,#nav .vr:hover .ci.d{opacity:.95;transform:scale(1.06)}
+#nav .tab.sel{color:var(--tx)}
+html:not([data-contrast=high]) #nav .tab.sel .ci.d{opacity:1;color:var(--ac)}
+#nav .tab:not(.sel):has(.badge:not([hidden]))::before{content:"";position:absolute;left:-3px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--tx);box-shadow:0 0 8px color-mix(in srgb,var(--tx) 55%,transparent)}
+.cat{margin-top:16px}
+.cat-t{text-transform:none;font:650 12.5px/1.2 system-ui,sans-serif;letter-spacing:.01em;color:color-mix(in srgb,var(--tx) 48%,var(--dim))}
+.cat-t:hover{color:var(--tx)}
+.cat-t i{font-size:0;width:12px;height:12px;display:inline-grid;place-items:center;opacity:.85}
+.cat-t i::before{content:"";width:5px;height:5px;border-right:1.7px solid currentColor;border-bottom:1.7px solid currentColor;rotate:45deg;translate:0 -1px}
+.cat-n{background:none;padding:0;font-weight:600;opacity:.65}
+.cat-act button{width:24px;height:24px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--dim);display:inline-grid;place-items:center}
+.cat-act button:hover{background:color-mix(in srgb,var(--tx) 12%,transparent);color:var(--tx)}
+#nav .vi:has(.vm) .vr:not(.in){color:var(--tx)}
+#nav .vi:has(.vm) .vr .ci.d{color:var(--live);opacity:1}
+#nav .vcn{flex:none;margin-left:6px;padding:1px 7px;border-radius:99px;font:700 11px/16px system-ui,sans-serif;font-style:normal;color:var(--live);background:color-mix(in srgb,var(--live) 14%,transparent)}
+}
+#modal{backdrop-filter:blur(10px) saturate(1.15)}
+#modal .pk{border-radius:24px;border:1px solid color-mix(in srgb,var(--tx) 12%,var(--line));box-shadow:0 40px 90px -30px #000,inset 0 0 0 1px #ffffff06}
+@media(prefers-reduced-motion:no-preference){#modal[style*="grid"] .pk{animation:hzpk .22s cubic-bezier(.2,.8,.2,1)}}
+@keyframes hzpk{from{opacity:0;transform:translateY(12px) scale(.97)}}
+#bar:focus-within{border-color:color-mix(in srgb,var(--ac) 55%,var(--line));box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 12%,transparent)}
+/* unsaved-changes prompt */
+.hzcb.hzu .hzi{color:var(--ac2);background:color-mix(in srgb,var(--ac2) 16%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--ac2) 8%,transparent)}
+.hzcb.hzu .hza .y{grid-column:1/-1}
+.hzcb.hzu .hza .dz{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,var(--line))}
+.hzcb.hzu .hza .dz:hover{background:color-mix(in srgb,var(--bad) 12%,var(--raise));border-color:var(--bad)}
+</style>
 </head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
   <h1>Huddle</h1><p class="tag">Everyone, together.</p>
@@ -1244,7 +1282,7 @@ function side(){if(window.hzDragging&&Date.now()-window.hzDragging<30000){window
   const mixH=c=>c.type=='voice'?vocH(c):tabH(c.id);
   const dmRow=i=>{const o=dmO(i),n=(P[o]||{}).name||'?',pl=REL.f.includes(o)&&!(P[o]||{}).hiddenProfile?String((P[o]||{}).pl||'').trim():'';return pl?`<span class="dmr"><span class="dmav" title="Playing ${esc(pl)}">${av(o,n)}<i class="dact" aria-hidden="true">🎮</i></span><span class="dmt"><span class="nn">${esc(n)}</span><small class="dma">Playing ${esc(pl)}</small></span></span>`:`<span class="dmr">${av(o,n)}<span class="nn">${esc(n)}</span></span>`},
   tabH=i=>`<button class="tab${i==cur?' sel':''}${ringK=='i'+i?' ringing':''}${i.startsWith('dm:')&&mDm(i)?' muted':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+'<span class="cnm">'+colorLabel(chLabel(i).replace(/^#\s*/,''))+'</span>'+(chObj(i).nsfw?'<span class="nsfwTag">18+</span>':'')}</span>${cg(i)}<span class="badge" hidden></span></button>`;
-  const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}<span class="cnm">${colorLabel(c.name)}</span>${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
+  const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}<span class="cnm">${colorLabel(c.name)}</span>${(n=>n?`<em class="vcn" title="${n} in voice">${n}</em>`:'')(users.filter(u=>u.voice==c.id).length)}${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
   const ids=home?(()=>{const recent=dmKeys(),eligible=o=>o!==oid&&o[0]!=='u'&&!!P[o]&&(REL.f.includes(o)||recent.some(ch=>dmO(ch)===o));const contacts=Object.keys(P).filter(eligible);contacts.sort((a,b)=>{const ka=recent.find(ch=>dmO(ch)===a),kb=recent.find(ch=>dmO(ch)===b),ta=ka?lastTs(ka):0,tb=kb?lastTs(kb):0;return tb-ta||((P[a].name||'').localeCompare(P[b].name||''))});const keys=contacts.map(dmId);if(cur.startsWith('dm:')&&!keys.includes(cur))keys.unshift(cur);return keys})():[];
   $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn">${IC.fr}Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn">${IC.com}Community</span><small class="num" id="comN">${LFG.length||''}</small></button><button class="tab${scOn?' sel':''}" id="scBtn"><span class="cn">${IC.sc||''}Public Showcase</span></button>`:'')+(home&&!ids.length?'<div class="empty">No people to show yet.</div>':ids.map(i=>home?tabH(i):mixH(chObj(i))).join(''));
   $('#vlist').innerHTML='';
@@ -1594,8 +1632,23 @@ $('#np').onclick=e=>{if(e.target.closest('#npc')){notes=[];saveNotes();bellPaint
 addEventListener('mousedown',e=>{if(!$('#np').hidden&&!e.target.closest('#np,#bell'))npClose()});addEventListener('keydown',e=>{if(e.key=='Escape')npClose()});
 bellPaint();
 /* ---------- servers, DMs, reactions: dialogs and menus ---------- */
-const modal=(h,f)=>{const m=$('#modal');m.innerHTML='<div class="pk" style="width:min(420px,92vw);display:grid;gap:10px">'+h+'</div>';m.style.display='grid';f()},closeM=()=>{window.repDlgDraw=null;if(typeof micTestStream!=='undefined'&&micTestStream)stopMicTest();$('#modal').style.display='none'};
-$('#modal').addEventListener('mousedown',e=>{if(e.target.id=='modal')closeM()});addEventListener('keydown',e=>{if(e.key=='Escape')closeM()});
+const modal=(h,f)=>{const m=$('#modal');window.hzGuard=null;m.innerHTML='<div class="pk" style="width:min(420px,92vw);display:grid;gap:10px">'+h+'</div>';m.style.display='grid';f()},closeM=()=>{window.hzGuard=null;window.repDlgDraw=null;if(typeof micTestStream!=='undefined'&&micTestStream)stopMicTest();$('#modal').style.display='none'};
+$('#modal').addEventListener('mousedown',e=>{if(e.target.id=='modal')hzLeave()});addEventListener('keydown',e=>{if(e.key=='Escape')hzLeave()});
+/* unsaved-changes guard: a dialog sets window.hzGuard={dirty(),save(),msg}; every way out (Cancel/Close, backdrop, Esc, tab close) checks it */
+$('#modal').addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#gx');if(b&&window.hzGuard&&window.hzGuard.dirty()){e.stopPropagation();e.preventDefault();hzLeave()}},true);
+addEventListener('beforeunload',e=>{const g=window.hzGuard;if(g&&$('#modal').style.display=='grid'&&g.dirty()){e.preventDefault();e.returnValue=''}});
+let hzUOpen=false;
+function hzUnsaved(g){return new Promise(res=>{if(hzUOpen)return res('keep');hzUOpen=true;const prev=document.activeElement,o=document.createElement('div');o.id='hzc';
+  o.innerHTML=`<div class="hzcb hzu" role="alertdialog" aria-modal="true" aria-labelledby="hzut"><div class="hzi" aria-hidden="true">!</div><h3 id="hzut">You have unsaved changes</h3><p>${esc(g.msg||'If you leave now, your changes will be lost.')}</p><div class="hza">${g.save?'<button type="button" class="y" data-k="save">Save changes</button>':''}<button type="button" data-k="keep">Keep editing</button><button type="button" class="dz" data-k="discard">Discard</button></div></div>`;
+  const kd=e=>{if(e.key=='Escape'){e.preventDefault();e.stopPropagation();done('keep')}else if(e.key=='Tab'){e.preventDefault();const b=[...o.querySelectorAll('button')],i=b.indexOf(document.activeElement);b[(i+(e.shiftKey?-1:1)+b.length)%b.length].focus()}else if(e.key=='Enter')e.stopPropagation()};
+  const done=r=>{if(!hzUOpen)return;hzUOpen=false;document.removeEventListener('keydown',kd,true);o.classList.add('out');setTimeout(()=>{o.remove();try{prev&&prev.focus&&prev.focus()}catch{}},150);res(r)};
+  document.addEventListener('keydown',kd,true);
+  o.onclick=e=>{const k=e.target.closest('button');if(k)done(k.dataset.k);else if(e.target===o)done('keep')};
+  document.body.append(o);o.querySelector('[data-k=keep]').focus()})}
+async function hzLeave(next){const g=window.hzGuard;if(!g||!g.dirty()){closeM();if(next)next();return}
+  const r=await hzUnsaved(g);if(r=='keep')return;
+  if(r=='save'){g.save();if($('#modal').style.display=='grid'){if(g.dirty())return;closeM()}}else closeM();
+  if(next)next()}
 $('#msgs').addEventListener('click',e=>{const sp=e.target.closest('.spoiler');if(sp){sp.classList.toggle('revealed');return}const b=e.target.closest('.rx');if(b)rxSend({t:'react',ch:cur,id:b.closest('.m').dataset.id,e:b.dataset.e})});
 $('#msgs').addEventListener('keydown',e=>{const sp=e.target.closest('.spoiler');if(sp&&(e.key==='Enter'||e.key===' ')){e.preventDefault();sp.classList.toggle('revealed')}});
 $('#msgs').addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||a.target!=='_blank'||!LS.get('huddle.confirmLinks'))return;e.preventDefault();const u=a.href;if(confirm('Open this external link in a new tab?\n'+u))window.open(u,'_blank','noopener,noreferrer')},true);
@@ -1691,8 +1744,10 @@ function chEdit(id){const g=G[sel],c=g&&g.channels.find(x=>x.id==id);if(!c)retur
   modal(`<h3>Edit ${c.type} channel</h3><label class="fl">Rename channel<input id="en" maxlength="24" value="${esc(c.name)}" aria-label="Channel name" placeholder="channel-name"></label>${c.type=='text'?`<label class="fl">Topic <span style="opacity:.6">(optional)</span><input id="et" maxlength="100" placeholder="What is this channel about?" value="${esc(c.topic||'')}"></label>`:''}${(g.categories||[]).length?`<label class="fl">Category<select id="ec">${catOpts(g,c.cat)}</select></label>`:''}<label class="tg"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"${c.nsfw?' checked':''}></label>${hasP(g,'roles')?'<button id="ep">🔒 Channel permissions…</button>':''}<div class="fl">Channel icon<div class="icrow"><span class="prev" id="ip"></span><button id="iu">Upload image</button><button id="ir">Use default</button><small>PNG with a transparent background works best.</small></div></div><input type="file" id="if" accept="image/*" hidden><button class="on" id="es">Save</button><button class="off" id="ed">Delete channel</button><button id="gx">Cancel</button>`,()=>{
     const pv=()=>{$('#ip').innerHTML=chIcon({type:c.type,icon:ic})};pv();$('#iu').onclick=()=>$('#if').click();$('#ir').onclick=()=>{ic='';pv()};
     $('#if').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{ic=await toIcon(f);pv()}catch{toast('That image could not be read.')}};
-    if($('#et'))emAttach($('#et'));if($('#ep'))$('#ep').onclick=()=>{closeM();chPerms(id)};$('#en').focus();$('#en').select();$('#gx').onclick=closeM;$('#es').onclick=()=>{const n=$('#en').value.trim();if(n&&send({t:'chedit',g:g.id,id,name:n,icon:ic,cat:$('#ec')?$('#ec').value:(c.cat||''),topic:$('#et')?$('#et').value:'',nsfw:$('#c18').checked}))closeM()};
-    $('#en').onkeydown=e=>{if(e.key=='Enter')$('#es').click()};$('#ed').onclick=async ()=>{if(await hzAsk('Delete this channel and all its messages?')&&send({t:'chdel',g:g.id,id}))closeM()}})}
+    if($('#et'))emAttach($('#et'));if($('#ep'))$('#ep').onclick=()=>{hzLeave(()=>chPerms(id))};$('#en').focus();$('#en').select();$('#gx').onclick=closeM;$('#es').onclick=()=>{const n=$('#en').value.trim();if(n&&send({t:'chedit',g:g.id,id,name:n,icon:ic,cat:$('#ec')?$('#ec').value:(c.cat||''),topic:$('#et')?$('#et').value:'',nsfw:$('#c18').checked}))closeM()};
+    $('#en').onkeydown=e=>{if(e.key=='Enter')$('#es').click()};$('#ed').onclick=async ()=>{if(await hzAsk('Delete this channel and all its messages?')&&send({t:'chdel',g:g.id,id}))closeM()};
+    const eS=()=>JSON.stringify([$('#en').value,$('#et')?$('#et').value:'',ic,$('#ec')?$('#ec').value:'',$('#c18').checked]),e0=eS();
+    window.hzGuard={dirty:()=>eS()!==e0,save:()=>$('#es').click(),msg:'Your edits to this channel haven’t been saved.'}})}
 /* ---------- channel permissions ---------- */
 const CHP=[['view','View channel','See this channel and read its messages. People who can’t see it never receive it.','text'],['view','View channel','See this channel in the list. People who can’t see it can’t join it.','voice'],['send','Send messages','Write in this channel.','text'],['files','Send files','Upload files and images (also needs “Send messages”).','text'],['react','Add reactions','React to messages with emoji.','text'],['links','Post links','Post URLs in this channel.','text'],['mention','Mention everyone','Use @everyone in messages in this channel.','text'],['connect','Connect','Join this voice channel.','voice'],['speak','Speak','Use the microphone. People without this are muted when they join.','voice'],['video','Camera','Turn on a camera.','voice'],['screen','Share screen','Share a screen or a window.','voice']];
 const chAllow=(g,x,p,o=oid)=>{if(!g||!x||g.owner==o)return true;const ov=x.ov||{},rs=((g.mroles||{})[o]||[]).map(r=>ov[r]).filter(Boolean);let v=true;
@@ -1713,10 +1768,12 @@ function chPerms(id){const gid=sel,g0=G[gid],c0=g0&&g0.channels.find(x=>x.id==id
       $('#pp').innerHTML=items.map(([k,t,d])=>{const v=gi(tgt,k);return`<div class="pr"><span><b>${t}</b><small>${d}</small></span><span class="tri" data-k="${k}">${[[-1,'✕','Block'],[0,'–','Use default'],[1,'✓','Allow']].map(([n,sy,ti])=>`<button data-v="${n}" aria-pressed="${v==n}" title="${ti}" aria-label="${ti}">${sy}</button>`).join('')}</span></div>`}).join('')};
     $('#pt').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tgt=b.dataset.t;draw()}};
     $('#pp').onclick=e=>{const b=e.target.closest('.tri button');if(!b)return;si(tgt,b.parentNode.dataset.k,+b.dataset.v);draw()};
-    $('#ps').onclick=()=>{if(send({t:'chperm',g:gid,id,ov})){closeM();toast('Permissions saved',true)}else toast('Not connected. Try again in a moment.')};$('#gx').onclick=closeM;draw()})}
+    $('#ps').onclick=()=>{if(send({t:'chperm',g:gid,id,ov})){closeM();toast('Permissions saved',true)}else toast('Not connected. Try again in a moment.')};$('#gx').onclick=closeM;draw();
+  const nz=o=>JSON.stringify(Object.keys(o).sort().map(k=>[k,[...(o[k].allow||[])].sort(),[...(o[k].deny||[])].sort()])),snap=nz(ov);
+  window.hzGuard={dirty:()=>nz(ov)!==snap,save:()=>$('#ps').click(),msg:'Your permission changes for this channel haven’t been saved.'}})}
 function catDialog(g,id){const k=id&&(g.categories||[]).find(x=>x.id==id);
   modal(`<h3>${k?'Edit category':'Create category'}</h3><label class="fl">Category name<input id="kn" maxlength="24" placeholder="e.g. Projects" value="${k?esc(k.name):''}"></label><button class="on" id="ks">${k?'Save':'Create'}</button>${k?'<button class="off" id="kd">Delete category</button>':''}<button id="gx">Cancel</button>${k?'<small style="color:var(--dim)">Deleting a category keeps its channels. They move out of the category.</small>':''}`,()=>{
-    $('#kn').focus();$('#kn').select();$('#gx').onclick=closeM;$('#kn').onkeydown=e=>{if(e.key=='Enter')$('#ks').click()};
+    $('#kn').focus();$('#kn').select();$('#gx').onclick=closeM;{const k0=$('#kn').value.trim();window.hzGuard={dirty:()=>$('#kn').value.trim()!==k0,save:()=>$('#ks').click(),msg:'Your changes to this category haven’t been saved.'}}$('#kn').onkeydown=e=>{if(e.key=='Enter')$('#ks').click()};
     $('#ks').onclick=()=>{const n=$('#kn').value.trim();if(n&&send(k?{t:'catedit',g:g.id,id,name:n}:{t:'catadd',g:g.id,name:n}))closeM()};
     if(k)$('#kd').onclick=async ()=>{if(await hzAsk('Delete this category? Its channels will be kept.')&&send({t:'catdel',g:g.id,id}))closeM()}})}
 if(navigator.mediaDevices&&navigator.mediaDevices.addEventListener)navigator.mediaDevices.addEventListener('devicechange',()=>{if(window.avDraw&&$('#dmic'))window.avDraw()});
@@ -1804,8 +1861,8 @@ function sDialog(g,tab){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g
     const drawM=()=>{const c=now(),rs=c.roles||[];$('#sm').innerHTML=[c.owner,...c.members.filter(o=>o!=c.owner)].filter(o=>c.members.includes(o)).map(o=>`<div class="mrow"><div class="mwho">${avs(o,(P[o]||{}).name||'?')}<span class="nn">${esc((P[o]||{}).name||'?')}${o==c.owner?' <small>(owner)</small>':''}</span>${o==c.owner||!hasP(c,'kick')?'':`<button class="off" data-k="${o}">Kick</button>`}</div>${rs.length?`<div class="mch">${rs.map(r=>`<button class="chip${mr(o).includes(r.id)?' has':''}" data-gl="${esc(r.glow||'')}" style="--rc:${esc(r.color)}" data-o="${o}" data-r="${r.id}" aria-pressed="${mr(o).includes(r.id)}"><i class="dot"></i>${esc(r.name)}</button>`).join('')}</div>`:''}</div>`).join('')||'<div class="empty">No members.</div>'};
     sRefresh=id=>{if(id==gid&&$('#modal .sdlg')){drawR();drawM()}};
     box.querySelector('.tabs2').onclick=e=>{const b=e.target.closest('[data-t]');if(b)show(b.dataset.t)};
-    $('#rls').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;const r=(now().roles||[]).find(x=>x.id==b.dataset.r);if(r){rid=r.id;dr={name:r.name,color:r.color,perms:[...r.perms],nfx:r.nfx||'',icon:r.icon||'',color2:r.color2||'',style:r.style||'',badge:!!r.badge,glow:r.glow||''};drawR()}};
-    $('#rnew').onclick=()=>{rid='new';dr={name:'',color:SW[(now().roles||[]).length%SW.length],perms:[],glow:'',nfx:'',icon:'',color2:'',style:'',badge:false};drawR();$('#rn').focus()};
+    $('#rls').onclick=async e=>{const b=e.target.closest('[data-r]');if(!b)return;if(b.dataset.r!=rid&&!await roleLeave())return;const r=(now().roles||[]).find(x=>x.id==b.dataset.r);if(r){rid=r.id;dr={name:r.name,color:r.color,perms:[...r.perms],nfx:r.nfx||'',icon:r.icon||'',color2:r.color2||'',style:r.style||'',badge:!!r.badge,glow:r.glow||''};drawR()}};
+    $('#rnew').onclick=async()=>{if(!await roleLeave())return;rid='new';dr={name:'',color:SW[(now().roles||[]).length%SW.length],perms:[],glow:'',nfx:'',icon:'',color2:'',style:'',badge:false};drawR();$('#rn').focus()};
     $('#red').oninput=e=>{if(!dr)return;if(e.target.id=='rn')dr.name=e.target.value;else if(e.target.id=='rcu')dr.color=e.target.value.toLowerCase();else if(e.target.id=='ric')dr.icon=e.target.value;else if(e.target.id=='rc2')dr.color2=e.target.value.toLowerCase();else return;pv()};
     $('#red').onchange=e=>{if(e.target.id=='rgl'&&dr){dr.glow=e.target.value;pv()}if(dr&&e.target.id=='rst')dr.style=e.target.value;if(dr&&e.target.id=='rnf')dr.nfx=e.target.value;if(dr&&e.target.id=='rbd')dr.badge=e.target.checked;const k=e.target.dataset.k;if(k&&dr)dr.perms=e.target.checked?[...new Set([...dr.perms,k])]:dr.perms.filter(x=>x!=k)};
     $('#red').onclick=async e=>{if(e.target.closest('#rc2x')&&dr){dr.color2='';$('#rc2').value=dr.color;return pv()}const s=e.target.closest('.sw[data-c]');if(s&&dr){dr.color=s.dataset.c;return pv()}
@@ -1818,7 +1875,12 @@ function sDialog(g,tab){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g
     $('#sf').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{ic=isGifAsset(f)?await upImageAsset(f,'icon',gid):await toIcon(f);pi()}catch{toast('That image could not be read (GIF and images up to 8 MB are supported).')}};
     $('#sg').onclick=async ()=>{if(await hzAsk('Old invite code will stop working. Continue?')){send({t:'gcode',g:gid});closeM();toast('New invite code made. Reopen settings to copy it.',true)}};
     $('#ss').onclick=()=>{const n=$('#sn').value.trim();if(n&&send({t:'gset',g:gid,name:n,desc:$('#sd').value,color:col,icon:ic,glow,glowColor,glowIntensity}))closeM()};$('#gx').onclick=closeM;
-    show(tab&&box.querySelector('[data-t="'+tab+'"]')?tab:(g.owner==oid||hasP(g,'server')?'o':'r'));pi();drawR();drawM()})}
+    show(tab&&box.querySelector('[data-t="'+tab+'"]')?tab:(g.owner==oid||hasP(g,'server')?'o':'r'));pi();drawR();drawM();
+    const hasO=!!$('#sn'),oS=()=>hasO?JSON.stringify([$('#sn').value,$('#sd').value,col,ic,glow,glowColor,glowIntensity]):'',o0=oS();
+    const rK=x=>JSON.stringify([x.name||'',[...(x.perms||[])].sort(),x.nfx||'',x.icon||'',(x.color2||'').toLowerCase(),x.style||'',!!x.badge,x.glow||'',(x.color||'').toLowerCase()]);
+    const rDirty=()=>{if(!dr)return false;if(rid=='new')return !!(dr.name.trim()||dr.perms.length||dr.glow||dr.nfx||dr.icon||dr.style||dr.badge||(dr.color2&&dr.color2!=dr.color));const r=(now().roles||[]).find(x=>x.id==rid);return r?rK(dr)!==rK(r):false};
+    const roleLeave=async()=>{if(!rDirty())return true;const q=await hzUnsaved({save:1,msg:'Your changes to this role haven’t been saved.'});if(q=='keep')return false;if(q=='save'){$('#rs').click();if(rDirty())return false}return true};
+    window.hzGuard={dirty:()=>oS()!==o0||rDirty(),save:()=>{if(rDirty())$('#rs').click();if(hasO&&oS()!==o0)$('#ss').click()},get msg(){return rDirty()&&oS()===o0?'Your role changes haven’t been saved.':'Your server settings haven’t been saved.'}}})}
 const catOpts=(g,sel)=>'<option value="">No category</option>'+(g.categories||[]).map(k=>`<option value="${k.id}"${k.id==sel?' selected':''}>${esc(k.name)}</option>`).join('');
 function chDialog(g,pre){modal('<h3>Create channel</h3><input id="cn" placeholder="channel-name" maxlength="24"><select id="ct"><option value="text">Text channel</option><option value="voice">Voice channel</option></select>'+((g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':'')+'<label class="tg"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"></label><button class="on" id="chc">Create</button><button id="gx">Cancel</button>',()=>{
   $('#cn').focus();$('#chc').onclick=()=>{const n=$('#cn').value.trim();if(n&&send({t:'chadd',g:g.id,name:n,type:$('#ct').value,cat:$('#cc')?$('#cc').value:'',nsfw:$('#c18').checked}))closeM()};$('#cn').onkeydown=e=>{if(e.key=='Enter')$('#chc').click()};$('#gx').onclick=closeM})}
