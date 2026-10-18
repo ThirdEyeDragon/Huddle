@@ -434,6 +434,7 @@ html[data-motion=reduced] *,html[data-motion=reduced] ::before,html[data-motion=
 #nav [draggable=true]{cursor:grab}#nav [draggable=true]:active{cursor:grabbing}
 #nav .dragging{opacity:.4;transform:scale(.98)}
 #nav .dr-b{box-shadow:0 -2px 0 var(--ac)}#nav .dr-a{box-shadow:0 2px 0 var(--ac)}
+#cats{gap:1px}#cats>.cat:first-child{margin-top:0}
 #nav .dz{background:color-mix(in srgb,var(--ac) 12%,transparent);border-radius:12px;outline:2px dashed color-mix(in srgb,var(--ac) 55%,transparent);outline-offset:-2px}
 #chs,#vlist{min-height:6px}
 .tos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.tos button{padding:9px 6px}.mrow .mwho .off{margin-left:auto}
@@ -1005,7 +1006,7 @@ const SGFX=['','soft','neon','pulse','comet','aurora','rainbow','ember','electri
 function serverGlowSync(){document.querySelectorAll('#rail .ri[data-g]:not([data-g=home])').forEach(el=>{const g=G[el.dataset.g]||{},fx=SGFX.includes(g.glow||'')?g.glow:'',color=/^#[0-9a-f]{6}$/i.test(g.glowColor||'')?g.glowColor:'#ff5c93',intensity=['1','2','3'].includes(String(g.glowIntensity||'2'))?String(g.glowIntensity||'2'):'2';el.dataset.sfx=fx;el.style.setProperty('--sgc',color);el.style.setProperty('--sgi',intensity)})}
 // Stable id for this install: lets the server swap out our old, dead connection when we reconnect.
 let KEY=LS.get('huddle.key');if(!KEY){KEY=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2)+Date.now());LS.set('huddle.key',KEY)}
-let G={},sel=LS.get('huddle.sel')||'home',vch='',lastCh={},typers={},lastT=0,P={},REP={users:{},servers:{}},nsfwAccepted=new Set(),pendingNsfw=null,maxU=10,saving=false,pf={},last=null,oid='',replyTo=null,mpList=[],mpSel=0,mentioned={},base="",ice=[],ws=null,me=null,myName='',users=[],hist={},cur='general',unread={},voice=false,local,vtrack,muted=false,deaf=false,pcs={},ac,hb=0,lastRx=0,fatal=false,
+let G={},sel=LS.get('huddle.sel')||'home',vch='',lastCh={},typers={},lastT=0,P={},REP={users:{},servers:{}},nsfwAccepted=new Set(),pendingNsfw=null,maxU=500,saving=false,pf={},last=null,oid='',replyTo=null,mpList=[],mpSel=0,mentioned={},base="",ice=[],ws=null,me=null,myName='',users=[],hist={},cur='general',unread={},voice=false,local,vtrack,muted=false,deaf=false,pcs={},ac,hb=0,lastRx=0,fatal=false,
   frac=Math.min(.85,Math.max(.15,parseFloat(LS.get('huddle.sf'))||.5)),pinned=null,collapsed=false;
 const tn=(t,t0,f,d,v)=>{const x=t-t0;if(x<0||x>d)return 0;return v*Math.min(1,x/.006)*Math.exp(-6*x/d)*(Math.sin(6.2832*f*x)+.28*Math.sin(12.5664*f*x))/1.28},
 wav=(dur,fn,vol,sr=22050)=>{const n=Math.floor(dur*sr),b=new Uint8Array(44+n*2),d=new DataView(b.buffer),w=(o,t)=>[...t].forEach((c,i)=>b[o+i]=c.charCodeAt(0));
@@ -1106,7 +1107,7 @@ function on(d){
   if(d.t=='dx'){window.dxRecv&&window.dxRecv(d);return}
   if(d.t=='err'){if(d.tok){tokDel();CRED=null}fatal=true;const pw=/server password/i.test(d.msg);status('');wait(false);$('#err').textContent=pw?'Wrong invite code. Ask the host for a new one.':d.msg;
     $('#app').style.display='none';$('#login').style.display='grid';showForm(pw);if(ws)ws.close();return}
-  if(d.t=='init'){fatal=false;window.__dv=!!d.dev;window.dxReset&&window.dxReset();me=d.id;oid=d.oid||'';muteLoad();REL=d.rel||{f:[],i:[],o:[]};LFG=d.lfg||[];SC=d.sc||[];if(REL.i.length)setTimeout(()=>toast('You have '+REL.i.length+' pending friend request'+(REL.i.length>1?'s':'')+'. Open Friends in Direct Messages.',true),900);ice=d.ice||[];hist=d.history;G={};d.guilds.forEach(g=>G[g.id]=g);users=d.users;P=d.profiles||{};REP=d.rep||{users:{},servers:{}};nsfwAccepted.clear();pendingNsfw=null;EM=d.emojis||{};maxU=d.max||10;{const mu=users.find(u=>u.id==me);if(mu)myName=mu.name}Object.values(P).forEach(p=>noteName(p.name));Object.values(hist).flat().forEach(m=>noteName(m.from));users.forEach(u=>noteName(u.name));status('');if(d.tok){LS.set('huddle.tok',d.tok);if(CRED){CRED={mode:'token',token:d.tok};}}else if(CRED&&CRED.mode!='token')CRED.mode='login';$('#pw').value='';wait(false);startHeartbeat();
+  if(d.t=='init'){fatal=false;window.__dv=!!d.dev;window.dxReset&&window.dxReset();me=d.id;oid=d.oid||'';muteLoad();REL=d.rel||{f:[],i:[],o:[]};LFG=d.lfg||[];SC=d.sc||[];if(REL.i.length)setTimeout(()=>toast('You have '+REL.i.length+' pending friend request'+(REL.i.length>1?'s':'')+'. Open Friends in Direct Messages.',true),900);ice=d.ice||[];hist=d.history;G={};d.guilds.forEach(g=>G[g.id]=g);users=d.users;P=d.profiles||{};REP=d.rep||{users:{},servers:{}};nsfwAccepted.clear();pendingNsfw=null;EM=d.emojis||{};maxU=d.max||500;{const mu=users.find(u=>u.id==me);if(mu)myName=mu.name}Object.values(P).forEach(p=>noteName(p.name));Object.values(hist).flat().forEach(m=>noteName(m.from));users.forEach(u=>noteName(u.name));status('');if(d.tok){LS.set('huddle.tok',d.tok);if(CRED){CRED={mode:'token',token:d.tok};}}else if(CRED&&CRED.mode!='token')CRED.mode='login';$('#pw').value='';wait(false);startHeartbeat();
     if(document.activeElement)document.activeElement.blur();
     $('#login').style.display='none';$('#app').style.display='grid';
     sel=G[sel]?sel:'home';selG(sel);applyStage();send({t:'status',s:myStatus});setTimeout(()=>$('#txt').focus(),100)}
@@ -1168,42 +1169,57 @@ const chObj=i=>{const g=gOf(i);return g&&g.channels.find(c=>c.id==i)||{}},
   chTitle=i=>i.startsWith('dm:')?esc(chLabel(i)):chIcon(chObj(i))+colorLabel(chLabel(i).replace(/^#\s*/,''))+(chObj(i).nsfw?' <span class="nsfwTag">18+</span>':'');
 const cg=i=>(hasP(G[sel],'channels')||hasP(G[sel],'roles'))?`<i class="cg" data-e="${i}" title="Edit channel">⚙</i>`:'';
 const colGet=g=>{try{return JSON.parse(localStorage.getItem('cc:'+g)||'[]')}catch{return[]}},colSet=(g,a)=>{try{localStorage.setItem('cc:'+g,JSON.stringify(a))}catch{}};
-function side(){const g=G[sel],home=!g;
+const topOf=g=>{const cats=g.categories||[],loose=g.channels.filter(c=>!cats.some(k=>k.id==c.cat)),ok=new Set([...loose.map(c=>c.id),...cats.map(k=>k.id)]),seen=new Set(),out=[];(g.top||[]).forEach(i=>{if(ok.has(i)&&!seen.has(i)){seen.add(i);out.push(i)}});loose.forEach(c=>{if(!seen.has(c.id)){seen.add(c.id);out.push(c.id)}});cats.forEach(k=>{if(!seen.has(k.id)){seen.add(k.id);out.push(k.id)}});return out};
+function side(){if(window.hzDragging&&Date.now()-window.hzDragging<30000){window.hzSideLater=1;return} // a re-render in the middle of a drag would cancel it
+  const g=G[sel],home=!g;
   if(home)$('#gh').innerHTML='<b>Direct Messages</b><button id="newdm" title="New message">＋</button>';else{const voters=((REP.servers||{})[g.id]||{}).voters||[],count=voters.length,level=serverRepLevel(g.id),thresholds=[3,7,12,16,30,40,50,80,90,100],next=thresholds[level]||100,prev=level?thresholds[level-1]:0,prog=level>=10?100:Math.max(0,Math.min(100,(count-prev)/Math.max(1,next-prev)*100));$('#gh').innerHTML=`<div class="ghGuild"><b>${esc(g.name)}</b><div class="server-rep" title="Community reputation"><span class="repLevel">Level ${level}</span><div class="repTrack" aria-label="${count} reputation votes"><i style="--prog:${prog}%"></i></div><span class="rep-count">${count} rep</span><button type="button" class="repBtn${voters.includes(oid)?' on':''}" data-server-rep="${esc(g.id)}" title="Give or remove your server rep">${voters.includes(oid)?'✓ Repped':'＋ Rep'}</button></div><button id="gmenu" title="Server menu">⋯</button></div>`;}
   const cats=home?[]:(g.categories||[]),inCat=c=>cats.some(k=>k.id==c.cat),own=!home&&hasP(g,'channels');
   const mixH=c=>c.type=='voice'?vocH(c):tabH(c.id);
   const dmRow=i=>{const o=dmO(i),n=(P[o]||{}).name||'?',pl=REL.f.includes(o)&&!(P[o]||{}).hiddenProfile?String((P[o]||{}).pl||'').trim():'';return pl?`<span class="dmr"><span class="dmav" title="Playing ${esc(pl)}">${av(o,n)}<i class="dact" aria-hidden="true">🎮</i></span><span class="dmt"><span class="nn">${esc(n)}</span><small class="dma">Playing ${esc(pl)}</small></span></span>`:`<span class="dmr">${av(o,n)}<span class="nn">${esc(n)}</span></span>`},
   tabH=i=>`<button class="tab${i==cur?' sel':''}${ringK=='i'+i?' ringing':''}${i.startsWith('dm:')&&mDm(i)?' muted':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+'<span class="cnm">'+colorLabel(chLabel(i).replace(/^#\s*/,''))+'</span>'+(chObj(i).nsfw?'<span class="nsfwTag">18+</span>':'')}</span>${cg(i)}<span class="badge" hidden></span></button>`;
   const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}<span class="cnm">${colorLabel(c.name)}</span>${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
-  const ids=home?(()=>{const recent=dmKeys(),eligible=o=>o!==oid&&o[0]!=='u'&&!!P[o]&&(REL.f.includes(o)||recent.some(ch=>dmO(ch)===o));const contacts=Object.keys(P).filter(eligible);contacts.sort((a,b)=>{const ka=recent.find(ch=>dmO(ch)===a),kb=recent.find(ch=>dmO(ch)===b),ta=ka?lastTs(ka):0,tb=kb?lastTs(kb):0;return tb-ta||((P[a].name||'').localeCompare(P[b].name||''))});const keys=contacts.map(dmId);if(cur.startsWith('dm:')&&!keys.includes(cur))keys.unshift(cur);return keys})():g.channels.filter(c=>!inCat(c)).map(c=>c.id);
+  const ids=home?(()=>{const recent=dmKeys(),eligible=o=>o!==oid&&o[0]!=='u'&&!!P[o]&&(REL.f.includes(o)||recent.some(ch=>dmO(ch)===o));const contacts=Object.keys(P).filter(eligible);contacts.sort((a,b)=>{const ka=recent.find(ch=>dmO(ch)===a),kb=recent.find(ch=>dmO(ch)===b),ta=ka?lastTs(ka):0,tb=kb?lastTs(kb):0;return tb-ta||((P[a].name||'').localeCompare(P[b].name||''))});const keys=contacts.map(dmId);if(cur.startsWith('dm:')&&!keys.includes(cur))keys.unshift(cur);return keys})():[];
   $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn">${IC.fr}Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn">${IC.com}Community</span><small class="num" id="comN">${LFG.length||''}</small></button><button class="tab${scOn?' sel':''}" id="scBtn"><span class="cn">${IC.sc||''}Public Showcase</span></button>`:'')+(home&&!ids.length?'<div class="empty">No people to show yet.</div>':ids.map(i=>home?tabH(i):mixH(chObj(i))).join(''));
   $('#vlist').innerHTML='';
   const shut=home?[]:colGet(g.id);
-  $('#cats').innerHTML=cats.map(k=>{const mine=g.channels.filter(c=>c.cat==k.id),isC=shut.includes(k.id);
+  $('#cats').innerHTML=(home?[]:topOf(g)).map(tid=>{const k=cats.find(x=>x.id==tid);if(!k){const lc=g.channels.find(x=>x.id==tid);return lc?mixH(lc):''}const mine=g.channels.filter(c=>c.cat==k.id),isC=shut.includes(k.id);
     return `<div class="cat${isC?' col':''}" data-cat="${k.id}"><div class="cat-h" data-cat-h="${k.id}"${own?' draggable="true"':''}><button class="cat-t" data-ct="${k.id}" aria-expanded="${!isC}"><i>▾</i><span>${esc(k.name)}</span><em class="cat-n">${mine.length}</em><em class="cat-u badge" hidden></em></button>${own?`<span class="cat-act"><button data-cadd="${k.id}" title="Create channel here">＋</button><button data-cedit="${k.id}" title="Edit category">⚙</button></span>`:''}</div><div class="cat-b">${mine.map(mixH).join('')}${mine.length?'':'<div class="cat-e">No channels yet</div>'}</div></div>`}).join('');
   const cb=$('#callBtn'),dm=cur.startsWith('dm:');cb.hidden=!dm;if(dm){const inC=vch==cur;const ringIn=ringK=='i'+cur,ringOut=ringK=='o'+cur,other=users.some(u=>u.voice==cur&&u.id!=me);cb.disabled=inC;cb.dataset.st=ringOut?'out':inC?'in':ringIn?'ring':other?'join':'';cb.innerHTML=IC.call+(ringOut?'Calling…':inC?'In call':ringIn?'Answer':other?'Join call':'Call')}
   {const cc=g&&g.channels.find(x=>x.id==cur);$('#chtitle').innerHTML=cur?`<span class="tn">${chTitle(cur)}</span>`+(cc&&cc.topic?`<small class="td">${emo(esc(cc.topic))}</small>`:'')+(cur.startsWith('dm:')&&vch==cur?`<span class="ctm">${tmr()}</span>`:''):''}
   badges();dndMark(own);tmoPaint()}
-/* drag to reorder channels, only inside their own list (owner / 'Manage channels' role) */
+/* drag to reorder channels AND categories anywhere in the list: above, below or between loose channels and other categories (owner / 'Manage channels' role) */
 let dnd=null;
 const dRow=el=>el.matches('.tab')?el.dataset.c:el.querySelector('[data-v]').dataset.v;
+const topKey=el=>el.classList.contains('cat')?el.dataset.cat:dRow(el);
 function dndMark(on){document.querySelectorAll('#chs .tab[data-c],#cats .tab[data-c],#chs .vi,#cats .vi').forEach(el=>{if(on&&G[sel])el.draggable=true;else el.removeAttribute('draggable')});document.querySelectorAll('#cats .cat-h[data-cat-h]').forEach(el=>{if(on&&G[sel])el.draggable=true;else el.removeAttribute('draggable')})}
 function dndClear(){document.querySelectorAll('.dragging,.dr-b,.dr-a,.dz').forEach(el=>el.classList.remove('dragging','dr-b','dr-a','dz'))}
+function dndEnd(){dndClear();dnd=null;window.hzDragging=0;if(window.hzSideLater){window.hzSideLater=0;side()}}
 const dn=$('#nav');
-dn.addEventListener('dragstart',e=>{const header=e.target.closest&&e.target.closest('.cat-h[data-cat-h]');if(header&&header.draggable){dnd={kind:'category',id:header.dataset.catH,t:null};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');requestAnimationFrame(()=>header.classList.add('dragging'));return}const el=e.target.closest&&e.target.closest('.tab[data-c],.vi');if(!el||!el.draggable)return;dnd={kind:'channel',id:dRow(el),t:null};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');requestAnimationFrame(()=>el.classList.add('dragging'))});
-dn.addEventListener('dragover',e=>{if(!dnd)return;const g=G[sel];if(!g)return;const src=document.querySelector('.dragging');dndClear();if(src)src.classList.add('dragging');dnd.t=null;
-  if(dnd.kind==='category'){if(!hasP(g,'channels'))return;const row=e.target.closest('.cat-h[data-cat-h]'),target=row&&row.dataset.catH;if(!row||target===dnd.id)return;const rest=(g.categories||[]).filter(k=>k.id!==dnd.id),i=rest.findIndex(k=>k.id===target);if(i<0)return;const r=row.getBoundingClientRect(),after=e.clientY>r.top+r.height/2;dnd.t={before:after?((rest[i+1]||{}).id||''):target};row.classList.add(after?'dr-a':'dr-b');e.preventDefault();e.dataTransfer.dropEffect='move';return}
+dn.addEventListener('dragstart',e=>{const header=e.target.closest&&e.target.closest('.cat-h[data-cat-h]');if(header&&header.draggable){dnd={kind:'category',id:header.dataset.catH,t:null};window.hzDragging=Date.now();e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');const box=header.closest('.cat')||header;requestAnimationFrame(()=>box.classList.add('dragging'));return}const el=e.target.closest&&e.target.closest('.tab[data-c],.vi');if(!el||!el.draggable)return;dnd={kind:'channel',id:dRow(el),t:null};window.hzDragging=Date.now();e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','');requestAnimationFrame(()=>el.classList.add('dragging'))});
+dn.addEventListener('dragover',e=>{if(!dnd)return;const g=G[sel];if(!g||!hasP(g,'channels'))return;const src=document.querySelector('.dragging');dndClear();if(src)src.classList.add('dragging');dnd.t=null;
+  const top=topOf(g).filter(i=>i!==dnd.id),nextTop=id=>{const i=top.indexOf(id);return i<0?'':(top[i+1]||'')},
+    ok=()=>{e.preventDefault();e.dataTransfer.dropEffect='move'},
+    kids=()=>[...$('#cats').children].filter(k=>topKey(k)!=dnd.id),
+    gap=y=>{const k=kids().find(k=>{const r=k.getBoundingClientRect();return y<r.top+r.height/2});return k?topKey(k):''}, // empty space / margins: slot in before the first item that is below the pointer
+    gapMark=b=>{const l=kids(),el=b?l.find(k=>topKey(k)==b):l[l.length-1];if(el)el.classList.add(b?'dr-b':'dr-a')};
+  const catEl=e.target.closest('#cats .cat'),rowEl=e.target.closest('.tab[data-c],.vi'),looseRow=rowEl&&rowEl.parentNode.id==='cats'?rowEl:null;
+  if(dnd.kind==='category'){
+    const el=looseRow||catEl;
+    if(!el){if(!e.target.closest('#nav'))return;const b=gap(e.clientY);dnd.t={before:b};gapMark(b);ok();return}
+    const tid=topKey(el);if(tid===dnd.id)return;const r=el.getBoundingClientRect(),a=e.clientY>r.top+r.height/2;
+    dnd.t={before:a?nextTop(tid):tid};el.classList.add(a?'dr-a':'dr-b');ok();return}
   const me=g.channels.find(c=>c.id==dnd.id);if(!me)return;
-  const row=e.target.closest('.tab[data-c],.vi'),rc=row&&g.channels.find(c=>c.id==dRow(row));
-  if(rc&&rc.id!=me.id){ // drop next to another channel: any type, any category
-    const r=row.getBoundingClientRect(),a=e.clientY>r.top+r.height/2,list=g.channels.filter(c=>(c.cat||'')==(rc.cat||'')&&c.id!=me.id),i=list.findIndex(c=>c.id==rc.id);
-    dnd.t={before:a?(list[i+1]||{}).id||'':rc.id,cat:rc.cat||''};row.classList.add(a?'dr-a':'dr-b');e.preventDefault();e.dataTransfer.dropEffect='move';return}
-  if(rc)return; // hovering over itself
-  const ch=e.target.closest('.cat-h,.cat-b'),ce=ch&&ch.closest('.cat'); // category header / empty category: drop at the end of it
-  if(ce){dnd.t={before:'',cat:ce.dataset.cat};ce.classList.add('dz');e.preventDefault();e.dataTransfer.dropEffect='move';return}
-  if(e.target.closest('#chs')){dnd.t={before:'',cat:''};e.preventDefault();e.dataTransfer.dropEffect='move'}}); // empty space in the main list: end of the uncategorised channels
-dn.addEventListener('drop',e=>{if(!dnd||!dnd.t)return;e.preventDefault();const m=dnd.kind==='category'?{t:'catmove',g:sel,id:dnd.id,before:dnd.t.before}:{t:'chmove',g:sel,id:dnd.id,before:dnd.t.before,cat:dnd.t.cat};dndClear();dnd=null;if(!send(m))toast('Not connected. Try again in a moment.')});
-dn.addEventListener('dragend',()=>{dndClear();dnd=null});
+  if(rowEl){const rc=g.channels.find(c=>c.id==dRow(rowEl));if(!rc||rc.id==me.id)return;
+    const r=rowEl.getBoundingClientRect(),a=e.clientY>r.top+r.height/2;
+    if(looseRow){dnd.t={before:a?nextTop(rc.id):rc.id,cat:''}} // loose channel: it joins the top level list (can land between categories)
+    else{const list=g.channels.filter(c=>(c.cat||'')==(rc.cat||'')&&c.id!=me.id),i=list.findIndex(c=>c.id==rc.id);dnd.t={before:a?((list[i+1]||{}).id||''):rc.id,cat:rc.cat||''}}
+    rowEl.classList.add(a?'dr-a':'dr-b');ok();return}
+  if(catEl){const h=e.target.closest('.cat-h');
+    if(h){const hr=h.getBoundingClientRect();if(e.clientY<hr.top+hr.height*.3){dnd.t={before:catEl.dataset.cat,cat:''};catEl.classList.add('dr-b');ok();return}} // top edge of a category header: drop as a loose channel just above the category
+    dnd.t={before:'',cat:catEl.dataset.cat};catEl.classList.add('dz');ok();return} // rest of a category: drop at the end of it
+  if(e.target.closest('#nav')){const b=gap(e.clientY);dnd.t={before:b,cat:''};gapMark(b);ok()}});
+dn.addEventListener('drop',e=>{if(!dnd||!dnd.t)return;e.preventDefault();const m=dnd.kind==='category'?{t:'catmove',g:sel,id:dnd.id,before:dnd.t.before}:{t:'chmove',g:sel,id:dnd.id,before:dnd.t.before,cat:dnd.t.cat};dndEnd();if(!send(m))toast('Not connected. Try again in a moment.')});
+dn.addEventListener('dragend',dndEnd);
 function badges(){document.querySelectorAll('#nav [data-c]').forEach(r=>{const c=r.dataset.c,b=r.querySelector('.badge'),mu=mDm(c);b.hidden=mu||!unread[c];b.textContent=unread[c]||'';b.classList.toggle('men',!!mentioned[c])});
   document.querySelectorAll('#cats .cat').forEach(c=>{let n=0,m=false;c.querySelectorAll('.tab[data-c]').forEach(t=>{const k=t.dataset.c;n+=unread[k]||0;if(unread[k]&&mentioned[k])m=true});const u=c.querySelector('.cat-u');if(u){u.hidden=!n||!c.classList.contains('col');u.textContent=n>99?'99+':n;u.classList.toggle('men',m)}}); // a collapsed category still shows what is waiting inside it
   document.querySelectorAll('#rail .ri[data-g]').forEach(r=>{const g=G[r.dataset.g],mg=!!(g&&mG(g.id)),n=mg?0:(g?g.channels.map(c=>c.id):dmKeys().filter(k=>!mDm(k))).reduce((a,k)=>a+(unread[k]||0),0),b=r.querySelector('.badge');b.hidden=!n;b.textContent=n;r.classList.toggle('muted',mg);if(g)r.title=g.name+(mg?' (muted'+(MUTE.g[g.id]>0?' until '+muteEnd(MUTE.g[g.id]):'')+')':'')})}
@@ -1299,7 +1315,10 @@ function startEdit(el,id){const m=(hist[cur]||[]).find(x=>x.id==id);if(!m||el.qu
     else if(e.key=='Enter'&&!e.isComposing){e.preventDefault();const v=inp.value.trim();if(!v&&!m.file)return;
       if(v!=(m.text||'')&&!send({t:'edit',ch:cur,id,text:v}))toast('Not connected, so that was not saved.');done()}};
   box.hidden=true;box.after(inp);emAttach(inp);inp.focus()}
+function paintMe(){const b=$('#meBtn');if(!b)return;const nm=myName||(P[oid]||{}).name||'',stl=STS[myStatus]||STS.online;
+  b.innerHTML=avs(oid,nm)+'<span class="who"><span class="nn">'+esc(nm)+'</span><small id="meSt">'+stl[0]+'</small></span>';b.className=gc(oid).trim();b.style.cssText=gs(oid);marks();paintSt()}
 function roster(){
+  try{paintMe()}catch(err){console.error('profile bar',err)} // always repaint the bottom-left profile, even in the DM layout where the member list is detached
   if(!$('#online')||!$('#offline'))return; // member list is detached in the home/DM layout
   const st=u=>u.status||'online',row=(o,n0,u)=>{const n=nickOf(o)||n0,you=u&&u.id==me?' (you)':'',t=esc(n)+you+(u&&u.voice?' · in voice':'')+(u&&u.muted?' · muted':'')+(u&&st(u)!='online'?' · '+STS[st(u)][0]:'');
     return `<button class="pa${u&&u.voice?' v':''}${gc(o)}" style="${gs(o)}" data-o="${esc(o)}" title="${t}" aria-label="${t}">${avs(o,n)}<span class="nn"${roleSt(o)?` style="${esc(roleSt(o))}"`:''}>${esc(n)}${you}</span>${u&&u.voice?'<i class="mk">'+(u.muted?'🔇':u.video?'📷':'🔊')+'</i>':''}</button>`};
@@ -1307,8 +1326,7 @@ function roster(){
   $('#online').innerHTML=on.map(u=>row(u.oid||u.id,u.name,u)).join('');
   $('#offline').innerHTML=off.map(u=>row(u.oid||u.id,u.name,u)).join('')+known.map(o=>row(o,P[o].name)).join('');
   const oc=off.length+known.length;$('#shOn').textContent='Online ('+on.length+')';$('#shOff').textContent='Offline ('+oc+')';$('#shOff').hidden=!oc;
-  side();if(window.popO)cardRefresh();
-  $('#meBtn').innerHTML=avs(oid,myName)+'<span class="who"><span class="nn">'+esc(myName)+'</span><small id="meSt">'+STS[myStatus][0]+'</small></span>';$('#meBtn').className=gc(oid).trim();$('#meBtn').style.cssText=gs(oid);marks();paintSt()}
+  side();if(window.popO)cardRefresh()}
 function sendMsg(){const v=$('#txt').value.trim();if(!v||!cur)return;if(myTmo())return toast('You are timed out for '+tLeft(myTmo()-Date.now())+'.');
   if(!send({t:'msg',ch:cur,text:v,reply:replyTo&&replyTo.id})){status('Not connected, so your message was not sent. Reconnecting…');return} // draft stays in the box
   $('#txt').value='';txtFit();ccPaint();clearReply();mpClose()}
