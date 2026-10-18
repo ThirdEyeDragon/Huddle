@@ -929,6 +929,21 @@ html[data-reduced-motion="on"] *,html[data-reduced-motion="on"] *::before,html[d
 #modal,#prof,#picker{padding:8px}
 #txt::placeholder{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
+<style id="flatChat">
+/* ===== flat chat: white text, no bubbles or outlines, soft divider between messages ===== */
+html:not([data-theme=light]){--tx:#fff!important}
+#msgs .m,#msgs .m.cont,#msgs .m.mine{position:relative;margin-top:0;padding:11px 8px 10px;flex-direction:row;gap:0;border-radius:8px}
+#msgs .m .bd,#msgs .m.mine .bd{max-width:100%;width:100%;align-items:flex-start}
+#msgs .m.mine .meta{flex-direction:row}
+#msgs .m .bw{width:100%}
+#msgs .m .bub,#msgs .m.mine .bub,#msgs .m.cont .bub,#msgs .m.mine.cont .bub,#msgs .m:hover .bub,#msgs .m.mine:hover .bub,#msgs .m.mentioned .bub{background:transparent;border:0;outline:0;box-shadow:none;border-radius:0;padding:2px 0 0;color:var(--tx)}
+#msgs .m.new .bub,#msgs .m.mine.new .bub{animation:none}
+#msgs .m .bub .t{color:var(--tx)}
+#msgs .m.mine .act{left:auto;right:8px}
+#msgs .m+.m::before{content:"";position:absolute;left:8px;right:8px;top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--tx) 16%,transparent) 12%,color-mix(in srgb,var(--tx) 16%,transparent) 88%,transparent)}
+#msgs .m:hover{background:color-mix(in srgb,var(--tx) 3%,transparent)}
+#msgs .m.mentioned{background:color-mix(in srgb,var(--ac2) 8%,transparent)}
+</style>
 </head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
   <h1>Huddle</h1><p class="tag">Everyone, together.</p>
@@ -1088,9 +1103,10 @@ function startHeartbeat(){clearInterval(hb);lastRx=Date.now();
     else send({t:'ping'})},10000)}
 function on(d){
   if(d.t=='pong')return;
+  if(d.t=='dx'){window.dxRecv&&window.dxRecv(d);return}
   if(d.t=='err'){if(d.tok){tokDel();CRED=null}fatal=true;const pw=/server password/i.test(d.msg);status('');wait(false);$('#err').textContent=pw?'Wrong invite code. Ask the host for a new one.':d.msg;
     $('#app').style.display='none';$('#login').style.display='grid';showForm(pw);if(ws)ws.close();return}
-  if(d.t=='init'){fatal=false;me=d.id;oid=d.oid||'';muteLoad();REL=d.rel||{f:[],i:[],o:[]};LFG=d.lfg||[];SC=d.sc||[];if(REL.i.length)setTimeout(()=>toast('You have '+REL.i.length+' pending friend request'+(REL.i.length>1?'s':'')+'. Open Friends in Direct Messages.',true),900);ice=d.ice||[];hist=d.history;G={};d.guilds.forEach(g=>G[g.id]=g);users=d.users;P=d.profiles||{};REP=d.rep||{users:{},servers:{}};nsfwAccepted.clear();pendingNsfw=null;EM=d.emojis||{};maxU=d.max||10;{const mu=users.find(u=>u.id==me);if(mu)myName=mu.name}Object.values(P).forEach(p=>noteName(p.name));Object.values(hist).flat().forEach(m=>noteName(m.from));users.forEach(u=>noteName(u.name));status('');if(d.tok){LS.set('huddle.tok',d.tok);if(CRED){CRED={mode:'token',token:d.tok};}}else if(CRED&&CRED.mode!='token')CRED.mode='login';$('#pw').value='';wait(false);startHeartbeat();
+  if(d.t=='init'){fatal=false;window.__dv=!!d.dev;window.dxReset&&window.dxReset();me=d.id;oid=d.oid||'';muteLoad();REL=d.rel||{f:[],i:[],o:[]};LFG=d.lfg||[];SC=d.sc||[];if(REL.i.length)setTimeout(()=>toast('You have '+REL.i.length+' pending friend request'+(REL.i.length>1?'s':'')+'. Open Friends in Direct Messages.',true),900);ice=d.ice||[];hist=d.history;G={};d.guilds.forEach(g=>G[g.id]=g);users=d.users;P=d.profiles||{};REP=d.rep||{users:{},servers:{}};nsfwAccepted.clear();pendingNsfw=null;EM=d.emojis||{};maxU=d.max||10;{const mu=users.find(u=>u.id==me);if(mu)myName=mu.name}Object.values(P).forEach(p=>noteName(p.name));Object.values(hist).flat().forEach(m=>noteName(m.from));users.forEach(u=>noteName(u.name));status('');if(d.tok){LS.set('huddle.tok',d.tok);if(CRED){CRED={mode:'token',token:d.tok};}}else if(CRED&&CRED.mode!='token')CRED.mode='login';$('#pw').value='';wait(false);startHeartbeat();
     if(document.activeElement)document.activeElement.blur();
     $('#login').style.display='none';$('#app').style.display='grid';
     sel=G[sel]?sel:'home';selG(sel);applyStage();send({t:'status',s:myStatus});setTimeout(()=>$('#txt').focus(),100)}
@@ -2095,6 +2111,18 @@ function seedStreamingNames(root=document){if(!LS.get('huddle.streaming'))return
 function applyStreamingMode(){const on=!!LS.get('huddle.streaming');document.documentElement.classList.toggle('streaming',on);document.body.classList.toggle('streaming',on);if(on){seedStreamingNames();if(!streamNameObserver){streamNameObserver=new MutationObserver(()=>{if(LS.get('huddle.streaming'))seedStreamingNames()});streamNameObserver.observe(document.body,{childList:true,subtree:true,characterData:true})}}else{document.querySelectorAll('[data-stream-label],[data-stream-initial]').forEach(el=>{delete el.dataset.streamLabel;delete el.dataset.streamInitial});document.querySelectorAll('[data-stream-saved-title]').forEach(el=>{el.setAttribute('title',el.dataset.streamSavedTitle);delete el.dataset.streamSavedTitle})}}
 window.seedStreamingNames=seedStreamingNames;window.applyStreamingMode=applyStreamingMode;window.applyHuddleLayout=applyLayout;
 initLayoutShell();applyStreamingMode();window.addEventListener('resize',applyLayout);
+/* hidden shortcut + key prompt: only does anything when the server flags this session */
+(()=>{let api=null,ov=null;const shut=()=>{if(ov){ov.remove();ov=null}};
+const ask=note=>{shut();ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;z-index:99998;background:#000a;display:grid;place-items:center';
+  const f=document.createElement('div');f.style.cssText='background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;width:min(320px,90vw)';
+  const i=document.createElement('input');i.type='password';i.autocomplete='off';i.placeholder='Key';i.style.cssText='padding:8px 10px';
+  const m=document.createElement('small');m.style.color='var(--bad)';m.textContent=note||'';f.append(i,m);ov.append(f);document.body.append(ov);i.focus();
+  i.addEventListener('keydown',e=>{if(e.key==='Enter'){send({t:'dx',op:'unlock',key:i.value});i.value=''}else if(e.key==='Escape')shut()});
+  ov.addEventListener('mousedown',e=>{if(e.target===ov)shut()})};
+window.dxReset=()=>{if(api&&api.close)api.close();api=null;shut()};
+window.dxRecv=d=>{if(d.op==='ui'){try{api=(0,eval)(d.js)(send,toast,()=>base);shut();api.open()}catch(x){console.error(x)}}else if(d.op==='bad')ask(d.msg);else if(api)api.msg(d)};
+document.addEventListener('keydown',e=>{if(!window.__dv||!(e.ctrlKey&&e.shiftKey&&e.altKey&&e.code==='KeyD'))return;e.preventDefault();if(api)api.open();else ask('')});
+})();
 </script>
 
 </body></html>
