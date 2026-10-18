@@ -794,7 +794,7 @@ html[data-contrast=high] #nav .tab.sel .cg{color:#000}
 #edgeTop .cat-b,#edgeBottom .cat-b{display:flex;flex-direction:row;gap:3px}
 #edgeTop #gh,#edgeBottom #gh{position:static;margin:0;flex:none;order:0}
 #edgeTop .meRow,#edgeBottom .meRow{position:static;display:flex;flex:none;margin:0;padding:4px;border:0;background:none}
-#edgeLeft #plist,#edgeRight #plist{width:220px;min-width:170px;max-width:100%;flex:0 1 220px;display:block!important;min-height:0;overflow:auto;border:0}
+#edgeLeft #plist:not([hidden]),#edgeRight #plist:not([hidden]){width:220px;min-width:170px;max-width:100%;flex:0 1 220px;display:block;min-height:0;overflow:auto;border:0}
 #edgeTop #plist,#edgeBottom #plist{width:auto;min-width:220px;max-width:36%;flex:1 1 260px;display:flex!important;flex-direction:row;align-items:flex-start;gap:10px;padding:8px 12px;overflow:auto;border:0;min-height:0}
 #edgeTop #plist .sh,#edgeBottom #plist .sh{display:none}
 #edgeTop #online,#edgeBottom #online,#edgeTop #offline,#edgeBottom #offline{display:flex;flex-direction:row;gap:5px;overflow:visible;flex:none}
@@ -817,6 +817,16 @@ html[data-contrast=high] #nav .tab.sel .cg{color:#000}
 @media(max-width:700px){#app.layout-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:max-content minmax(0,1fr) max-content;grid-template-areas:"top" "center" "bottom"}
   #edgeLeft,#edgeRight{display:none!important}#edgeTop,#edgeBottom{max-height:28vh;max-width:none;border-left:0;border-right:0}#edgeTop #side,#edgeBottom #side{min-width:0;flex:1 1 auto}#edgeTop #plist,#edgeBottom #plist{max-width:48%;min-width:0}#edgeTop #rail,#edgeBottom #rail{max-width:100%}#edgeTop #meBtn .who,#edgeBottom #meBtn .who{display:none}}
 @media(prefers-reduced-motion:reduce){#rail .ri[data-sfx]::after,#si[data-sfx]::after,#sipreview[data-sfx]::after{animation:none!important}}
+/* Keep Direct Messages at a stable 3-column layout and pin the composer to the bottom. */
+#app.layout-shell{grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:minmax(0,1fr)}
+#edgeRight:has(> #plist[hidden]){display:none!important}
+#edgeLeft #plist[hidden],#edgeRight #plist[hidden],#edgeTop #plist[hidden],#edgeBottom #plist[hidden]{display:none!important}
+#layoutCenter,#layoutCenter>main{width:100%;height:100%;min-width:0;min-height:0}
+#layoutCenter>main{display:flex;flex:1 1 auto;flex-direction:column;overflow:hidden}
+#layoutCenter>main #msgs{flex:1 1 0;min-height:0;overflow:auto}
+#layoutCenter>main #bar{flex:0 0 auto;align-items:flex-end;min-height:48px;margin-top:8px;margin-bottom:12px;padding:5px}
+#layoutCenter>main #txt{height:38px;min-height:38px;max-height:160px;line-height:22px;align-self:stretch}
+
 /* Own speaking ring styles are intentionally scoped to #t-me; other participants stay unchanged. */
 #t-me[data-speakfx="steady"].talk .ring{animation:none;background:conic-gradient(var(--live),var(--live));filter:drop-shadow(0 0 1.4cqmin #3fe0c5aa)}
 #t-me[data-speakfx="pulse"].talk .ring{animation:ownSpeakPulse 1.2s ease-in-out infinite}
@@ -824,6 +834,30 @@ html[data-contrast=high] #nav .tab.sel .cg{color:#000}
 #t-me[data-speakfx="fast"].talk .ring{animation:spin .72s linear infinite}
 @keyframes ownSpeakPulse{0%,100%{opacity:.55;transform:scale(.985);filter:drop-shadow(0 0 .7cqmin var(--live))}50%{opacity:1;transform:scale(1.035);filter:drop-shadow(0 0 2.2cqmin var(--live))}}
 @media(prefers-reduced-motion:reduce){#t-me[data-speakfx="pulse"].talk .ring,#t-me[data-speakfx="fast"].talk .ring{animation:none!important}}
+/* Additional local-only speaking ring styles. These never affect other participants. */
+#t-me[data-speakfx="rainbow"].talk .ring{background:conic-gradient(#ff5c5c,#ffd75c,#5cff8a,#5cc8ff,#c45cff,#ff5c5c);filter:drop-shadow(0 0 1.8cqmin #7cf7e0aa);animation:spin 2.2s linear infinite}
+#t-me[data-speakfx="comet"].talk .ring{background:conic-gradient(from 0deg,transparent 0 54%,var(--live) 72%,#eaffff 81%,transparent 88%),conic-gradient(#3fe0c522,#3fe0c522);filter:drop-shadow(0 0 1.8cqmin var(--live));animation:spin 1.15s linear infinite}
+#t-me[data-speakfx="ripple"].talk .ring{animation:ownSpeakRipple 1.45s ease-out infinite;filter:drop-shadow(0 0 1.5cqmin var(--live))}
+#t-me[data-speakfx="heartbeat"].talk .ring{animation:ownSpeakBeat 1.15s ease-in-out infinite;filter:drop-shadow(0 0 1.5cqmin var(--live))}
+#t-me[data-speakfx="dash"].talk .ring{background:repeating-conic-gradient(var(--live) 0 9deg,transparent 9deg 18deg);filter:drop-shadow(0 0 1.2cqmin var(--live));animation:spin 1.9s linear infinite}
+#t-me[data-speakfx="double"].talk .ring{box-shadow:0 0 0 3px var(--live),0 0 0 7px #3fe0c577,0 0 0 10px #3fe0c522;filter:drop-shadow(0 0 1.1cqmin var(--live));animation:ownSpeakPulse 1.35s ease-in-out infinite}
+#t-me[data-speakfx="wave"].talk .ring{background:conic-gradient(from var(--speak-angle,0deg),var(--live),#d9fff8,var(--live));filter:drop-shadow(0 0 2cqmin var(--live));animation:spin 3.1s linear infinite}
+#t-me[data-speakfx="neon"].talk .ring{filter:drop-shadow(0 0 1cqmin var(--live)) drop-shadow(0 0 3cqmin var(--live)) drop-shadow(0 0 5cqmin #3fe0c566);animation:ownSpeakNeon 1.6s steps(1,end) infinite}
+@keyframes ownSpeakRipple{0%{transform:scale(.94);opacity:.45}55%{transform:scale(1.055);opacity:1}100%{transform:scale(1.12);opacity:.55}}
+@keyframes ownSpeakBeat{0%,100%{transform:scale(1);opacity:.65}15%{transform:scale(1.055);opacity:1}28%{transform:scale(1)}42%{transform:scale(1.035);opacity:1}58%{transform:scale(1)}}
+@keyframes ownSpeakNeon{0%,100%{opacity:1}18%,54%{opacity:.72}20%,56%{opacity:.98}}
+@media(prefers-reduced-motion:reduce){#t-me[data-speakfx].talk .ring{animation:none!important;transform:none!important}}
+
+/* Final layout guardrails: DMs get a stable friends-left/chat-right workspace. */
+@media(min-width:701px){#app.layout-shell{grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:max-content minmax(0,1fr) max-content;grid-template-areas:"top top top" "left center right" "bottom bottom bottom"}}
+@media(max-width:700px){#app.layout-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:max-content minmax(0,1fr) max-content;grid-template-areas:"top" "center" "bottom"}}
+#edgeLeft #plist[hidden],#edgeRight #plist[hidden],#edgeTop #plist[hidden],#edgeBottom #plist[hidden]{display:none!important}
+#edgeRight:has(> #plist[hidden]),#edgeRight.empty{display:none!important}
+#layoutCenter,#layoutCenter>main{width:100%;height:100%;min-width:0;min-height:0}
+#layoutCenter>main{display:flex;flex:1 1 auto;flex-direction:column;overflow:hidden}
+#layoutCenter>main #msgs{flex:1 1 0;min-height:0;overflow:auto}
+#layoutCenter>main #bar{flex:0 0 auto;align-items:flex-end;min-height:48px;margin-top:8px;margin-bottom:12px;padding:5px}
+#layoutCenter>main #txt{height:38px;min-height:38px;max-height:160px;line-height:22px;align-self:stretch}
 </style>
 
 </head><body>
@@ -1033,12 +1067,12 @@ const chLabel=ch=>ch.startsWith('dm:')?'@ '+((P[dmO(ch)]||{}).name||'?'):'# '+((
 const welcomeH=c=>{if(!c||c.startsWith('dm:'))return '';const n=chLabel(c).replace(/^#\s*/,'');return '<div class="wlc"><h2>Welcome to '+colorLabel(n)+'</h2><p>This is the start of an amazing story.</p></div>'},
   emptyH=c=>'<div class="empty">No messages in '+colorLabel(chLabel(c))+' yet.</div>';
 const goCh=c=>{const g=gOf(c);selG(g?g.id:'home',c)},openDm=o=>selG('home',dmId(o));
-function openCh(c){comClose();cur=c||'';if(c){unread[c]=0;mentioned[c]=false;lastCh[sel]=c}clearReply();mpClose();badges();side();
+function openCh(c){comClose();cur=c||'';if(c){unread[c]=0;mentioned[c]=false;lastCh[sel]=c}clearReply();mpClose();badges();side();if(window.applyHuddleLayout)window.applyHuddleLayout();
   last=null;typingPaint();$('#msgs').innerHTML=welcomeH(c);$('#bar').style.visibility=c?'':'hidden';
   if(!c)$('#msgs').innerHTML='<div class="empty">'+(sel=='home'?'Nothing here yet.<br>Press ＋ above to message someone, or use ＋ in the left bar to create or join a server.':'This server has no text channels.')+'</div>';
   else if(!(hist[c]||[]).length)$('#msgs').insertAdjacentHTML('beforeend',emptyH(c));else hist[c].forEach(m=>addMsg(m));$('#msgs').scrollTop=1e9;if(c)$('#txt').focus()}
 function selG(id,c){comClose();sel=G[id]?id:'home';LS.set('huddle.sel',sel);rail();$('#plist').hidden=sel=='home';const g=G[sel],lc=lastCh[sel],ok=g?g.channels.some(x=>x.id==lc&&x.type=='text'):lc&&hist[lc];
-  openCh(c||(ok?lc:g?(g.channels.find(x=>x.type=='text')||{}).id:dmKeys()[0]));roster()}
+  openCh(c||(ok?lc:g?(g.channels.find(x=>x.type=='text')||{}).id:dmKeys()[0]));if(window.applyHuddleLayout)window.applyHuddleLayout();roster()}
 function rail(){$('#rail').innerHTML=`<button class="ri${sel=='home'?' sel':''}" data-g="home" title="Direct Messages" style="--h:200"><img class="hl" alt="Huddle" src="${LOGO}"><span class="badge" hidden></span></button><hr>`+Object.values(G).map(g=>`<button class="ri${sel==g.id?' sel':''}" data-g="${g.id}" title="${esc(g.name)}" style="--h:${hue(g.name)}${g.color?';background:'+esc(g.color):''}">${g.icon?`<img src="${esc(assetUrl(g.icon))}" alt="">`:esc([...g.name][0].toUpperCase())}<span class="badge" hidden></span></button>`).join('')+'<button class="ri add" id="gadd" title="Create or join a server">＋</button>';badges();serverGlowSync()}
 const chObj=i=>{const g=gOf(i);return g&&g.channels.find(c=>c.id==i)||{}},
   chIcon=c=>c&&c.icon?`<img class="ci" src="${esc(c.icon)}" alt="">`:`<i class="ci d ${c&&c.type=='voice'?'v':'t'}"></i>`,
@@ -1263,7 +1297,7 @@ function syncPeers(){if(!voice)return;const ids=users.filter(u=>vch&&u.voice==vc
   Object.keys(pcs).forEach(id=>{if(!ids.includes(id)){pcs[id].pc.close();delete pcs[id];$('#t-'+id)?.remove()}});
   applyStage()}
 function marks(){document.querySelectorAll('#stage .tile').forEach(t=>{const id=t.id.slice(2),u=users.find(u=>u.id==(id=='me'?me:id));t.classList.toggle('mut',!!(u&&u.muted))})}
-const speakFx=()=>['orbit','steady','pulse','glow','fast'].includes(LS.get('huddle.speakfx')||'orbit')?(LS.get('huddle.speakfx')||'orbit'):'orbit';
+const speakFx=()=>['orbit','steady','pulse','glow','fast','rainbow','comet','ripple','heartbeat','dash','double','wave','neon'].includes(LS.get('huddle.speakfx')||'orbit')?(LS.get('huddle.speakfx')||'orbit'):'orbit';
 function applySpeakFx(){const t=$('#t-me');if(t)t.dataset.speakfx=speakFx()}
 function tile(id,stream,label){const src=stream||(pcs[id]&&pcs[id].stream);if(!src)return;let t=$('#t-'+id);
   if(!t){const nm=id=='me'?nameOf(me):nameOf(id);
@@ -1489,7 +1523,7 @@ function setDialog(){sRefresh=null;if(window.beginLayoutPreview)window.beginLayo
       const opts=(kind,cur,lb)=>'<option value="">System default</option>'+d.filter(x=>x.kind==kind&&x.deviceId!='default'&&x.deviceId!='communications').map((x,i)=>`<option value="${esc(x.deviceId)}"${x.deviceId==cur?' selected':''}>${esc(x.label||lb+' '+(i+1))}</option>`).join('');
       avp.innerHTML=`<label class="fl">Microphone <span style="opacity:.6">(voice input)</span><select id="dmic">${opts('audioinput',micId,'Microphone')}</select></label>
       <label class="fl">Speakers <span style="opacity:.6">(voice &amp; video output)</span><select id="dspk"${canSink?'':' disabled'}>${opts('audiooutput',spkId,'Speakers')}</select>${canSink?'':'<small style="color:var(--dim)">This browser cannot pick an output device. Use your system sound settings.</small>'}</label>
-      <label class="fl">Camera <span style="opacity:.6">(video input)</span><select id="dcam">${opts('videoinput',camId,'Camera')}</select></label><label class="fl">My speaking indicator <small class="hint">Effect for the green ring around your own avatar while you speak. Other people’s indicators are unchanged.</small><select id="spkfx">${[['orbit','Orbiting trail'],['steady','Solid ring'],['pulse','Pulsing ring'],['glow','Soft glow'],['fast','Fast sweep']].map(([v,n])=>`<option value="${v}"${((LS.get('huddle.speakfx')||'orbit')===v)?' selected':''}>${n}</option>`).join('')}</select></label><div class="mtest"><div class="mtestHead"><div><b>Microphone test</b><small>Live input level</small></div><button type="button" id="mtestBtn">Start test</button></div><div class="mtestTrack"><div id="mtestFill"></div></div><small class="hint">During the test, your outgoing microphone is temporarily muted for everyone else in the call.</small></div>`;const mb=$('#mtestBtn');mb.textContent=micTestStream?'Stop test':'Start test';mb.onclick=()=>micTestStream?stopMicTest():startMicTest()};
+      <label class="fl">Camera <span style="opacity:.6">(video input)</span><select id="dcam">${opts('videoinput',camId,'Camera')}</select></label><label class="fl">My speaking indicator <small class="hint">Effect for the green ring around your own avatar while you speak. Other people’s indicators are unchanged.</small><select id="spkfx">${[['orbit','Orbiting trail'],['steady','Solid ring'],['pulse','Pulsing ring'],['glow','Soft glow'],['fast','Fast sweep'],['rainbow','Rainbow ring'],['comet','Comet trail'],['ripple','Expanding ripple'],['heartbeat','Heartbeat'],['dash','Dashed ring'],['double','Double halo'],['wave','Wave sweep'],['neon','Neon flicker']].map(([v,n])=>`<option value="${v}"${((LS.get('huddle.speakfx')||'orbit')===v)?' selected':''}>${n}</option>`).join('')}</select></label><div class="mtest"><div class="mtestHead"><div><b>Microphone test</b><small>Live input level</small></div><button type="button" id="mtestBtn">Start test</button></div><div class="mtestTrack"><div id="mtestFill"></div></div><small class="hint">During the test, your outgoing microphone is temporarily muted for everyone else in the call.</small></div>`;const mb=$('#mtestBtn');mb.textContent=micTestStream?'Stop test':'Start test';mb.onclick=()=>micTestStream?stopMicTest():startMicTest()};
     avp.onchange=e=>{const v=e.target.value,i=e.target.id;
       if(i=='spkfx'){LS.set('huddle.speakfx',v);applySpeakFx();return}
       else if(i=='dmic'){if(micTestStream)stopMicTest();micId=v;LS.set('huddle.mic',v);switchMic()}
@@ -1497,8 +1531,8 @@ function setDialog(){sRefresh=null;if(window.beginLayoutPreview)window.beginLayo
       else if(i=='dcam'){camId=v;LS.set('huddle.cam',v);if(vtrack&&!vtrack._scr)startCam()}};
     S('ac').innerHTML=tg('shc','High contrast','Pure black and white with brighter accents and stronger outlines, for easier reading.',!!LS.get('huddle.contrast'));
     S('ac').onchange=e=>{if(e.target.id=='shc'){LS.set('huddle.contrast',e.target.checked?'high':'');applyLook()}};
-    S('pv').innerHTML=tg('sdisc','Account discoverable','Let people find you by your name and number or in New message search.',(P[oid]||{}).disc!==false)+tg('shprof','Hide my profile from server members','People who share a server with you will only see your display name. Your number, avatar, bio and other profile details will be hidden.',!!(P[oid]||{}).hideProfile)+tg('streammode','Streaming mode','Show only the first letter of usernames and blur profile details, tags, avatars and other identifying information on this device.',!!LS.get('huddle.streaming'));
-    S('pv').onchange=e=>{if(e.target.id=='streammode'){LS.set('huddle.streaming',e.target.checked?'1':'');applyStreamingMode();return}if(['sdisc','shprof'].includes(e.target.id)){const k=({sdisc:'disc',shprof:'hideProfile',sbfr:'blockServerFriendRequests'})[e.target.id],v=e.target.checked;if(!send({t:'priv',[k]:v})){e.target.checked=!v;toast('Not connected. Try again in a moment.')}}};
+    S('pv').innerHTML=tg('sdisc','Account discoverable','Let people find you by your name and number or in New message search.',(P[oid]||{}).disc!==false)+tg('shprof','Hide my profile from server members','People who share a server with you will only see your display name. Your number, avatar, bio and other profile details will be hidden.',!!(P[oid]||{}).hideProfile)+tg('sfriendsdm','Only friends can send me DMs','Block incoming direct messages from people who are not on your friends list. The server enforces this setting.',!!(P[oid]||{}).friendsOnlyDM)+tg('shstatus','Hide my online status','Show your presence indicator as offline to other people. Your messages and participation in a voice channel may still be visible.',!!(P[oid]||{}).hideOnlineStatus)+tg('streammode','Streaming mode','Show only the first letter of usernames and blur profile details, tags, avatars and other identifying information on this device.',!!LS.get('huddle.streaming'));
+    S('pv').onchange=e=>{if(e.target.id=='streammode'){LS.set('huddle.streaming',e.target.checked?'1':'');applyStreamingMode();return}const map={sdisc:'disc',shprof:'hideProfile',sfriendsdm:'friendsOnlyDM',shstatus:'hideOnlineStatus'};if(Object.hasOwn(map,e.target.id)){const k=map[e.target.id],v=e.target.checked;if(!send({t:'priv',[k]:v})){e.target.checked=!v;toast('Not connected. Try again in a moment.')}}};
     S('ad').innerHTML='<div class="fl">Restart<p class="pb" style="margin:0 0 8px">Close and reopen Huddle. Use this if something looks stuck.</p><button id="rst">Restart Huddle</button></div>';
     S('ad').onclick=async e=>{if(e.target.id!='rst')return;if(!await hzAsk('Restart Huddle? You will leave any call and need to sign in again.'))return;
       try{if(voice)leaveVoice()}catch{}fatal=true;CRED=null;try{ws&&ws.close()}catch{}
@@ -1929,8 +1963,8 @@ function readSavedLayout(){try{const v=JSON.parse(LS.get('huddle.layout')||'{}')
 function initLayoutShell(){if(layoutShellReady)return;const app=document.getElementById('app'),rail=document.getElementById('rail'),side=document.getElementById('side'),main=document.querySelector('#app > main'),plist=document.getElementById('plist');if(!app||!rail||!side||!main||!plist)return;
   const make=(id,cls)=>{const e=document.createElement('div');e.id=id;e.className=cls;return e},top=make('edgeTop','layout-edge'),left=make('edgeLeft','layout-edge'),center=make('layoutCenter',''),right=make('edgeRight','layout-edge'),bottom=make('edgeBottom','layout-edge');
   app.innerHTML='';app.classList.add('layout-shell');app.append(top,left,center,right,bottom);center.append(main);window.layoutEdges={top,left,right,bottom};window.layoutBlocks={rail,side,plist};layoutShellReady=true;readSavedLayout();applyLayoutPreview(layoutCommitted);}
-function applyLayoutPreview(positions){initLayoutShell();if(!layoutShellReady)return;const p={...layoutCommitted,...positions};for(const e of Object.values(window.layoutEdges))e.innerHTML='';
-  for(const key of ['rail','side','plist']){let pos=layoutPlaces.includes(p[key])?p[key]:'left';/* On narrow screens use stacked fallbacks instead of hiding side panels. */if(innerWidth<=700){if(pos==='left')pos='top';else if(pos==='right')pos='bottom';}window.layoutEdges[pos].append(window.layoutBlocks[key]);}
+function applyLayoutPreview(positions){initLayoutShell();if(!layoutShellReady)return;const p={...layoutCommitted,...(positions||{})};const homeView=(typeof sel!=='undefined'&&sel==='home')||(typeof cur!=='undefined'&&String(cur||'').startsWith('dm:'));const lockDMLayout=homeView&&!layoutPreviewActive;for(const e of Object.values(window.layoutEdges))e.innerHTML='';
+  for(const key of ['rail','side','plist']){if(key==='plist'&&homeView&&!layoutPreviewActive){window.layoutBlocks.plist.hidden=true;continue}if(key==='plist')window.layoutBlocks.plist.hidden=false;let pos=lockDMLayout&&(key==='rail'||key==='side')?'left':(layoutPlaces.includes(p[key])?p[key]:'left');/* On narrow screens use stacked fallbacks instead of hiding side panels. */if(innerWidth<=700){if(pos==='left')pos='top';else if(pos==='right')pos='bottom';}window.layoutEdges[pos].append(window.layoutBlocks[key]);}
   for(const [key,e] of Object.entries(window.layoutEdges))e.classList.toggle('empty',!e.children.length);
   const app=document.getElementById('app');app.dataset.railPosition=p.rail;app.dataset.channelsPosition=p.side;app.dataset.membersPosition=p.plist;
   if(window.seedStreamingNames&&LS.get('huddle.streaming'))seedStreamingNames();}
@@ -1956,7 +1990,7 @@ function seedStreamingNames(root=document){if(!LS.get('huddle.streaming'))return
   root.querySelectorAll?.('.av').forEach(el=>{const o=el.dataset.o||el.closest('.avw')?.dataset.o;let name=(o&&P[o]&&P[o].name)||(o&&users.find(u=>u.oid===o)?.name)||'';if(el.closest('#pav'))name=(typeof pf!=='undefined'&&pf.name)||name;el.dataset.streamInitial=streamInitial(name||el.textContent)});
   const tag=document.querySelector('#chtitle .tn');if(tag&&cur&&cur.startsWith('dm:')){const other=cur.split(':').slice(1).find(x=>x!==oid),name=(P[other]||{}).name||'?';tag.dataset.streamLabel=streamInitial(name)} }
 function applyStreamingMode(){const on=!!LS.get('huddle.streaming');document.documentElement.classList.toggle('streaming',on);document.body.classList.toggle('streaming',on);if(on){seedStreamingNames();if(!streamNameObserver){streamNameObserver=new MutationObserver(()=>{if(LS.get('huddle.streaming'))seedStreamingNames()});streamNameObserver.observe(document.body,{childList:true,subtree:true,characterData:true})}}else{document.querySelectorAll('[data-stream-label],[data-stream-initial]').forEach(el=>{delete el.dataset.streamLabel;delete el.dataset.streamInitial});document.querySelectorAll('[data-stream-saved-title]').forEach(el=>{el.setAttribute('title',el.dataset.streamSavedTitle);delete el.dataset.streamSavedTitle})}}
-window.seedStreamingNames=seedStreamingNames;window.applyStreamingMode=applyStreamingMode;window.beginLayoutPreview=beginLayoutPreview;window.layoutCancelPreview=layoutCancelPreview;window.layoutPreviewActive=false;
+window.seedStreamingNames=seedStreamingNames;window.applyStreamingMode=applyStreamingMode;window.beginLayoutPreview=beginLayoutPreview;window.layoutCancelPreview=layoutCancelPreview;window.applyHuddleLayout=()=>applyLayoutPreview(layoutPreviewActive?layoutDraft:layoutCommitted);window.layoutPreviewActive=false;
 Object.defineProperty(window,'layoutPreviewActive',{get:()=>layoutPreviewActive,set:v=>{layoutPreviewActive=!!v}});
 initLayoutShell();applyStreamingMode();window.addEventListener('resize',()=>applyLayoutPreview(layoutPreviewActive?layoutDraft:layoutCommitted));
 </script>
