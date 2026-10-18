@@ -1111,7 +1111,7 @@ const SGFX=['','soft','neon','pulse','comet','aurora','rainbow','ember','electri
 function serverGlowSync(){document.querySelectorAll('#rail .ri[data-g]:not([data-g=home])').forEach(el=>{const g=G[el.dataset.g]||{},fx=SGFX.includes(g.glow||'')?g.glow:'',color=/^#[0-9a-f]{6}$/i.test(g.glowColor||'')?g.glowColor:'#ff5c93',intensity=['1','2','3'].includes(String(g.glowIntensity||'2'))?String(g.glowIntensity||'2'):'2';el.dataset.sfx=fx;el.style.setProperty('--sgc',color);el.style.setProperty('--sgi',intensity)})}
 // Stable id for this install: lets the server swap out our old, dead connection when we reconnect.
 let KEY=LS.get('huddle.key');if(!KEY){KEY=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2)+Date.now());LS.set('huddle.key',KEY)}
-let G={},sel=LS.get('huddle.sel')||'home',vch='',lastCh={},typers={},lastT=0,P={},REP={users:{},servers:{}},nsfwAccepted=new Set(),pendingNsfw=null,maxU=500,saving=false,pf={},last=null,oid='',replyTo=null,mpList=[],mpSel=0,mentioned={},base="",ice=[],ws=null,me=null,myName='',users=[],hist={},cur='general',unread={},voice=false,local,vtrack,muted=false,deaf=false,pcs={},ac,hb=0,lastRx=0,fatal=false,
+let G={},sel=LS.get('huddle.sel')||'home',vch='',lastCh={},typers={},lastT=0,P={},REP={users:{},servers:{}},nsfwAccepted=new Set(),pendingNsfw=null,maxU=500,saving=false,pf={},last=null,oid='',replyTo=null,mpList=[],mpSel=0,mentioned={},base="",ice=[],icePolicy="all",ws=null,me=null,myName='',users=[],hist={},cur='general',unread={},voice=false,local,vtrack,muted=false,deaf=false,pcs={},ac,hb=0,lastRx=0,fatal=false,
   frac=Math.min(.85,Math.max(.15,parseFloat(LS.get('huddle.sf'))||.5)),pinned=null,collapsed=false;
 const tn=(t,t0,f,d,v)=>{const x=t-t0;if(x<0||x>d)return 0;return v*Math.min(1,x/.006)*Math.exp(-6*x/d)*(Math.sin(6.2832*f*x)+.28*Math.sin(12.5664*f*x))/1.28},
 wav=(dur,fn,vol,sr=22050)=>{const n=Math.floor(dur*sr),b=new Uint8Array(44+n*2),d=new DataView(b.buffer),w=(o,t)=>[...t].forEach((c,i)=>b[o+i]=c.charCodeAt(0));
@@ -1212,7 +1212,7 @@ function on(d){
   if(d.t=='dx'){window.dxRecv&&window.dxRecv(d);return}
   if(d.t=='err'){if(d.tok){tokDel();CRED=null}fatal=true;const pw=/server password/i.test(d.msg);status('');wait(false);$('#err').textContent=pw?'Wrong invite code. Ask the host for a new one.':d.msg;
     $('#app').style.display='none';$('#login').style.display='grid';showForm(pw);if(ws)ws.close();return}
-  if(d.t=='init'){fatal=false;window.__dv=!!d.dev;window.dxReset&&window.dxReset();me=d.id;oid=d.oid||'';muteLoad();REL=d.rel||{f:[],i:[],o:[]};LFG=d.lfg||[];SC=d.sc||[];if(REL.i.length)setTimeout(()=>toast('You have '+REL.i.length+' pending friend request'+(REL.i.length>1?'s':'')+'. Open Friends in Direct Messages.',true),900);ice=d.ice||[];hist=d.history;G={};d.guilds.forEach(g=>G[g.id]=g);users=d.users;P=d.profiles||{};REP=d.rep||{users:{},servers:{}};nsfwAccepted.clear();pendingNsfw=null;EM=d.emojis||{};maxU=d.max||500;{const mu=users.find(u=>u.id==me);if(mu)myName=mu.name}Object.values(P).forEach(p=>noteName(p.name));Object.values(hist).flat().forEach(m=>noteName(m.from));users.forEach(u=>noteName(u.name));status('');if(d.tok){LS.set('huddle.tok',d.tok);if(CRED){CRED={mode:'token',token:d.tok};}}else if(CRED&&CRED.mode!='token')CRED.mode='login';$('#pw').value='';wait(false);startHeartbeat();
+  if(d.t=='init'){fatal=false;window.__dv=!!d.dev;window.dxReset&&window.dxReset();me=d.id;oid=d.oid||'';muteLoad();REL=d.rel||{f:[],i:[],o:[]};LFG=d.lfg||[];SC=d.sc||[];if(REL.i.length)setTimeout(()=>toast('You have '+REL.i.length+' pending friend request'+(REL.i.length>1?'s':'')+'. Open Friends in Direct Messages.',true),900);ice=d.ice||[];icePolicy=['all','relay'].includes(d.icePolicy)?d.icePolicy:'all';hist=d.history;G={};d.guilds.forEach(g=>G[g.id]=g);users=d.users;P=d.profiles||{};REP=d.rep||{users:{},servers:{}};nsfwAccepted.clear();pendingNsfw=null;EM=d.emojis||{};maxU=d.max||500;{const mu=users.find(u=>u.id==me);if(mu)myName=mu.name}Object.values(P).forEach(p=>noteName(p.name));Object.values(hist).flat().forEach(m=>noteName(m.from));users.forEach(u=>noteName(u.name));status('');if(d.tok){LS.set('huddle.tok',d.tok);if(CRED){CRED={mode:'token',token:d.tok};}}else if(CRED&&CRED.mode!='token')CRED.mode='login';$('#pw').value='';wait(false);startHeartbeat();
     if(document.activeElement)document.activeElement.blur();
     $('#login').style.display='none';$('#app').style.display='grid';
     sel=G[sel]?sel:'home';selG(sel);applyStage();send({t:'status',s:myStatus});setTimeout(()=>$('#txt').focus(),100)}
@@ -1493,23 +1493,102 @@ function applyStage(){const st=$('#stage');st.style.display=$('#split').style.di
   st.style.height=SH?Math.max(120,Math.min(SH,$('main').clientHeight-220))+'px':'';if(voice)layoutStage()}
 new ResizeObserver(layoutStage).observe($('#stage'));
 
-/* ---------- voice / video (WebRTC mesh; works great for ≤10 on a LAN) ---------- */
+/* ---------- voice / video (WebRTC, Opus-first audio, ICE recovery) ---------- */
+const OPUS_MAX_BITRATE=64000;
+function optimizeOpusSdp(sdp){
+  if(typeof sdp!=='string'||!sdp)return sdp;
+  const lines=sdp.split(/\r?\n/);let a0=-1,a1=lines.length;
+  for(let i=0;i<lines.length;i++)if(lines[i].startsWith('m=')){if(a0>=0){a1=i;break}if(lines[i].startsWith('m=audio '))a0=i}
+  if(a0<0)return sdp;
+  const m=lines[a0].trim().split(/\s+/),payloads=m.slice(3);
+  const opus=payloads.filter(pt=>lines.slice(a0,a1).some(line=>new RegExp('^a=rtpmap:'+pt+'\\s+opus/48000(?:/2)?(?:\\s|$)','i').test(line)));
+  if(!opus.length)return sdp;
+  lines[a0]=[...m.slice(0,3),...opus,...payloads.filter(pt=>!opus.includes(pt))].join(' ');
+  for(const pt of opus){
+    // Enable Opus packet-loss recovery and silence suppression while preserving
+    // all browser-negotiated parameters already present in the fmtp line.
+    let e=lines.length;for(let i=a0+1;i<lines.length;i++){if(lines[i].startsWith('m=')){e=i;break}}
+    let fi=-1,params='';
+    for(let i=a0+1;i<e;i++){const f=lines[i].match(new RegExp('^a=fmtp:'+pt+'\\s*(.*)$','i'));if(f){fi=i;params=f[1];break}}
+    const map=new Map();params.split(';').map(x=>x.trim()).filter(Boolean).forEach(x=>{const n=x.indexOf('=');map.set((n<0?x:x.slice(0,n)).toLowerCase(),n<0?'':x.slice(n+1))});
+    for(const [k,v] of [['useinbandfec','1'],['usedtx','1'],['maxaveragebitrate',String(OPUS_MAX_BITRATE)],['maxplaybackrate','48000'],['sprop-maxcapturerate','48000']])map.set(k,v);
+    const fmt='a=fmtp:'+pt+' '+[...map.entries()].map(([k,v])=>v===''?k:k+'='+v).join(';');
+    if(fi>=0)lines[fi]=fmt;else{let ri=a0+1;while(ri<e&&!new RegExp('^a=rtpmap:'+pt+'\\s','i').test(lines[ri]))ri++;lines.splice(ri<e?ri+1:e,0,fmt)}
+  }
+  return lines.join('\r\n');
+}
+function preferCodec(t,kind){
+  try{if(!t||typeof t.setCodecPreferences!=='function'||!window.RTCRtpReceiver?.getCapabilities)return;
+    const codecs=RTCRtpReceiver.getCapabilities(kind)?.codecs;if(!Array.isArray(codecs)||!codecs.length)return;
+    if(kind==='audio'){const op=codecs.filter(c=>/^audio\/opus$/i.test(c.mimeType||'')&&+c.clockRate===48000);if(op.length)t.setCodecPreferences([...op,...codecs.filter(c=>!op.includes(c))]);}
+  }catch(e){console.debug('Codec preference not supported by this browser',e)}
+}
+function tuneAudioSender(o,sender){
+  try{sender=sender||o?.pc?.getSenders().find(s=>s.track&&s.track.kind==='audio');if(!sender)return;
+    const p=sender.getParameters();if(!p.encodings||!p.encodings.length)p.encodings=[{}];
+    p.encodings[0].maxBitrate=o.audioBitrate||OPUS_MAX_BITRATE;
+    if('priority' in p.encodings[0])p.encodings[0].priority='high';
+    sender.setParameters(p).catch(()=>{});
+  }catch{}
+}
+function monitorPeer(id,o){
+  if(o.statsTimer)clearInterval(o.statsTimer);
+  o.statsTimer=setInterval(async()=>{
+    if(!voice||pcs[id]!==o||o.closed||o.statsBusy||!o.pc.getStats)return;
+    o.statsBusy=true;try{const stats=await o.pc.getStats();let loss=null;
+      stats.forEach(s=>{if(s.type==='remote-inbound-rtp'&&(s.kind==='audio'||s.mediaType==='audio')){const n=(s.packetsReceived||0)+Math.max(0,s.packetsLost||0);if(n>=40)loss=Math.max(loss,Math.max(0,s.packetsLost||0)/n)}});
+      if(loss!==null){const rate=loss>.12?32000:loss>.05?48000:OPUS_MAX_BITRATE;if(rate!==o.audioBitrate){o.audioBitrate=rate;tuneAudioSender(o)}}
+    }catch{}finally{o.statsBusy=false}
+  },5000);
+}
+function clearPeerTimers(o){if(!o)return;if(o.recoveryTimer)clearTimeout(o.recoveryTimer);if(o.statsTimer)clearInterval(o.statsTimer);o.recoveryTimer=o.statsTimer=0}
+function closePeer(id,o){if(!o)return;o.closed=true;clearPeerTimers(o);try{o.pc.close()}catch{}if(pcs[id]===o)delete pcs[id];$('#t-'+id)?.remove()}
+function peerHealthy(id,o){if(pcs[id]!==o||o.closed)return;if(o.recoveryTimer){clearTimeout(o.recoveryTimer);o.recoveryTimer=0}o.restartAttempts=0;o.lastHealthy=Date.now()}
+function rebuildPeer(id,o){
+  if(!voice||pcs[id]!==o||o.closed)return;
+  const rebuilds=(o.rebuilds||0)+1;closePeer(id,o);
+  const n=makePc(id);n.rebuilds=rebuilds;tile(id);if(rebuilds>1)n.restartAttempts=2;
+}
+function schedulePeerRecovery(id,o,immediate=false){
+  if(!voice||pcs[id]!==o||o.closed||o.recoveryTimer)return;
+  o.recoveryTimer=setTimeout(()=>{o.recoveryTimer=0;if(!voice||pcs[id]!==o||o.closed)return;
+    const state=o.pc.connectionState||o.pc.iceConnectionState;
+    if(state==='connected'||state==='completed'){peerHealthy(id,o);return}
+    if(o.restartAttempts>=3&&(o.rebuilds||0)<1){rebuildPeer(id,o);return}
+    o.restartAttempts++;
+    try{if(typeof o.pc.restartIce==='function')o.pc.restartIce();else{const p=o.pc.createOffer({iceRestart:true}).then(async d=>{d.sdp=optimizeOpusSdp(d.sdp);await o.pc.setLocalDescription(d);send({t:'sig',to:id,d:{s:o.pc.localDescription}})});p.catch(e=>console.debug('ICE restart negotiation failed',e))}}catch(e){console.debug('ICE restart unavailable',e)}
+    o.recoveryTimer=setTimeout(()=>{o.recoveryTimer=0;const st=o.pc.connectionState||o.pc.iceConnectionState;if(st!=='connected'&&st!=='completed')schedulePeerRecovery(id,o,false);else peerHealthy(id,o)},12000);
+  },immediate?350:4000);
+}
 function makePc(id){if(pcs[id])return pcs[id];
-  const pc=new RTCPeerConnection({iceServers:ice}),o=pcs[id]={pc,making:false,ignore:false,polite:me<id,stream:new MediaStream(),senders:[]};
-  local.getTracks().forEach(t=>o.senders.push(pc.addTrack(t,local)));
-  pc.ontrack=e=>{o.stream.addTrack(e.track);e.track.onmute=e.track.onunmute=()=>tile(id);tile(id);if(e.track.kind=='audio')watch(id,o.stream)};
-  pc.onicecandidate=e=>e.candidate&&send({t:'sig',to:id,d:{c:e.candidate}});
-  pc.onsignalingstatechange=()=>{if(pc.signalingState=='stable')tuneV(o)};
-  pc.onnegotiationneeded=async()=>{try{o.making=true;await pc.setLocalDescription();send({t:'sig',to:id,d:{s:pc.localDescription}})}catch(e){console.warn(e)}finally{o.making=false}};
-  return o}
-async function signal(from,d){if(!voice)return;const o=makePc(from),pc=o.pc;
-  try{if(d.s){const col=d.s.type=='offer'&&(o.making||pc.signalingState!='stable');o.ignore=!o.polite&&col;if(o.ignore)return;
-      await pc.setRemoteDescription(d.s);if(d.s.type=='offer'){await pc.setLocalDescription();send({t:'sig',to:from,d:{s:pc.localDescription}})}}
-    else if(d.c){try{await pc.addIceCandidate(d.c)}catch(e){if(!o.ignore)throw e}}}catch(e){console.warn(e)}}
+  const pc=new RTCPeerConnection({iceServers:ice,iceTransportPolicy:icePolicy,bundlePolicy:'max-bundle',rtcpMuxPolicy:'require',iceCandidatePoolSize:4});
+  const o=pcs[id]={pc,makingOffer:false,ignoreOffer:false,settingRemoteAnswerPending:false,polite:String(me)<String(id),stream:new MediaStream(),senders:[],pendingCandidates:[],signalQueue:Promise.resolve(),audioBitrate:OPUS_MAX_BITRATE,restartAttempts:0,rebuilds:0,closed:false,statsBusy:false};
+  (local?.getTracks()||[]).forEach(t=>{const sender=pc.addTrack(t,local);o.senders.push(sender);const tr=pc.getTransceivers().find(x=>x.sender===sender);if(tr&&t.kind==='audio')preferCodec(tr,'audio');if(t.kind==='audio')tuneAudioSender(o,sender);if(t.kind==='video'){o.vs=sender;preferCodec(tr,'video');tuneV(o)}});
+  pc.ontrack=e=>{if(!o.stream.getTracks().some(t=>t.id===e.track.id))o.stream.addTrack(e.track);e.track.onmute=e.track.onunmute=e.track.onended=()=>tile(id);tile(id,o.stream);if(e.track.kind==='audio')watch(id,o.stream)};
+  pc.onicecandidate=e=>{if(e.candidate){const c=e.candidate.toJSON?e.candidate.toJSON():e.candidate;send({t:'sig',to:id,d:{c}})}else send({t:'sig',to:id,d:{end:true}})};
+  pc.onnegotiationneeded=async()=>{if(o.makingOffer||pc.signalingState!=='stable')return;
+    try{o.makingOffer=true;const offer=await pc.createOffer();if(!voice||pcs[id]!==o)return;offer.sdp=optimizeOpusSdp(offer.sdp);await pc.setLocalDescription(offer);if(voice&&pcs[id]===o)send({t:'sig',to:id,d:{s:pc.localDescription}})}
+    catch(e){console.debug('Peer negotiation failed',e)}finally{o.makingOffer=false}};
+  const onState=()=>{if(pcs[id]!==o||o.closed)return;const state=pc.connectionState||pc.iceConnectionState;if(state==='connected'||state==='completed')peerHealthy(id,o);else if(state==='failed')schedulePeerRecovery(id,o,true);else if(state==='disconnected')schedulePeerRecovery(id,o,false)};
+  pc.onconnectionstatechange=onState;pc.oniceconnectionstatechange=onState;
+  pc.onicegatheringstatechange=()=>{if(pc.iceGatheringState==='complete'&&pc.connectionState==='connected')peerHealthy(id,o)};
+  monitorPeer(id,o);return o;
+}
+async function processSignal(from,d,o){if(!voice||pcs[from]!==o||o.closed||!d)return;const pc=o.pc;
+  if(d.s){
+    const desc=d.s,readyForOffer=!o.makingOffer&&(pc.signalingState==='stable'||o.settingRemoteAnswerPending),collision=desc.type==='offer'&&!readyForOffer;
+    o.ignoreOffer=!o.polite&&collision;if(o.ignoreOffer)return;
+    o.settingRemoteAnswerPending=desc.type==='answer';
+    await pc.setRemoteDescription(desc);o.settingRemoteAnswerPending=false;o.ignoreOffer=false;
+    const pending=o.pendingCandidates.splice(0);for(const c of pending){try{await pc.addIceCandidate(c)}catch(e){if(!o.ignoreOffer)console.debug('Queued ICE candidate rejected',e)}}
+    if(desc.type==='offer'){const answer=await pc.createAnswer();answer.sdp=optimizeOpusSdp(answer.sdp);await pc.setLocalDescription(answer);if(voice&&pcs[from]===o)send({t:'sig',to:from,d:{s:pc.localDescription}})}
+  }else if(d.c){if(o.ignoreOffer)return;if(!pc.remoteDescription){if(o.pendingCandidates.length<256)o.pendingCandidates.push(d.c);return}try{await pc.addIceCandidate(d.c)}catch(e){if(!o.ignoreOffer)console.debug('ICE candidate rejected',e)}}
+  else if(d.end&&!o.ignoreOffer&&pc.remoteDescription){try{await pc.addIceCandidate(null)}catch{}}
+}
+function signal(from,d){if(!voice||!from||from===me||!d)return;const o=makePc(from);o.signalQueue=o.signalQueue.then(()=>processSignal(from,d,o)).catch(e=>{if(!o.ignoreOffer)console.debug('Signalling message failed',e)})}
 function syncPeers(){if(!voice)return;const ids=users.filter(u=>vch&&u.voice==vch&&u.id!=me).map(u=>u.id);
-  ids.forEach(id=>{makePc(id);tile(id)}); // everyone in the call gets a tile (avatar) right away, even before video arrives
-  Object.keys(pcs).forEach(id=>{if(!ids.includes(id)){pcs[id].pc.close();delete pcs[id];$('#t-'+id)?.remove()}});
-  applyStage()}
+  ids.forEach(id=>{makePc(id);tile(id)});
+  Object.keys(pcs).forEach(id=>{if(!ids.includes(id))closePeer(id,pcs[id])});applyStage()}
 function marks(){document.querySelectorAll('#stage .tile').forEach(t=>{const id=t.id.slice(2),u=users.find(u=>u.id==(id=='me'?me:id));t.classList.toggle('mut',!!(u&&u.muted))})}
 const speakFx=()=>['orbit','steady','pulse','glow','fast','rainbow','comet','ripple','heartbeat','dash','double','wave','neon'].includes(LS.get('huddle.speakfx')||'orbit')?(LS.get('huddle.speakfx')||'orbit'):'orbit';
 function applySpeakFx(){const t=$('#t-me');if(t)t.dataset.speakfx=speakFx()}
@@ -1530,7 +1609,7 @@ async function joinVoice(id){if(nsfwChannel(id)&&!nsfwAccepted.has(id)){askNsfw(
   try{local=new MediaStream();const a=await getMic();local.addTrack(a.getAudioTracks()[0])}
   catch(e){toast('Microphone unavailable: '+e.message+'\nMake sure you opened the https:// link and allowed mic access.');vr.classList.remove('joining');return}
   vr.classList.remove('joining');vr.classList.add('pop');setTimeout(()=>vr.classList.remove('pop'),2000);voice=true;vch=id;callT=Date.now();muted=false;deaf=false;fm=fd=false;collapsed=false;send({t:'voice',on:true,ch:id});snd(SB);side();ctrls();applyStage();tile('me',local,'You');watch('me',local);syncPeers();ringSync();{const st=$('#stage');st.classList.add('peek');setTimeout(()=>st.classList.remove('peek'),3500)}}
-function leaveVoice(){if(micTestStream)stopMicTest();fm=fd=false;if(voice)snd(SD);vch='';Object.values(pcs).forEach(o=>o.pc.close());pcs={};local?.getTracks().forEach(t=>t.stop());vtrack=null;local=null;voice=false;
+function leaveVoice(){if(micTestStream)stopMicTest();fm=fd=false;if(voice)snd(SD);vch='';Object.entries(pcs).forEach(([id,o])=>closePeer(id,o));pcs={};local?.getTracks().forEach(t=>t.stop());vtrack=null;local=null;voice=false;
   $('#stage').querySelectorAll('.tile').forEach(t=>t.remove());pinned=null;collapsed=false;send({t:'voice',on:false});ctrls();applyStage();ringSync();side()}
 let fm=false,fd=false,fns=false;const eM=()=>muted||fm,eD=()=>deaf||fd; // fm / fd: muted / deafened by a moderator
 function forceSync(){if(!voice)return;const u=users.find(x=>x.id==me),nm=!!(u&&(u.sm||u.ns)),nd=!!(u&&u.sd);fns=!!(u&&u.ns&&!u.sm);if(nm==fm&&nd==fd)return;
@@ -1559,7 +1638,7 @@ function tuneV(o){const s=o&&o.vs;if(!s||!vtrack)return;try{const sc=!!vtrack._s
     p.encodings[0].maxBitrate=sc?6e6:2.5e6;p.encodings[0].maxFramerate=sc?60:30;p.degradationPreference=sc?'maintain-framerate':'balanced';s.setParameters(p).catch(()=>{})}catch{}}
 function setVideo(t){ // one outgoing video track at a time: camera or screen
   if(vtrack){vtrack.stop();local.removeTrack(vtrack);Object.values(pcs).forEach(o=>{if(o.vs){try{o.pc.removeTrack(o.vs)}catch{}o.vs=null}})}
-  vtrack=t;if(t){if(t._scr)t.contentHint='motion';local.addTrack(t);Object.values(pcs).forEach(o=>{o.vs=o.pc.addTrack(t,local);tuneV(o);setTimeout(()=>{if(vtrack==t)tuneV(o)},1500)});t.onended=()=>{if(vtrack==t){setVideo(null)}}}
+  vtrack=t;if(t){if(t._scr)t.contentHint='motion';local.addTrack(t);Object.values(pcs).forEach(o=>{o.vs=o.pc.addTrack(t,local);const tr=o.pc.getTransceivers().find(x=>x.sender===o.vs);preferCodec(tr,'video');tuneV(o);setTimeout(()=>{if(vtrack==t)tuneV(o)},1500)});t.onended=()=>{if(vtrack==t){setVideo(null)}}}
   tile('me',local,'You');ctrls()}
 $('#vlist').onclick=e=>{const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);const b=e.target.closest('[data-v]');if(b&&vch!=b.dataset.v&&!b.classList.contains('joining'))joinVoice(b.dataset.v)};$('#callBtn').onclick=()=>{if(vch!=cur)joinVoice(cur)};$('#bLeave').onclick=leaveVoice;
 $('#bMic').onclick=()=>{if(fm)return toast(fns?'You do not have permission to speak in this channel.':'A moderator muted you.');muted=!muted;local.getAudioTracks().forEach(t=>t.enabled=!muted&&!micTestStream);ctrls()};
@@ -1596,7 +1675,7 @@ function applySinks(){document.querySelectorAll('video,audio').forEach(applySink
 let micTestStream=null,micTestContext=null,micTestAnalyser=null,micTestFrame=0,micTestWasDeaf=false;
 async function stopMicTest(){if(micTestFrame)cancelAnimationFrame(micTestFrame);micTestFrame=0;const stream=micTestStream;micTestStream=null;if(stream)stream.getTracks().forEach(t=>t.stop());const ctx=micTestContext;micTestContext=null;micTestAnalyser=null;deaf=micTestWasDeaf;micTestWasDeaf=false;if(voice&&local){local.getAudioTracks().forEach(t=>t.enabled=!eM());document.querySelectorAll('.tile video').forEach(v=>v.muted=eD()||v.closest('#t-me')!=null);ctrls()}const f=$('#mtestFill'),b=$('#mtestBtn');if(f)f.style.width='0%';if(b)b.textContent='Start test';if(ctx)try{await ctx.close()}catch{}}
 async function startMicTest(){if(micTestStream){await stopMicTest();return}try{micTestWasDeaf=deaf;if(voice&&local){local.getAudioTracks().forEach(t=>t.enabled=false);deaf=true;document.querySelectorAll('.tile video').forEach(v=>v.muted=true);ctrls()}micTestStream=await getMic();const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw new Error('Live mic metering is not supported by this browser.');micTestContext=new AC();if(micTestContext.state==='suspended')await micTestContext.resume();micTestAnalyser=micTestContext.createAnalyser();micTestAnalyser.fftSize=512;micTestContext.createMediaStreamSource(micTestStream).connect(micTestAnalyser);const data=new Uint8Array(micTestAnalyser.fftSize),b=$('#mtestBtn');if(b)b.textContent='Stop test';const tick=()=>{if(!micTestStream||!micTestAnalyser)return;micTestAnalyser.getByteTimeDomainData(data);let sum=0;for(let i=0;i<data.length;i++){const v=(data[i]-128)/128;sum+=v*v}const level=Math.min(100,Math.round(Math.sqrt(sum/data.length)*260)),f=$('#mtestFill');if(f)f.style.width=level+'%';micTestFrame=requestAnimationFrame(tick)};tick()}catch(e){await stopMicTest();toast('Microphone test unavailable: '+(e.message||'Allow microphone access.'))}}
-async function getMic(){const base={echoCancellation:true,noiseSuppression:true};
+async function getMic(){const base={echoCancellation:{ideal:true},noiseSuppression:{ideal:true},autoGainControl:{ideal:true},channelCount:{ideal:1},sampleRate:{ideal:48000}};
   try{return await navigator.mediaDevices.getUserMedia({audio:micId?{...base,deviceId:{exact:micId}}:base})}
   catch(e){if(micId&&(e.name=='OverconstrainedError'||e.name=='NotFoundError')){micId='';LS.set('huddle.mic','');return navigator.mediaDevices.getUserMedia({audio:base})}throw e}}
 async function switchMic(){if(!voice||!local)return;try{const s=await getMic(),t=s.getAudioTracks()[0],old=local.getAudioTracks()[0];t.enabled=!eM()&&!micTestStream;
