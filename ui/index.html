@@ -870,6 +870,73 @@ html[data-reduced-motion="on"] *,html[data-reduced-motion="on"] *::before,html[d
 #modal .blocked-row{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:8px 0}.blocked-row .nn{flex:1;min-width:0}.blocked-row button{font-size:12px}.repActions{display:flex;gap:8px;flex-wrap:wrap}.repActions button{flex:1}
 @media(max-width:700px){.ghGuild{flex-wrap:wrap}.ghGuild>b{max-width:none}.server-rep{flex-basis:100%}}
 </style>
+<style id="uifix">
+/* ===== server header + rep: name and menu on one row, rep widget gets its own full-width row ===== */
+#gh{align-items:center;gap:6px;min-width:0}
+#gh .ghGuild{flex:1 1 0;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+#gh .ghGuild>b{order:0;flex:1 1 0;max-width:none;min-width:0;line-height:32px}
+#gh #gmenu,#gh #newdm{width:32px;height:32px;padding:0;flex:none}
+#gh #gmenu{order:1}
+#gh .server-rep{order:2;flex:1 1 100%;width:100%;min-width:0;display:flex;align-items:center;gap:6px;padding:4px 4px 4px 12px;border-radius:999px}
+#gh .server-rep :is(.repLevel,.rep-count){flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#gh .server-rep .repTrack{flex:1 1 24px;min-width:16px}
+#gh .server-rep button{width:auto;height:26px;min-width:0;padding:0 10px;flex:none;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--line);background:var(--raise);color:var(--tx);font-size:12px;font-weight:600;line-height:1;white-space:nowrap}
+#gh .server-rep button:hover{border-color:var(--dim);background:var(--hi)}
+#gh .server-rep button.on{background:var(--ac);border-color:var(--ac);color:#1c0610}
+
+/* ===== edit-profile pencil: real icon in an accent badge, never a font glyph, never hidden ===== */
+.meRow #meBtn::after,#meBtn::after{content:"";display:block;position:static;flex:none;width:26px;height:26px;margin-left:auto;border-radius:50%;opacity:1;font-size:0;
+  background:var(--ac) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c0610' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E") no-repeat center/14px 14px;box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 22%,transparent);transition:transform .15s}
+.meRow #meBtn:hover::after,#meBtn:hover::after,#meBtn:focus-visible::after{transform:scale(1.1) rotate(-8deg);opacity:1;background-color:var(--ac)}
+/* compact spots where only the avatar is shown: pencil becomes a small corner badge */
+@media(max-width:700px){
+ .meRow #meBtn,#meBtn{position:relative;overflow:visible}
+ .meRow #meBtn::after,#meBtn::after{display:block;position:absolute;right:-4px;top:-4px;margin:0;width:18px;height:18px;background-size:10px 10px;box-shadow:0 0 0 2px var(--panel)}
+}
+#edgeTop .meRow #meBtn::after,#edgeBottom .meRow #meBtn::after{display:block;position:absolute;right:-4px;top:-4px;margin:0;width:18px;height:18px;background-size:10px 10px;box-shadow:0 0 0 2px var(--panel)}
+#edgeTop .meRow #meBtn,#edgeBottom .meRow #meBtn{position:relative}
+
+/* ===== settings dialog: stop the grid growing wider than the dialog ===== */
+.sdlg{grid-template-columns:minmax(0,1fr)}
+.sdlg>*,.sdlg section>*{min-width:0}
+.sdlg section{grid-template-columns:minmax(0,1fr)}
+.sdlg .tabs2{width:100%;max-width:100%;flex-wrap:wrap;gap:4px;overflow:visible;border-radius:20px}
+.sdlg .tabs2 button{flex:0 0 auto;white-space:nowrap;padding:6px 10px;font-size:13px}
+.sdlg :is(p,small,.hint,.fl,label,.pr>div){overflow-wrap:anywhere}
+.sdlg .pr{min-width:0}.sdlg .pr>div:first-child{min-width:0;flex:1 1 auto}.sdlg .pr>:last-child{flex:none}
+.sdlg :is(img,svg,canvas,video,select){max-width:100%}
+/* Sign out / Done: same size, always visible at the bottom of the dialog */
+.sdlg>.pact{position:sticky;bottom:-16px;z-index:5;margin:auto -16px -16px;padding:12px 16px 16px;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;
+  background:linear-gradient(180deg,transparent,var(--panel) 22%);border-top:1px solid var(--line)}
+.sdlg>.pact button{flex:0 1 auto;min-width:104px;height:38px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.sdlg>.pact #gx{margin-left:auto}
+@media(max-width:480px){.sdlg>.pact button{flex:1 1 0;min-width:0}.sdlg>.pact #gx{margin-left:0}}
+
+/* ===== context menu toggles: label on the left, Enabled / Disabled on the right ===== */
+#cm:has(button.tg) button{max-width:none}
+#cm button.tg{display:flex;align-items:center;justify-content:space-between;gap:18px;max-width:none;overflow:visible}
+#cm button.tg>span{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis}
+#cm button.tg .st{flex:none;font-style:normal;font-size:12px;font-weight:600;color:var(--dim);padding:2px 9px;border-radius:999px;border:1px solid var(--line)}
+#cm button.tg .st.on{color:#1c0610;background:var(--live);border-color:var(--live)}
+
+/* ===== 701-900px: a leftover rule turned the sidebar sideways inside its 244px column ===== */
+@media(min-width:701px){
+ #edgeLeft #side,#edgeRight #side{flex-direction:column;align-items:stretch}
+ #side #online,#side #offline{flex-direction:column}
+}
+
+/* ===== phone / top-bottom strip: header fits the visible area, channel list no longer collapses to 0 width ===== */
+#edgeTop #gh,#edgeBottom #gh{order:-1;flex:0 0 auto;width:max(220px,calc(100vw - 175px))}
+#edgeTop #nav,#edgeBottom #nav{flex:0 0 auto;overflow:visible;max-width:none}
+#edgeTop #chs,#edgeBottom #chs{flex:0 0 auto;overflow:visible;max-width:none}
+
+/* ===== general scaling safety ===== */
+.pk{max-width:calc(100vw - 16px);max-height:min(85vh,calc(100dvh - 24px))}
+.pk.wide{width:min(680px,calc(100vw - 16px))!important}
+.pc{max-width:calc(100vw - 16px)}
+#modal,#prof,#picker{padding:8px}
+#txt::placeholder{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
 </head><body>
 <div id="login"><form id="lf" data-m="login" novalidate>
   <h1>Huddle</h1><p class="tag">Everyone, together.</p>
@@ -1094,7 +1161,7 @@ const chObj=i=>{const g=gOf(i);return g&&g.channels.find(c=>c.id==i)||{}},
 const cg=i=>(hasP(G[sel],'channels')||hasP(G[sel],'roles'))?`<i class="cg" data-e="${i}" title="Edit channel">⚙</i>`:'';
 const colGet=g=>{try{return JSON.parse(localStorage.getItem('cc:'+g)||'[]')}catch{return[]}},colSet=(g,a)=>{try{localStorage.setItem('cc:'+g,JSON.stringify(a))}catch{}};
 function side(){const g=G[sel],home=!g;
-  if(home)$('#gh').innerHTML='<b>Direct Messages</b><button id="newdm" title="New message">＋</button>';else{const voters=((REP.servers||{})[g.id]||{}).voters||[],count=voters.length,level=serverRepLevel(g.id),thresholds=[3,7,12,16,30,40,50,80,90,100],next=thresholds[level]||100,prev=level?thresholds[level-1]:0,prog=level>=10?100:Math.max(0,Math.min(100,(count-prev)/Math.max(1,next-prev)*100));$('#gh').innerHTML=`<div class="ghGuild"><b>${esc(g.name)}</b><div class="server-rep" title="Community reputation"><span class="repLevel">Level ${level}</span><div class="repTrack" aria-label="${count} reputation votes"><i style="--prog:${prog}%"></i></div><span class="rep-count">${count} rep</span><button type="button" data-server-rep="${esc(g.id)}" title="Give or remove your server rep">${voters.includes(oid)?'✓ Repped':'＋ Rep'}</button></div><button id="gmenu" title="Server menu">⋯</button></div>`;}
+  if(home)$('#gh').innerHTML='<b>Direct Messages</b><button id="newdm" title="New message">＋</button>';else{const voters=((REP.servers||{})[g.id]||{}).voters||[],count=voters.length,level=serverRepLevel(g.id),thresholds=[3,7,12,16,30,40,50,80,90,100],next=thresholds[level]||100,prev=level?thresholds[level-1]:0,prog=level>=10?100:Math.max(0,Math.min(100,(count-prev)/Math.max(1,next-prev)*100));$('#gh').innerHTML=`<div class="ghGuild"><b>${esc(g.name)}</b><div class="server-rep" title="Community reputation"><span class="repLevel">Level ${level}</span><div class="repTrack" aria-label="${count} reputation votes"><i style="--prog:${prog}%"></i></div><span class="rep-count">${count} rep</span><button type="button" class="repBtn${voters.includes(oid)?' on':''}" data-server-rep="${esc(g.id)}" title="Give or remove your server rep">${voters.includes(oid)?'✓ Repped':'＋ Rep'}</button></div><button id="gmenu" title="Server menu">⋯</button></div>`;}
   const cats=home?[]:(g.categories||[]),inCat=c=>cats.some(k=>k.id==c.cat),own=!home&&hasP(g,'channels');
   const mixH=c=>c.type=='voice'?vocH(c):tabH(c.id);
   const dmRow=i=>{const o=dmO(i),n=(P[o]||{}).name||'?';return `<span class="dmr">${av(o,n)}<span class="nn">${esc(n)}</span></span>`},
@@ -1527,7 +1594,7 @@ if(navigator.mediaDevices&&navigator.mediaDevices.addEventListener)navigator.med
 function setDialog(){sRefresh=null;if(window.beginLayoutPreview)window.beginLayoutPreview();const TABS=[['ap','Appearance'],['nt','Notifications'],['av','Voice & video'],['ac','Accessibility'],['pv','Privacy'],['rp','Reputation'],['ad','Advanced']];
   modal(`<div class="sdlg"><h3>Settings</h3><div class="tabs2" role="tablist">${TABS.map(([k,t])=>`<button role="tab" data-t="${k}">${t}</button>`).join('')}</div>
   <section data-p="ap"></section>${TABS.slice(1).map(([k,t])=>`<section data-p="${k}" hidden><div class="soon"><b>${t}</b><span>Nothing here yet. Settings you add will show up in this tab.</span></div></section>`).join('')}
-  <div class="pact" style="position:relative;left:-12px"><button class="off" id="so">Sign out</button><button class="on" id="gx">Done</button></div></div>`,()=>{
+  <div class="pact"><button class="off" id="so">Sign out</button><button class="on" id="gx">Done</button></div></div>`,()=>{
     const box=$('#modal .pk'),ap=box.querySelector('[data-p=ap]');box.classList.add('wide');
     const show=t=>{box.querySelectorAll('[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t==t));box.querySelectorAll('[data-p]').forEach(p=>p.hidden=p.dataset.p!=t);if(t!='av'&&micTestStream)stopMicTest();if(t=='av'&&window.avDraw)window.avDraw()};
     const draw=()=>{const th=LS.get('huddle.theme')||'midnight',ac=LS.get('huddle.accent')||'';
@@ -1627,7 +1694,7 @@ const catOpts=(g,sel)=>'<option value="">No category</option>'+(g.categories||[]
 function chDialog(g,pre){modal('<h3>Create channel</h3><input id="cn" placeholder="channel-name" maxlength="24"><select id="ct"><option value="text">Text channel</option><option value="voice">Voice channel</option></select>'+((g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':'')+'<label class="tg"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"></label><button class="on" id="chc">Create</button><button id="gx">Cancel</button>',()=>{
   $('#cn').focus();$('#chc').onclick=()=>{const n=$('#cn').value.trim();if(n&&send({t:'chadd',g:g.id,name:n,type:$('#ct').value,cat:$('#cc')?$('#cc').value:'',nsfw:$('#c18').checked}))closeM()};$('#cn').onkeydown=e=>{if(e.key=='Enter')$('#chc').click()};$('#gx').onclick=closeM})}
 function gMenu(btn,g0,pt){const g=g0||G[sel],r=pt||btn.getBoundingClientRect(),own=g.owner==oid,mc=hasP(g,'channels'),sv=hasP(g,'server'),rl=hasP(g,'roles');
-  const sp=((P[oid]||{}).serverPrivacy||{})[g.id]||{};cm.innerHTML=[['mute',mG(g.id)?'Unmute server'+muteTag(MUTE.g[g.id]):'Mute server…'],['inv','Copy invite code'],...(sv||hasP(g,'invites')?[['gen','New invite code']]:[]),...(sv?[['name','Name, icon & colour']]:[]),[ 'pfr',(sp.friendRequests?'✓ ':'□ ')+'Block friend requests from this server'],['pdm',(sp.dms?'✓ ':'□ ')+'Block DMs from this server'],...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(hasP(g,'emojis')?[['emojis','Manage custom emojis']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':''}>${t}</button>`).join('');cm.hidden=false;
+  const sp=((P[oid]||{}).serverPrivacy||{})[g.id]||{};cm.innerHTML=[['mute',mG(g.id)?'Unmute server'+muteTag(MUTE.g[g.id]):'Mute server…'],['inv','Copy invite code'],...(sv||hasP(g,'invites')?[['gen','New invite code']]:[]),...(sv?[['name','Name, icon & colour']]:[]),['pfr',`<span>Block friend requests from this server</span><em class="st${sp.friendRequests?' on':''}">${sp.friendRequests?'Enabled':'Disabled'}</em>`],['pdm',`<span>Block DMs from this server</span><em class="st${sp.dms?' on':''}">${sp.dms?'Enabled':'Disabled'}</em>`],...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(hasP(g,'emojis')?[['emojis','Manage custom emojis']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':a=='pfr'||a=='pdm'?` class="tg" role="switch" aria-checked="${!!sp[a=='pfr'?'friendRequests':'dms']}"`:''}>${t}</button>`).join('');cm.hidden=false;
   cm.style.left=Math.max(4,Math.min(r.left,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(r.bottom+4,innerHeight-cm.offsetHeight-8))+'px';
   cm.onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const a=b.dataset.a;
     if((a=='del'||a=='leave')&&!b.dataset.sure){b.dataset.sure=1;b.textContent='Click again to confirm';return}
@@ -1926,7 +1993,7 @@ addEventListener('resize',()=>closeCard(true));addEventListener('scroll',e=>{if(
 $('#prof').addEventListener('mousedown',e=>{if(e.target.id=='prof')closeProfile()});
 addEventListener('keydown',e=>{if(e.key=='Escape'){if(window.popEl)closeCard();else if($('#prof').style.display=='grid')closeProfile()}});
 $('#plist').onclick=e=>{const b=e.target.closest('.pa');if(b)openProfile(b.dataset.o,false,b)};$('#meBtn').onclick=()=>openProfile(oid,true);
-$('#meBtn').addEventListener('contextmenu',e=>{if(oid[0]==='u')return;e.preventDefault();e.stopPropagation();const blocked=!!(P[oid]||{}).blockServerFriendRequests;cm.innerHTML=`<button data-a="sbfr">${blocked?'✓ ':''}Block friend requests from server members</button>`;cm.hidden=false;cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY,innerHeight-cm.offsetHeight-8))+'px';cm.onclick=ev=>{const b=ev.target.closest('[data-a="sbfr"]');if(!b)return;cmClose();const enabled=!((P[oid]||{}).blockServerFriendRequests);if(!send({t:'priv',blockServerFriendRequests:enabled}))toast('Not connected. Try again in a moment.');else toast(enabled?'Friend requests from server members are blocked.':'Friend requests from server members are allowed.',true)}});
+$('#meBtn').addEventListener('contextmenu',e=>{if(oid[0]==='u')return;e.preventDefault();e.stopPropagation();const blocked=!!(P[oid]||{}).blockServerFriendRequests;cm.innerHTML=`<button data-a="sbfr" class="tg" role="switch" aria-checked="${blocked}"><span>Block friend requests from server members</span><em class="st${blocked?' on':''}">${blocked?'Enabled':'Disabled'}</em></button>`;cm.hidden=false;cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY,innerHeight-cm.offsetHeight-8))+'px';cm.onclick=ev=>{const b=ev.target.closest('[data-a="sbfr"]');if(!b)return;cmClose();const enabled=!((P[oid]||{}).blockServerFriendRequests);if(!send({t:'priv',blockServerFriendRequests:enabled}))toast('Not connected. Try again in a moment.');else toast(enabled?'Friend requests from server members are blocked.':'Friend requests from server members are allowed.',true)}});
 (async()=>{const s=await window.api.get();showForm(!s.invite);const t=tokGet();if(t&&s.invite){CRED={mode:'token',token:t};connect('')}})(); // signs in automatically only if “Remember me” was ticked
 </script><script>/* Huddle motion: animate only live messages, never a whole-channel repaint */
 (()=>{const box=document.getElementById('msgs');if(!box||!window.MutationObserver)return;
