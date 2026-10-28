@@ -1149,17 +1149,12 @@ t=W(`<path d="M23 12H73A15 15 0 0 1 88 27V55A15 15 0 0 1 73 70H44L26 86V70H23A15
 v=W(`<path transform="translate(7.2 7.2) scale(3.4)" d="${PH}" fill="url(#tl)"/>`,TL),
 fr=W(`<circle cx="63" cy="33" r="12" fill="url(#tl)"/><path d="M40 76c0-14 10-24 23-24s23 10 23 24z" fill="url(#tl)"/>
 <g stroke="#070709" stroke-width="3.5" paint-order="stroke"><circle cx="35" cy="38" r="14" fill="url(#pk)"/><path d="M8 88c0-18 12-31 27-31s27 13 27 31z" fill="url(#pk)"/></g>`,PK+TL),
-com=W(`<g transform="translate(0 -8)"><path d="M24 30h48c10 0 17 8 19 22l3 16c1 8-4 14-11 14-5 0-8-3-12-8l-4-5H29l-4 5c-4 5-7 8-12 8-7 0-12-6-11-14l3-16C7 38 14 30 24 30z" fill="url(#pc)"/>
+com=W(`<g transform="translate(48 48) scale(.8) translate(-48 -56)"><path d="M24 30h48c10 0 17 8 19 22l3 16c1 8-4 14-11 14-5 0-8-3-12-8l-4-5H29l-4 5c-4 5-7 8-12 8-7 0-12-6-11-14l3-16C7 38 14 30 24 30z" fill="url(#pc)"/>
 <path d="M23 43h8v5h5v8h-5v5h-8v-5h-5v-8h5z" fill="#3b2412"/><circle cx="68" cy="47" r="5" fill="#3b2412"/><circle cx="78" cy="57" r="5" fill="#3b2412"/></g>`,PC),
-sc=W(`<rect x="8" y="12" width="80" height="64" rx="11" fill="url(#gd)" stroke="#0a0a0d" stroke-width="2.2"/>
-<clipPath id="c"><rect x="15" y="19" width="66" height="50" rx="5.5"/></clipPath>
-<g clip-path="url(#c)"><rect x="15" y="19" width="66" height="50" fill="url(#sky)"/><circle cx="62" cy="43" r="9.5" fill="#fff2c9"/><circle cx="62" cy="43" r="14" fill="#fff2c9" opacity=".25"/>
-<path d="M15 69V53l17-15 14 17 12-10 23 19v5z" fill="#6a357f"/><path d="M15 69V60l14-9 19 18z" fill="#3a1c55"/><path d="M48 69l13-12 20 12z" fill="#4a2466"/>${SP(28,31,1,'#fff')}${SP(44,27,.6,'#ffe9f2')}${SP(72,28,.7,'#fff')}</g>
-<rect x="15" y="19" width="66" height="50" rx="5.5" fill="none" stroke="#fff" stroke-opacity=".35"/>
-<path d="M18 12h60a10 10 0 0 1 10 9c-18 4-62 4-80 0a10 10 0 0 1 10-9z" fill="url(#g)" opacity=".5"/>
-<rect x="31" y="80" width="34" height="9" rx="4.5" fill="url(#gd)" stroke="#0a0a0d" stroke-width="1.6"/><path d="M38 84.5h20" stroke="#8a5413" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
-<circle cx="83" cy="17" r="6.6" fill="#3fe0c5" stroke="#0a0a0d" stroke-width="2"/><circle cx="83" cy="17" r="2.6" fill="#fff"/>`,
-L('gd','#ffe9bd','#ffc27a','#d68a38')+`<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2b1f5c"/><stop offset=".55" stop-color="#ff5c93"/><stop offset="1" stop-color="#ffc27a"/></linearGradient>`);
+sc=W(`<clipPath id="c"><rect x="8" y="14" width="80" height="68" rx="15"/></clipPath>
+<rect x="8" y="14" width="80" height="68" rx="15" fill="url(#lv)"/>
+<g clip-path="url(#c)"><circle cx="65" cy="37" r="8.5" fill="#fff"/><path d="M6 84L31 48 50 70 62 57 90 88z" fill="#fff"/></g>`,
+L('lv','#c4b8ff','#9a8bff','#6f5fe6'));
 return{t,v,fr,com,sc}})();
 </script>
 <style>
