@@ -2162,12 +2162,12 @@ function refreshTiles(){document.querySelectorAll('#stage .tile').forEach(t=>{co
 const SW=['#ff5c93','#ffc27a','#3fe0c5','#6cc4ff','#b79cff','#c4f06a','#ff8a5c','#f1efe9'];
 function isGifAsset(file){return !!file&&((file.type||'').toLowerCase()==='image/gif'||/\.gif$/i.test(file.name||''))}
 function toIcon(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),i=new Image();
-  i.onload=()=>{const S=64,c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d'),k=Math.min(S/i.width,S/i.height),w=i.width*k,h=i.height*k;
-    x.drawImage(i,(S-w)/2,(S-h)/2,w,h);URL.revokeObjectURL(u);ok(c.toDataURL('image/png'))};
+  i.onload=()=>{const S=128,c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d'),k=Math.min(S/i.width,S/i.height),w=i.width*k,h=i.height*k;
+    x.imageSmoothingQuality='high';x.drawImage(i,(S-w)/2,(S-h)/2,w,h);URL.revokeObjectURL(u);ok(c.toDataURL('image/png'))};
   i.onerror=()=>{URL.revokeObjectURL(u);no()};i.src=u})}
 function toAvatar(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),i=new Image();
-  i.onload=()=>{const S=128,c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d'),q=Math.min(i.width,i.height);
-    x.fillStyle='#000';x.fillRect(0,0,S,S);x.drawImage(i,(i.width-q)/2,(i.height-q)/2,q,q,0,0,S,S);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.85))};
+  i.onload=()=>{const S=256,c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d'),q=Math.min(i.width,i.height);
+    x.fillStyle='#000';x.fillRect(0,0,S,S);x.imageSmoothingQuality='high';x.drawImage(i,(i.width-q)/2,(i.height-q)/2,q,q,0,0,S,S);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.95))};
   i.onerror=()=>{URL.revokeObjectURL(u);no()};i.src=u})}
 async function upImageAsset(file,kind,gid=''){
   if(!file||file.size>8*1024*1024)throw new Error('File is too large');
@@ -2179,8 +2179,8 @@ async function upImageAsset(file,kind,gid=''){
   const data=await r.json();if(!data.url)throw new Error('Image upload failed');return data.url;
 }
 function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),i=new Image();
-  i.onload=()=>{const k=Math.min(1,900/i.width),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);
-    const x=c.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>b?ok(b):no(),'image/jpeg',.85)};
+  i.onload=()=>{const k=Math.min(1,1920/i.width),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);
+    const x=c.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,c.width,c.height);x.imageSmoothingQuality='high';x.drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>b?ok(b):no(),'image/jpeg',.95)};
   i.onerror=()=>{URL.revokeObjectURL(u);no()};i.src=u})}
 async function upBanner(f){ // GIF and WebP are sent untouched so animation survives; other images are shrunk first
   const keep=f.type=='image/gif'||f.type=='image/webp';let blob=f,ext=f.type=='image/gif'?'gif':'webp';
@@ -2291,9 +2291,8 @@ async function emPrep(f){const T={'image/png':'png','image/jpeg':'jpg','image/gi
   if(!ext)throw 'Use a PNG, JPG, GIF or WebP image.';
   if(ext=='gif'){if(f.size>LIM)throw 'That GIF is over 256 KB. Use a smaller or shorter one.';return{blob:f,ext}}
   if(f.size<=LIM)return{blob:f,ext};
-  const bmp=await createImageBitmap(f),k=Math.min(1,128/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');
-  c.width=Math.max(1,Math.round(bmp.width*k));c.height=Math.max(1,Math.round(bmp.height*k));c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
-  const b=await new Promise(r=>c.toBlob(r,'image/png'));if(!b||b.size>LIM)throw 'That image is too big even after shrinking.';return{blob:b,ext:'png'}}
+  const bmp=await createImageBitmap(f);let b=null;for(const S of [256,192,128]){const k=Math.min(1,S/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(bmp.width*k));c.height=Math.max(1,Math.round(bmp.height*k));const g=c.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(bmp,0,0,c.width,c.height);b=await new Promise(r=>c.toBlob(r,'image/png'));if(b&&b.size<=LIM)break}
+  if(!b||b.size>LIM)throw 'That image is too big even after shrinking.';return{blob:b,ext:'png'}}
 function emojiDialog(){let blob=null,ext='',busy=false;
   modal(`<h3>Custom emojis</h3><small class="hint">Make your own from a picture or GIF. Everyone on the server can use it by typing :name: or picking it from the emoji picker. Pictures over 256 KB are shrunk; GIFs need to be under 256 KB already.</small>
     <div class="emnew"><button type="button" id="emch">Choose image</button><span id="emprev"></span><input id="emnm" placeholder="name" maxlength="24" autocomplete="off" aria-label="Emoji name"><button type="button" class="on" id="emup" disabled>Add</button></div>
