@@ -2195,7 +2195,7 @@ function pcPaint(){gApply($('#prof .pcW'),pf);{const np=$('#npv');if(np){np.text
   document.querySelectorAll('#prof .sw[data-c]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c==pf.color))}
 function closeProfile(){$('#prof').style.display='none';$('#prof').innerHTML='';saving=false;$('#txt').focus()}
 function openProfile(o,edit,anchor){if(!o)return;if(!edit)return showCard(o,anchor);const isMe=true,u=users.find(x=>x.oid==o),p=P[o]||{};
-  pfO=o;pf={name:p.name||(u?u.name:isMe?myName:'?'),bio:p.bio||'',color:p.color||'',avatar:p.avatar||'',banner:p.banner||'',gl:p.gl||'',gr:p.gr||'',fx:p.fx||'',rc:p.rc||'',cg:p.cg||'',cc:p.cc||'',cc2:p.cc2||'',ci:p.ci||2,nfx:p.nfx||'',nc:p.nc||'',nc2:p.nc2||'',bfx:p.bfx||'',bc:p.bc||'',pn:p.pn||'',cs:p.cs||'',ce:p.ce||'',pl:p.pl||''};const m=$('#prof');
+  pfO=o;pf={name:p.name||(u?u.name:isMe?myName:'?'),bio:p.bio||'',color:p.color||'',avatar:p.avatar||'',banner:p.banner||'',gl:p.gl||'',gr:p.gr||'',fx:p.fx||'',rc:p.rc||'',cg:p.cg||'',cc:p.cc||'',cc2:p.cc2||'',ci:p.ci||2,nfx:p.nfx||'',nc:p.nc||'',nc2:p.nc2||'',bfx:p.bfx||'',bc:p.bc||'',pn:p.pn||'',cs:p.cs||'',ce:p.ce||'',pl:p.pl||'',dec:p.dec||'',nf:p.nf||'',th:p.th||'',bs:p.bs||'',tags:Array.isArray(p.tags)?p.tags.slice(0,5):[]};const m=$('#prof');
   m.innerHTML=`<div class="pcW gfx"><div class="pc" role="dialog" aria-modal="true" aria-label="${isMe?'Edit profile':'Profile'}"><div class="ban">${isMe?'<div class="bbtns"><button id="bup">'+BI.image+'Change banner</button><button id="brm">'+BI.trash+'Remove banner</button></div>':''}</div>
     <div class="phead"><div id="pav"></div>${isMe?'<div class="pbtns"><button id="pup">'+BI.upload+'Upload photo</button><button id="prm">'+BI.trash+'Remove</button></div>':''}</div>
     ${isMe?`<label class="pfl"><input id="pname" maxlength="24" placeholder="Name" aria-label="Name" autocomplete="off"><small class="hint">Your display name. Friends find you with this plus your number.</small></label>
@@ -2204,7 +2204,7 @@ function openProfile(o,edit,anchor){if(!o)return;if(!edit)return showCard(o,anch
     <label class="pfl"><input id="pcs" maxlength="60" placeholder="Custom status" aria-label="Custom status" autocomplete="off"><small class="hint">A short note under your online status, like “Back at 8”.</small></label>
     <div class="sws" role="group" aria-label="Colour">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="Colour ${c}"></button>`).join('')}<label class="sw cu" title="Custom colour"><input type="color" id="pcu" value="#ff5c93" aria-label="Custom colour"></label></div>
     <small class="hint">Your accent colour. Tints your name, photo fallback and card.</small>
-    <div class="efxh">Effects</div><div class="efx"><div class="eft"><b>Profile gradient</b><small>Tints your card, and fills your banner when it has no image</small></div><div class="pfx"><label>Left <input type="color" id="pgl" value="#ff5c93"></label><label>Right <input type="color" id="pgr" value="#ffc27a"></label><button id="pgc">Clear</button></div></div><div class="efx"><div class="eft"><b>Photo effect</b><small>Animated light around your profile picture</small></div><div class="pfx"><label>Style <select id="pfx"><option value="">None</option><option value="ring">Ring</option><option value="glow">Soft glow</option><option value="neon">Neon</option><option value="pulse">Pulse</option><option value="breathe">Breathe</option><option value="flicker">Flicker</option><option value="heartbeat">Heartbeat</option><option value="dash">Dashed ring (spinning)</option><option value="comet">Comet</option><option value="sparkle">Sparkles</option><option value="orbit">Orbit (uses your gradient)</option><option value="rainbow">Rainbow</option><option value="aurora">Aurora</option><option value="ripple">Ripple</option><option value="fire">Fire</option><option value="electric">Electric</option><option value="halo">Halo</option><option value="glitch">Glitch</option></select></label><label>Colour <input type="color" id="prc" value="#ff5c93"></label></div></div><div class="efx"><div class="eft"><b>Card glow</b><small>Light around your whole profile card</small></div><div class="pfx"><label>Style <select id="pgs"><option value="">Off</option><option value="steady">Steady</option><option value="breathe">Breathe</option><option value="flicker">Neon flicker</option><option value="heartbeat">Heartbeat</option><option value="aurora">Aurora (2 colours)</option><option value="sweep">Comet (2 colours)</option><option value="rainbow">Rainbow</option></select></label></div><div class="pfx" id="pgrow" style="display:none"><label>Colour <input type="color" id="pgc1"></label><label>Second <input type="color" id="pgc2"></label><label>Intensity <select id="pgi"><option value="1">Soft</option><option value="2">Medium</option><option value="3">Strong</option></select></label></div></div><div class="efx"><div class="eft"><b>Name style</b><small>How your name looks on your profile card</small></div><div class="pfx"><label>Style <select id="pnf"><option value="">Plain (your colour)</option><option value="gradient">Gradient</option><option value="flow">Flowing gradient</option><option value="shimmer">Shimmer</option><option value="neon">Neon</option><option value="rainbow">Rainbow</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="pulse">Pulse</option></select></label></div><div class="pfx" id="pnrow" style="display:none"><label>Colour <input type="color" id="pnc1"></label><label>Second <input type="color" id="pnc2"></label><span id="npv" class="npv">Preview</span></div></div><div class="efx"><div class="eft"><b>Banner effect</b><small>Animated overlay on top of your banner</small></div><div class="pfx"><label>Style <select id="pbf"><option value="">None</option><option value="shine">Shine sweep</option><option value="aurora">Aurora wash</option><option value="scan">Scanlines</option><option value="sparkle">Sparkles</option></select></label><label id="pbl" style="display:none">Colour <input type="color" id="pbc"></label></div></div>
+    ${window.persHTML?persHTML():''}<div class="efxh">Effects</div><div class="efx"><div class="eft"><b>Profile gradient</b><small>Tints your card, and fills your banner when it has no image</small></div><div class="pfx"><label>Left <input type="color" id="pgl" value="#ff5c93"></label><label>Right <input type="color" id="pgr" value="#ffc27a"></label><button id="pgc">Clear</button></div></div><div class="efx"><div class="eft"><b>Photo effect</b><small>Animated light around your profile picture</small></div><div class="pfx"><label>Style <select id="pfx"><option value="">None</option><option value="ring">Ring</option><option value="glow">Soft glow</option><option value="neon">Neon</option><option value="pulse">Pulse</option><option value="breathe">Breathe</option><option value="flicker">Flicker</option><option value="heartbeat">Heartbeat</option><option value="dash">Dashed ring (spinning)</option><option value="comet">Comet</option><option value="sparkle">Sparkles</option><option value="orbit">Orbit (uses your gradient)</option><option value="rainbow">Rainbow</option><option value="aurora">Aurora</option><option value="ripple">Ripple</option><option value="fire">Fire</option><option value="electric">Electric</option><option value="halo">Halo</option><option value="glitch">Glitch</option></select></label><label>Colour <input type="color" id="prc" value="#ff5c93"></label></div></div><div class="efx"><div class="eft"><b>Card glow</b><small>Light around your whole profile card</small></div><div class="pfx"><label>Style <select id="pgs"><option value="">Off</option><option value="steady">Steady</option><option value="breathe">Breathe</option><option value="flicker">Neon flicker</option><option value="heartbeat">Heartbeat</option><option value="aurora">Aurora (2 colours)</option><option value="sweep">Comet (2 colours)</option><option value="rainbow">Rainbow</option></select></label></div><div class="pfx" id="pgrow" style="display:none"><label>Colour <input type="color" id="pgc1"></label><label>Second <input type="color" id="pgc2"></label><label>Intensity <select id="pgi"><option value="1">Soft</option><option value="2">Medium</option><option value="3">Strong</option></select></label></div></div><div class="efx"><div class="eft"><b>Name style</b><small>How your name looks on your profile card</small></div><div class="pfx"><label>Style <select id="pnf"><option value="">Plain (your colour)</option><option value="gradient">Gradient</option><option value="flow">Flowing gradient</option><option value="shimmer">Shimmer</option><option value="neon">Neon</option><option value="rainbow">Rainbow</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="pulse">Pulse</option></select></label></div><div class="pfx" id="pnrow" style="display:none"><label>Colour <input type="color" id="pnc1"></label><label>Second <input type="color" id="pnc2"></label><span id="npv" class="npv">Preview</span></div></div><div class="efx"><div class="eft"><b>Banner effect</b><small>Animated overlay on top of your banner</small></div><div class="pfx"><label>Style <select id="pbf"><option value="">None</option><option value="shine">Shine sweep</option><option value="aurora">Aurora wash</option><option value="scan">Scanlines</option><option value="sparkle">Sparkles</option></select></label><label id="pbl" style="display:none">Colour <input type="color" id="pbc"></label></div></div>
     <p id="pferr" class="perr" role="alert"></p><div class="pact"><button id="pcx">Cancel</button><button id="psv" class="on">Save profile</button></div>
     <input type="file" id="pfile" accept="image/png,image/jpeg,image/gif,image/webp" hidden><input type="file" id="bfile" accept="image/*" hidden>`:''}</div></div>`;
   m.style.display='grid';pcPaint();$('#pcx').onclick=closeProfile;
@@ -2231,7 +2231,7 @@ function openProfile(o,edit,anchor){if(!o)return;if(!edit)return showCard(o,anch
   $('#pup').onclick=()=>$('#pfile').click();$('#prm').onclick=()=>{pf.avatar='';pcPaint()};
   $('#pfile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{pf.avatar=isGifAsset(f)?await upImageAsset(f,'avatar'):await toAvatar(f);pcPaint()}catch{$('#pferr').textContent='That image could not be read (GIF and images up to 8 MB are supported).'}};
   $('#psv').onclick=()=>{const n=pf.name.trim();if(!n){$('#pferr').textContent='Enter a name.';return}
-    saving=true;$('#pferr').textContent='';if(!send({t:'profile',name:n,bio:pf.bio.trim(),color:pf.color,avatar:pf.avatar,banner:pf.banner,gl:pf.gl,gr:pf.gr,fx:pf.fx,rc:pf.rc,cg:pf.cg,cc:pf.cc,cc2:pf.cc2,ci:pf.ci,nfx:pf.nfx,nc:pf.nc,nc2:pf.nc2,bfx:pf.bfx,bc:pf.bc,pn:pf.pn,cs:pf.cs,ce:pf.ce,pl:pf.pl})){saving=false;$('#pferr').textContent='Not connected. Try again in a moment.'}};
+    saving=true;$('#pferr').textContent='';if(!send({t:'profile',name:n,bio:pf.bio.trim(),color:pf.color,avatar:pf.avatar,banner:pf.banner,gl:pf.gl,gr:pf.gr,fx:pf.fx,rc:pf.rc,cg:pf.cg,cc:pf.cc,cc2:pf.cc2,ci:pf.ci,nfx:pf.nfx,nc:pf.nc,nc2:pf.nc2,bfx:pf.bfx,bc:pf.bc,pn:pf.pn,cs:pf.cs,ce:pf.ce,pl:pf.pl,dec:pf.dec,nf:pf.nf,th:pf.th,bs:pf.bs,tags:pf.tags})){saving=false;$('#pferr').textContent='Not connected. Try again in a moment.'}};
   $('#pname').focus()}
 
 const EMC=[['recent','🕘'],['custom','🖼️'],['smileys','😀'],['people','👋'],['animals','🐶'],['food','🍔'],['activities','⚽'],['travel','🚗'],['objects','💡'],['symbols','❤️']];
@@ -2413,7 +2413,7 @@ const myTmo=()=>{const g=G[sel],t=g&&(g.timeouts||{})[oid];return t&&t>Date.now(
   canFile=ch=>chCan(ch,'send')&&chCan(ch,'files'),
   canVc=ch=>chCan(ch,'view')&&chCan(ch,'connect');
 function tmoPaint(){const t=myTmo(),x=$('#txt'),f=canFile(cur),sd=canSend(cur);if(!x)return;
-  x.disabled=!!t||!sd;x.placeholder=t?'⏱ You are timed out for '+tLeft(t-Date.now()):sd?'Send a message':chCan(cur,'view')?'You do not have permission to send messages in this channel':'You do not have permission to view this channel';$('#go').disabled=!!t||!sd;
+  x.disabled=!!t||!sd;x.placeholder=t?'⏱ You are timed out for '+tLeft(t-Date.now()):sd?(window.hzPh?hzPh():'Send a message'):chCan(cur,'view')?'You do not have permission to send messages in this channel':'You do not have permission to view this channel';$('#go').disabled=!!t||!sd;
   const a=$('#attach');a.disabled=!!t||!f;a.title=t?'You are timed out':f?'Share a file':'You do not have permission to send files in this channel'}
 function tmoNote(ng){const was=((G[ng.id]||{}).timeouts||{})[oid],now=(ng.timeouts||{})[oid];if(now&&now>Date.now()&&now!=was)toast('You were timed out. You can chat again in '+tLeft(now-Date.now())+'.')}
 setInterval(tmoPaint,1000);
@@ -2682,6 +2682,222 @@ const pb=$('#pinBtn');if(pb)pb.onclick=()=>pinsOpen(cur);const po=$('#pollBtn');
 /* load the pin count whenever a chat opens */
 let lastCur=null;setInterval(()=>{if(cur!==lastCur){lastCur=cur;pinBadge();jSync();if(cur&&!PINS[cur])send({t:'pinsget',ch:cur})}},250);
 setInterval(()=>document.querySelectorAll('#msgs .poll small').forEach(s=>{const el=s.closest('.poll'),m=(hist[cur]||[]).find(x=>x.id==el.dataset.poll);if(m&&m.poll){const t=pollHtml(m);if(el.outerHTML!==t)el.outerHTML=t}}),30000);
+})();
+</script>
+<style id="huddle-v3">
+/* ---------- Huddle v3: in-app media viewer, icon set, personality ---------- */
+/* ambient glow behind the app, tinted by the theme accent */
+#app{background:radial-gradient(1200px 600px at 85% -10%,color-mix(in srgb,var(--ac) 9%,transparent),transparent 60%),radial-gradient(900px 500px at -10% 110%,color-mix(in srgb,var(--ac2) 7%,transparent),transparent 60%),var(--bg)}
+main{background:transparent}
+/* icon buttons */
+.hzI{width:19px;height:19px;flex:none;display:block}
+#attach,#emBtn,#pollBtn,#go{display:grid;place-items:center;width:38px;height:38px;padding:0;border-radius:12px}
+#attach:hover,#emBtn:hover,#pollBtn:hover{background:var(--hi);color:var(--ac);transform:translateY(-1px)}
+#go{border-radius:12px}#go .hzI{transform:translateX(1px)}
+#go.fly .hzI{animation:hzFly .45s var(--ease-out)}
+@keyframes hzFly{0%{transform:none}45%{transform:translate(10px,-10px) scale(.7);opacity:0}46%{transform:translate(-10px,10px) scale(.7);opacity:0}100%{transform:none;opacity:1}}
+#pinBtn{gap:5px;padding:6px 11px;border-radius:999px}#pinBtn .hzI{width:16px;height:16px}#pinBtn b{font-size:12px}
+.hzAct button{display:grid;place-items:center}.hzAct .hzI{width:16px;height:16px}
+#msgs .rx{animation:hzPopIn .3s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes hzPopIn{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+/* media in chat: clickable, opens in the viewer */
+#msgs .bub img,#msgs .bub video,.scP img{cursor:zoom-in;border-radius:14px;transition:transform .25s var(--ease),box-shadow .25s var(--ease),filter .25s}
+#msgs .bub img:hover,.scP img:hover{transform:scale(1.012);box-shadow:0 10px 30px #0006;filter:brightness(1.05)}
+.hzVx{position:relative;display:inline-block;max-width:100%}
+.hzVx>button{position:absolute;top:8px;right:8px;width:32px;height:32px;padding:0;display:grid;place-items:center;border-radius:10px;background:#000a;border:1px solid #fff2;color:#fff;opacity:0;backdrop-filter:blur(6px)}
+.hzVx:hover>button{opacity:1}
+/* the viewer */
+#hzView{position:fixed;inset:0;z-index:9000;display:grid;grid-template-rows:auto 1fr auto;background:#000d;backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px);animation:hzFade .2s var(--ease-out) both;color:#fff}
+#hzView[hidden]{display:none}
+@keyframes hzFade{from{opacity:0}to{opacity:1}}
+#hzView header{display:flex;align-items:center;gap:10px;padding:12px 16px}
+#hzView header .who{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto}
+#hzView header .who b{display:block;font-size:14px}#hzView header .who small{opacity:.65;font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw}
+#hzView header button,#hzView .nav{background:#ffffff14;border:1px solid #ffffff1f;color:#fff;border-radius:12px;width:38px;height:38px;padding:0;display:grid;place-items:center}
+#hzView header button:hover,#hzView .nav:hover{background:#ffffff2a}
+#hzView .stage{position:relative;display:grid;place-items:center;overflow:hidden;min-height:0;cursor:zoom-in}
+#hzView .stage.z{cursor:grab}#hzView .stage.z.drag{cursor:grabbing}
+#hzView .stage img,#hzView .stage video{max-width:92vw;max-height:calc(100vh - 150px);border-radius:12px;box-shadow:0 30px 80px #000a;transition:transform .22s var(--ease-out);animation:hzZoomIn .28s var(--ease-out) both;user-select:none;-webkit-user-drag:none}
+#hzView .stage.drag img{transition:none}
+@keyframes hzZoomIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+#hzView .nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;z-index:2}
+#hzView .nav.p{left:18px}#hzView .nav.n{right:18px}#hzView .nav[hidden]{display:none}
+#hzView footer{display:flex;justify-content:center;gap:8px;padding:10px 16px 16px;font-size:12px;opacity:.75}
+#hzView .strip{display:flex;gap:6px;overflow-x:auto;max-width:80vw;padding:2px}
+#hzView .strip button{width:46px;height:46px;padding:0;border-radius:10px;overflow:hidden;border:2px solid transparent;background:#ffffff10;flex:none}
+#hzView .strip button.on{border-color:var(--ac)}#hzView .strip img{width:100%;height:100%;object-fit:cover}
+#hzView .strip i{font-style:normal;font-size:18px}
+/* personality: avatar decorations */
+.avw{position:relative}
+.hzDec{position:absolute;top:-28%;right:-24%;line-height:1;pointer-events:none;filter:drop-shadow(0 2px 3px #0008);z-index:2;animation:hzBob 3.2s ease-in-out infinite}
+.hzDec[data-d=crown]{top:-46%;right:auto;left:50%;transform:translateX(-50%) rotate(-8deg);animation:none}
+.hzDec[data-d=halo]{top:-22%;left:12%;right:12%;height:22%;border:2px solid #ffd66b;border-radius:50%;box-shadow:0 0 8px #ffd66b,inset 0 0 6px #ffd66b88;animation:hzHalo 2.6s ease-in-out infinite}
+@keyframes hzBob{50%{transform:translateY(-12%) rotate(6deg)}}
+@keyframes hzHalo{50%{transform:translateY(-14%)}}
+/* personality: name fonts (applied per person by the generated sheet) */
+.hzNf-rounded{font-family:"Segoe UI Variable Display","Nunito","Arial Rounded MT Bold",system-ui,sans-serif!important;font-weight:700!important}
+.hzNf-serif{font-family:var(--serif)!important;font-style:italic}
+.hzNf-mono{font-family:"Cascadia Code","Cascadia Mono",Consolas,monospace!important;letter-spacing:-.01em}
+.hzNf-display{font-family:Bahnschrift,"Segoe UI Black",Impact,sans-serif!important;letter-spacing:.04em;text-transform:uppercase}
+.hzNf-hand{font-family:"Segoe Print","Ink Free","Comic Sans MS",cursive!important}
+.hzNf-wide{font-family:Bahnschrift,system-ui,sans-serif!important;letter-spacing:.14em}
+/* personality: profile card themes */
+.pcard[data-th] .pcIn,#prof .pc[data-th]{background-blend-mode:normal}
+[data-th=aurora]{--thb:linear-gradient(160deg,#0d2b2a 0%,#152046 55%,#3a1450 100%);--thg:#4ff3c8}
+[data-th=sunset]{--thb:linear-gradient(160deg,#3b0f24 0%,#6b2140 45%,#c4552f 100%);--thg:#ff9a5c}
+[data-th=ocean]{--thb:linear-gradient(160deg,#051c33 0%,#0b3b63 55%,#0f6e8c 100%);--thg:#5cd2ff}
+[data-th=candy]{--thb:linear-gradient(160deg,#3d1236 0%,#7a2a6b 50%,#d76aa8 100%);--thg:#ff8fd8}
+[data-th=forest]{--thb:linear-gradient(160deg,#08160d 0%,#14321d 55%,#2c5a2e 100%);--thg:#8ee06a}
+[data-th=noir]{--thb:linear-gradient(160deg,#050505 0%,#151515 60%,#2a2a2a 100%);--thg:#e8e8e8}
+[data-th=galaxy]{--thb:radial-gradient(circle at 20% 20%,#ffffff22 0 1px,transparent 2px),radial-gradient(circle at 70% 60%,#ffffff1a 0 1px,transparent 2px),linear-gradient(160deg,#0a0620 0%,#24124d 55%,#4a1d6e 100%);--thg:#b79cff}
+[data-th=ember]{--thb:linear-gradient(160deg,#1a0703 0%,#4a1308 50%,#a3330f 100%);--thg:#ff6a3d}
+.pcard[data-th] .pcIn,#prof .pc[data-th]{background-image:var(--thb)!important;box-shadow:0 0 0 1px color-mix(in srgb,var(--thg) 45%,transparent),0 20px 60px color-mix(in srgb,var(--thg) 22%,#0008)!important}
+.hzTags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.hzTags span{font-size:12px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--pc,var(--ac)) 16%,transparent);border:1px solid color-mix(in srgb,var(--pc,var(--ac)) 35%,transparent);animation:hzPopIn .3s cubic-bezier(.2,1.6,.4,1) both}
+/* personality: message bubbles (per person, generated sheet) */
+.hzBs-glass{background:color-mix(in srgb,var(--raise) 55%,transparent)!important;backdrop-filter:blur(10px);border-color:#ffffff1f!important;box-shadow:inset 0 1px 0 #ffffff14}
+.hzBs-neon{background:color-mix(in srgb,var(--bc) 10%,var(--raise))!important;border-color:var(--bc)!important;box-shadow:0 0 12px color-mix(in srgb,var(--bc) 45%,transparent),inset 0 0 8px color-mix(in srgb,var(--bc) 20%,transparent)}
+.hzBs-soft{background:color-mix(in srgb,var(--bc) 18%,var(--raise))!important;border-color:transparent!important}
+.hzBs-outline{background:transparent!important;border:1.5px solid color-mix(in srgb,var(--bc) 70%,transparent)!important}
+#msgs .bub[class*=hzBs-]{width:fit-content;max-width:100%;border-radius:16px!important;padding:8px 14px}
+.hzBs-gradient{background:linear-gradient(135deg,color-mix(in srgb,var(--bc) 32%,var(--raise)),color-mix(in srgb,var(--ac2) 18%,var(--raise)))!important;border-color:transparent!important}
+/* the Personality section in the profile editor */
+.hzPers{display:grid;gap:8px;margin:4px 0 6px}
+.hzChips{display:flex;flex-wrap:wrap;gap:6px}
+.hzChips button{padding:5px 11px;font-size:13px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.hzChips button[aria-pressed=true]{background:var(--acs2);border-color:var(--ac);color:var(--tx);box-shadow:0 0 0 1px var(--ac) inset}
+.hzChips .thS{width:42px;height:28px;padding:0;border-radius:9px;background:var(--thb,var(--raise))}
+.hzTagEd{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:6px;background:var(--bg)}
+.hzTagEd span{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:3px 4px 3px 10px;border-radius:999px;background:var(--acs);border:1px solid var(--acs2)}
+.hzTagEd span button{border:0;background:transparent;padding:0 4px;line-height:1}
+.hzTagEd input{flex:1;min-width:140px;border:0;background:transparent;outline:0;box-shadow:none!important;padding:4px}
+.hzSug{display:flex;flex-wrap:wrap;gap:5px}.hzSug button{font-size:12px;padding:3px 9px;opacity:.8}.hzSug button:hover{opacity:1}
+</style>
+<script id="huddle-v3-js">
+/* ---------- Huddle v3 ---------- */
+(()=>{
+/* ---- icon set: one consistent stroke style for the app's controls ---- */
+const I=p=>`<svg class="hzI" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const HI=window.HZICON={
+  attach:I('<path d="M21 11.5 12.6 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/>'),
+  smile:I('<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.6"/>'),
+  poll:I('<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 16v-4M12 16V8M16 16v-6"/>'),
+  send:I('<path d="M5 12 3.6 4.7a.8.8 0 0 1 1.1-.9l15.6 7.4a.9.9 0 0 1 0 1.6L4.7 20.2a.8.8 0 0 1-1.1-.9z"/><path d="M5 12h7"/>'),
+  pin:I('<path d="M15 3.5 20.5 9l-3 1.2-3.6 3.6.5 4.2-1.5 1.5-4.4-4.4L4 19.6M9.5 8.6l3.6-3.6z"/><path d="m8.5 9.6 6 6"/>'),
+  reply:I('<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5A5.5 5.5 0 0 1 20 14.5V20"/>'),
+  more:I('<circle cx="5" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="19" cy="12" r="1.2" fill="currentColor"/>'),
+  x:I('<path d="M6 6l12 12M18 6 6 18"/>'),
+  left:I('<path d="m15 5-7 7 7 7"/>'),right:I('<path d="m9 5 7 7-7 7"/>'),
+  down:I('<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/>'),
+  ext:I('<path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M19 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4"/>'),
+  zoom:I('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M11 8.5v5M8.5 11h5"/>'),
+  expand:I('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'),
+  copy:I('<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>')};
+const icon=(sel,ic,keepText)=>{const b=$(sel);if(b)b.innerHTML=ic+(keepText?b.querySelector('b')?.outerHTML||'':'')};
+icon('#attach',HI.attach);icon('#emBtn',HI.smile);icon('#pollBtn',HI.poll);icon('#go',HI.send);icon('#pinBtn',HI.pin,true);
+$('#go').addEventListener('click',()=>{const g=$('#go');g.classList.remove('fly');void g.offsetWidth;g.classList.add('fly')});
+/* hover toolbar: swap its glyphs for the icon set as it appears */
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType!=1||!n.classList.contains('hzAct'))return;
+  const r=n.querySelector('[data-a=r]'),p=n.querySelector('[data-a=p]'),mo=n.querySelector('[data-a=m]');if(r)r.innerHTML=HI.reply;if(p)p.innerHTML=HI.pin;if(mo)mo.innerHTML=HI.more}))).observe($('#msgs'),{childList:true,subtree:true});
+/* friendlier composer placeholder: "Message #general" / "Message @Alex" */
+window.hzPh=()=>cur?'Message '+chLabel(cur).replace(/^# /,'#').replace(/^@ /,'@').replace(/\^[0-9]/g,''):'Send a message';
+
+/* ---- media viewer: images and videos open inside Huddle, never in the browser ---- */
+const V=document.createElement('div');V.id='hzView';V.hidden=true;V.setAttribute('role','dialog');V.setAttribute('aria-label','Media viewer');document.body.append(V);
+let L=[],k=0,z=1,px=0,py=0;
+const isMedia=f=>!!f&&/^(image|video)\//.test(f.type||'');
+const listFor=(ch)=>(hist[ch]||[]).filter(m=>isMedia(m.file)).map(m=>({u:base+m.file.url,type:m.file.type,name:m.file.name,size:m.file.size,o:m.o,from:m.from,ts:m.ts}));
+const saveFile=async(u,name)=>{try{toast('Downloading '+name+'…',true);const r=await fetch(u+(u.includes('?')?'&':'?')+'dl');if(!r.ok)throw 0;const b=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=b;a.download=name||'file';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(b),4000)}catch{toast('Could not download that file.')}};
+window.hzSaveFile=saveFile;
+const tf=()=>{const im=V.querySelector('.stage img');if(im)im.style.transform=`translate(${px}px,${py}px) scale(${z})`;V.querySelector('.stage').classList.toggle('z',z>1)};
+const draw=()=>{const it=L[k];if(!it)return close();z=1;px=py=0;
+  const nm=(P[it.o]||{}).name||it.from||'',when=it.ts?new Date(it.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
+  V.innerHTML=`<header><div class="who">${it.o?avs(it.o,nm,'s28'):''}<span><b>${esc(nm||it.name)}</b><small>${esc(it.name)}${when?' · '+when:''}${it.size?' · '+fmt(it.size):''}</small></span></div>
+    ${it.type.startsWith('image/')?`<button data-a="zi" title="Zoom (scroll or double-click)">${HI.zoom}</button>`:''}<button data-a="dl" title="Download">${HI.down}</button><button data-a="cp" title="Copy link">${HI.copy}</button><button data-a="ext" title="Open in browser">${HI.ext}</button><button data-a="x" title="Close (Esc)">${HI.x}</button></header>
+    <div class="stage">${it.type.startsWith('video/')?`<video src="${esc(it.u)}" controls autoplay playsinline></video>`:`<img src="${esc(it.u)}" alt="${esc(it.name)}" draggable="false">`}
+    <button class="nav p" data-a="p" title="Previous (←)"${k>0?'':' hidden'}>${HI.left}</button><button class="nav n" data-a="n" title="Next (→)"${k<L.length-1?'':' hidden'}>${HI.right}</button></div>
+    <footer>${L.length>1?`<div class="strip">${L.map((x,i)=>`<button data-i="${i}" class="${i==k?'on':''}" title="${esc(x.name)}">${x.type.startsWith('image/')?`<img src="${esc(x.u)}" alt="" loading="lazy">`:'<i>▶</i>'}</button>`).join('')}</div>`:''}</footer>`;
+  V.querySelector('.strip .on')?.scrollIntoView({inline:'center',block:'nearest'})};
+const open=(list,i)=>{L=list;k=Math.max(0,Math.min(i,list.length-1));V.hidden=false;draw()};
+const close=()=>{V.hidden=true;V.innerHTML='';L=[]};
+window.hzView={open,close};
+const go=d=>{if(k+d<0||k+d>=L.length)return;k+=d;draw()};
+V.addEventListener('click',e=>{const b=e.target.closest('button');
+  if(!b){if(e.target.classList.contains('stage')||e.target===V)close();return}
+  const a=b.dataset.a,it=L[k];
+  if(b.dataset.i!==undefined){k=+b.dataset.i;return draw()}
+  if(a=='x')close();else if(a=='p')go(-1);else if(a=='n')go(1);else if(a=='dl')saveFile(it.u,it.name);else if(a=='ext')window.open(it.u,'_blank');
+  else if(a=='cp')copyText(it.u);else if(a=='zi'){z=z>1?1:2;px=py=0;tf()}});
+V.addEventListener('dblclick',e=>{if(!e.target.matches('.stage img'))return;z=z>1?1:2.2;px=py=0;tf()});
+V.addEventListener('wheel',e=>{if(!e.target.closest('.stage')||!V.querySelector('.stage img'))return;e.preventDefault();z=Math.max(1,Math.min(6,z*(e.deltaY<0?1.15:1/1.15)));if(z==1)px=py=0;tf()},{passive:false});
+let drag=null;V.addEventListener('pointerdown',e=>{if(z<=1||!e.target.matches('.stage img'))return;drag={x:e.clientX-px,y:e.clientY-py};V.querySelector('.stage').classList.add('drag');e.target.setPointerCapture(e.pointerId)});
+V.addEventListener('pointermove',e=>{if(!drag)return;px=e.clientX-drag.x;py=e.clientY-drag.y;tf()});
+V.addEventListener('pointerup',()=>{drag=null;V.querySelector('.stage')?.classList.remove('drag')});
+addEventListener('keydown',e=>{if(V.hidden)return;if(e.key=='Escape'){e.stopPropagation();close()}else if(e.key=='ArrowLeft')go(-1);else if(e.key=='ArrowRight')go(1);else if(e.key=='+'||e.key=='='){z=Math.min(6,z*1.25);tf()}else if(e.key=='-'){z=Math.max(1,z/1.25);if(z==1)px=py=0;tf()}},true);
+/* catch clicks on media and file links before they can leave the app */
+document.addEventListener('click',e=>{
+  const sc=e.target.closest('.scP img');if(sc){e.preventDefault();return open([{u:sc.src,type:'image/*',name:'Showcase image',o:'',from:''}],0)}
+  const msg=e.target.closest('#msgs .m');if(!msg)return;
+  const a=e.target.closest('.bub a.file,.bub a:has(>img)'),img=e.target.closest('.bub img:not(.cem)'),ex=e.target.closest('.hzVx>button');
+  if(!a&&!img&&!ex)return;
+  const m=(hist[cur]||[]).find(x=>x.id==msg.dataset.id);if(!m||!m.file)return; // text links keep opening in the browser
+  e.preventDefault();e.stopPropagation();
+  if(isMedia(m.file)){const l=listFor(cur);open(l,Math.max(0,l.findIndex(x=>x.u==base+m.file.url)))}else saveFile(base+m.file.url,m.file.name)},true);
+/* an "expand" button on chat videos */
+new MutationObserver(()=>document.querySelectorAll('#msgs .bub>video:not([data-hz])').forEach(v=>{v.dataset.hz=1;const w=document.createElement('span');w.className='hzVx';v.before(w);w.append(v);w.insertAdjacentHTML('beforeend',`<button type="button" title="Open in viewer">${HI.expand}</button>`)})).observe($('#msgs'),{childList:true,subtree:true});
+
+/* ---- personality: avatar decorations, name fonts, card themes, bubbles, interests ---- */
+const DEC=[['','None'],['crown','👑'],['halo','Halo'],['sparkle','✨'],['flame','🔥'],['hearts','💞'],['cat','🐾'],['headphones','🎧'],['stars','⭐'],['leaf','🌿'],['ghost','👻'],['bolt','⚡'],['moon','🌙']];
+const DEC_E=Object.fromEntries(DEC.filter(x=>x[0]&&x[0]!='halo').map(x=>[x[0],x[1]]));DEC_E.crown='👑';
+const NF=[['','Default'],['rounded','Rounded'],['serif','Serif'],['mono','Mono'],['display','DISPLAY'],['hand','Handwritten'],['wide','W i d e']];
+const TH=[['','None'],['aurora','Aurora'],['sunset','Sunset'],['ocean','Ocean'],['candy','Candy'],['forest','Forest'],['noir','Noir'],['galaxy','Galaxy'],['ember','Ember']];
+const BS=[['','Classic'],['glass','Glass'],['neon','Neon'],['soft','Soft'],['outline','Outline'],['gradient','Gradient']];
+const SUG=['🎮 Gaming','🎵 Music','🎨 Art','🎬 Movies','💻 Coding','📚 Books','⚽ Sports','🍳 Cooking','✈️ Travel','🐾 Pets','📸 Photos','🌙 Night owl'];
+const css=document.createElement('style');css.id='hz-person';document.head.append(css);
+const q=o=>CSS.escape(String(o));
+window.persCss=()=>{let s='';for(const [o,p] of Object.entries(P)){if(!p)continue;const id=q(o);
+    if(p.nf&&NF.some(x=>x[0]==p.nf))s+=`.mn[data-o="${id}"],.pa[data-o="${id}"] .nn,#meBtn[data-o="${id}"] .nn{${({rounded:'font-family:"Segoe UI Variable Display","Nunito","Arial Rounded MT Bold",system-ui,sans-serif;font-weight:700',serif:'font-family:var(--serif);font-style:italic',mono:'font-family:"Cascadia Code",Consolas,monospace',display:'font-family:Bahnschrift,"Segoe UI Black",Impact,sans-serif;letter-spacing:.04em;text-transform:uppercase',hand:'font-family:"Segoe Print","Ink Free","Comic Sans MS",cursive',wide:'font-family:Bahnschrift,system-ui,sans-serif;letter-spacing:.14em'})[p.nf]}}\n`;
+    if(p.bs&&BS.some(x=>x[0]==p.bs)){const c=/^#[0-9a-f]{6}$/i.test(p.color||'')?p.color:'var(--ac)';s+=`.m:has(.mn[data-o="${id}"]) .bub{--bc:${c}}\n`}}
+  css.textContent=s;
+  document.querySelectorAll('#msgs .m').forEach(markBub);decorateAll(document)};
+const markBub=el=>{const n=el.querySelector('.mn[data-o]'),b=el.querySelector('.bub');if(!n||!b)return;const bs=(P[n.dataset.o]||{}).bs||'';
+  b.classList.forEach(c=>c.startsWith('hzBs-')&&b.classList.remove(c));if(bs)b.classList.add('hzBs-'+bs)};
+const decorate=w=>{const o=w.dataset.o,d=o&&(P[o]||{}).dec||'';let e=w.querySelector(':scope>.hzDec');
+  if(!d){if(e)e.remove();return}if(!e){e=document.createElement('b');e.className='hzDec';w.append(e)}
+  if(e.dataset.d!=d){e.dataset.d=d;e.textContent=d=='halo'?'':DEC_E[d]||''}
+  const sz=w.offsetWidth||28;e.style.fontSize=Math.max(9,Math.round(sz*.46))+'px'};
+const decorateAll=root=>{if(root.matches&&root.matches('.avw[data-o]'))decorate(root);root.querySelectorAll&&root.querySelectorAll('.avw[data-o]').forEach(decorate)};
+let pend=new Set(),raf=0;new MutationObserver(ms=>{ms.forEach(m=>m.addedNodes.forEach(n=>n.nodeType==1&&pend.add(n)));if(!raf)raf=requestAnimationFrame(()=>{raf=0;const ns=[...pend];pend.clear();
+  ns.forEach(n=>{if(!n.isConnected)return;decorateAll(n);if(n.matches('#msgs .m'))markBub(n);n.querySelectorAll&&n.querySelectorAll('#msgs .m').forEach(markBub)});cardDeco()})}).observe(document.body,{childList:true,subtree:true});
+/* profile card (other people): theme + interests */
+const cardDeco=()=>{if(typeof popEl=='undefined'||!popEl||!popO)return;const p=P[popO]||{};
+  if(p.th)popEl.dataset.th=p.th;else delete popEl.dataset.th;
+  const id=popEl.querySelector('.ppId');if(!id)return;let t=id.querySelector('.hzTags');const tags=Array.isArray(p.tags)?p.tags:[];
+  if(!tags.length){if(t)t.remove();return}const h=tags.map(x=>`<span>${esc(x)}</span>`).join('');if(!t){t=document.createElement('div');t.className='hzTags';id.append(t)}if(t.innerHTML!=h)t.innerHTML=h};
+const _on=on;on=function(d){_on(d);if(d.t=='init'||d.t=='profiles'||d.t=='rel')persCss()};
+/* the profile editor's Personality section */
+window.persHTML=()=>`<div class="efxh">Personality</div><div class="hzPers">
+  <div class="eft"><b>Avatar decoration</b><small>A bit of flair on your photo, everywhere it shows up</small></div><div class="hzChips" data-k="dec">${DEC.map(([v,t])=>`<button type="button" data-v="${v}">${t}</button>`).join('')}</div>
+  <div class="eft"><b>Name font</b><small>How your name looks in chat and member lists</small></div><div class="hzChips" data-k="nf">${NF.map(([v,t])=>`<button type="button" data-v="${v}" class="${v?'hzNf-'+v:''}">${t}</button>`).join('')}</div>
+  <div class="eft"><b>Profile card theme</b><small>The backdrop people see when they open your card</small></div><div class="hzChips" data-k="th">${TH.map(([v,t])=>`<button type="button" data-v="${v}" title="${t}" class="${v?'thS':''}" data-th="${v}">${v?'':t}</button>`).join('')}</div>
+  <div class="eft"><b>Message bubbles</b><small>The style of your messages, tinted by your accent colour</small></div><div class="hzChips" data-k="bs">${BS.map(([v,t])=>`<button type="button" data-v="${v}">${t}</button>`).join('')}</div>
+  <div class="eft"><b>Interests</b><small>Up to 5 tags on your card</small></div><div class="hzTagEd"><span id="hzTagL"></span><input id="hzTagI" maxlength="18" placeholder="Add a tag, press Enter"></div>
+  <div class="hzSug">${SUG.map(t=>`<button type="button" data-t="${esc(t)}">${t}</button>`).join('')}</div></div>`;
+const persPaint=()=>{const r=$('#prof .hzPers');if(!r)return;
+  r.querySelectorAll('.hzChips').forEach(c=>c.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',(pf[c.dataset.k]||'')==b.dataset.v)));
+  $('#hzTagL').innerHTML=(pf.tags||[]).map((t,i)=>`<span>${esc(t)}<button type="button" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('');
+  const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th}
+  const np=$('#npv');if(np){np.classList.forEach(c=>c.startsWith('hzNf-')&&np.classList.remove(c));if(pf.nf)np.classList.add('hzNf-'+pf.nf)}
+  const w=$('#pav .avw');if(w){let e=w.querySelector(':scope>.hzDec');if(!pf.dec){if(e)e.remove()}else{if(!e){e=document.createElement('b');e.className='hzDec';w.append(e)}e.dataset.d=pf.dec;e.textContent=pf.dec=='halo'?'':DEC_E[pf.dec]||'';e.style.fontSize=Math.max(12,Math.round((w.offsetWidth||80)*.42))+'px'}}};
+const _pp=pcPaint;pcPaint=function(){_pp();persPaint()};
+const _op=openProfile;openProfile=function(o,edit){const r=_op.apply(this,arguments);const root=edit&&$('#prof .hzPers');if(!root)return r;
+  pf.tags=Array.isArray(pf.tags)?pf.tags:[];
+  const addTag=t=>{t=String(t||'').replace(/[<>]/g,'').trim().slice(0,18);if(!t)return;if(pf.tags.length>=5)return toast('Up to 5 interests.');if(!pf.tags.some(x=>x.toLowerCase()==t.toLowerCase()))pf.tags.push(t);persPaint()};
+  root.onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=b.closest('.hzChips');
+    if(c){pf[c.dataset.k]=b.dataset.v;return pcPaint()}if(b.dataset.rm!==undefined){pf.tags.splice(+b.dataset.rm,1);return persPaint()}if(b.dataset.t)addTag(b.dataset.t)};
+  const ti=$('#hzTagI');ti.onkeydown=e=>{if(e.key=='Enter'||e.key==','){e.preventDefault();addTag(ti.value);ti.value=''}else if(e.key=='Backspace'&&!ti.value&&pf.tags.length){pf.tags.pop();persPaint()}};
+  persPaint();return r};
+if(typeof P=='object')persCss();
 })();
 </script>
 </body></html>
