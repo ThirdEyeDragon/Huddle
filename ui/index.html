@@ -2715,7 +2715,28 @@ window.HZDECO={
   laurel:{n:'Laurel',s:laurel()},
   witch:{n:'Witch hat',s:`<g transform="rotate(-10 50 0)"><ellipse cx="50" cy="5" rx="42" ry="8.5" fill="url(#hzHat)" stroke="#1d1033" stroke-width="1.5"/><path d="M28 4C34-6 40-18 50-30C56-32 62-30 66-24C60-24 58-20 60-14C64-6 68 0 72 4Z" fill="url(#hzHat)" stroke="#1d1033" stroke-width="1.5" stroke-linejoin="round"/><path d="M31-1C44 2 58 2 70-1L69 3C57 6 43 6 30 3Z" fill="#ffb84d"/><rect x="46" y="-3" width="8" height="7" rx="1.5" fill="none" stroke="#ffe27a" stroke-width="1.6"/></g>`},
   party:{n:'Party hat',s:`<g transform="rotate(16 74 -6)"><path d="M58 4 74-28 90 4Z" fill="#5cd2ff" stroke="#1b5f7a" stroke-width="1.5" stroke-linejoin="round"/><path d="M64-8 84-4M69-18 80-16M61-1 88 2" stroke="#ff5c93" stroke-width="3" stroke-linecap="round"/><circle cx="74" cy="-29" r="5" fill="#ffd34d" stroke="#b07a00"/><path d="M57 4Q74 9 91 4" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-dasharray="2 3"/></g>`},
-  orbit:{n:'Orbit',s:`<g transform="rotate(-18 50 50)"><ellipse cx="50" cy="50" rx="66" ry="17" fill="none" stroke="var(--dc,#b79cff)" stroke-width="1.6" opacity=".7" stroke-dasharray="3 4"/><circle r="5" fill="#ffd34d" stroke="#fff" stroke-width="1"><animateMotion dur="4.5s" repeatCount="indefinite" path="M116 50A66 17 0 1 1 -16 50A66 17 0 1 1 116 50"/></circle><path d="${star(0,0,5)}" fill="#fff"><animateMotion dur="4.5s" begin="-2.25s" repeatCount="indefinite" path="M116 50A66 17 0 1 1 -16 50A66 17 0 1 1 116 50"/></path></g>`},
+  orbit:{n:'Orbit',s:(()=>{
+    /* a tilted planetary system: the half of each orbit behind the avatar is hidden by it, the front half passes over it */
+    const E1='M118 50A68 17 0 1 1 -18 50A68 17 0 1 1 118 50',E2='M106 50A56 11 0 1 1 -6 50A56 11 0 1 1 106 50',dc='var(--dc,#b79cff)';
+    const sys=`<ellipse cx="50" cy="50" rx="79" ry="23" fill="none" style="stroke:${dc}" stroke-width=".9" opacity=".4" stroke-dasharray="1.2 3.2"/>
+      <ellipse cx="50" cy="50" rx="68" ry="17" fill="none" style="stroke:${dc}" stroke-width="5" opacity=".14"/>
+      <ellipse cx="50" cy="50" rx="68" ry="17" fill="none" stroke="url(#hzOrbG)" stroke-width="1.5"/>
+      <ellipse cx="50" cy="50" rx="56" ry="11" fill="none" style="stroke:${dc}" stroke-width="1" opacity=".5"/>
+      <g><animateMotion dur="9s" repeatCount="indefinite" path="${E1}"/>
+        <circle r="10" fill="url(#hzPlGlow)"><animate attributeName="r" dur="9s" repeatCount="indefinite" values="10;12;12;10;7.5;7.5;10"/></circle>
+        <circle r="6.6" fill="url(#hzPlA)"><animate attributeName="r" dur="9s" repeatCount="indefinite" values="6.6;7.8;7.8;6.6;5;5;6.6"/></circle>
+        <ellipse rx="12.5" ry="3.1" fill="none" stroke="#ffe2a8" stroke-width="1.4" opacity=".9"><animate attributeName="rx" dur="9s" repeatCount="indefinite" values="12.5;14.6;14.6;12.5;9.5;9.5;12.5"/></ellipse></g>
+      <g><animateMotion dur="5.5s" repeatCount="indefinite" path="${E2}" keyPoints="1;0" keyTimes="0;1" calcMode="linear"/>
+        <circle r="3.6" fill="url(#hzPlB)"><animate attributeName="r" dur="5.5s" repeatCount="indefinite" values="3.6;2.7;2.7;3.6;4.3;4.3;3.6"/></circle></g>
+      ${[0,1,2,3,4,5,6].map(i=>`<circle r="${(2.5-i*.3).toFixed(2)}" style="fill:${i?dc:'#fff'}" opacity="${(1-i*.13).toFixed(2)}"><animateMotion dur="9s" begin="${(-4.5+i*.06).toFixed(2)}s" repeatCount="indefinite" path="${E1}"/></circle>`).join('')}`;
+    return `<defs><linearGradient id="hzOrbG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:${dc};stop-opacity:.15"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" style="stop-color:${dc};stop-opacity:.15"/></linearGradient>
+      <radialGradient id="hzPlA" cx=".34" cy=".3" r=".75"><stop offset="0" stop-color="#fff4c9"/><stop offset=".45" stop-color="#ffb347"/><stop offset="1" stop-color="#b8400c"/></radialGradient>
+      <radialGradient id="hzPlB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#c3cde0"/><stop offset="1" stop-color="#4a5568"/></radialGradient>
+      <radialGradient id="hzPlGlow"><stop offset=".45" stop-color="#ffb347" stop-opacity=".5"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+      <mask id="hzOrbM" maskUnits="userSpaceOnUse" x="-60" y="-80" width="220" height="260"><rect x="-60" y="-80" width="220" height="260" fill="#fff"/><circle cx="50" cy="50" r="50.5" fill="#000"/></mask>
+      <clipPath id="hzOrbF"><rect x="-60" y="50" width="220" height="110"/></clipPath><clipPath id="hzOrbB"><rect x="-60" y="-90" width="220" height="140"/></clipPath></defs>
+      <g transform="rotate(-20 50 50)"><g clip-path="url(#hzOrbB)" mask="url(#hzOrbM)">${sys}</g><g clip-path="url(#hzOrbF)">${sys}</g></g>
+      <path class="tw t1" d="M-8 6Q-8 9-5 9Q-8 9-8 12Q-8 9-11 9Q-8 9-8 6Z" fill="#fff"/><path class="tw t2" d="M104 82Q104 86 108 86Q104 86 104 90Q104 86 100 86Q104 86 104 82Z" fill="#fff"/><path class="tw t3" d="M96 -16Q96 -13 99 -13Q96 -13 96 -10Q96 -13 93 -13Q96 -13 96 -16Z" style="fill:${dc}"/>`})()},
   hearts:{n:'Hearts',s:`<path class="hf h1" d="${heart(96,-4,11)}" fill="#ff4d7e" stroke="#a3123f" stroke-width="1"/><path class="hf h2" d="${heart(78,-20,7)}" fill="#ff8fb8"/><path class="hf h3" d="${heart(108,24,6)}" fill="#ff6b9a"/>`},
   lightning:{n:'Lightning',s:`<path d="M-4 10 8-6 4 8 14 6 0 30 4 14-6 16Z" fill="#ffe14d" stroke="#b08a00" stroke-width="1.2" stroke-linejoin="round" class="zap"/><path d="M104 60 92 76 96 62 86 64 100 40 96 56 106 54Z" fill="#ffe14d" stroke="#b08a00" stroke-width="1.2" stroke-linejoin="round" class="zap z2"/>`},
   frost:{n:'Frost',s:`<path d="M6 30A46 46 0 0 1 60 4" fill="none" stroke="url(#hzIce)" stroke-width="4" stroke-linecap="round" opacity=".85"/>${[[2,-2,10],[96,8,7],[100,92,8]].map(([x,y,r])=>`<g transform="translate(${x} ${y})" stroke="#bfefff" stroke-width="1.8" stroke-linecap="round">${[0,60,120].map(a=>`<path d="M0 ${-r}V${r}M-3 ${-r+3}L0 ${-r+5}L3 ${-r+3}M-3 ${r-3}L0 ${r-5}L3 ${r-3}" transform="rotate(${a})"/>`).join('')}</g>`).join('')}`},
@@ -2744,7 +2765,7 @@ window.HZTHEMES=[
 ['midnight','Midnight',L('#02040c','#0a1230','#1c2a66'),'#6c8cff'],
 ['cyber','Cyber grid',`repeating-linear-gradient(0deg,#00ffd522 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,#ff2bd61f 0 1px,transparent 1px 22px),${L('#070014','#14002e','#2a0050')}`,'#00ffd5'],
 ['vaporwave','Vaporwave','linear-gradient(180deg,#2b0a4a 0%,#7a1f8f 45%,#ff6ec7 78%,#40e0ff 100%)','#ff6ec7'],
-['synthwave','Synthwave','radial-gradient(circle 54px at 50% 86%,#ffcf3d 0 58%,#ff6a5c 60% 99%,transparent 100%),repeating-linear-gradient(180deg,transparent 0 9px,#00000055 9px 11px),linear-gradient(180deg,#14002b 0%,#3d0b5c 55%,#ff3d7f 100%)','#ff3d7f'],
+['synthwave','Synthwave','linear-gradient(180deg,#14002b 0%,#3d0b5c 55%,#ff3d7f 100%)','#ff3d7f'],
 ['desert','Desert',L('#2b1a0a','#6b4420','#d9a05b'),'#ffc875'],
 ['glacier','Glacier',L('#06141c','#1b4659','#6fc2e6'),'#bff2ff'],
 ['volcano','Volcano',`radial-gradient(circle at 50% 110%,#ff450088,transparent 55%),${L('#0b0303','#3a0a05','#7a1a05')}`,'#ff6a00'],
@@ -2773,6 +2794,230 @@ window.HZTHEMES=[
 ['hologram','Hologram','linear-gradient(120deg,#1b1b3a 0%,#2a3a6a 25%,#2f6a6a 50%,#6a3a6a 75%,#1b1b3a 100%)','#99ffff'],
 ['lava','Lava lamp','radial-gradient(circle at 25% 70%,#ff4d6d88,transparent 35%),radial-gradient(circle at 75% 30%,#ffb34d77,transparent 35%),linear-gradient(160deg,#1a0510,#3d0a1f)','#ff6a8a'],
 ['matrix','Matrix','repeating-linear-gradient(90deg,#00ff4114 0 2px,transparent 2px 9px),linear-gradient(180deg,#000 0%,#021a08 60%,#043d12 100%)','#00ff41']];
+})();
+
+/* ---- animated profile card themes. Each theme is a small scene of moving layers and particles. Sizes use container
+   query units (cqw / cqh), so the same scene fits the profile card and the small picker tiles. ---- */
+(()=>{
+const svgUrl=s=>`url('data:image/svg+xml,${encodeURIComponent(s).replace(/'/g,'%27')}')`;
+const SIL={
+  mountains:'M0 40L0 26L12 14L20 21L32 5L44 19L52 13L64 25L74 9L86 21L100 15L100 40Z',
+  dunes:'M0 40L0 27Q14 17 30 25T60 23Q78 13 100 21L100 40Z',
+  dunes2:'M0 40L0 31Q22 22 44 30T100 26L100 40Z',
+  volcano:'M0 40L0 35Q18 32 28 24L41 7Q50 4 59 7L72 24Q82 32 100 35L100 40Z',
+  lava:'M47.5 7Q45 15 41 22Q38 28 34 35L36.5 35Q40 28 43 23Q47 15 49 7ZM52.5 7Q56 16 60 24Q63 29 66 34L64 34Q60 28 57.5 24Q54 16 51 7Z',
+  hills:'M0 40L0 30Q20 20 40 28T80 24Q92 20 100 24L100 40Z'};
+const pines=seed=>{let s=seed,r=()=>(s=(s*16807)%2147483647)/2147483647,d='M0 40L0 30';for(let x=0;x<100;x+=3+r()*3){const h=8+r()*20;d+=`L${x.toFixed(1)} ${(40-h*.35).toFixed(1)}L${(x+2.2).toFixed(1)} ${(40-h).toFixed(1)}L${(x+4.4).toFixed(1)} ${(40-h*.35).toFixed(1)}`}return d+'L100 30L100 40Z'};
+SIL.pines=pines(7);SIL.pines2=pines(91);
+const silUrl=(k,top)=>svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" preserveAspectRatio="none"><path d="${SIL[k]}" fill="#000"${top?' transform="translate(0 40) scale(1 -1)"':''}/></svg>`);
+const FRONDS=svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" preserveAspectRatio="none"><g fill="#000">${[[4,30,-12],[16,22,8],[30,34,-6],[46,20,10],[60,30,-10],[74,24,6],[88,32,-8],[98,20,12]].map(([x,h,a])=>`<path d="M${x} 0Q${x+5} ${h*.5} ${x} ${h}Q${x-5} ${h*.5} ${x} 0Z" transform="rotate(${a} ${x} 0)"/>`).join('')}<rect width="100" height="4"/></g></svg>`);
+const WAVE=svgUrl('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 18Q25 4 50 18T100 18T150 18T200 18V40H0Z"/></svg>');
+const BAT=svgUrl('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20"><path d="M20 6C18 4 17 4 16 6C12 2 7 2 0 6C4 7 6 9 7 12C9 10 12 10 14 12C15 10 17 10 20 14C23 10 25 10 26 12C28 10 31 10 33 12C34 9 36 7 40 6C33 2 28 2 24 6C23 4 22 4 20 6Z"/></svg>');
+const WINGS=svgUrl('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30"><path d="M20 15C14 2 2 0 2 9C2 15 10 16 14 16C6 18 4 26 10 28C15 30 19 22 20 18C21 22 25 30 30 28C36 26 34 18 26 16C30 16 38 15 38 9C38 0 26 2 20 15Z"/></svg>');
+const BOLT=`<svg class="l-bolt" viewBox="0 0 20 60" preserveAspectRatio="none" style="--x:VAR_X;--s:VAR_S;--d:VAR_D;--dl:VAR_DL"><path d="M13 0L8 14L12 15L5 30L10 31L3 60L15 27L10 26L16 12L12 11L17 0Z" fill="#f4f8ff"/><path d="M9 31L4 38L6 38L2 46L8 36L6 36L10 31Z" fill="#dfe9ff" opacity=".85"/></svg>`;
+const NOISE=svgUrl('<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(#n)" opacity=".9"/></svg>');
+
+const CSS=`
+.hzFx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1;container-type:size;border-radius:inherit}
+.hzFx.ed{opacity:.5;-webkit-mask:linear-gradient(#000 0,#000 180px,transparent 420px);mask:linear-gradient(#000 0,#000 180px,transparent 420px)}
+:where(.hzFxHost){position:relative}.hzFxHost{isolation:isolate}
+.hzFx i,.hzFx svg{position:absolute;display:block}
+.hzFx .p-rain{left:var(--x);top:0;width:max(1px,.4cqw);height:calc(var(--s)*1cqh);background:linear-gradient(transparent,var(--c));border-radius:1cqw;opacity:.6;animation:fxRain var(--d) linear var(--dl) infinite}
+@keyframes fxRain{from{transform:translate(0,-25cqh) rotate(12deg)}to{transform:translate(-20cqw,112cqh) rotate(12deg)}}
+.hzFx .p-snow{left:var(--x);top:0;width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(#fff 0 35%,#ffffff88 50%,transparent 70%);animation:fxSnow var(--d) linear var(--dl) infinite}
+@keyframes fxSnow{0%{transform:translate(0,-8cqh)}25%{transform:translate(4cqw,22cqh)}50%{transform:translate(-3cqw,50cqh)}75%{transform:translate(4cqw,78cqh)}100%{transform:translate(0,108cqh)}}
+.hzFx .p-petal{left:var(--x);top:0;width:calc(var(--s)*1cqw);height:calc(var(--s)*.62cqw);border-radius:100% 0 100% 0;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 50%,#fff));box-shadow:inset 0 0 .6cqw #fff6;animation:fxPetal var(--d) linear var(--dl) infinite}
+.hzFx .p-leaf{left:var(--x);top:0;width:calc(var(--s)*1cqw);height:calc(var(--s)*.5cqw);border-radius:0 100% 0 100%;background:linear-gradient(150deg,transparent 47%,#0005 48% 52%,transparent 53%),linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 60%,#000));animation:fxPetal var(--d) linear var(--dl) infinite}
+.hzFx .p-sprinkle{left:var(--x);top:0;width:calc(var(--s)*.32cqw);height:calc(var(--s)*1cqw);border-radius:3cqw;background:var(--c);box-shadow:inset 0 0 0 .2cqw #fff3;animation:fxPetal var(--d) linear var(--dl) infinite}
+@keyframes fxPetal{0%{transform:translate(0,-8cqh) rotate(0) rotateX(0)}25%{transform:translate(8cqw,22cqh) rotate(110deg) rotateX(60deg)}50%{transform:translate(-4cqw,50cqh) rotate(200deg) rotateX(0)}75%{transform:translate(9cqw,78cqh) rotate(300deg) rotateX(70deg)}100%{transform:translate(3cqw,110cqh) rotate(400deg) rotateX(0)}}
+.hzFx .p-bubble{left:var(--x);bottom:0;width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;border:max(1px,.3cqw) solid color-mix(in srgb,var(--c) 70%,#fff);background:radial-gradient(circle at 32% 30%,#ffffffcc 0 10%,transparent 28%),radial-gradient(circle,transparent 55%,color-mix(in srgb,var(--c) 35%,transparent));animation:fxRise var(--d) ease-in var(--dl) infinite}
+@keyframes fxRise{0%{transform:translate(0,12cqh);opacity:0}8%{opacity:1}35%{transform:translate(4cqw,-30cqh)}65%{transform:translate(-3cqw,-65cqh)}92%{opacity:.9}100%{transform:translate(2cqw,-105cqh);opacity:0}}
+.hzFx .p-ember{left:var(--x);bottom:var(--b,0);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(#fff6c0,var(--c) 45%,transparent 72%);box-shadow:0 0 calc(var(--s)*1.4cqw) var(--c);animation:fxEmber var(--d) ease-out var(--dl) infinite}
+@keyframes fxEmber{0%{transform:translate(0,6cqh) scale(1);opacity:0}10%{opacity:1}60%{opacity:.9}100%{transform:translate(var(--dx),calc(var(--h)*-1cqh)) scale(.25);opacity:0}}
+.hzFx .p-steam{left:var(--x);bottom:var(--b,-15cqh);width:calc(var(--s)*1cqw);height:calc(var(--s)*1.5cqw);border-radius:50%;background:radial-gradient(var(--c),transparent 68%);filter:blur(2.2cqw);animation:fxSteam var(--d) ease-out var(--dl) infinite}
+@keyframes fxSteam{0%{transform:translate(0,0) scale(.5);opacity:0}25%{opacity:var(--o,.75)}100%{transform:translate(var(--dx),calc(var(--h,80)*-1cqh)) scale(2.2);opacity:0}}
+.hzFx .p-star{left:var(--x);top:var(--y);width:calc(var(--s)*.3cqw);aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 0 calc(var(--s)*.6cqw) var(--c);animation:fxTw var(--d) ease-in-out var(--dl) infinite}
+@keyframes fxTw{0%,100%{opacity:.15;transform:scale(.5)}50%{opacity:1;transform:scale(1.15)}}
+.hzFx .p-spark{left:var(--x);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;background:var(--c);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:fxSpark var(--d) ease-in-out var(--dl) infinite}
+@keyframes fxSpark{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+.hzFx .p-fly{left:var(--x);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(#fff 0 20%,var(--c) 45%,transparent 72%);box-shadow:0 0 calc(var(--s)*2cqw) var(--c);animation:fxFly var(--d) ease-in-out var(--dl) infinite alternate,fxBlink 2.6s ease-in-out var(--dl) infinite}
+@keyframes fxFly{0%{transform:translate(0,0)}33%{transform:translate(9cqw,-7cqh)}66%{transform:translate(-6cqw,-12cqh)}100%{transform:translate(5cqw,6cqh)}}
+@keyframes fxBlink{0%,100%{opacity:.1}50%{opacity:1}}
+.hzFx .p-bokeh{left:var(--x);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(color-mix(in srgb,var(--c) 80%,#fff),var(--c) 40%,transparent 70%);animation:fxBokeh var(--d) ease-in-out var(--dl) infinite alternate}
+@keyframes fxBokeh{from{transform:translate(0,0) scale(.85);opacity:.2}to{transform:translate(5cqw,-7cqh) scale(1.15);opacity:.6}}
+.hzFx .p-sand{left:0;top:var(--y);width:calc(var(--s)*.5cqw);aspect-ratio:1;border-radius:50%;background:var(--c);opacity:.7;animation:fxSand var(--d) linear var(--dl) infinite}
+@keyframes fxSand{0%{transform:translate(-8cqw,0)}50%{transform:translate(50cqw,-4cqh)}100%{transform:translate(112cqw,2cqh)}}
+.hzFx .p-code{left:var(--x);top:0;font:700 calc(var(--s)*1cqw)/1.08 "Cascadia Code",Consolas,monospace;color:var(--c);writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;text-shadow:0 0 1cqw var(--c);-webkit-mask:linear-gradient(transparent,#000 55%);mask:linear-gradient(transparent,#000 55%);animation:fxCode var(--d) linear var(--dl) infinite}
+.hzFx .p-code b{color:#eaffea;text-shadow:0 0 1.6cqw #fff;font-weight:700}
+@keyframes fxCode{from{transform:translateY(-100%)}to{transform:translateY(110cqh)}}
+.hzFx .p-erupt{left:var(--x);bottom:var(--b);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(#fff3b0,var(--c) 50%,transparent 72%);box-shadow:0 0 calc(var(--s)*1.3cqw) var(--c);animation:fxErupt var(--d) linear var(--dl) infinite,fxEruptO var(--d) linear var(--dl) infinite}
+@keyframes fxErupt{0%{transform:translate(0,0) scale(1);animation-timing-function:cubic-bezier(.15,.7,.45,1)}45%{transform:translate(calc(var(--dx)*.45),calc(var(--h)*-1cqh)) scale(.95);animation-timing-function:cubic-bezier(.55,0,.85,.45)}100%{transform:translate(var(--dx),calc(var(--b) * 1 + 4cqh)) scale(.45)}}
+@keyframes fxEruptO{0%{opacity:0}4%{opacity:1}80%{opacity:.85}100%{opacity:0}}
+.hzFx .p-bat{left:0;top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:2;animation:fxBat var(--d) linear var(--dl) infinite}
+.hzFx .p-bat b,.hzFx .p-bfly b{position:absolute;inset:0;background:var(--c);-webkit-mask:${BAT} center/contain no-repeat;mask:${BAT} center/contain no-repeat;animation:fxFlap .22s ease-in-out infinite alternate}
+@keyframes fxBat{0%{transform:translate(-18cqw,0)}25%{transform:translate(20cqw,-5cqh)}50%{transform:translate(55cqw,3cqh)}75%{transform:translate(85cqw,-4cqh)}100%{transform:translate(120cqw,1cqh)}}
+@keyframes fxFlap{from{transform:scaleY(1)}to{transform:scaleY(.3)}}
+.hzFx .p-bfly{left:var(--x);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:4/3;animation:fxFly var(--d) ease-in-out var(--dl) infinite alternate}
+.hzFx .p-bfly b{-webkit-mask-image:${WINGS};mask-image:${WINGS};animation:fxWing .3s ease-in-out infinite alternate;filter:drop-shadow(0 0 .8cqw var(--c))}
+@keyframes fxWing{from{transform:scaleX(1)}to{transform:scaleX(.25)}}
+.hzFx .p-jelly{left:var(--x);bottom:0;width:calc(var(--s)*1cqw);aspect-ratio:3/4;animation:fxJelly var(--d) linear var(--dl) infinite}
+.hzFx .p-jelly b{position:absolute;inset:0;background:radial-gradient(ellipse 50% 32% at 50% 30%,color-mix(in srgb,var(--c) 45%,#fff) 0 35%,var(--c) 70%,transparent 72%),repeating-linear-gradient(90deg,transparent 0 16%,color-mix(in srgb,var(--c) 75%,transparent) 16% 21%,transparent 21% 26%);-webkit-mask:linear-gradient(#000 40%,transparent);mask:linear-gradient(#000 40%,transparent);filter:drop-shadow(0 0 1.6cqw var(--c));opacity:.85;transform-origin:50% 25%;animation:fxPulse 1.8s ease-in-out infinite}
+@keyframes fxJelly{0%{transform:translate(0,20cqh);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx),-115cqh);opacity:.7}}
+@keyframes fxPulse{0%,100%{transform:scale(1,1)}50%{transform:scale(1.14,.82)}}
+.hzFx .p-drip{left:var(--x);top:0;width:calc(var(--s)*1cqw);height:calc(var(--s)*1.4cqw);border-radius:50% 50% 50% 50%/40% 40% 60% 60%;background:radial-gradient(circle at 35% 35%,#ffffffaa 0 12%,var(--c) 40%);box-shadow:0 0 calc(var(--s)*1cqw) var(--c);animation:fxDrip var(--d) cubic-bezier(.5,0,.9,.5) var(--dl) infinite}
+@keyframes fxDrip{0%{transform:translate(0,-6cqh) scale(.4,.6)}25%{transform:translate(0,1cqh) scale(1,1.35)}100%{transform:translate(0,108cqh) scale(.9,1.2)}}
+.hzFx .p-glitch{left:0;right:0;top:var(--y);height:calc(var(--s)*1cqh);background:linear-gradient(90deg,transparent,var(--c),transparent);mix-blend-mode:screen;opacity:0;animation:fxGlitch var(--d) steps(1) var(--dl) infinite}
+@keyframes fxGlitch{0%,88%{opacity:0;transform:translateX(0)}89%{opacity:.7;transform:translateX(-7cqw)}92%{opacity:.35;transform:translateX(9cqw)}95%,100%{opacity:0}}
+.hzFx .p-blob{left:var(--x);bottom:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--c) 45%,#fff),var(--c) 55%,color-mix(in srgb,var(--c) 75%,#000));animation:fxLava var(--d) ease-in-out var(--dl) infinite alternate,fxMorph calc(var(--d)*.55) ease-in-out var(--dl) infinite alternate}
+@keyframes fxLava{from{transform:translateY(0)}to{transform:translateY(calc(var(--h)*-1cqh))}}
+@keyframes fxMorph{0%{border-radius:50%;scale:1 1}50%{border-radius:42% 58% 55% 45%/55% 45% 58% 42%;scale:1.12 .9}100%{border-radius:58% 42% 45% 55%/45% 58% 42% 55%;scale:.9 1.14}}
+.hzFx .l-goo{inset:0;filter:url(#hzGoo)}
+.hzFx .l-aur{left:-30cqw;top:var(--y);width:160cqw;height:calc(var(--s)*1cqh);background:linear-gradient(90deg,transparent,var(--c1) 30%,var(--c2) 62%,transparent);filter:blur(5cqw);opacity:.65;border-radius:50%;mix-blend-mode:screen;animation:fxAur var(--d) ease-in-out var(--dl) infinite alternate}
+@keyframes fxAur{0%{transform:translateX(-12cqw) skewY(-8deg) scaleY(.7)}50%{transform:translateX(4cqw) skewY(6deg) scaleY(1.3)}100%{transform:translateX(12cqw) skewY(-3deg) scaleY(.9)}}
+.hzFx .l-cloud{left:0;top:var(--y);width:calc(var(--s)*1cqw);height:calc(var(--s)*.42cqw);border-radius:50%;background:radial-gradient(ellipse at 50% 60%,var(--c),transparent 68%);filter:blur(1.4cqw);opacity:var(--o,.85);animation:fxDrift var(--d) linear var(--dl) infinite}
+@keyframes fxDrift{from{transform:translateX(-100%)}to{transform:translateX(120cqw)}}
+.hzFx .l-neb{left:var(--x);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:46% 54% 60% 40%;background:radial-gradient(circle at 45% 45%,var(--c),transparent 66%);filter:blur(4cqw);mix-blend-mode:screen;opacity:.8;animation:fxNeb var(--d) ease-in-out var(--dl) infinite alternate}
+@keyframes fxNeb{0%{transform:translate(-7cqw,5cqh) rotate(0) scale(.85)}50%{transform:translate(6cqw,-6cqh) rotate(50deg) scale(1.2)}100%{transform:translate(-2cqw,-9cqh) rotate(95deg) scale(1)}}
+.hzFx .l-spiral{left:50%;top:var(--y,36%);width:120cqw;aspect-ratio:1;margin:-60cqw 0 0 -60cqw;border-radius:50%;background:radial-gradient(circle,#fff 0 2%,color-mix(in srgb,var(--c1) 60%,#fff) 5%,transparent 20%),conic-gradient(from 0deg,transparent,var(--c1) 7%,transparent 18%,transparent 33%,var(--c2) 40%,transparent 51%,transparent 66%,var(--c1) 73%,transparent 84%);-webkit-mask:radial-gradient(circle,#000 18%,transparent 66%);mask:radial-gradient(circle,#000 18%,transparent 66%);filter:blur(1.3cqw);opacity:.9;animation:fxSpiral 50s linear infinite}
+@keyframes fxSpiral{from{transform:perspective(90cqw) rotateX(60deg) rotate(0)}to{transform:perspective(90cqw) rotateX(60deg) rotate(360deg)}}
+.hzFx .l-sun{left:calc(var(--x) - var(--s)*.5cqw);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,var(--c1) 0 45%,var(--c2) 70%,transparent 72%);box-shadow:0 0 calc(var(--s)*.5cqw) var(--c2),0 0 calc(var(--s)*1.4cqw) color-mix(in srgb,var(--c2) 50%,transparent);animation:fxSun var(--d) ease-in-out var(--dl,0s) infinite alternate}
+@keyframes fxSun{from{transform:translateY(0) scale(1)}to{transform:translateY(var(--dy,4cqh)) scale(1.05)}}
+.hzFx .l-ssun{left:calc(50% - var(--s)*.5cqw);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:linear-gradient(180deg,#ffe96b,#ff8a4d 50%,#ff2e88);-webkit-mask:linear-gradient(#000 50%,transparent 50%),repeating-linear-gradient(180deg,#000 0 3.4cqw,transparent 3.4cqw 4.8cqw);mask:linear-gradient(#000 50%,transparent 50%),repeating-linear-gradient(180deg,#000 0 3.4cqw,transparent 3.4cqw 4.8cqw);filter:drop-shadow(0 0 3cqw #ff4d8a);animation:fxSun 6s ease-in-out infinite alternate;--dy:2cqh}
+.hzFx .l-grid{left:-50cqw;bottom:0;width:200cqw;height:calc(var(--s)*1cqh);background:repeating-linear-gradient(90deg,var(--c) 0 .35cqw,transparent .35cqw 8cqw),repeating-linear-gradient(0deg,var(--c) 0 .35cqw,transparent .35cqw 8cqw);transform:perspective(40cqh) rotateX(62deg);transform-origin:50% 100%;-webkit-mask:linear-gradient(transparent,#000 50%);mask:linear-gradient(transparent,#000 50%);filter:drop-shadow(0 0 .8cqw var(--c));animation:fxGrid 1.3s linear infinite}
+@keyframes fxGrid{from{background-position:0 0,0 0}to{background-position:0 0,0 8cqw}}
+.hzFx .l-scan{inset:0;background:repeating-linear-gradient(180deg,#ffffff0b 0 .35cqh,transparent .35cqh 1.1cqh)}
+.hzFx .l-scanbar{left:0;right:0;top:0;height:14cqh;background:linear-gradient(transparent,color-mix(in srgb,var(--c) 28%,transparent),transparent);animation:fxScan 4.5s linear infinite}
+@keyframes fxScan{from{transform:translateY(-16cqh)}to{transform:translateY(116cqh)}}
+.hzFx .l-sheen{top:-30cqh;left:0;width:34cqw;height:160cqh;background:linear-gradient(90deg,transparent,#ffffff22 42%,#ffffff55 50%,#ffffff22 58%,transparent);animation:fxSheen var(--d,6s) ease-in-out var(--dl,0s) infinite}
+@keyframes fxSheen{0%,50%{transform:translateX(-60cqw) rotate(20deg)}85%,100%{transform:translateX(150cqw) rotate(20deg)}}
+.hzFx .l-facet{left:-40cqw;top:-40cqh;width:180cqw;height:180cqh;background:conic-gradient(from 0deg at 50% 50%,#ffffff14 0 18deg,transparent 18deg 50deg,#0000001f 50deg 70deg,color-mix(in srgb,var(--c) 22%,transparent) 70deg 105deg,transparent 105deg 150deg,#ffffff10 150deg 175deg,transparent 175deg 230deg,#00000018 230deg 260deg,color-mix(in srgb,var(--c) 18%,transparent) 260deg 300deg,transparent 300deg);filter:blur(.6cqw);mix-blend-mode:soft-light;opacity:.9;animation:fxRot 60s linear infinite}
+.hzFx .l-prism{left:-20cqw;top:var(--y);width:140cqw;height:18cqh;background:linear-gradient(90deg,transparent,#ff6b6b33,#ffd34d33,#6bff9a33,#5cd2ff33,#b79cff33,transparent);filter:blur(2.4cqw);mix-blend-mode:screen;animation:fxAur var(--d) ease-in-out var(--dl) infinite alternate}
+@keyframes fxRot{to{transform:rotate(360deg)}}
+.hzFx .l-flash{inset:0;background:radial-gradient(circle at var(--x,60%) 8%,#f2f6ffdd,#cfe0ff55 40%,transparent 78%);opacity:0;animation:fxFlash var(--d) linear var(--dl) infinite}
+.hzFx .l-bolt{left:var(--x);top:0;width:calc(var(--s)*1cqw);height:62cqh;opacity:0;filter:drop-shadow(0 0 1.5cqw #bcd4ff) drop-shadow(0 0 .4cqw #fff);animation:fxFlash var(--d) linear var(--dl) infinite}
+@keyframes fxFlash{0%,86%{opacity:0}87%{opacity:.9}88%{opacity:.1}89.5%{opacity:.75}92%,100%{opacity:0}}
+.hzFx .l-grain{inset:-50%;background-image:${NOISE};opacity:var(--o,.12);animation:fxGrain .5s steps(3) infinite}
+@keyframes fxGrain{0%{transform:translate(0,0)}33%{transform:translate(-4%,3%)}66%{transform:translate(3%,-5%)}100%{transform:translate(-2%,2%)}}
+.hzFx .l-vig{inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 45%,#000b)}
+.hzFx .l-moon{left:var(--x);top:var(--y);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,color-mix(in srgb,var(--c) 35%,#fff),var(--c) 60%,color-mix(in srgb,var(--c) 65%,#000));box-shadow:0 0 calc(var(--s)*.5cqw) var(--c),0 0 calc(var(--s)*1.6cqw) color-mix(in srgb,var(--c) 45%,transparent);animation:fxMoon 4s ease-in-out infinite alternate}
+.hzFx .l-moon.cr{background:transparent;box-shadow:inset calc(var(--s)*-.22cqw) calc(var(--s)*.1cqw) 0 0 var(--c);filter:drop-shadow(0 0 calc(var(--s)*.25cqw) var(--c))}
+@keyframes fxMoon{to{filter:brightness(1.3) drop-shadow(0 0 2cqw var(--c))}}
+.hzFx .l-shoot{left:var(--x);top:var(--y);width:24cqw;height:max(1px,.45cqw);border-radius:1cqw;background:linear-gradient(90deg,#fff,transparent);opacity:0;animation:fxShoot var(--d) ease-out var(--dl) infinite}
+@keyframes fxShoot{0%{transform:rotate(-30deg) translateX(0);opacity:0}2%{opacity:1}9%{transform:rotate(-30deg) translateX(-75cqw);opacity:0}100%{transform:rotate(-30deg) translateX(-75cqw);opacity:0}}
+.hzFx .l-rays{left:-20cqw;top:-12cqh;width:140cqw;height:110cqh;background:repeating-conic-gradient(from 150deg at 50% 0,var(--c) 0 3deg,transparent 3deg 10deg);-webkit-mask:linear-gradient(#000,transparent 80%);mask:linear-gradient(#000,transparent 80%);filter:blur(1cqw);opacity:var(--o,.3);transform-origin:50% 0;animation:fxRays 9s ease-in-out infinite alternate}
+@keyframes fxRays{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.hzFx .l-wave{left:0;bottom:var(--y);width:200cqw;height:calc(var(--s)*1cqh);background:var(--c);-webkit-mask:${WAVE} 0 0/50% 100% repeat-x;mask:${WAVE} 0 0/50% 100% repeat-x;animation:fxWave var(--d) linear infinite}
+@keyframes fxWave{to{transform:translateX(-50%)}}
+.hzFx .l-sil{left:-2%;right:-2%;bottom:var(--y,0);height:calc(var(--s)*1cqh);background:var(--c);-webkit-mask:var(--m) bottom/100% 100% no-repeat;mask:var(--m) bottom/100% 100% no-repeat}
+.hzFx .l-sil.top{top:0;bottom:auto;transform-origin:50% 0;animation:fxSway 6s ease-in-out infinite alternate}
+@keyframes fxSway{from{transform:rotate(-1.2deg) scaleY(1)}to{transform:rotate(1.2deg) scaleY(1.04)}}
+.hzFx .l-sil.lv{filter:drop-shadow(0 0 1.5cqw #ff6a00);animation:fxLavaGlow 1.6s ease-in-out infinite alternate}
+@keyframes fxLavaGlow{from{opacity:.65}to{opacity:1}}
+.hzFx .l-glow{left:calc(var(--x) - var(--s)*.5cqw);bottom:calc(var(--y) - var(--s)*.5cqw);width:calc(var(--s)*1cqw);aspect-ratio:1;border-radius:50%;background:radial-gradient(var(--c),transparent 65%);filter:blur(2cqw);animation:fxGlowP var(--d,2.4s) ease-in-out infinite alternate}
+@keyframes fxGlowP{from{opacity:.45;transform:scale(.9)}to{opacity:1;transform:scale(1.15)}}
+.hzFx .l-heat{left:0;right:0;bottom:0;height:45cqh;background:repeating-linear-gradient(180deg,transparent 0 2cqh,#ffffff0e 2cqh 3cqh);filter:blur(.6cqw);animation:fxHeat 2.2s linear infinite}
+@keyframes fxHeat{0%{transform:translateY(0) skewX(0)}50%{transform:translateY(-1.5cqh) skewX(3deg)}100%{transform:translateY(-3cqh) skewX(0)}}
+.hzFx .l-glass{left:10cqw;top:4cqh;bottom:4cqh;width:7cqw;border-radius:6cqw;background:linear-gradient(90deg,transparent,#ffffff1c,transparent)}
+.hzFx .l-tube{left:var(--x);top:var(--y);width:calc(var(--w)*1cqw);height:calc(var(--hh)*1cqw);border:max(1.5px,.7cqw) solid color-mix(in srgb,var(--c) 70%,#fff);border-radius:calc(var(--r)*1cqw);box-shadow:0 0 1.4cqw var(--c),inset 0 0 1.2cqw var(--c),0 0 4.5cqw color-mix(in srgb,var(--c) 55%,transparent);animation:fxNeon var(--d) steps(1) var(--dl) infinite}
+@keyframes fxNeon{0%,46%,53%,100%{opacity:1}47%{opacity:.15}48%{opacity:.9}50%{opacity:.25}51%{opacity:1}}
+.hzFx .l-iri{left:-10%;top:-10%;width:120%;height:120%;background:linear-gradient(115deg,#ff4dd8,#4dfff3,#ffe94d,#7aff8a,#7a8cff,#ff4dd8);background-size:300% 300%;mix-blend-mode:overlay;opacity:.5;animation:fxIri 7s ease-in-out infinite alternate}
+@keyframes fxIri{to{background-position:100% 50%}}
+`;
+/* ---- scene builders ---- */
+let R=Math.random;
+const seed=str=>{let h=2166136261;for(const c of str)h=Math.imul(h^c.charCodeAt(0),16777619);let s=h>>>0;R=()=>{s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}};
+const r=(a,b)=>a+(b-a)*R(),pick=a=>a[Math.floor(R()*a.length)],f=(v,d=1)=>(+v).toFixed(d);
+const st=o=>Object.entries(o).map(([k,v])=>`--${k}:${v}`).join(';');
+const P=(cls,n,g,inner='')=>Array.from({length:n},(_,i)=>`<i class="${cls}" style="${st(g(i))}">${typeof inner=='function'?inner(i):inner}</i>`).join('');
+const C=a=>Array.isArray(a)?pick(a):a;
+const rain=(n,c,len=[7,14],sp=[.45,.85])=>P('p-rain',n,()=>({x:f(r(-5,125))+'%',s:f(r(...len)),d:f(r(...sp),2)+'s',dl:'-'+f(r(0,2),2)+'s',c:C(c)}));
+const snow=(n,sz=[.8,2.2],sp=[7,14])=>P('p-snow',n,()=>({x:f(r(-5,105))+'%',s:f(r(...sz),2),d:f(r(...sp))+'s',dl:'-'+f(r(0,14))+'s'}));
+const fall=(cls,n,c,sz,sp)=>P(cls,n,()=>({x:f(r(-5,100))+'%',s:f(r(...sz),1),d:f(r(...sp))+'s',dl:'-'+f(r(0,sp[1]))+'s',c:C(c)}));
+const bubbles=(n,c,sz=[2,5],sp=[6,12])=>P('p-bubble',n,()=>({x:f(r(0,96))+'%',s:f(r(...sz)),d:f(r(...sp))+'s',dl:'-'+f(r(0,sp[1]))+'s',c:C(c)}));
+const embers=(n,c,o={})=>P('p-ember',n,()=>({x:f(r(...(o.x||[0,100])))+'%',b:o.b||'0px',s:f(r(...(o.s||[.8,2])),2),d:f(r(...(o.sp||[3,6])))+'s',dl:'-'+f(r(0,6))+'s',dx:f(r(-14,14))+'cqw',h:f(r(...(o.h||[60,100]))),c:C(c)}));
+const steam=(n,c,o={})=>P('p-steam',n,()=>({x:f(r(...(o.x||[5,80])))+'%',b:o.b||'-15cqh',s:f(r(...(o.s||[18,34]))),d:f(r(...(o.sp||[7,12])))+'s',dl:'-'+f(r(0,12))+'s',dx:f(r(-10,10))+'cqw',h:o.h||80,o:o.o||.75,c:C(c)}));
+const stars=(n,c='#fff',y=[0,100],sz=[.8,2.4])=>P('p-star',n,()=>({x:f(r(0,100))+'%',y:f(r(...y))+'%',s:f(r(...sz),2),d:f(r(2,5))+'s',dl:'-'+f(r(0,5))+'s',c:C(c)}));
+const sparks=(n,c,sz=[2.5,5],y=[0,100])=>P('p-spark',n,()=>({x:f(r(2,94))+'%',y:f(r(...y))+'%',s:f(r(...sz)),d:f(r(2.4,4.5))+'s',dl:'-'+f(r(0,4.5))+'s',c:C(c)}));
+const flies=(n,c,y=[20,95])=>P('p-fly',n,()=>({x:f(r(2,94))+'%',y:f(r(...y))+'%',s:f(r(1,2.2),2),d:f(r(5,10))+'s',dl:'-'+f(r(0,10))+'s',c:C(c)}));
+const bokeh=(n,c,sz=[10,24])=>P('p-bokeh',n,()=>({x:f(r(-5,90))+'%',y:f(r(0,90))+'%',s:f(r(...sz)),d:f(r(5,10))+'s',dl:'-'+f(r(0,10))+'s',c:C(c)}));
+const sand=(n,c,y=[55,100])=>P('p-sand',n,()=>({y:f(r(...y))+'%',s:f(r(.6,1.6),2),d:f(r(3,7))+'s',dl:'-'+f(r(0,7))+'s',c:C(c)}));
+const code=(n,c)=>{const ch='ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄ0123456789Z:・=*+-<>';return P('p-code',n,i=>({x:f(i*100/n+r(-1,1))+'%',s:f(r(3,4.4)),d:f(r(3,7))+'s',dl:'-'+f(r(0,7))+'s',c}),()=>Array.from({length:Math.floor(r(10,22))},()=>pick([...ch])).join('')+'<b>'+pick([...ch])+'</b>')};
+const erupt=(n,c,b,x=[47,53])=>P('p-erupt',n,()=>({x:f(r(...x))+'%',b,s:f(r(1.2,3),2),d:f(r(1.8,3.2))+'s',dl:'-'+f(r(0,3.2),2)+'s',dx:f(r(-34,34))+'cqw',h:f(r(18,44)),c:C(c)}));
+const bats=(n,c,y=[8,40],sz=[5,9])=>P('p-bat',n,()=>({y:f(r(...y))+'%',s:f(r(...sz)),d:f(r(7,13))+'s',dl:'-'+f(r(0,13))+'s',c:C(c)}),'<b></b>');
+const bflies=(n,c)=>P('p-bfly',n,()=>({x:f(r(10,80))+'%',y:f(r(15,70))+'%',s:f(r(5,8)),d:f(r(6,11))+'s',dl:'-'+f(r(0,11))+'s',c:C(c)}),'<b></b>');
+const jellies=(n,c)=>P('p-jelly',n,()=>({x:f(r(8,78))+'%',s:f(r(9,15)),d:f(r(14,22))+'s',dl:'-'+f(r(0,22))+'s',dx:f(r(-10,10))+'cqw',c:C(c)}),'<b></b>');
+const drips=(n,c)=>P('p-drip',n,()=>({x:f(r(4,94))+'%',s:f(r(1.6,3)),d:f(r(3,6))+'s',dl:'-'+f(r(0,6))+'s',c:C(c)}));
+const glitch=(n,c)=>P('p-glitch',n,()=>({y:f(r(5,90))+'%',s:f(r(1,4)),d:f(r(3,7))+'s',dl:'-'+f(r(0,7))+'s',c:C(c)}));
+const blobs=(n,c,sz=[14,30])=>`<i class="l-goo">${P('p-blob',n,()=>({x:f(r(8,70))+'%',y:f(r(-12,6))+'%',s:f(r(...sz)),h:f(r(40,92)),d:f(r(9,18))+'s',dl:'-'+f(r(0,18))+'s',c:C(c)}))}</i>`;
+const L=(cls,o={})=>`<i class="${cls}" style="${st(o)}"></i>`;
+const aur=(y,s,c1,c2,d,dl=0)=>L('l-aur',{y:y+'%',s,c1,c2,d:d+'s',dl:'-'+dl+'s'});
+const clouds=(n,c,y=[0,40],sz=[50,90],sp=[30,60],o)=>P('l-cloud',n,()=>({y:f(r(...y))+'%',s:f(r(...sz)),d:f(r(...sp))+'s',dl:'-'+f(r(0,sp[1]))+'s',c:C(c),...(o?{o}:{})}));
+const neb=list=>list.map(([c,x,y,s,d])=>L('l-neb',{c,x:x+'%',y:y+'%',s,d:d+'s',dl:'-'+f(r(0,d))+'s'})).join('');
+const sun=(x,y,s,c1,c2,d=8,dy='4cqh')=>L('l-sun',{x:x+'%',y:y+'%',s,c1,c2,d:d+'s',dy});
+const sil=(k,c,s,o={})=>`<i class="l-sil${o.cls?' '+o.cls:''}" style="--c:${c};--s:${s};--y:${o.y||'0px'};--m:${o.top?FRONDS:silUrl(k)}"></i>`;
+const glow=(x,y,s,c,d=2.4)=>L('l-glow',{x:x+'%',y,s,c,d:d+'s'});
+const bolt=(x,s,d,dl)=>BOLT.replace('VAR_X',x+'%').replace('VAR_S',s).replace('VAR_D',d+'s').replace('VAR_DL','-'+dl+'s');
+const flash=(x,d,dl)=>L('l-flash',{x:x+'%',d:d+'s',dl:'-'+dl+'s'});
+const shoot=(n)=>P('l-shoot',n,()=>({x:f(r(60,95))+'%',y:f(r(2,30))+'%',d:f(r(6,11))+'s',dl:'-'+f(r(0,11))+'s'}));
+const waves=list=>list.map(([c,y,s,d])=>L('l-wave',{c,y,s,d:d+'s'})).join('');
+const tubes=list=>list.map(([x,y,w,hh,rr,c])=>L('l-tube',{x:x+'%',y:y+'%',w,hh,r:rr,c,d:f(r(3,7))+'s',dl:'-'+f(r(0,7))+'s'})).join('');
+
+const SCENES={
+  aurora:()=>stars(28,'#cfe8ff',[0,60])+aur(6,30,'#4ff3c8','#7a8cff',9)+aur(20,22,'#b06bff','#4ff3c8',12,4)+aur(34,18,'#4ff3c8','#ff7ad9',15,7)+sil('mountains','#04110d',30),
+  sunset:()=>sun(50,46,48,'#ffe9a0','#ff6a3d',10,'6cqh')+clouds(4,['#ff9a8a66','#ffb38a55','#c4552f66'],[8,42],[60,100],[45,80])+bats(3,'#1a0710',[14,34],[4,6])+waves([['#3b0f2499','6cqh',22,14],['#24081aee','0px',16,9]]),
+  ocean:()=>L('l-rays',{c:'#9fe8ff',o:.28})+bubbles(12,'#9fe8ff',[1.5,4])+waves([['#0f6e8c88','10cqh',26,16],['#0b3b63bb','4cqh',22,11],['#051c33','0px',16,7]]),
+  candy:()=>bokeh(6,['#ff8fd8','#ffd1f0','#b79cff'])+fall('p-sprinkle',36,['#ff5c93','#ffd34d','#5cd2ff','#7cff6b','#b79cff','#ffffff','#ff9a5c'],[2.4,4],[5,10])+sparks(6,'#fff'),
+  forest:()=>L('l-rays',{c:'#d6ffb0',o:.18})+clouds(3,'#cfe8d633',[40,70],[80,120],[50,80])+sil('pines2','#0a1d10',38)+flies(18,['#d4ff6b','#fff3a0'],[30,90])+sil('pines','#020905',30),
+  noir:()=>bokeh(4,['#fff2c255','#ffffff33'],[14,26])+rain(46,'#d6d6d6',[6,12])+L('l-grain',{o:.16})+L('l-vig')+L('l-sheen',{d:'9s'}),
+  galaxy:()=>stars(50,['#fff','#c7b8ff','#9fd8ff'])+L('l-spiral',{c1:'#b79cff',c2:'#5cd2ff',y:'38%'})+shoot(2),
+  ember:()=>glow(50,'0cqh',120,'#ff5a1f',2.2)+L('l-heat')+embers(32,['#ffb347','#ff6a3d','#ffd56b'],{h:[55,100]}),
+  lavender:()=>bokeh(8,['#c7a6ff','#e3d4ff','#a98bff'])+fall('p-petal',20,['#c7a6ff','#e7dbff','#a98bff','#f0e8ff'],[3,5.5],[8,14])+sil('hills','#160f26',20),
+  mint:()=>L('l-rays',{c:'#c9fff0',o:.22})+bokeh(6,'#6ff0c8')+bubbles(22,'#6ff0c8',[1.5,4.5],[5,10]),
+  peach:()=>sun(70,10,26,'#fff1d6','#ffb08a',7)+bokeh(16,['#ffb08a','#ffd1b3','#ff8f6b','#ffe0c4'],[8,22])+L('l-sheen',{d:'8s'}),
+  sakura:()=>bokeh(5,['#ffd6e8','#ffc2dc'])+L('l-moon',{x:'68%',y:'8%',s:16,c:'#ffe3ef'})+fall('p-petal',30,['#ffc2dc','#ffe3ef','#ff9fc2','#ffd1e3'],[2.6,5],[7,13]),
+  midnight:()=>stars(60,['#fff','#9fb4ff'])+`<i class="l-moon cr" style="--x:68%;--y:7%;--s:18;--c:#e8ecff"></i>`+clouds(3,'#1c2a6655',[10,40],[70,110],[60,90])+shoot(3),
+  cyber:()=>L('l-scan')+L('l-grid',{c:'#00ffd5',s:48})+L('l-scanbar',{c:'#00ffd5'})+glitch(5,['#ff2bd6','#00ffd5'])+sparks(5,['#00ffd5','#ff2bd6'],[2,3.5],[0,45]),
+  vaporwave:()=>stars(18,'#ffd6f5',[0,40])+L('l-ssun',{y:'16%',s:56})+sil('mountains','#2b0a4a',26,{y:'40cqh'})+L('l-grid',{c:'#ff6ec7',s:42}),
+  synthwave:()=>stars(22,'#ffd6f5',[0,35])+L('l-ssun',{y:'12%',s:60})+sil('mountains','#14002b',30,{y:'38cqh'})+L('l-grid',{c:'#ff3d7f',s:40}),
+  desert:()=>sun(72,10,22,'#fff3c2','#ffb84d',9)+L('l-heat')+sil('dunes','#5a3818',34)+sand(30,['#e8c48a','#d9a05b'])+sil('dunes2','#2b1a0a',22),
+  glacier:()=>sil('mountains','#bfe6f7aa',40)+L('l-sheen',{d:'7s'})+sparks(8,'#e9fbff',[2,4],[30,90])+snow(38),
+  volcano:()=>stars(16,'#ffd1b0',[0,30])+glow(50,'40cqh',70,'#ff6a00',1.6)+steam(7,'#4a3a3a',{x:[40,56],b:'38cqh',s:[16,28],h:45,o:.85,sp:[5,9]})+erupt(28,['#ffcf3d','#ff6a00','#ff3d1f'],'39cqh')+sil('volcano','#140403',46)+`<i class="l-sil lv" style="--c:#ff7a1a;--s:46;--m:${silUrl('lava')}"></i>`+embers(14,['#ff8a3d','#ffcf3d'],{x:[30,70],b:'30cqh',h:[40,70]}),
+  jungle:()=>clouds(3,'#a8e6b033',[30,70],[80,120],[40,70])+rain(20,'#a8e6b0',[5,10])+flies(16,['#eaff6b','#b6ff6b'],[30,95])+sil('pines','#03120a',26)+`<i class="l-sil top" style="--c:#052a12;--s:34;--m:${FRONDS}"></i>`,
+  deepsea:()=>L('l-rays',{c:'#5ce1ff',o:.25})+stars(30,'#5cd2ff')+jellies(3,['#ff8fd8','#8fe6ff','#c7a6ff'])+bubbles(16,'#8fe6ff',[1.2,3.5])+L('l-vig'),
+  royal:()=>bokeh(8,['#ffd34d55','#b98cff55'])+L('l-facet',{c:'#ffd34d'})+sparks(18,['#ffd34d','#fff3b0'])+L('l-prism',{y:'22%',d:'9s',dl:'0s'})+L('l-prism',{y:'62%',d:'12s',dl:'-5s'})+L('l-sheen',{d:'7s'}),
+  gold:()=>L('l-facet',{c:'#ffd34d'})+L('l-prism',{y:'22%',d:'9s',dl:'0s'})+L('l-prism',{y:'62%',d:'12s',dl:'-5s'})+L('l-sheen',{d:'5s'})+sparks(16,['#fff3b0','#ffd34d']),
+  rosegold:()=>bokeh(10,['#ffd0c0','#ffb3a0','#ffe6dc'])+L('l-sheen',{d:'6s'})+sparks(8,'#fff'),
+  emerald:()=>L('l-facet',{c:'#34ffb0'})+bokeh(4,'#34ffb0')+sparks(12,['#fff','#b8ffe6'])+L('l-prism',{y:'22%',d:'9s',dl:'0s'})+L('l-prism',{y:'62%',d:'12s',dl:'-5s'})+L('l-sheen',{d:'7s'}),
+  sapphire:()=>L('l-facet',{c:'#7fb2ff'})+bokeh(4,'#7fb2ff')+sparks(12,['#fff','#cfe0ff'])+L('l-prism',{y:'22%',d:'9s',dl:'0s'})+L('l-prism',{y:'62%',d:'12s',dl:'-5s'})+L('l-sheen',{d:'7s'}),
+  ruby:()=>L('l-facet',{c:'#ff5c7a'})+bokeh(4,'#ff5c7a')+sparks(12,['#fff','#ffd0da'])+L('l-prism',{y:'22%',d:'9s',dl:'0s'})+L('l-prism',{y:'62%',d:'12s',dl:'-5s'})+L('l-sheen',{d:'7s'}),
+  amethyst:()=>L('l-facet',{c:'#d8b4fe'})+bokeh(4,'#d8b4fe')+sparks(12,['#fff','#efe0ff'])+L('l-prism',{y:'22%',d:'9s',dl:'0s'})+L('l-prism',{y:'62%',d:'12s',dl:'-5s'})+L('l-sheen',{d:'7s'}),
+  coffee:()=>bokeh(6,['#e0b48a55','#ffcf9a44'])+steam(8,'#f0dcc8',{x:[15,70],s:[20,36],sp:[6,11]})+L('l-grain',{o:.08}),
+  matcha:()=>steam(5,'#eef8dc',{x:[20,65]})+fall('p-leaf',14,['#9bc26b','#6b8c45','#cdf59b'],[3.5,6],[9,15]),
+  cotton:()=>clouds(7,['#ffd1f0','#d1e3ff','#ffffff','#e6d1ff'],[0,90],[40,80],[30,55],.75)+sparks(10,'#fff')+bokeh(4,'#ffc2e6'),
+  storm:()=>flash(65,6,0)+flash(28,9,3)+clouds(7,['#3a4558','#4a5568','#2a3240'],[-10,22],[90,150],[22,40],.95)+bolt(58,9,6,0)+bolt(22,7,9,3)+rain(72,'#b9c8dc',[8,16],[.4,.7])+L('l-vig'),
+  twilight:()=>stars(40,'#fff',[0,55])+sun(30,72,40,'#ffd1a0','#ff8a5c',9,'8cqh')+clouds(3,'#3a1f5c99',[30,60],[70,110],[40,70])+shoot(1),
+  dawn:()=>sun(50,58,44,'#fff1d0','#ffb38a',12,'-8cqh')+clouds(5,['#ffd1a855','#ffe2c844','#c97a5a55'],[10,55],[60,110],[40,70])+bats(3,'#1a0f24',[18,40],[3.5,5])+sil('hills','#1a0f24',18),
+  neon:()=>bokeh(8,['#ff2bd655','#00e5ff44'])+tubes([[12,10,30,30,15,'#ff2bd6'],[56,14,32,6,3,'#00e5ff'],[56,24,22,6,3,'#00e5ff'],[18,60,64,5,3,'#ffe14d'],[62,52,22,22,4,'#7cff6b']])+rain(18,'#ff9bf0',[5,9])+L('l-scan'),
+  toxic:()=>glow(50,'0cqh',110,'#7cff00',1.8)+drips(9,'#7cff00')+bubbles(24,'#a6ff4d',[1.5,4.5],[4,8])+steam(4,'#a6ff4d',{o:.35}),
+  blood:()=>L('l-moon',{x:'60%',y:'8%',s:26,c:'#ff1a1a'})+clouds(5,['#8b000066','#5a000055'],[20,75],[70,120],[30,55])+bats(5,'#0a0000',[10,45],[5,9])+sil('pines','#050000',26),
+  arctic:()=>aur(4,22,'#bff2ff','#9affd8',11)+aur(16,16,'#9affd8','#c7a6ff',14,5)+sil('mountains','#dff2fb',30)+snow(42,[.7,2],[8,15]),
+  autumn:()=>sun(76,10,20,'#ffe0a0','#ffa040',8)+clouds(2,'#ffa04033',[20,50],[80,120],[50,80])+fall('p-leaf',24,['#ff8a3d','#ffb347','#d2691e','#ffd56b','#b33a1a'],[3.5,6.5],[8,14]),
+  spring:()=>bokeh(5,['#ffe6f0','#e6ffe6'])+bflies(4,['#ffd34d','#ff8fd8','#8fd8ff','#b6ff6b'])+fall('p-petal',18,['#ffffff','#ffd1e3','#f4a6c8'],[2.4,4.5],[8,14])+sil('hills','#173a22',18),
+  nebula:()=>stars(50,['#fff','#ffd1f0','#cfe8ff'])+neb([['#ff5ca8',-10,0,80,18],['#5cd2ff',30,25,90,24],['#b79cff',-20,45,85,21],['#ff8f5c',35,60,70,16],['#5cffc8',10,20,60,26]])+sparks(5,'#fff',[2,4]),
+  hologram:()=>L('l-iri')+L('l-scan')+L('l-scanbar',{c:'#99ffff'})+glitch(6,['#ff4dd8','#4dfff3','#ffe94d'])+sparks(6,['#99ffff','#ff99ff'],[2,3.5]),
+  lava:()=>glow(50,'0cqh',140,'#ffb34d',3)+glow(50,'100cqh',90,'#ff4d6d',4)+blobs(9,['#ff4d6d','#ff7a45','#ffb34d','#ff5c8a'])+L('l-glass'),
+  matrix:()=>code(16,'#00ff41')+L('l-scan')+L('l-vig')};
+const cache={};
+window.hzFxHtml=id=>{if(!SCENES[id])return '';if(!cache[id]){seed(id);cache[id]=SCENES[id]()}return cache[id]};
+window.hzFxSet=(host,id,ed)=>{if(!host)return;let fx=host.querySelector(':scope>.hzFx');
+  if(!id||!SCENES[id]){if(fx)fx.remove();return}
+  host.classList.add('hzFxHost');if(fx&&fx.dataset.th==id)return;
+  if(!fx){fx=document.createElement('div');fx.className='hzFx'+(ed?' ed':'');host.prepend(fx)}
+  fx.dataset.th=id;fx.innerHTML=hzFxHtml(id)};
+{const s=document.createElement('style');s.id='hz-fx';s.textContent=CSS;document.head.append(s);
+ const g=document.createElement('div');g.style.cssText='position:absolute;width:0;height:0;overflow:hidden';g.setAttribute('aria-hidden','true');
+ g.innerHTML='<svg width="0" height="0"><filter id="hzGoo" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8"/></filter></svg>';
+ (document.body||document.documentElement).append(g)}
 })();
 
 </script>
@@ -3044,7 +3289,7 @@ window.persCss=()=>{let s='';for(const [o,p] of Object.entries(P)){if(!p||!FONT[
 let pend=new Set(),raf=0;new MutationObserver(ms=>{ms.forEach(m=>m.addedNodes.forEach(n=>n.nodeType==1&&pend.add(n)));if(!raf)raf=requestAnimationFrame(()=>{raf=0;const ns=[...pend];pend.clear();
   ns.forEach(n=>{if(n.isConnected&&!n.closest('.hzDec'))decorateAll(n)});cardDeco()})}).observe(document.body,{childList:true,subtree:true});
 const cardDeco=()=>{if(typeof popEl=='undefined'||!popEl||!popO)return;const p=P[popO]||{};
-  if(p.th&&HZTHEMES.some(t=>t[0]==p.th))popEl.dataset.th=p.th;else delete popEl.dataset.th;
+  if(p.th&&HZTHEMES.some(t=>t[0]==p.th))popEl.dataset.th=p.th;else delete popEl.dataset.th;hzFxSet(popEl.querySelector('.pcIn'),popEl.dataset.th||'');
   const big=popEl.querySelector('.ppAv .avw,.avw');if(big&&!big.dataset.o)setDec(big,p.dec,colOfP(popO));
   const id=popEl.querySelector('.ppId');if(!id)return;let t=id.querySelector('.hzTags');const tags=Array.isArray(p.tags)?p.tags:[];
   if(!tags.length){if(t)t.remove();return}const h=tags.map(x=>`<span>${esc(x)}</span>`).join('');if(!t){t=document.createElement('div');t.className='hzTags';id.append(t)}if(t.innerHTML!=h)t.innerHTML=h};
@@ -3060,15 +3305,18 @@ const persPaint=()=>{const r=$('#prof .hzPers');if(!r)return;pf.dec=pf.dec?decOf
   r.querySelectorAll('[data-k]').forEach(c=>c.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',(pf[c.dataset.k]||'')==b.dataset.v)));
   r.querySelectorAll('.hzDecG .dp').forEach(x=>x.style.background=pf.color||'var(--ac)');
   $('#hzTagL').innerHTML=(pf.tags||[]).map((t,i)=>`<span>${esc(t)}<button type="button" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('');
-  const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th}
+  const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th;hzFxSet(pc,pf.th||'',true)}tileFx();
   const np=$('#npv');if(np){np.classList.forEach(c=>c.startsWith('hzNf-')&&np.classList.remove(c));if(pf.nf)np.classList.add('hzNf-'+pf.nf)}
   const w=$('#pav .avw');if(w)setDec(w,pf.dec,pf.color)};
+/* theme tiles animate while hovered, and the chosen one keeps animating */
+let thHover=null;const tileFx=()=>document.querySelectorAll('#prof .hzThG>button').forEach(b=>hzFxSet(b,b===thHover||(b.dataset.v&&b.dataset.v==pf.th)?b.dataset.v:''));
 const _pp=pcPaint;pcPaint=function(){_pp();persPaint()};
 const _op=openProfile;openProfile=function(o,edit){const r=_op.apply(this,arguments);const root=edit&&$('#prof .hzPers');if(!root)return r;
   pf.tags=Array.isArray(pf.tags)?pf.tags:[];delete pf.bs;
   const addTag=t=>{t=String(t||'').replace(/[<>]/g,'').trim().slice(0,18);if(!t)return;if(pf.tags.length>=5)return toast('Up to 5 interests.');if(!pf.tags.some(x=>x.toLowerCase()==t.toLowerCase()))pf.tags.push(t);persPaint()};
   root.onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=b.parentElement.closest('[data-k]');
     if(c&&b.parentElement===c){pf[c.dataset.k]=b.dataset.v;return pcPaint()}if(b.dataset.rm!==undefined){pf.tags.splice(+b.dataset.rm,1);return persPaint()}if(b.dataset.t)addTag(b.dataset.t)};
+  const tg=root.querySelector('.hzThG');tg.onmouseover=e=>{const b=e.target.closest('.hzThG>button');if(b!==thHover){thHover=b;tileFx()}};tg.onmouseleave=()=>{thHover=null;tileFx()};
   const ti=$('#hzTagI');ti.onkeydown=e=>{if(e.key=='Enter'||e.key==','){e.preventDefault();addTag(ti.value);ti.value=''}else if(e.key=='Backspace'&&!ti.value&&pf.tags.length){pf.tags.pop();persPaint()}};
   persPaint();return r};
 
@@ -3112,5 +3360,9 @@ const _cp=comPaint;comPaint=function(){const r=_cp.apply(this,arguments);comStat
 if(typeof P=='object')persCss();
 })();
 </script>
+
+
+
+
 
 </body></html>
