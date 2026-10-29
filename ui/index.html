@@ -1642,6 +1642,7 @@ function preferCodec(t,kind){
   try{if(!t||typeof t.setCodecPreferences!=='function'||!window.RTCRtpReceiver?.getCapabilities)return;
     const codecs=RTCRtpReceiver.getCapabilities(kind)?.codecs;if(!Array.isArray(codecs)||!codecs.length)return;
     if(kind==='audio'){const op=codecs.filter(c=>/^audio\/opus$/i.test(c.mimeType||'')&&+c.clockRate===48000);if(op.length)t.setCodecPreferences([...op,...codecs.filter(c=>!op.includes(c))]);}
+    if(kind==='video'&&window.hzVideoCodecs){const v=hzVideoCodecs(codecs);if(v)t.setCodecPreferences(v)}
   }catch(e){console.debug('Codec preference not supported by this browser',e)}
 }
 function tuneAudioSender(o,sender){
@@ -1756,10 +1757,10 @@ function ctrls(){$('#ctrl').hidden=!voice;
   if(voice){const nc=!chCan(vch,'video'),ns=!chCan(vch,'screen'),cOn=!!vtrack&&!vtrack._scr,sOn=!!vtrack&&!!vtrack._scr;$('#bCam').disabled=nc&&!cOn;$('#bScr').disabled=ns&&!sOn;if(nc&&!cOn)$('#bCam').title='You do not have permission to use a camera in this channel';if(ns&&!sOn)$('#bScr').title='You do not have permission to share your screen in this channel'}
   if(voice)send({t:'state',muted:eM(),video:!!vtrack,scr:!!(vtrack&&vtrack._scr)});sbSync()}
 function tuneV(o){const s=o&&o.vs;if(!s||!vtrack)return;try{const sc=!!vtrack._scr,p=s.getParameters();if(!p.encodings||!p.encodings.length)p.encodings=[{}];
-    p.encodings[0].maxBitrate=sc?6e6:2.5e6;p.encodings[0].maxFramerate=sc?60:30;p.degradationPreference=sc?'maintain-framerate':'balanced';s.setParameters(p).catch(()=>{})}catch{}}
+    p.encodings[0].maxBitrate=sc?6e6:2.5e6;p.encodings[0].maxFramerate=sc?60:30;p.degradationPreference=sc?'maintain-framerate':'balanced';if(window.hzSsTune)hzSsTune(p,sc);s.setParameters(p).catch(()=>{})}catch{}}
 function setVideo(t){ // one outgoing video track at a time: camera or screen
   if(vtrack){vtrack.stop();local.removeTrack(vtrack);Object.values(pcs).forEach(o=>{if(o.vs){try{o.pc.removeTrack(o.vs)}catch{}o.vs=null}})}
-  vtrack=t;if(t){if(t._scr)t.contentHint='motion';local.addTrack(t);Object.values(pcs).forEach(o=>{o.vs=o.pc.addTrack(t,local);const tr=o.pc.getTransceivers().find(x=>x.sender===o.vs);preferCodec(tr,'video');tuneV(o);setTimeout(()=>{if(vtrack==t)tuneV(o)},1500)});t.onended=()=>{if(vtrack==t){setVideo(null)}}}
+  vtrack=t;if(t){if(t._scr)t.contentHint=window.hzSsHint?hzSsHint():'motion';local.addTrack(t);Object.values(pcs).forEach(o=>{o.vs=o.pc.addTrack(t,local);const tr=o.pc.getTransceivers().find(x=>x.sender===o.vs);preferCodec(tr,'video');tuneV(o);setTimeout(()=>{if(vtrack==t)tuneV(o)},1500)});t.onended=()=>{if(vtrack==t){setVideo(null)}}}
   tile('me',local,'You');ctrls()}
 $('#vlist').onclick=e=>{const k=e.target.closest('.cg');if(k)return chOpen(k.dataset.e);const b=e.target.closest('[data-v]');if(b&&vch!=b.dataset.v&&!b.classList.contains('joining'))joinVoice(b.dataset.v)};$('#callBtn').onclick=()=>{if(vch!=cur)joinVoice(cur)};$('#bLeave').onclick=leaveVoice;
 $('#bMic').onclick=()=>{if(fm)return toast(fns?'You do not have permission to speak in this channel.':'A moderator muted you.');muted=!muted;local.getAudioTracks().forEach(t=>t.enabled=!muted&&!micTestStream);ctrls()};
@@ -1768,11 +1769,11 @@ $('#bCam').onclick=async()=>{if(vtrack&&!vtrack._scr)return setVideo(null);if(!c
   await startCam()};
 $('#bScr').onclick=async()=>{if(vtrack&&vtrack._scr)return setVideo(null);if(!chCan(vch,'screen'))return toast('You do not have permission to share your screen in this channel.');
   const id=await pickScreen();if(!id)return;window.api.pick(id);
-  try{const s=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:60,max:60},width:{ideal:1920},height:{ideal:1080}},audio:false});const t=s.getVideoTracks()[0];t._scr=true;setVideo(t)}catch(e){toast('Screen share failed: '+e.message)}};
+  try{const s=await navigator.mediaDevices.getDisplayMedia(window.hzSsConstraints?hzSsConstraints():{video:{frameRate:{ideal:60,max:60},width:{ideal:1920},height:{ideal:1080}},audio:false});const t=s.getVideoTracks()[0];t._scr=true;setVideo(t)}catch(e){toast('Screen share failed: '+e.message)}};
 async function pickScreen(){const list=await window.api.sources(),m=$('#picker'),isS=x=>String(x.id).startsWith('screen');
   return new Promise(res=>{let tab=list.some(isS)?'screen':'window';const done=v=>{m.style.display='none';res(v)};
     const draw=()=>{const items=list.filter(x=>tab=='screen'?isS(x):!isS(x));
-      m.innerHTML=`<div class="pk"><h3>Choose what to share</h3><div class="tabs2"><button data-k="screen" aria-pressed="${tab=='screen'}">Screens</button><button data-k="window" aria-pressed="${tab=='window'}">Applications</button></div><div class="pg"></div><button id="pc">Cancel</button></div>`;
+      m.innerHTML=`<div class="pk"><h3>Choose what to share</h3><div class="tabs2"><button data-k="screen" aria-pressed="${tab=='screen'}">Screens</button><button data-k="window" aria-pressed="${tab=='window'}">Applications</button></div><div class="pg"></div>${window.hzSsOpts?hzSsOpts():''}<button id="pc">Cancel</button></div>`;
       const g=m.querySelector('.pg');if(!items.length)g.innerHTML='<div class="empty">Nothing to share here.</div>';
       items.forEach(x=>{const b=document.createElement('button');b.innerHTML=`<img src="${x.thumb}" alt=""><span>${esc(x.name)}</span>`;b.onclick=()=>done(x.id);g.append(b)});
       m.querySelectorAll('.tabs2 button').forEach(b=>b.onclick=()=>{tab=b.dataset.k;draw()});$('#pc').onclick=()=>done(null)};
@@ -3253,7 +3254,7 @@ main{background:transparent}
 .hzDecG{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
 .hzDecG button{display:grid;justify-items:center;gap:4px;padding:16px 4px 7px;border-radius:14px;background:var(--bg);font-size:11.5px;color:var(--dim)}
 .hzDecG button[aria-pressed=true]{border-color:var(--ac);background:var(--acs);color:var(--tx);box-shadow:0 0 0 1px var(--ac) inset}
-.hzDecG .dp{position:relative;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;color:#140810;background:var(--pc,var(--ac))}
+.hzDecG .dp{position:relative;width:38px;height:38px;border-radius:50%;display:block}.hzDecG .dp .av{--s:38px}
 .hzDecG .none{font-size:20px;opacity:.55;line-height:36px;height:36px}
 .hzThG{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
 .hzThG button{position:relative;height:58px;padding:0;border-radius:12px;overflow:hidden;background:var(--thb,var(--bg));display:flex;align-items:flex-end;justify-content:flex-start}
@@ -3447,22 +3448,23 @@ window.persCss=()=>{let s='';for(const [o,p] of Object.entries(P)){if(!p||!FONT[
   css.textContent=s;decorateAll(document);cardDeco()};
 let pend=new Set(),raf=0;new MutationObserver(ms=>{ms.forEach(m=>m.addedNodes.forEach(n=>n.nodeType==1&&pend.add(n)));if(!raf)raf=requestAnimationFrame(()=>{raf=0;const ns=[...pend];pend.clear();
   ns.forEach(n=>{if(n.isConnected&&!n.closest('.hzDec'))decorateAll(n)});cardDeco()})}).observe(document.body,{childList:true,subtree:true});
-const cardDeco=()=>{if(typeof popEl=='undefined'||!popEl||!popO)return;const p=P[popO]||{};
+const decoCard=(popEl,popO)=>{if(!popEl||!popO)return;const p=P[popO]||{};
   if(p.th&&HZTHEMES.some(t=>t[0]==p.th))popEl.dataset.th=p.th;else delete popEl.dataset.th;hzFxSet(popEl.querySelector('.pcIn'),popEl.dataset.th||'');{const pn=popEl.querySelector('.ppName');if(pn){pn.classList.forEach(c=>c.startsWith('hzNf-')&&pn.classList.remove(c));if(FONT[p.nf])pn.classList.add('hzNf-'+p.nf)}const bn=popEl.querySelector('.ppBan');if(bn)hzFxSet(bn,bn.dataset.bfx?'b-'+bn.dataset.bfx:'')}
   const big=popEl.querySelector('.ppAv .avw,.avw');if(big&&!big.dataset.o)setDec(big,p.dec,colOfP(popO));
   const id=popEl.querySelector('.ppId');if(!id)return;let t=id.querySelector('.hzTags');const tags=Array.isArray(p.tags)?p.tags:[];
   if(!tags.length){if(t)t.remove();return}const h=tags.map(x=>`<span>${esc(x)}</span>`).join('');if(!t){t=document.createElement('div');t.className='hzTags';id.append(t)}if(t.innerHTML!=h)t.innerHTML=h};
+const cardDeco=()=>{if(typeof popEl!='undefined'&&popEl&&popO)decoCard(popEl,popO)};window.hzDecoCard=decoCard;
 const _on=on;on=function(d){_on(d);if(d.t=='init'||d.t=='profiles'||d.t=='rel')persCss()};
 /* profile editor: Personality section */
 window.persHTML=()=>`<div class="efxh">Personality</div><div class="hzPers">
-  <div class="hzSec"><div class="eft"><b>Avatar decoration</b><small>Hand-drawn flair on your photo, everywhere it shows up</small></div><div class="hzDecG" data-k="dec"><button type="button" data-v=""><span class="none">∅</span>None</button>${DECS.map(d=>`<button type="button" data-v="${d}"><span class="dp">${esc([...(pf.name||'?')][0].toUpperCase())}<span class="hzDec">${hzDecoSvg(d)}</span></span>${HZDECO[d].n}</button>`).join('')}</div></div>
+  <div class="hzSec"><div class="eft"><b>Avatar decoration</b><small>Hand-drawn flair on your photo, everywhere it shows up</small></div><div class="hzDecG" data-k="dec"><button type="button" data-v=""><span class="none">∅</span>None</button>${DECS.map(d=>`<button type="button" data-v="${d}"><span class="dp">${avh(pf.name||'?',pf.color||'#ff5c93',pf.avatar)}<span class="hzDec">${hzDecoSvg(d)}</span></span>${HZDECO[d].n}</button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Profile card theme</b><small>The backdrop people see when they open your card</small></div><div class="hzThG" data-k="th"><button type="button" data-v="" style="background:var(--bg)"><span>None</span></button>${HZTHEMES.map(([id,n])=>`<button type="button" data-v="${id}" data-th="${id}" title="${n}"><span>${n}</span></button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Name font</b><small>How your name looks in chat and member lists</small></div><div class="hzChips hzFontG" data-k="nf">${NF.map(([v,t])=>`<button type="button" data-v="${v}" class="${v?'hzNf-'+v:''}">${t}</button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Interests</b><small>Up to 5 tags on your card</small></div><div class="hzTagEd"><span id="hzTagL"></span><input id="hzTagI" maxlength="18" placeholder="Add a tag, press Enter"></div>
   <div class="hzSug">${SUG.map(t=>`<button type="button" data-t="${esc(t)}">${t}</button>`).join('')}</div></div></div>`;
 const persPaint=()=>{const r=$('#prof .hzPers');if(!r)return;pf.dec=pf.dec?decOf(pf.dec):'';
   r.querySelectorAll('[data-k]').forEach(c=>c.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',(pf[c.dataset.k]||'')==b.dataset.v)));
-  r.querySelectorAll('.hzDecG .dp').forEach(x=>x.style.background=pf.color||'var(--ac)');
+  {const k=[pf.name,pf.color,pf.avatar].join('|'),g=r.querySelector('.hzDecG');if(g&&g.dataset.k!==k){g.dataset.k=k;g.querySelectorAll('.dp').forEach(x=>{const a=x.querySelector('.av');if(a)a.outerHTML=avh(pf.name||'?',pf.color||'#ff5c93',pf.avatar)})}}
   $('#hzTagL').innerHTML=(pf.tags||[]).map((t,i)=>`<span>${esc(t)}<button type="button" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('');
   const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th;hzFxSet(pc,'',true)}tileFx();hzFxSet($('#prof .ban'),pf.bfx?'b-'+pf.bfx:'');pickPaint();
   const np=$('#npv');if(np){np.classList.forEach(c=>c.startsWith('hzNf-')&&np.classList.remove(c));if(pf.nf)np.classList.add('hzNf-'+pf.nf)}
@@ -3579,6 +3581,114 @@ const _cp=comPaint;comPaint=function(){const r=_cp.apply(this,arguments);comStat
 if(typeof P=='object')persCss();
 })();
 </script>
+
+<style id="huddle-v7">
+/* ---------- Huddle v7: DM profile panel, screen share options ---------- */
+#hzDmP{width:320px;height:100%;overflow-y:auto;overflow-x:hidden;padding:12px 12px 16px;box-sizing:border-box;border-left:1px solid var(--line);background:var(--panel);animation:hzDmIn .3s var(--ease-out,ease) both}
+@keyframes hzDmIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+#hzDmP .pcard{position:relative!important;left:auto!important;top:auto!important;width:100%!important;animation:none!important;transform:none!important;z-index:auto}
+#hzDmP .ppX{display:none}
+#hzDmP .hzDmHd{display:flex;align-items:center;justify-content:space-between;margin:0 2px 10px;color:var(--dim);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+#hzDmP .hzDmHd button{padding:3px 9px;font-size:12px;border-radius:8px}
+#dmPBtn{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px}
+#dmPBtn[aria-pressed=true]{border-color:var(--ac);color:var(--ac)}
+/* screen share options in the share picker */
+.ssOpts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:4px 0 10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.ssOpts label{display:grid;gap:4px;font-size:12px;color:var(--dim);font-weight:600}
+.ssOpts select{padding:6px 8px;border-radius:9px}
+.ssOpts .ssNote{grid-column:1/-1;font-size:12px;color:var(--dim);line-height:1.4}
+.ssOpts .ssNote b{color:var(--tx)}
+</style>
+<script id="huddle-v7-js">
+(()=>{
+/* ---- 1. profile cards open instantly: everything a card needs is prepared in the background beforehand ---- */
+const idle=f=>(window.requestIdleCallback||(c=>setTimeout(c,60)))(f,{timeout:1500});
+let warmedFonts=false;const warmed=new Set();
+const warmFonts=()=>{if(warmedFonts)return;warmedFonts=true;try{document.fonts.forEach(f=>{if(f.status=='unloaded')f.load().catch(()=>{})})}catch{}};
+/* renders one invisible card per distinct look so styles, scenes, glows and fonts are already cached by the time a card opens */
+const warmLooks=()=>{const looks=new Map();
+  for(const [o,p] of Object.entries(P||{})){if(!p)continue;const k=[p.th,p.bfx,p.dec,p.cg,p.nfx,p.nf,p.fx].join('|');if(!warmed.has(k)&&!looks.has(k))looks.set(k,o)}
+  if(!looks.size)return;
+  const st=document.createElement('div');st.setAttribute('aria-hidden','true');st.style.cssText='position:fixed;left:0;top:0;width:340px;opacity:.001;pointer-events:none;z-index:-1;contain:strict;height:600px;overflow:hidden';
+  [...looks].slice(0,16).forEach(([k,o])=>{warmed.add(k);try{const v=cardHTML(o),c=document.createElement('div');c.className='pcard gfx';c.style.cssText='position:absolute!important;left:0;top:0;animation:none';
+    const inn=document.createElement('div');inn.className='pcIn';inn.innerHTML=v.html;c.append(inn);c.style.setProperty('--pc',v.col);gApply(c,v.p);
+    st.append(c);if(window.hzDecoCard)hzDecoCard(c,o)}catch{}});
+  document.body.append(st);requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>st.remove(),400)))};
+const warm=()=>idle(()=>{warmFonts();if(typeof P=='object'&&P)warmLooks()});
+/* hovering a name or avatar warms that person's card a moment before the click */
+addEventListener('pointerover',e=>{const el=e.target.closest&&e.target.closest('[data-o]'),p=el&&P[el.dataset.o];if(p&&!warmed.has([p.th,p.bfx,p.dec,p.cg,p.nfx,p.nf,p.fx].join('|')))idle(warmLooks)},{passive:true});
+
+/* ---- 2. DM profile panel: the other person's profile on the right while you chat with them ---- */
+const panel=document.createElement('aside');panel.id='hzDmP';panel.setAttribute('aria-label','Profile');
+const dmOn=()=>LS.get('huddle.dmPanel')!=='off';
+const panelKey=o=>JSON.stringify([P[o],(REL||{}).f&&REL.f.includes(o),(REL||{}).i&&REL.i.includes(o),(REL||{}).o&&REL.o.includes(o),stOf(o),UP&&UP.notes&&UP.notes[o]]);
+const isDm=()=>typeof cur=='string'&&cur.startsWith('dm:');
+function dmPaint(){const E=window.layoutEdges,btn=$('#dmPBtn');if(btn){btn.hidden=!isDm();btn.setAttribute('aria-pressed',dmOn())}
+  if(!E||!E.right)return;
+  if(!isDm()||!dmOn()||innerWidth<=900){if(panel.isConnected){panel.remove();E.right.classList.toggle('empty',!E.right.children.length)}return}
+  const o=dmO(cur);if(!P[o])return;const k=panelKey(o);
+  if(panel.dataset.o!==o||panel.dataset.k!==k){panel.dataset.o=o;panel.dataset.k=k;
+    const v=cardHTML(o);panel.innerHTML='<div class="hzDmHd"><span>Profile</span><button type="button" data-a="hide" title="Hide this panel">Hide</button></div>';
+    const c=document.createElement('div');c.className='pcard gfx';const inn=document.createElement('div');inn.className='pcIn';inn.innerHTML=v.html;c.append(inn);c.style.setProperty('--pc',v.col);gApply(c,v.p);panel.append(c);
+    if(window.hzDecoCard)hzDecoCard(c,o)}
+  if(panel.parentElement!==E.right)E.right.append(panel);E.right.classList.remove('empty')}
+panel.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a,o=panel.dataset.o;if(!o)return;
+  if(a=='hide'){LS.set('huddle.dmPanel','off');dmPaint();return toast('Profile panel hidden. Turn it back on with the profile button at the top.',true)}
+  if(a=='note')return noteDialog(o);if(a=='copytag')return copyText(tagOf(o));if(a=='rep')return repDialog(o);
+  if(a=='fr')return frAct(FRA[frSt(o)],o,'');
+  if(a=='block'){const was=((P[oid]||{}).blockedUsers||[]).includes(o);if(was)return send({t:'blockuser',o,block:false});if(await hzAsk('Block '+((P[o]||{}).name||'this user')+'? They will not be able to DM or send friend requests, and your friendship will be removed.'))send({t:'blockuser',o,block:true});return}
+  if(a=='mod'||a=='back'){const pg=panel.querySelector('.pcPages');if(pg)pg.dataset.sub=a=='mod'?1:0}});
+/* the panel follows the conversation you have open, and changes to that person's profile */
+const _lay=window.applyHuddleLayout;if(_lay)window.applyHuddleLayout=function(){_lay.apply(this,arguments);dmPaint()};
+addEventListener('resize',()=>setTimeout(dmPaint,0));
+{const tb=$('#tbar'),pin=$('#pinBtn');if(tb){const b=document.createElement('button');b.id='dmPBtn';b.type='button';b.hidden=true;b.title='Show or hide their profile';
+  b.innerHTML='<svg class="hzI" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-3.8 3.8-6 7.5-6s6.7 2.2 7.5 6"/></svg>';
+  b.onclick=()=>{LS.set('huddle.dmPanel',dmOn()?'off':'on');dmPaint()};(pin||tb.lastChild).after(b)}}
+let lastCur=null;setInterval(()=>{if(cur!==lastCur){lastCur=cur;dmPaint()}},250);
+
+/* ---- 3. screen share: resolution, frame rate, bitrate, content type and colour (HDR / SDR) ---- */
+const SS_DEF={res:'1080',fps:'60',br:'12',hint:'motion',color:'auto'};
+const ssGet=()=>{try{return {...SS_DEF,...JSON.parse(LS.get('huddle.ss')||'{}')}}catch{return {...SS_DEF}}};
+const RES={'720':[1280,720],'1080':[1920,1080],'1440':[2560,1440],'2160':[3840,2160],src:null};
+window.hzSsConstraints=()=>{const s=ssGet(),r=RES[s.res],f=+s.fps||60,v={frameRate:{ideal:f,max:f}};if(r){v.width={ideal:r[0],max:r[0]};v.height={ideal:r[1],max:r[1]}}return {video:v,audio:false}};
+window.hzSsTune=(p,sc)=>{if(!sc)return;const s=ssGet();p.encodings[0].maxBitrate=(+s.br||12)*1e6;p.encodings[0].maxFramerate=+s.fps||60;p.degradationPreference=s.hint=='detail'?'maintain-resolution':'maintain-framerate';if('priority' in p.encodings[0])p.encodings[0].priority='high'};
+window.hzSsHint=()=>ssGet().hint=='detail'?'detail':'motion';
+/* codec order for screen video: HDR prefers 10-bit capable codecs (VP9 profile 2 / AV1), SDR keeps to 8-bit (VP9 profile 0 / H.264) */
+window.hzVideoCodecs=codecs=>{if(!(typeof vtrack!='undefined'&&vtrack&&vtrack._scr))return null;const c=ssGet().color,m=x=>(x.mimeType||'').toLowerCase(),f=x=>x.sdpFmtpLine||'';
+  const rank=x=>{const t=m(x);if(c=='hdr')return t=='video/av1'?0:t=='video/vp9'&&/profile-id=2/.test(f(x))?1:t=='video/vp9'?2:t=='video/h264'?3:4;
+    if(c=='sdr')return t=='video/vp9'&&!/profile-id=[123]/.test(f(x))?0:t=='video/h264'?1:t=='video/vp8'?2:t=='video/av1'?3:4;
+    return t=='video/vp9'&&!/profile-id=[123]/.test(f(x))?0:t=='video/av1'?1:t=='video/h264'?2:3};
+  const main=codecs.filter(x=>!/rtx|red|ulpfec|flexfec/i.test(m(x)));return [...main].sort((a,b)=>rank(a)-rank(b)).concat(codecs.filter(x=>!main.includes(x)))};
+const opt=(k,v,t,s)=>`<option value="${v}"${s[k]==v?' selected':''}>${t}</option>`;
+window.hzSsOpts=()=>{const s=ssGet();return `<div class="ssOpts">
+  <label>Resolution<select data-ss="res">${opt('res','720','720p',s)}${opt('res','1080','1080p',s)}${opt('res','1440','1440p',s)}${opt('res','2160','4K',s)}${opt('res','src','Source (native)',s)}</select></label>
+  <label>Frame rate<select data-ss="fps">${opt('fps','15','15 fps',s)}${opt('fps','30','30 fps',s)}${opt('fps','60','60 fps',s)}${opt('fps','120','120 fps',s)}</select></label>
+  <label>Quality<select data-ss="br">${opt('br','2.5','Data saver (2.5 Mbps)',s)}${opt('br','6','Balanced (6 Mbps)',s)}${opt('br','12','High (12 Mbps)',s)}${opt('br','25','Ultra (25 Mbps)',s)}${opt('br','50','Max (50 Mbps)',s)}</select></label>
+  <label>Optimise for<select data-ss="hint">${opt('hint','motion','Motion (games, video)',s)}${opt('hint','detail','Text and detail (code, docs)',s)}</select></label>
+  <label>Colour<select data-ss="color">${opt('color','auto','Auto',s)}${opt('color','sdr','Force SDR (fixes washed-out colours)',s)}${opt('color','hdr','HDR (10-bit, experimental)',s)}</select></label>
+  <div class="ssNote" id="ssNote"></div></div>`};
+const note=()=>{const n=$('#ssNote');if(!n)return;const s=ssGet();
+  n.innerHTML=(s.color=='hdr'?'<b>HDR:</b> prefers 10-bit codecs (AV1 / VP9 profile 2) when your PC and the viewer support them, otherwise it falls back to SDR automatically. ':s.color=='sdr'?'<b>Force SDR:</b> keeps the stream 8-bit sRGB, which fixes the washed-out look when sharing from an HDR monitor. ':'')+
+    ((+s.br>=25||s.res=='2160'||s.res=='src')?'High settings need a fast upload; viewers on slow connections get a lower quality automatically.':'Higher settings need more upload speed.')};
+document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.ss;if(!k)return;const s=ssGet(),was=s.color;s[k]=e.target.value;LS.set('huddle.ss',JSON.stringify(s));note();
+  if(k=='color'&&window.api&&window.api.set){window.api.set({ssColor:s.color}).catch(()=>{});if(s.color!=was&&(s.color=='sdr'||was=='sdr'))toast('Colour mode saved. Restart Huddle once so Force SDR applies to the whole app.',true)}
+  /* already sharing? apply the new settings to the live stream */
+  if(typeof vtrack!='undefined'&&vtrack&&vtrack._scr){const c=hzSsConstraints().video;vtrack.applyConstraints(c).catch(()=>{});vtrack.contentHint=hzSsHint();Object.values(pcs).forEach(o=>tuneV(o))}},true);
+new MutationObserver(()=>{if($('#ssNote')&&!$('#ssNote').innerHTML)note()}).observe($('#picker'),{childList:true,subtree:true});
+/* keep the desktop app's colour mode in step (used at startup for Force SDR) */
+idle(()=>{try{const c=ssGet().color;window.api&&window.api.set&&window.api.set({ssColor:c}).catch(()=>{})}catch{}});
+
+/* warm-up triggers */
+const _on2=on;on=function(d){_on2(d);if(d.t=='init'||d.t=='profiles')warm();if(['profiles','rel','uprefs','users'].includes(d.t))dmPaint()};
+warm();
+})();
+</script>
+
+
+
+
+
+
 
 
 
