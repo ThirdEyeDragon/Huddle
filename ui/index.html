@@ -2792,6 +2792,19 @@ span[data-nfx]{display:inline-block}
 .hzPick.pkbn>button span:last-child{padding:4px 6px 5px}
 /* every tile shows a paused still of its scene; the hovered or chosen one plays */
 .hzPick.pkbn>button:not(.run) .hzFx *,.hzThG>button:not(.run) .hzFx *{animation-play-state:paused!important}
+/* smooth scrolling in the editor: sections off screen are not rendered, idle tiles do not animate */
+#prof .efx,#prof .hzSec{content-visibility:auto;contain-intrinsic-size:auto 320px}
+.hzRun>button{contain:layout paint;will-change:transform}
+#prof.hzScrolling *,#prof.hzScrolling *::before,#prof.hzScrolling *::after{animation-play-state:paused!important}
+#prof .pc .ban{contain:paint}
+.hzRun>button:not(.run),.hzRun>button:not(.run) *,.hzRun>button:not(.run)::before,.hzRun>button:not(.run)::after,.hzRun>button:not(.run) *::before,.hzRun>button:not(.run) *::after{animation-play-state:paused!important}
+.hzPick.pkfx{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
+.hzPick.pkfx>button{display:grid;justify-items:center;gap:9px;padding:16px 4px 8px;overflow:hidden}
+.hzPick.pkfx .av{--s:40px}
+.hzPick.pkgr{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}
+.hzPick.pkgr>button{display:grid;gap:6px;padding:8px 8px 6px}
+.grS{height:28px;border-radius:9px;display:grid;place-items:center;color:var(--dim);font-size:14px}
+.hzPick.pkgr>button[aria-pressed=true] .grS{box-shadow:0 0 0 2px #fff inset,0 0 12px #0006}
 .hzFontG{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))!important;display:grid!important}
 .hzFontG button{font-size:15px!important;padding:8px 10px!important;border-radius:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
@@ -3451,32 +3464,71 @@ const persPaint=()=>{const r=$('#prof .hzPers');if(!r)return;pf.dec=pf.dec?decOf
   r.querySelectorAll('[data-k]').forEach(c=>c.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',(pf[c.dataset.k]||'')==b.dataset.v)));
   r.querySelectorAll('.hzDecG .dp').forEach(x=>x.style.background=pf.color||'var(--ac)');
   $('#hzTagL').innerHTML=(pf.tags||[]).map((t,i)=>`<span>${esc(t)}<button type="button" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('');
-  const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th;hzFxSet(pc,pf.th||'',true)}tileFx();hzFxSet($('#prof .ban'),pf.bfx?'b-'+pf.bfx:'');pickPaint();
+  const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th;hzFxSet(pc,'',true)}tileFx();hzFxSet($('#prof .ban'),pf.bfx?'b-'+pf.bfx:'');pickPaint();
   const np=$('#npv');if(np){np.classList.forEach(c=>c.startsWith('hzNf-')&&np.classList.remove(c));if(pf.nf)np.classList.add('hzNf-'+pf.nf)}
   const w=$('#pav .avw');if(w)setDec(w,pf.dec,pf.color)};
 /* theme tiles animate while hovered, and the chosen one keeps animating */
-let thHover=null;const tileFx=()=>document.querySelectorAll('#prof .hzThG>button').forEach(b=>{hzFxSet(b,b.dataset.v||'');b.classList.toggle('run',!!b.dataset.v&&(b===thHover||b.dataset.v==pf.th))});
-/* visual pickers for card glow, name style and banner effect (they drive the original dropdowns, so saving is unchanged) */
+let thHover=null;const tileFx=()=>window.hzRunPaint&&hzRunPaint();
+/* visual pickers for photo effect, profile gradient, card glow, name style and banner effect. They drive the original
+   controls, so saving is unchanged. Only the hovered or chosen tile animates; tile scenes exist only while on screen. */
 const CGS=[['','Off'],['steady','Steady'],['breathe','Breathe'],['flicker','Neon flicker'],['heartbeat','Heartbeat'],['aurora','Aurora'],['sweep','Comet'],['rainbow','Rainbow'],['orbit','Orbit'],['prism','Prism'],['holo','Holo'],['galaxy','Galaxy'],['ocean','Ocean'],['electric','Electric'],['ice','Ice'],['fire','Fire'],['sunset','Sunset'],['toxic','Toxic'],['halo','Halo'],['void','Void'],['glitch','Glitch'],['ripple','Ripple']];
 const NFX=[['','Plain'],['gradient','Gradient'],['flow','Flowing'],['shimmer','Shimmer'],['neon','Neon'],['rainbow','Rainbow'],['fire','Fire'],['ice','Ice'],['pulse','Pulse'],['chrome','Chrome'],['gold','Gold'],['holo','Holo'],['glitch','Glitch'],['outline','Outline'],['retro','Retro 3D'],['aurora','Aurora'],['lava','Lava'],['galaxy','Galaxy'],['toxic','Toxic'],['glitter','Glitter'],['vapor','Vaporwave'],['electric','Electric'],['blood','Blood'],['sunset','Sunset'],['ocean','Ocean'],['shadow','Long shadow']];
-let bnHover=null;
+const GRADS=[['Sunset','#ff5c93','#ffc27a'],['Ocean','#00c6ff','#0072ff'],['Aurora','#4ff3c8','#7a8cff'],['Candy','#ff8fd8','#b79cff'],['Fire','#ff3d00','#ffd34d'],['Ice','#9be7ff','#ffffff'],['Forest','#56ab2f','#a8e063'],['Galaxy','#6c3cff','#ff5ca8'],['Peach','#ffb08a','#ffe0c4'],['Mint','#3fe0c5','#c9fff0'],['Lavender','#a98bff','#f0e8ff'],['Gold','#f7971e','#ffd200'],['Midnight','#141e30','#5c6bc0'],['Neon','#ff2bd6','#00e5ff'],['Rose','#e8a0bf','#fff0f6'],['Toxic','#7cff00','#00c853'],['Blood','#8b0000','#ff4d4d'],['Vapor','#ff71ce','#01cdfe']];
+let pkHover=null,pkIO=null;
 const pickBuild=(selId,cls,list,tile)=>{const sel=$('#'+selId);if(!sel||sel.dataset.hz)return;sel.dataset.hz=1;
   list.forEach(([v,t])=>{if(![...sel.options].some(o=>o.value==v))sel.add(new Option(t,v))});
   const lab=sel.closest('label');if(lab)lab.style.display='none';
-  const g=document.createElement('div');g.className='hzPick '+cls;g.dataset.sel=selId;g.innerHTML=list.map(([v,t])=>`<button type="button" data-v="${v}">${tile(v,t)}</button>`).join('');
+  const g=document.createElement('div');g.className='hzPick hzRun '+cls;g.dataset.sel=selId;g.innerHTML=list.map(([v,t])=>`<button type="button" data-v="${v}">${tile(v,t)}</button>`).join('');
   sel.closest('.pfx').after(g);g.onclick=e=>{const b=e.target.closest('.hzPick>button');if(!b)return;sel.value=b.dataset.v;sel.dispatchEvent(new Event('change',{bubbles:true}))};return g};
+const avTile=v=>`<span class="avw"${v?` data-fx="${v}"`:''}>${avh(pf.name||'?',pf.color||'#ff5c93',pf.avatar)}</span>`;
+/* which value each picker currently holds */
+const pkVal=g=>({pgs:pf.cg,pnf:pf.nfx,pbf:pf.bfx,pfx:pf.fx}[g.dataset.sel]||'');
+const gradOn=b=>b.dataset.l?(pf.gl||'').toLowerCase()==b.dataset.l&&(pf.gr||'').toLowerCase()==b.dataset.r:!(pf.gl&&pf.gr);
+/* scenes for theme and banner tiles: built while the tile is on screen (or hovered / chosen), removed otherwise */
+/* while scrolling, new scenes wait; afterwards they are built a few per frame so nothing stutters */
+let pkScrolling=false,pkQ=new Set(),pkRaf=0;
+const fxNow=b=>{const th=b.parentElement.classList.contains('hzThG'),v=b.dataset.v,want=v&&(b.dataset.vis||b.classList.contains('run'));
+  hzFxSet(th?b:b.querySelector('.bnM'),want?(th?v:'b-'+v):'')};
+const pkPump=()=>{pkRaf=0;if(pkScrolling)return;let n=0;for(const b of pkQ){pkQ.delete(b);if(b.isConnected)fxNow(b);if(++n>=3)break}if(pkQ.size)pkRaf=requestAnimationFrame(pkPump)};
+const fxTile=b=>{const host=b.parentElement.classList.contains('hzThG')?b:b.querySelector('.bnM'),has=!!host.querySelector(':scope>.hzFx');
+  const want=!!b.dataset.v&&!!(b.dataset.vis||b.classList.contains('run'));if(has==want&&!(want&&b.classList.contains('run')))return;
+  if(!want||b.classList.contains('run'))return fxNow(b);pkQ.add(b);if(!pkRaf)pkRaf=requestAnimationFrame(pkPump)};
+window.hzRunPaint=()=>{const pr=$('#prof');if(!pr)return;
+  pr.querySelectorAll('.hzRun>button').forEach(b=>{const g=b.parentElement;
+    const on=g.classList.contains('hzThG')?!!b.dataset.v&&b.dataset.v==pf.th:g.classList.contains('hzDecG')?(b.dataset.v||'')==(pf.dec||''):g.classList.contains('pkgr')?gradOn(b):(b.dataset.v||'')==pkVal(g);
+    const run=(b===pkHover||on)&&!!(b.dataset.v||b.dataset.l);
+    if(b.dataset.hzrun!==String(run)){b.dataset.hzrun=String(run);b.classList.toggle('run',run);b.querySelectorAll('svg').forEach(s=>{try{run?s.unpauseAnimations():s.pauseAnimations()}catch{}})}
+    if(g.classList.contains('hzThG')||g.classList.contains('pkbn'))fxTile(b)})};
 const pickPaint=()=>{const pr=$('#prof');if(!pr)return;
-  pr.querySelectorAll('.hzPick').forEach(g=>{const v={pgs:pf.cg,pnf:pf.nfx,pbf:pf.bfx}[g.dataset.sel]||'';g.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v==v))});
+  pr.querySelectorAll('.hzPick').forEach(g=>{if(g.classList.contains('pkgr'))g.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',gradOn(b)));
+    else{const v=pkVal(g);g.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v==v))}});
+  const fx=pr.querySelector('.hzPick.pkfx');if(fx){fx.style.cssText=fxv({rc:pf.rc||'#ff5c93',gl:pf.gl,gr:pf.gr});const k=[pf.name,pf.color,pf.avatar].join('|');
+    if(fx.dataset.k!=k){fx.dataset.k=k;fx.querySelectorAll(':scope>button').forEach(b=>{const w=b.querySelector('.avw');if(w)w.outerHTML=avTile(b.dataset.v)})}}
   const cg=pr.querySelector('.hzPick.pkcg');if(cg){cg.style.setProperty('--g1',pf.cc||'#ff5c93');cg.style.setProperty('--g2',pf.cc2||'#ffc27a');cg.style.setProperty('--gi',[.6,1,1.5][(pf.ci||2)-1]||1)}
   const nf=pr.querySelector('.hzPick.pknf');if(nf){nf.style.setProperty('--n1',pf.nc||'#ff5c93');nf.style.setProperty('--n2',pf.nc2||'#ffc27a');nf.style.setProperty('--pc',pf.color||'var(--ac)');
     nf.querySelectorAll('b').forEach(b=>{if(b.textContent!=(pf.name||'Name'))b.textContent=pf.name||'Name';b.classList.forEach(c=>c.startsWith('hzNf-')&&b.classList.remove(c));if(FONT[pf.nf])b.classList.add('hzNf-'+pf.nf)})}
   const bn=pr.querySelector('.hzPick.pkbn');if(bn){bn.style.setProperty('--b1',pf.bc||'#ffffff');bn.style.setProperty('--pc',pf.color||'var(--ac)');
-    bn.querySelectorAll(':scope>button').forEach(b=>{const m=b.querySelector('.bnM');m.style.backgroundImage=pf.banner?`url("${base}${pf.banner}")`:'';m.style.backgroundSize='cover';hzFxSet(m,b.dataset.v?'b-'+b.dataset.v:'');b.classList.toggle('run',!!b.dataset.v&&(b===bnHover||b.dataset.v==pf.bfx))})}};
+    bn.querySelectorAll('.bnM').forEach(m=>{const u=pf.banner?`url("${base}${pf.banner}")`:'';if(m.style.backgroundImage!=u){m.style.backgroundImage=u;m.style.backgroundSize='cover'}})}
+  hzRunPaint()};
 const pickInit=()=>{
+  pickBuild('pfx','pkfx',[...$('#pfx').options].map(o=>[o.value,o.textContent.replace(/\s*\(.*\)$/,'')]),(v,t)=>avTile(v)+t);
+  {const row=$('#pgl')&&$('#pgl').closest('.pfx');if(row&&!row.nextElementSibling?.classList.contains('pkgr')){const g=document.createElement('div');g.className='hzPick hzRun pkgr';
+    g.innerHTML='<button type="button"><span class="grS" style="background:var(--raise)">∅</span>None</button>'+GRADS.map(([n,l,r])=>`<button type="button" data-l="${l}" data-r="${r}"><span class="grS" style="background:linear-gradient(90deg,${l},${r})"></span>${n}</button>`).join('');
+    row.after(g);g.onclick=e=>{const b=e.target.closest('.pkgr>button');if(!b)return;if(!b.dataset.l)return $('#pgc').click();
+      const set=(id,v)=>{const i=$('#'+id);i.value=v;i.dispatchEvent(new Event('input',{bubbles:true}))};set('pgl',b.dataset.l);set('pgr',b.dataset.r)}}}
   pickBuild('pgs','pkcg',CGS,(v,t)=>`<span class="cgM gfx"${v?` data-g="${v}"`:''}></span>${t}`);
   pickBuild('pnf','pknf',NFX,(v,t)=>`<b${v?` data-nfx="${v}"`:''}></b>${t}`);
-  const bg=pickBuild('pbf','pkbn',[['','None'],...HZBANNERS],(v,t)=>`<span class="bnM"></span><span>${t}</span>`);
-  if(bg){bg.onmouseover=e=>{const b=e.target.closest('.hzPick>button');if(b!==bnHover){bnHover=b;pickPaint()}};bg.onmouseleave=()=>{bnHover=null;pickPaint()}}
+  pickBuild('pbf','pkbn',[['','None'],...HZBANNERS],(v,t)=>`<span class="bnM"></span><span>${t}</span>`);
+  const pr=$('#prof'),pc=$('#prof .pc');
+  pr.querySelectorAll('.hzDecG,.hzThG').forEach(g=>g.classList.add('hzRun'));
+  /* one hover tracker for every picker */
+  if(!pr.dataset.hzHov){pr.dataset.hzHov=1;pr.addEventListener('mouseover',e=>{const b=e.target.closest('.hzRun>button');if(b!==pkHover){pkHover=b;hzRunPaint()}});pr.addEventListener('mouseleave',()=>{pkHover=null;hzRunPaint()})}
+  /* while you scroll, every animation in the editor holds still; it carries on the moment scrolling stops */
+  if(!pc.dataset.hzScr){pc.dataset.hzScr=1;let st=0;pc.addEventListener('scroll',()=>{if(!st){pr.classList.add('hzScrolling');pkScrolling=true}clearTimeout(st);st=setTimeout(()=>{st=0;pkScrolling=false;pr.classList.remove('hzScrolling');if(pkQ.size&&!pkRaf)pkRaf=requestAnimationFrame(pkPump)},160)},{passive:true})}
+  /* scenes only for tiles that are on screen */
+  if(pkIO)pkIO.disconnect();
+  pkIO=new IntersectionObserver(es=>{es.forEach(en=>{en.target.dataset.vis=en.isIntersecting?'1':'';fxTile(en.target)})},{root:pc,rootMargin:'150px 0px'});
+  pr.querySelectorAll('.hzThG>button,.pkbn>button').forEach(b=>pkIO.observe(b));
   pickPaint()};
 const _pp=pcPaint;pcPaint=function(){_pp();persPaint()};
 const _op=openProfile;openProfile=function(o,edit){const r=_op.apply(this,arguments);const root=edit&&$('#prof .hzPers');if(!root)return r;
@@ -3484,7 +3536,6 @@ const _op=openProfile;openProfile=function(o,edit){const r=_op.apply(this,argume
   const addTag=t=>{t=String(t||'').replace(/[<>]/g,'').trim().slice(0,18);if(!t)return;if(pf.tags.length>=5)return toast('Up to 5 interests.');if(!pf.tags.some(x=>x.toLowerCase()==t.toLowerCase()))pf.tags.push(t);persPaint()};
   root.onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=b.parentElement.closest('[data-k]');
     if(c&&b.parentElement===c){pf[c.dataset.k]=b.dataset.v;return pcPaint()}if(b.dataset.rm!==undefined){pf.tags.splice(+b.dataset.rm,1);return persPaint()}if(b.dataset.t)addTag(b.dataset.t)};
-  const tg=root.querySelector('.hzThG');tg.onmouseover=e=>{const b=e.target.closest('.hzThG>button');if(b!==thHover){thHover=b;tileFx()}};tg.onmouseleave=()=>{thHover=null;tileFx()};
   const ti=$('#hzTagI');ti.onkeydown=e=>{if(e.key=='Enter'||e.key==','){e.preventDefault();addTag(ti.value);ti.value=''}else if(e.key=='Backspace'&&!ti.value&&pf.tags.length){pf.tags.pop();persPaint()}};
   pickInit();persPaint();return r};
 
@@ -3528,6 +3579,10 @@ const _cp=comPaint;comPaint=function(){const r=_cp.apply(this,arguments);comStat
 if(typeof P=='object')persCss();
 })();
 </script>
+
+
+
+
 
 
 
