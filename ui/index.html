@@ -1127,7 +1127,7 @@ html:not([data-contrast=high]) #nav .tab.sel .ci.d{opacity:1;color:var(--ac)}
     <div id="typing" role="status" aria-live="polite"></div>
     <div id="rbar" hidden><span id="rtxt"></span><button id="rx" title="Cancel reply">✕</button></div>
     <div id="bar"><div id="mp" hidden></div><button id="attach" title="Share a file" aria-label="Share a file">+</button><input type="file" id="fi" hidden multiple>
-      <textarea id="txt" rows="1" placeholder="Send a message" autocomplete="off" maxlength="1000" aria-label="Message"></textarea><span id="cc"></span><button id="emBtn" type="button" data-emb="1" title="Emoji" aria-label="Emoji"></button><button id="pollBtn" type="button" title="Create a poll" aria-label="Create a poll"></button><button id="go" class="on" title="Send" aria-label="Send">↑</button></div>
+      <textarea id="txt" rows="1" placeholder="Send a message" autocomplete="off" maxlength="4000" aria-label="Message"></textarea><span id="cc"></span><button id="emBtn" type="button" data-emb="1" title="Emoji" aria-label="Emoji"></button><button id="pollBtn" type="button" title="Create a poll" aria-label="Create a poll"></button><button id="go" class="on" title="Send" aria-label="Send">↑</button></div>
   </main>
     <div id="plist" aria-label="Members"><h2 class="sh" id="shOn">Online</h2><div id="online"></div><h2 class="sh" id="shOff">Offline</h2><div id="offline"></div></div>
 </div>
@@ -1236,6 +1236,21 @@ const ART={
   duo:W(`<path d="M48 7l35 13v24c0 23-15 38-35 44C28 82 13 67 13 44V20z" fill="url(#a)"/><path d="M48 16l26 10v18c0 17-11 29-26 34z" fill="#fff" opacity=".14"/>
 <circle cx="37" cy="38" r="8.5" fill="#fff"/><path d="M22 64c1.5-9 7.5-14 15-14s13.5 5 15 14z" fill="#fff"/><circle cx="60" cy="38" r="8.5" fill="#fff" opacity=".55"/><path d="M45 64c1.5-9 7.5-14 15-14s13.5 5 15 14z" fill="#fff" opacity=".55"/>
 <g transform="rotate(-35 74 74)"><rect x="60" y="68" width="16" height="12" rx="6" fill="none" stroke="#fde68a" stroke-width="4"/><rect x="72" y="68" width="16" height="12" rx="6" fill="none" stroke="#f59e0b" stroke-width="4"/></g>`,L('a','#67e8f9','#22d3ee','#0e7490')),
+  hufi:W(`<circle cx="48" cy="50" r="38" fill="#101418"/><circle cx="48" cy="50" r="38" fill="none" stroke="url(#a)" stroke-width="5"/><circle cx="48" cy="50" r="27" fill="none" stroke="#2a3138" stroke-width="2"/><circle cx="48" cy="50" r="20" fill="none" stroke="#2a3138" stroke-width="2"/><circle cx="48" cy="50" r="11" fill="url(#a)"/><circle cx="48" cy="50" r="3" fill="#101418"/>
+<g stroke="#070709" stroke-width="3" paint-order="stroke"><path d="M66 10v34a8 8 0 1 1-5-7.4V16l20-5v8z" fill="#fff"/></g>`,L('a','#86efac','#22c55e','#15803d')),
+  blackjack:W(`<g transform="rotate(-14 40 52)"><rect x="14" y="20" width="44" height="62" rx="7" fill="#fff"/><text x="21" y="38" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#111">A</text><path d="M36 46c-6 6-10 9-10 14a5 5 0 0 0 8 4l-2 6h8l-2-6a5 5 0 0 0 8-4c0-5-4-8-10-14z" fill="#111"/></g>
+<g transform="rotate(12 60 50)" stroke="#070709" stroke-width="3" paint-order="stroke"><rect x="40" y="16" width="44" height="62" rx="7" fill="url(#a)"/></g><g transform="rotate(12 60 50)"><text x="47" y="34" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#fff">K</text><path d="M62 40c4-7 12-6 12 1 0 6-8 11-12 15-4-4-12-9-12-15 0-7 8-8 12-1z" fill="#fff"/></g>`,L('a','#fb7185','#e11d48','#9f1239')),
+  roulette:W(`<circle cx="48" cy="48" r="40" fill="#3b2412"/><circle cx="48" cy="48" r="35" fill="url(#a)"/>${Array.from({length:12},(_,i)=>{const a=i*Math.PI/6,b=a+Math.PI/6,p=(t,r)=>(48+r*Math.cos(t)).toFixed(1)+' '+(48+r*Math.sin(t)).toFixed(1);return `<path d="M${p(a,35)}A35 35 0 0 1 ${p(b,35)}L${p(b,20)}A20 20 0 0 0 ${p(a,20)}z" fill="${i%2?'#111':'#dc2626'}"/>`}).join('')}<path d="M48 13A35 35 0 0 1 66 18L58 31A20 20 0 0 0 48 28z" fill="#16a34a"/><circle cx="48" cy="48" r="20" fill="#7c4a1e"/><circle cx="48" cy="48" r="8" fill="#fbbf24"/><path d="M48 32v32M32 48h32" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/><circle cx="69" cy="30" r="5" fill="#fff" stroke="#070709" stroke-width="2"/>`,L('a','#fde68a','#d97706')),
+  gifbot:W(`<path d="M48 6v10" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round"/><circle cx="48" cy="6" r="5" fill="#f472b6"/><rect x="12" y="16" width="72" height="56" rx="16" fill="url(#a)"/><rect x="21" y="26" width="54" height="34" rx="9" fill="#0f0a1f"/>
+<text x="48" y="50" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="17" fill="#fde047" letter-spacing="1">GIF</text><rect x="4" y="34" width="8" height="18" rx="4" fill="#a78bfa"/><rect x="84" y="34" width="8" height="18" rx="4" fill="#a78bfa"/><rect x="30" y="74" width="36" height="14" rx="6" fill="#7c3aed"/>${SP(80,14,1,'#fde68a')}`,L('a','#c4b5fd','#8b5cf6','#6d28d9')),
+  levels:W(`<rect x="12" y="58" width="16" height="26" rx="4" fill="#5eead4"/><rect x="34" y="44" width="16" height="40" rx="4" fill="#38bdf8"/><rect x="56" y="28" width="16" height="56" rx="4" fill="url(#a)"/>
+<g stroke="#070709" stroke-width="3" paint-order="stroke"><path d="M14 50 40 30l14 8 26-24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M68 12h14v14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>${STAR(84,64,11,'#fde047')}`,L('a','#a5b4fc','#6366f1','#4338ca')),
+  eco:W(`<ellipse cx="40" cy="74" rx="26" ry="9" fill="#b45309"/><rect x="14" y="62" width="52" height="12" fill="#d97706"/><ellipse cx="40" cy="62" rx="26" ry="9" fill="#f59e0b"/><rect x="14" y="50" width="52" height="12" fill="#d97706"/><ellipse cx="40" cy="50" rx="26" ry="9" fill="url(#a)"/>
+<g stroke="#070709" stroke-width="3" paint-order="stroke"><circle cx="66" cy="36" r="22" fill="url(#a)"/></g><circle cx="66" cy="36" r="16" fill="none" stroke="#b45309" stroke-width="2.5"/><path d="M72 28.5c-1.5-2-4-3-6.5-3-3.5 0-6 2-6 4.6 0 6 13 3.4 13 9.6 0 2.8-2.8 4.8-6.6 4.8-3 0-5.7-1.2-7-3.4M66 22v28" fill="none" stroke="#92400e" stroke-width="3" stroke-linecap="round"/>`,L('a','#fef3c7','#fcd34d','#f59e0b')),
+  cards:W(`<g transform="rotate(-16 48 60)"><rect x="18" y="16" width="40" height="58" rx="5" fill="#334155"/><rect x="22" y="20" width="32" height="50" rx="3" fill="#475569"/></g><g transform="rotate(-2 48 60)"><rect x="28" y="14" width="40" height="58" rx="5" fill="#1e293b"/><rect x="32" y="18" width="32" height="50" rx="3" fill="#64748b"/></g>
+<g transform="rotate(13 48 60)" stroke="#070709" stroke-width="3" paint-order="stroke"><rect x="38" y="14" width="42" height="62" rx="5" fill="url(#a)"/></g><g transform="rotate(13 48 60)"><rect x="42" y="20" width="34" height="24" rx="2" fill="#0f172a"/><path d="M59 25l7 7-7 9-7-9z" fill="#67e8f9"/><rect x="42" y="47" width="34" height="5" rx="1" fill="#fde68a" opacity=".85"/><rect x="42" y="55" width="34" height="14" rx="2" fill="#f8fafc" opacity=".9"/></g>`,L('a','#fcd34d','#f59e0b','#b45309')),
+  antispam:W(`<path d="M48 7l35 13v24c0 23-15 38-35 44C28 82 13 67 13 44V20z" fill="url(#a)"/><path d="M48 16l26 10v18c0 17-11 29-26 34z" fill="#fff" opacity=".14"/>
+<path d="M30 32h36a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H44l-9 8v-8h-5a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6z" fill="#fff"/><circle cx="38" cy="45" r="2.6" fill="#be123c"/><circle cx="48" cy="45" r="2.6" fill="#be123c"/><circle cx="58" cy="45" r="2.6" fill="#be123c"/><path d="M22 70 74 22" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M22 70 74 22" stroke="#be123c" stroke-width="3" stroke-linecap="round"/>`,L('a','#fda4af','#f43f5e','#be123c')),
   stickers:W(`<g transform="rotate(-8 48 48)"><path d="M22 14H70A12 12 0 0 1 82 26V58L58 82H22A12 12 0 0 1 10 70V26A12 12 0 0 1 22 14Z" fill="url(#a)"/><path d="M82 58 58 82V69A11 11 0 0 1 69 58Z" fill="#ffe4f1"/>${STAR(45,46,19,'#fff')}${SP(68,26,1,'#fff')}</g>`,L('a','#ffb0d6','#f472b6','#db2777')),
   scribble:W(`<path d="M9 74c9-13 16 6 25-6s13-17 21-6 9 8 17-2" fill="none" stroke="url(#b)" stroke-width="7" stroke-linecap="round"/><g transform="rotate(45 60 36)"><rect x="52" y="4" width="16" height="44" rx="3.5" fill="url(#a)"/><rect x="52" y="13" width="16" height="5" fill="#fff" opacity=".75"/><path d="M52 48h16l-8 17z" fill="#fde7c4"/><path d="M56.3 57h7.4L60 65z" fill="#0c4a6e"/></g>`,L('a','#7dd3fc','#38bdf8','#0369a1')+L('b','#f472b6','#a78bfa','#38bdf8')),
   checkers:W(`${disc(58,34,'k','#0b0b0d','#ffffff30')}${disc(40,58,'r','#8f1414','#ffffff55')}`,L('k','#5a5a63','#2a2a30','#0f0f12')+L('r','#ff8f8f','#ef4444','#b91c1c')),
@@ -1309,7 +1324,7 @@ const SB=wav(.4,t=>tn(t,0,523.25,.22,.5)+tn(t,.07,659.25,.22,.5)+tn(t,.14,783.99
   SP=wav(.92,t=>bell(t,0,1046.5,.5,.7)+bell(t,.09,1318.51,.5,.7)+bell(t,.18,1567.98,.5,.7)+bell(t,.3,2093,.62,.8),.65), // ping (@mention / reply / friend request): rising bell arpeggio
   RB=(()=>{const a=new Audio(window.HUDDLE_RING);a.preload='auto';a.volume=.85;return a})(); // you are calling: same Huddle.mp3 as an incoming call
 RI.loop=RB.loop=true;
-let callT=0;const ccPaint=()=>{const n=$('#txt').value.length,c=$('#cc');c.textContent=n>=800?n+'/1000':'';c.classList.toggle('max',n>=1000)};
+let callT=0;const ccPaint=()=>{const n=$('#txt').value.length,c=$('#cc');c.textContent=n>=3500?n+'/4000':'';c.classList.toggle('max',n>=4000)};
 const tmr=()=>{const s=Math.floor((Date.now()-callT)/1000),p=n=>String(n).padStart(2,'0'),h=Math.floor(s/3600);return(h?h+':':'')+p(Math.floor(s%3600/60))+':'+p(s%60)};
 setInterval(()=>{if(voice)document.querySelectorAll('.ctm').forEach(e=>e.textContent=tmr())},1000);
 const dmRing=()=>{if(vch&&vch.startsWith('dm:'))return users.some(x=>x.id!=me&&x.voice==vch)?'':'o'+vch;if(vch||myStatus=='dnd'||myStatus=='sleep')return '';const u=users.find(x=>x.id!=me&&x.voice&&x.voice.startsWith('dm:')&&x.voice.split(':').includes(oid));return u?'i'+u.voice:''};
@@ -1599,7 +1614,7 @@ function setReply(m){replyTo={id:m.id,from:m.from};$('#rtxt').innerHTML='Replyin
 function clearReply(){replyTo=null;$('#rbar').hidden=true;applyStage()}
 $('#rx').onclick=()=>{clearReply();$('#txt').focus()};
 function startEdit(el,id){const m=(hist[cur]||[]).find(x=>x.id==id);if(!m||el.querySelector('.ei'))return;
-  const box=el.querySelector('.t'),inp=document.createElement('input');inp.className='ei';inp.value=m.text||'';inp.maxLength=1000;inp.title='Enter to save, Esc to cancel';
+  const box=el.querySelector('.t'),inp=document.createElement('input');inp.className='ei';inp.value=m.text||'';inp.maxLength=4000;inp.title='Enter to save, Esc to cancel';
   const done=()=>{if(inp._emb)inp._emb.remove();inp.remove();box.hidden=false;$('#txt').focus()};
   inp.onkeydown=e=>{if(e.key=='Escape'){e.preventDefault();done()}
     else if(e.key=='Enter'&&!e.isComposing){e.preventDefault();const v=inp.value.trim();if(!v&&!m.file)return;
@@ -1814,7 +1829,7 @@ async function processSignal(from,d,o){if(!voice||pcs[from]!==o||o.closed||!d)re
   else if(d.end&&!o.ignoreOffer&&pc.remoteDescription){try{await pc.addIceCandidate(null)}catch{}}
 }
 function signal(from,d){if(!voice||!from||from===me||!d)return;const o=makePc(from);o.signalQueue=o.signalQueue.then(()=>processSignal(from,d,o)).catch(e=>{if(!o.ignoreOffer)console.debug('Signalling message failed',e)})}
-function syncPeers(){if(!voice)return;const ids=users.filter(u=>vch&&u.voice==vch&&u.id!=me).map(u=>u.id);
+function syncPeers(){if(!voice)return;const ids=users.filter(u=>vch&&u.voice==vch&&u.id!=me&&!u.bot).map(u=>u.id);
   ids.forEach(id=>{makePc(id);tile(id)});
   Object.keys(pcs).forEach(id=>{if(!ids.includes(id))closePeer(id,pcs[id])});applyStage()}
 function marks(){document.querySelectorAll('#stage .tile').forEach(t=>{const id=t.id.slice(2),u=users.find(u=>u.id==(id=='me'?me:id));t.classList.toggle('mut',!!(u&&u.muted))})}
@@ -3598,7 +3613,7 @@ const gradOn=b=>b.dataset.l?(pf.gl||'').toLowerCase()==b.dataset.l&&(pf.gr||'').
 let pkScrolling=false,pkQ=new Set(),pkRaf=0;
 const fxNow=b=>{const th=b.parentElement.classList.contains('hzThG'),v=b.dataset.v,want=v&&(b.dataset.vis||b.classList.contains('run'));
   hzFxSet(th?b:b.querySelector('.bnM'),want?(th?v:'b-'+v):'')};
-const pkPump=()=>{pkRaf=0;if(pkScrolling)return;let n=0;for(const b of pkQ){pkQ.delete(b);if(b.isConnected)fxNow(b);if(++n>=3)break}if(pkQ.size)pkRaf=requestAnimationFrame(pkPump)};
+const pkPump=()=>{pkRaf=0;let n=0;for(const b of pkQ){pkQ.delete(b);if(b.isConnected)fxNow(b);if(++n>=12)break}if(pkQ.size)pkRaf=requestAnimationFrame(pkPump)};
 const fxTile=b=>{const host=b.parentElement.classList.contains('hzThG')?b:b.querySelector('.bnM'),has=!!host.querySelector(':scope>.hzFx');
   const want=!!b.dataset.v&&!!(b.dataset.vis||b.classList.contains('run'));if(has==want&&!(want&&b.classList.contains('run')))return;
   if(!want||b.classList.contains('run'))return fxNow(b);pkQ.add(b);if(!pkRaf)pkRaf=requestAnimationFrame(pkPump)};
@@ -3635,9 +3650,9 @@ const pickInit=()=>{
   /* while you scroll, every animation in the editor holds still; it carries on the moment scrolling stops */
   if(!pc.dataset.hzScr){pc.dataset.hzScr=1;let st=0;pc.addEventListener('scroll',()=>{if(!st){pr.classList.add('hzScrolling');pkScrolling=true}clearTimeout(st);st=setTimeout(()=>{st=0;pkScrolling=false;pr.classList.remove('hzScrolling');if(pkQ.size&&!pkRaf)pkRaf=requestAnimationFrame(pkPump)},160)},{passive:true})}
   /* scenes only for tiles that are on screen */
-  if(pkIO)pkIO.disconnect();
-  pkIO=new IntersectionObserver(es=>{es.forEach(en=>{en.target.dataset.vis=en.isIntersecting?'1':'';fxTile(en.target)})},{root:pc,rootMargin:'150px 0px'});
-  pr.querySelectorAll('.hzThG>button,.pkbn>button').forEach(b=>pkIO.observe(b));
+  /* every theme and banner scene is built as soon as the editor opens (they stay paused until hovered), so nothing pops in while scrolling */
+  if(pkIO){pkIO.disconnect();pkIO=null}
+  pr.querySelectorAll('.hzThG>button,.pkbn>button').forEach(b=>{if(!b.dataset.vis){b.dataset.vis='1';fxTile(b)}});
   pickPaint()};
 const _pp=pcPaint;pcPaint=function(){_pp();persPaint()};
 const _op=openProfile;openProfile=function(o,edit){const r=_op.apply(this,arguments);const root=edit&&$('#prof .hzPers');if(!root)return r;
@@ -4438,7 +4453,7 @@ const _hzOn=on;on=function(d){
   return r};
 
 /* ================= the apps ================= */
-const RENDER={};
+const RENDER={};window.HZRENDER=RENDER;
 /* ---------- Declutter: every app says what can be cleared; one sheet clears it ---------- */
 function tidyRefresh(){if(!mounted)return;const ro=mounted.el.querySelector('.hzRO');if(ro)ro.hidden=chCan(mounted.ch,'use')}
 /* ---------- Sticker Together ---------- */
@@ -5054,6 +5069,464 @@ addEventListener('contextmenu',e=>{const t=e.target;if(t&&t.closest&&t.closest('
 const _o=on;on=function(d){_o(d);if(d&&(d.t=='init'||d.t=='profiles')){devPaint();try{devGroup()}catch{}}};devPaint();
 })();
 </script>
+
+<style id="huddle-v14">
+/* ---------- Huddle v14 apps ---------- */
+.v4Tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 auto 14px;max-width:1100px}
+.v4Tabs button{all:unset;cursor:pointer;padding:7px 14px;border-radius:999px;font-size:13px;font-weight:700;color:var(--dim);background:var(--raise);border:1px solid var(--line);display:inline-flex;gap:6px;align-items:center}
+.v4Tabs button[aria-pressed=true]{color:#fff;background:var(--c,var(--ac));border-color:transparent}
+.v4Wrap{max-width:1100px;margin:0 auto;display:grid;gap:14px}
+.v4Card{padding:16px;border-radius:16px;background:var(--raise);border:1px solid var(--line)}
+.v4Card>h4{margin:0 0 12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.v4Form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.v4Form label{display:grid;gap:5px;font-size:12px;color:var(--dim);font-weight:600}
+.v4Form input,.v4Form select,.v4Form textarea,.v4In{font:inherit;font-size:13.5px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--tx);min-width:0;box-sizing:border-box;width:100%}
+.v4Form textarea{resize:vertical;min-height:60px}
+.v4Row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.v4Grow{flex:1;min-width:0}
+.v4Big{font-size:32px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.v4Mut{color:var(--dim);font-size:12.5px}
+.v4List{display:grid;gap:6px}
+.v4Li{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.v4Li .av{width:28px!important;height:28px!important}
+.v4Pill{font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--c,var(--ac)) 20%,transparent);color:color-mix(in srgb,var(--c,var(--ac)) 75%,var(--tx))}
+.v4Empty{padding:28px;text-align:center;color:var(--dim);font-size:13.5px}
+.v4Two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:14px}
+@media (max-width:860px){.v4Two{grid-template-columns:1fr}}
+.v4Wallet{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 26%,var(--panel)),var(--panel));border:1px solid color-mix(in srgb,var(--c) 35%,var(--line))}
+.v4Wallet small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
+/* playing cards */
+.pcd{width:74px;height:104px;border-radius:9px;background:#fff;color:#111;position:relative;box-shadow:0 6px 16px #0007,inset 0 0 0 1px #0002;flex:none;animation:pcdIn .35s cubic-bezier(.2,1.2,.4,1) both;font-family:Georgia,serif}
+.pcd.red{color:#d11a2a}.pcd b{position:absolute;left:7px;top:5px;font-size:19px;line-height:1}.pcd i{position:absolute;left:7px;top:27px;width:14px;height:14px}
+.pcd .big{position:absolute;inset:auto 0 14px 0;margin:auto;width:36px;height:36px}.pcd svg{fill:currentColor;width:100%;height:100%}
+.pcd.back{background:repeating-linear-gradient(45deg,#7f1d1d 0 6px,#991b1b 6px 12px);box-shadow:0 6px 16px #0007,inset 0 0 0 4px #fff}
+@keyframes pcdIn{from{transform:translateY(-30px) rotate(-8deg);opacity:0}}
+.bjTable{background:radial-gradient(ellipse at 50% 0%,#15803d,#14532d 70%);border-radius:22px;padding:22px;border:6px solid #713f12;box-shadow:inset 0 0 40px #0008;display:grid;gap:18px;color:#fff}
+.bjHand{display:grid;gap:8px}.bjHand h5{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;display:flex;gap:8px;align-items:center}
+.bjHand h5 em{font-style:normal;background:#0006;padding:2px 9px;border-radius:99px;font-size:13px;letter-spacing:0}
+.bjCards{display:flex;gap:10px;flex-wrap:wrap;min-height:104px}
+.bjRes{text-align:center;font-size:22px;font-weight:900;text-shadow:0 2px 10px #000a}.bjRes.win{color:#86efac}.bjRes.lose{color:#fca5a5}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{all:unset;cursor:pointer;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:12.5px;color:#fff;background:var(--k);
+  box-shadow:inset 0 0 0 4px #fff7,inset 0 0 0 7px var(--k),inset 0 0 0 8px #fff5,0 3px 8px #0008}.chip[aria-pressed=true]{outline:3px solid #fde047;outline-offset:2px}
+/* roulette */
+.rlWheelW{position:relative;width:min(340px,80vw);aspect-ratio:1;margin:0 auto}
+.rlWheel{width:100%;height:100%;transition:transform 4.2s cubic-bezier(.12,.75,.12,1)}
+.rlPtr{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:24px solid #fde047;filter:drop-shadow(0 2px 3px #000)}
+.rlBoard{display:grid;grid-template-columns:44px repeat(12,1fr);gap:3px;font-weight:800;font-size:13px;user-select:none}
+.rlBoard button{all:unset;cursor:pointer;position:relative;display:grid;place-items:center;height:40px;border-radius:6px;color:#fff;box-shadow:inset 0 0 0 1px #fff3}
+.rlBoard .r{background:#b91c1c}.rlBoard .k{background:#18181b}.rlBoard .z{background:#15803d;grid-row:span 3;height:auto}
+.rlBoard .o{background:#14532d;grid-column:span 2}.rlBoard .dz{background:#14532d;grid-column:span 4}
+.rlBoard button:hover{filter:brightness(1.25)}
+.rlBoard button em{position:absolute;right:-4px;top:-6px;font-style:normal;font-size:10px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:99px;background:#fde047;color:#111;display:grid;place-items:center;box-shadow:0 1px 4px #000a}
+.rlHist{display:flex;gap:5px;flex-wrap:wrap}.rlHist span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:12px;color:#fff}
+/* trading cards (one-of-one) */
+.tcc{--f:#8b6bff;width:220px;aspect-ratio:63/88;border-radius:12px;padding:9px;box-sizing:border-box;background:linear-gradient(160deg,color-mix(in srgb,var(--f) 85%,#fff),var(--f) 40%,color-mix(in srgb,var(--f) 60%,#000));
+  box-shadow:0 10px 26px #0009,inset 0 0 0 2px #0006;display:flex;flex-direction:column;gap:5px;color:#111;font-family:Georgia,"Times New Roman",serif;position:relative;flex:none;transition:transform .2s}
+.tcc.sm{width:150px;padding:6px;gap:4px;border-radius:9px}.tcc.sm .tcN{font-size:11px}.tcc.sm .tcT{font-size:9.5px}.tcc.sm .tcX{font-size:9px}.tcc.sm .tcF{display:none}
+.tcc:hover{transform:translateY(-3px)}
+.tcN,.tcT{display:flex;justify-content:space-between;gap:6px;align-items:center;padding:3px 8px;border-radius:7px;background:linear-gradient(#f8f4ea,#e2dccb);box-shadow:inset 0 0 0 1px #0004;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden}
+.tcN span,.tcT span{overflow:hidden;text-overflow:ellipsis}.tcT{font-size:11.5px}
+.tcA{flex:1.15;border-radius:4px;background:#1e1b2e center/cover no-repeat;box-shadow:inset 0 0 0 2px #0007;min-height:0;display:grid;place-items:center;color:#fff8;font:600 11px system-ui}
+.tcX{flex:1;border-radius:5px;background:linear-gradient(#fbf7ee,#ece5d3);box-shadow:inset 0 0 0 1px #0004;padding:6px 8px;font-size:11.5px;line-height:1.35;overflow:auto;min-height:0}
+.tcF{display:block;margin-top:5px;font-style:italic;opacity:.75}
+.tcG{width:11px;height:11px;transform:rotate(45deg);border-radius:2px;flex:none;box-shadow:0 0 0 1px #0007}
+.tcG.common{background:#1f2937}.tcG.uncommon{background:linear-gradient(#e5e7eb,#9ca3af)}.tcG.rare{background:linear-gradient(#fde68a,#d97706)}.tcG.mythic{background:linear-gradient(#fdba74,#dc2626)}
+.tcPT{position:absolute;right:12px;bottom:12px;padding:2px 9px;border-radius:7px;background:linear-gradient(#f8f4ea,#d8d0bb);font-weight:800;font-size:13px;box-shadow:0 0 0 1px #0006}
+.tcc.sm .tcPT{right:8px;bottom:8px;font-size:10px;padding:1px 6px}
+.tcS{position:absolute;left:12px;bottom:-18px;font:600 10.5px system-ui;color:var(--dim)}
+.tcGrid{display:flex;flex-wrap:wrap;gap:22px 14px}
+.tcPick{cursor:pointer;outline:3px solid transparent;outline-offset:3px;border-radius:12px}.tcPick.on{outline-color:#fde047}
+.tcReveal{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;perspective:900px}
+.tcFlip{animation:tcFlip .9s cubic-bezier(.2,.8,.2,1) both}@keyframes tcFlip{from{transform:rotateY(180deg) scale(.6);opacity:0}}
+/* levels */
+.lvCard{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:20px;border-radius:18px;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 26%,var(--panel)),var(--panel) 65%);border:1px solid color-mix(in srgb,var(--c) 35%,var(--line))}
+.lvCard .av{width:72px!important;height:72px!important;font-size:28px!important}
+.lvBar{height:12px;border-radius:99px;background:color-mix(in srgb,var(--tx) 10%,transparent);overflow:hidden;margin-top:8px}.lvBar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#a5b4fc,var(--c))}
+.lvLv{display:grid;justify-items:center}.lvLv b{font-size:40px;font-weight:900;line-height:1}.lvLv small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.lvRow{display:grid;grid-template-columns:34px auto 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.lvRow>b{font-variant-numeric:tabular-nums;text-align:center;color:var(--dim)}.lvRow:nth-child(1)>b{color:#fbbf24}.lvRow:nth-child(2)>b{color:#cbd5e1}.lvRow:nth-child(3)>b{color:#d97706}
+/* economy store */
+.ecGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ecItem{border-radius:14px;background:var(--bg);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+.ecImg{aspect-ratio:16/10;background:color-mix(in srgb,var(--c) 14%,var(--panel)) center/cover no-repeat;display:grid;place-items:center}
+.ecImg img.gart{width:54px;height:54px;opacity:.85}
+.ecBody{padding:10px 12px;display:grid;gap:6px;flex:1}.ecBody b{font-size:14.5px}.ecBody p{margin:0;font-size:12.5px;color:var(--dim)}
+.ecPrice{font-weight:900;font-size:16px;color:color-mix(in srgb,var(--c) 70%,var(--tx))}
+/* gif bot */
+.gbGifs{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;max-height:260px;overflow:auto}
+.gbGifs button{all:unset;cursor:pointer;border-radius:8px;overflow:hidden;position:relative;aspect-ratio:1;background:#0005}.gbGifs img{width:100%;height:100%;object-fit:cover}
+.gbGifs button.on{outline:3px solid var(--c);outline-offset:-3px}.gbGifs button.on::after{content:'';position:absolute;right:5px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px #fff}
+.gbRule{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.gbRule img{width:52px;height:52px;border-radius:8px;object-fit:cover}
+.kw{display:inline-block;padding:2px 8px;margin:2px 4px 2px 0;border-radius:99px;font-size:12px;font-weight:700;background:color-mix(in srgb,var(--c) 18%,transparent)}
+/* hufi music */
+.hfNow{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:18px;border-radius:18px;background:linear-gradient(135deg,#14532d,#052e16 70%);border:1px solid #166534;color:#fff}
+.hfArt{width:120px;height:120px;border-radius:12px;background:#0b0f0c center/cover no-repeat;box-shadow:0 10px 26px #0009;display:grid;place-items:center}.hfArt img.gart{width:70px;height:70px}
+.hfNow h3{margin:0 0 4px;font-size:20px}.hfNow small{opacity:.75}
+.hfCtl{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.hfCtl button{all:unset;cursor:pointer;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#ffffff1c}.hfCtl button:hover{background:#ffffff33}
+.hfCtl button.pp{background:#22c55e;color:#04210f;width:48px;height:48px}.hfCtl button[aria-pressed=true]{background:#22c55e55}
+.hfCtl svg{width:20px;height:20px}
+.hfQ .v4Li.cur{border-color:#22c55e;background:color-mix(in srgb,#22c55e 10%,var(--bg))}
+.hfQ img{width:40px;height:40px;border-radius:6px;object-fit:cover}
+#hufiDock{position:fixed;right:16px;bottom:86px;z-index:60;width:320px;border-radius:16px;background:#0c120e;border:1px solid #166534;box-shadow:0 16px 40px #000c;padding:10px;display:grid;gap:8px;color:#fff}
+#hufiDock[hidden]{display:none}
+#hufiDock{box-sizing:border-box;max-width:calc(100vw - 32px);overflow:hidden}#hufiDock .sp{overflow:hidden;border-radius:12px;min-width:0}#hufiDock iframe{width:100%!important;display:block}
+#hzApp .hzB svg{width:16px;height:16px;flex:none}
+.v4Form input[type=color]{height:38px;padding:3px 5px;cursor:pointer}
+#hufiDock .hd{display:flex;gap:10px;align-items:center}#hufiDock .hd img{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#111}
+#hufiDock .hd div{flex:1;min-width:0}#hufiDock b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px}#hufiDock small{opacity:.7;font-size:11.5px}
+#hufiDock .mini{all:unset;cursor:pointer;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#ffffff14}#hufiDock .mini svg{width:16px;height:16px}
+#hufiDock .sp iframe{border-radius:12px}#hufiDock.min .sp{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+#hufiDock input[type=range]{width:100%;accent-color:#22c55e}
+/* soundboard */
+#bSB svg{width:20px;height:20px}
+#sbPop{position:fixed;z-index:70;width:min(380px,94vw);max-height:min(520px,70vh);display:flex;flex-direction:column;border-radius:16px;background:var(--panel);border:1px solid var(--line);box-shadow:0 18px 46px #000b;overflow:hidden}
+#sbPop .t{display:flex;gap:6px;padding:10px 10px 0}#sbPop .t button{all:unset;cursor:pointer;padding:6px 12px;border-radius:99px;font-size:12.5px;font-weight:700;color:var(--dim)}#sbPop .t button[aria-pressed=true]{background:var(--ac);color:#fff}
+#sbPop .b{padding:10px;overflow:auto;display:grid;gap:10px}
+.sbGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sbGrid .s{position:relative}.sbGrid .s>button:first-child{all:unset;box-sizing:border-box;cursor:pointer;width:100%;padding:12px 6px;border-radius:12px;text-align:center;font-size:12.5px;font-weight:700;background:var(--raise);border:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbGrid .s>button:first-child:hover{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,var(--raise))}.sbGrid .s>button:first-child:active{transform:scale(.96)}
+.sbGrid .x{all:unset;cursor:pointer;position:absolute;right:3px;top:3px;width:20px;height:20px;border-radius:50%;display:none;place-items:center;background:#e5484d;color:#fff}.sbGrid .s:hover .x{display:grid}.sbGrid .x svg{width:12px;height:12px}
+.sbP{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}.sbP .av{width:26px!important;height:26px!important}.sbP input{width:100%;accent-color:var(--ac)}
+.sbP .mt{all:unset;cursor:pointer;font-size:11.5px;font-weight:700;padding:4px 8px;border-radius:8px;background:var(--raise)}.sbP .mt.on{background:#e5484d;color:#fff}
+.sbChip{position:fixed;z-index:65;left:50%;bottom:110px;transform:translateX(-50%);padding:7px 14px;border-radius:99px;background:#000c;color:#fff;font-size:12.5px;font-weight:600;pointer-events:none;animation:sbChip 2.2s ease both}
+@keyframes sbChip{0%{opacity:0;transform:translate(-50%,10px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+</style>
+<script id="huddle-v14-js">
+(()=>{
+const APPS=window.HZAPPS,AS=window.HZAS;
+Object.assign(APPS,{
+  hufi:{n:'Hufi Music',d:'Play Spotify links and audio in a voice channel together.',c:'#22c55e',slug:'hufi-music'},
+  blackjack:{n:'Blackjack',d:'Beat the dealer to 21 with fake money.',c:'#e11d48',slug:'blackjack'},
+  roulette:{n:'Roulette',d:'Spin the wheel with fake money. Everyone starts with $10.',c:'#d97706',slug:'roulette'},
+  gifbot:{n:'GIF Bot',d:'Answers keywords in chat with a matching GIF.',c:'#8b5cf6',slug:'gif-bot'},
+  levels:{n:'Levels',d:'XP and levels from chatting and time in voice.',c:'#6366f1',slug:'levels'},
+  eco:{n:'Economy',d:'A server currency with a store, market, jobs and stealing.',c:'#f59e0b',slug:'economy'},
+  cards:{n:'Trading Cards',d:'One-of-one cards: open packs, collect and trade.',c:'#f59e0b',slug:'trading-cards'},
+  antispam:{n:'Anti-Spam',d:'Warns or times out people who flood the chat.',c:'#f43f5e',slug:'anti-spam'}});
+/* permissions */
+{const add=(after,row)=>{if(PERMS.some(p=>p[0]==row[0]))return;const i=PERMS.findIndex(p=>p[0]==after);PERMS.splice(i<0?PERMS.length:i+1,0,row)};
+ add('emojis',['sounds','Manage soundboard','Upload, rename and remove the server’s soundboard sounds (up to 50).']);
+ add('sounds',['sbmute','Mute soundboard','Turn the soundboard off for a member, so they can’t play sounds in this server.']);
+ if(!CHP.some(p=>p[0]=='soundboard'))CHP.push(['soundboard','Use soundboard','Play soundboard sounds in this call.','voice'])}
+const R=window.HZRENDER; // v10's renderer map: the app panel calls R[app].full / .ev
+const A=(a,extra)=>{const m=cur;return send(Object.assign({t:'app',ch:m,a},extra||{}))};
+const nm=o=>(P[o]||{}).name||'Someone';
+const gNow=()=>G[sel]||{};
+const left=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return s>=86400?Math.floor(s/86400)+'d '+Math.floor(s%86400/3600)+'h':s>=3600?Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m':s>=60?Math.floor(s/60)+'m '+(s%60)+'s':s+'s'};
+const ago=t=>{const s=Math.max(1,(Date.now()-t)/1000|0);return s<60?s+'s ago':s<3600?(s/60|0)+'m ago':s<86400?(s/3600|0)+'h ago':(s/86400|0)+'d ago'};
+const fmtMin=m=>m<60?m+'m':m<1440?(m/60|0)+'h '+(m%60)+'m':(m/1440|0)+'d '+((m%1440)/60|0)+'h';
+const SV=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const IC={play:SV('<path d="M7 4.5v15l12-7.5z" fill="currentColor"/>'),pause:SV('<rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor"/>'),
+  next:SV('<path d="M5 5v14l10-7z" fill="currentColor"/><path d="M18 5v14"/>'),prev:SV('<path d="M19 5v14L9 12z" fill="currentColor"/><path d="M6 5v14"/>'),loop:SV('<path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/>'),
+  sb:SV('<rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><path d="M14.5 15.5h2l2.5-2v8l-2.5-2h-2z" fill="currentColor"/>'),
+  x:SV('<path d="M6 6l12 12M18 6 6 18"/>'),min:SV('<path d="M5 12h14"/>'),up:SV('<path d="M6 15l6-6 6 6"/>')};
+const SUIT={S:'<svg viewBox="0 0 24 24"><path d="M12 2C9 7 4 9 4 14a4 4 0 0 0 7 2.6L10 21h4l-1-4.4A4 4 0 0 0 20 14c0-5-5-7-8-12z"/></svg>',H:'<svg viewBox="0 0 24 24"><path d="M12 21C6 16 2 12.6 2 8.5A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 10 2.5C22 12.6 18 16 12 21z"/></svg>',
+  D:'<svg viewBox="0 0 24 24"><path d="M12 2l8 10-8 10-8-10z"/></svg>',C:'<svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4.2"/><circle cx="7" cy="13.5" r="4.2"/><circle cx="17" cy="13.5" r="4.2"/><path d="M11 13h2l1 8h-4z"/></svg>'};
+const card=c=>{if(c=='??')return '<span class="pcd back"></span>';const r=c[0]=='T'?'10':c[0],s=c[1];return `<span class="pcd${s=='H'||s=='D'?' red':''}"><b>${r}</b><i>${SUIT[s]}</i><span class="big">${SUIT[s]}</span></span>`};
+const money=n=>'$'+Math.round(n).toLocaleString('en-US');
+const upApp=async(file,kind)=>{const ext=(file.name.split('.').pop()||'').toLowerCase();const r=await fetch(base+'/appup?kind='+kind+'&ext='+encodeURIComponent(ext),{method:'POST',headers:{'x-token':HT||''},body:file});if(!r.ok)throw new Error(await r.text()||'Upload failed');return (await r.json()).url};
+const pickFile=accept=>new Promise(res=>{const i=document.createElement('input');i.type='file';i.accept=accept;i.onchange=()=>res(i.files[0]||null);i.click()});
+const tabs=(list,curT,set)=>`<div class="v4Tabs">${list.filter(Boolean).map(([k,t])=>`<button data-tab="${k}" aria-pressed="${k==curT}">${t}</button>`).join('')}</div>`;
+const mgrBox=(st,what)=>st.owner?`<div class="v4Card"><h4>Who can manage ${what}</h4><p class="v4Mut" style="margin:0 0 8px">People with Manage server always can. Tick roles to let them manage it too.</p><div class="hzRolePick">${st.rolesAll.length?st.rolesAll.map(r=>`<label style="--rc:${esc(r.color||'#8e8d98')}"><input type="checkbox" value="${esc(r.id)}"${st.mgrRoles.includes(r.id)?' checked':''}><span>@${esc(r.name)}</span></label>`).join(''):'<span class="v4Mut">No roles yet.</span>'}</div><div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB on" data-mgrsave>Save managers</button></div></div>`:'';
+const mgrSave=b=>{A('mgr',{roles:[...b.querySelectorAll('.hzRolePick input:checked')].map(i=>i.value)});toast('Managers saved.',true)};
+const roleOpts=(st,v,none='No role')=>`<option value="">${none}</option>`+st.rolesAll.map(r=>`<option value="${esc(r.id)}"${r.id==v?' selected':''}>@${esc(r.name)}</option>`).join('');
+const keepScroll=(m,fn)=>{const y=m.body.scrollTop;fn();m.body.scrollTop=y};
+const sel={};const T=(app,def)=>sel[app]||(sel[app]=def);
+/* ================= Blackjack ================= */
+let bjChip=5;
+const wallet=(st,label)=>`<div class="v4Wallet"><img class="gart" src="${HG.art(label)}" style="width:44px;height:44px"><div class="v4Grow"><small>Your money</small><span class="v4Big">${money(st.me.b)}</span></div>${st.me.refill?'<button class="hzB on" data-refill>Get a free $10</button>':st.me.b<1?`<span class="v4Mut">Free $10 in ${left(st.me.refillIn)}</span>`:''}</div>`;
+const topList=st=>`<div class="v4Card"><h4>Richest players</h4><div class="v4List">${st.top.map((t,i)=>`<div class="v4Li"><b style="width:18px;color:var(--dim)">${i+1}</b>${avs(t.o,t.n)}<span class="v4Grow">${esc(t.n)}</span><b>${money(t.b)}</b></div>`).join('')||'<div class="v4Empty">No one has played yet.</div>'}</div></div>`;
+R.blackjack={full(st,m){m.body.className='hzAB';const h=st.hand,live=h&&!h.done,res={win:'You win!',blackjack:'Blackjack!',push:'Push: your bet comes back',lose:'Dealer wins',bust:'Bust!'};
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${wallet(st,'blackjack')}<div class="v4Two"><div class="bjTable">
+    <div class="bjHand"><h5>Dealer ${h&&h.dv!=null?`<em>${h.dv}</em>`:''}</h5><div class="bjCards">${h?h.d.map(card).join(''):''}</div></div>
+    ${h&&h.done?`<div class="bjRes ${['win','blackjack'].includes(h.res)?'win':h.res=='push'?'':'lose'}">${res[h.res]||''} ${h.pay>h.bet?'+'+money(h.pay-h.bet):h.pay==h.bet?'':'−'+money(h.bet)}</div>`:''}
+    <div class="bjHand"><h5>You ${h?`<em>${h.pv}</em> <span style="opacity:.8">bet ${money(h.bet)}</span>`:''}</h5><div class="bjCards">${h?h.p.map(card).join(''):'<span style="opacity:.75">Place a bet and deal.</span>'}</div></div>
+    <div class="v4Row">${live?`<button class="hzB on" data-bj="hit">Hit</button><button class="hzB" data-bj="stand">Stand</button>${h.dbl?'<button class="hzB" data-bj="double">Double down</button>':''}`:
+      `<div class="chips">${[1,5,10,25,100].map(v=>`<button class="chip" style="--k:${{1:'#64748b',5:'#dc2626',10:'#2563eb',25:'#16a34a',100:'#111'}[v]}" data-chip="${v}" aria-pressed="${v==bjChip}">$${v}</button>`).join('')}</div><input class="v4In" id="bjBet" type="number" min="1" value="${bjChip}" style="width:90px"><button class="hzB on" data-bj="deal">Deal</button>`}</div></div>
+    <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Recent hands</h4><div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow">${esc(l.n)} <span class="v4Mut">${l.res}</span></span><b style="color:${l.net>0?'#4ade80':l.net<0?'#f87171':'var(--dim)'}">${l.net>0?'+':l.net<0?'−':''}${money(Math.abs(l.net))}</b></div>`).join('')||'<div class="v4Empty">No hands yet.</div>'}</div></div>${topList(st)}</div></div>
+    <p class="v4Mut" style="text-align:center">Fake money only. Dealer stands on 17, blackjack pays 3 to 2. If you run out, you get a free $10 once a day.</p></div>`});
+  m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.chip){bjChip=+b.dataset.chip;$('#bjBet').value=bjChip;m.body.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c==b));return}
+    if(b.dataset.refill!==undefined)return A('refill');const a=b.dataset.bj;if(a=='deal')A('deal',{bet:+$('#bjBet').value});else if(a)A(a)}}};
+/* ================= Roulette ================= */
+const RLO=[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26],RRED=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const rlCol=n=>n===0?'#15803d':RRED.has(n)?'#b91c1c':'#18181b';
+const wheelSvg=()=>{const a=360/37,p=(t,r)=>{const x=(t-90)*Math.PI/180;return (50+r*Math.cos(x)).toFixed(2)+' '+(50+r*Math.sin(x)).toFixed(2)};
+  return `<svg class="rlWheel" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" fill="#5b3412"/><circle cx="50" cy="50" r="46" fill="#3b220c"/>${RLO.map((n,i)=>{const s=i*a-a/2,e=s+a;return `<path d="M${p(s,45)}A45 45 0 0 1 ${p(e,45)}L${p(e,30)}A30 30 0 0 0 ${p(s,30)}z" fill="${rlCol(n)}" stroke="#d4a017" stroke-width=".25"/><text x="${p(i*a,40).split(' ')[0]}" y="${p(i*a,40).split(' ')[1]}" transform="rotate(${i*a} ${p(i*a,40)})" font-size="3.4" font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-family="system-ui">${n}</text>`}).join('')}
+  <circle cx="50" cy="50" r="30" fill="url(#rlg)"/><defs><radialGradient id="rlg"><stop offset="0" stop-color="#d4a017"/><stop offset=".55" stop-color="#7c4a1e"/><stop offset="1" stop-color="#3b220c"/></radialGradient></defs>
+  ${[0,45,90,135].map(r=>`<rect x="48.6" y="26" width="2.8" height="48" rx="1.4" fill="#fbbf24" transform="rotate(${r} 50 50)"/>`).join('')}<circle cx="50" cy="50" r="5" fill="#fde047"/></svg>`};
+let rlBets={},rlChip=1,rlRot=0,rlSpinning=false;
+const rlBetsHtml=k=>rlBets[k]?`<em>${rlBets[k]}</em>`:'';
+R.roulette={full(st,m){m.body.className='hzAB';const total=Object.values(rlBets).reduce((a,b)=>a+b,0);
+  const cell=n=>`<button class="${RRED.has(n)?'r':'k'}" data-rb="n${n}">${n}${rlBetsHtml('n'+n)}</button>`;
+  let board='<button class="z" data-rb="n0">0'+rlBetsHtml('n0')+'</button>';for(const row of [3,2,1])for(let c=0;c<12;c++)board+=cell(c*3+row);
+  board+=`<span></span>${[['d1','1st 12'],['d2','2nd 12'],['d3','3rd 12']].map(([k,t])=>`<button class="dz" data-rb="${k}">${t}${rlBetsHtml(k)}</button>`).join('')}<span></span>${[['low','1-18'],['even','Even'],['red','Red'],['black','Black'],['odd','Odd'],['high','19-36']].map(([k,t])=>`<button class="o" data-rb="${k}" ${k=='red'?'style="background:#b91c1c"':k=='black'?'style="background:#18181b"':''}>${t}${rlBetsHtml(k)}</button>`).join('')}`;
+  if(!m.body.querySelector('.rlWheel')||!rlSpinning)keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${wallet(st,'roulette')}<div class="v4Two"><div class="v4Card" style="display:grid;gap:14px"><div class="rlWheelW"><span class="rlPtr"></span>${wheelSvg()}</div><div id="rlOut" class="bjRes" style="color:var(--tx)"></div>
+    <div class="rlHist">${st.log.filter(l=>l.o==oid).slice(-14).reverse().map(l=>`<span style="background:${rlCol(l.num)}">${l.num}</span>`).join('')}</div></div>
+    <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Your bets <span>${money(total)}</span></h4><div class="rlBoard">${board}</div>
+      <div class="v4Row" style="margin-top:12px"><div class="chips">${[1,5,10,25,100].map(v=>`<button class="chip" style="--k:${{1:'#64748b',5:'#dc2626',10:'#2563eb',25:'#16a34a',100:'#111'}[v]}" data-chip="${v}" aria-pressed="${v==rlChip}">$${v}</button>`).join('')}</div><span class="v4Grow"></span><button class="hzB" data-clear>Clear</button><button class="hzB on" data-spin${total?'':' disabled'}>Spin</button></div>
+      <p class="v4Mut" style="margin:10px 0 0">Click the board to stack chips. Numbers pay 35 to 1, dozens 2 to 1, colors and halves 1 to 1.</p></div>
+      <div class="v4Card"><h4>Table</h4><div class="v4List">${st.log.slice(-10).reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow">${esc(l.n)}</span><span class="rlHist"><span style="background:${rlCol(l.num)}">${l.num}</span></span><b style="color:${l.pay>l.total?'#4ade80':'#f87171'}">${l.pay>l.total?'+'+money(l.pay-l.total):'−'+money(l.total-l.pay)}</b></div>`).join('')||'<div class="v4Empty">No spins yet.</div>'}</div></div>${topList(st)}</div></div></div>`;
+    const w=m.body.querySelector('.rlWheel');if(w){w.style.transition='none';w.style.transform=`rotate(${rlRot}deg)`}});
+  m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b||rlSpinning)return;
+    if(b.dataset.chip){rlChip=+b.dataset.chip;m.body.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c==b));return}
+    if(b.dataset.refill!==undefined)return A('refill');
+    if(b.dataset.rb){const k=b.dataset.rb,tot=Object.values(rlBets).reduce((a,c)=>a+c,0);if(tot+rlChip>st.me.b)return toast('That is more than you have.');rlBets[k]=(rlBets[k]||0)+rlChip;return R.roulette.full(st,m)}
+    if(b.dataset.clear!==undefined){rlBets={};return R.roulette.full(st,m)}
+    if(b.dataset.spin!==undefined){A('spin',{bets:Object.entries(rlBets).map(([k,amt])=>({k,amt}))})}}},
+  ev(st,ev,m){if(ev.k!='spin'||ev.o!=oid||!m)return;const w=m.body.querySelector('.rlWheel');if(!w)return;rlSpinning=true;const i=RLO.indexOf(ev.r.num),a=360/37;
+    rlRot=rlRot-(rlRot%360)-360*6-i*a;w.style.transition='';requestAnimationFrame(()=>w.style.transform=`rotate(${rlRot}deg)`);
+    setTimeout(()=>{rlSpinning=false;rlBets={};const o=$('#rlOut');send({t:'app',ch:m.ch,a:'get'});setTimeout(()=>{const o2=$('#rlOut');if(o2){o2.innerHTML=`<span style="display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;background:${rlCol(ev.r.num)};color:#fff;margin-right:8px">${ev.r.num}</span>${ev.r.pay>ev.r.total?'You won '+money(ev.r.pay-ev.r.total)+'!':ev.r.pay?'Won back '+money(ev.r.pay):'No luck this time.'}`;o2.className='bjRes '+(ev.r.pay>ev.r.total?'win':'lose')}},250)},4300)}};
+/* ================= Hufi Music ================= */
+const hfArt=it=>it&&it.art?`style="background-image:url('${esc(it.art)}')"`:'';
+R.hufi={full(st,m){m.body.className='hzAB';const it=st.q[st.i],g=gNow(),vcN=(st.vcs.find(v=>v.id==st.vc)||{}).name,inVc=voice&&vch==st.vc;
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap"><div class="hfNow"><div class="hfArt" ${hfArt(it)}>${it&&it.art?'':HG.img('hufi')}</div><div style="min-width:0"><small>${st.on?'Now playing':it?'Paused':'Nothing playing'}${vcN?' in '+esc(vcN):''}</small><h3>${it?esc(it.title):'Queue some music'}</h3><small>${it?esc(it.sub||'')+' · added by '+esc(it.n||nm(it.by)):'Paste a Spotify link or upload audio below.'}</small>
+      <div class="hfCtl"><button data-h="prev" title="Previous">${IC.prev}</button><button class="pp" data-h="toggle" title="${st.on?'Pause':'Play'}">${st.on?IC.pause:IC.play}</button><button data-h="next" title="Next">${IC.next}</button><button data-h="loop" title="Repeat the queue" aria-pressed="${st.loop}">${IC.loop}</button></div>
+      ${st.vc&&!inVc?`<p style="margin:10px 0 0;opacity:.8;font-size:12.5px">Join ${esc(vcN||'the voice channel')} to hear it.</p>`:''}</div></div>
+    <div class="v4Two"><div class="v4Card hfQ"><h4>Queue <span>${st.q.length}/100</span></h4><div class="v4Row" style="margin-bottom:10px"><input class="v4In v4Grow" id="hfUrl" placeholder="Paste a Spotify link (song, album, playlist)"><button class="hzB on" data-add>Add</button><button class="hzB" data-upf>${HG('upload')}Audio file</button></div>
+      <div class="v4List">${st.q.map((q,i)=>`<div class="v4Li${i==st.i?' cur':''}">${q.art?`<img src="${esc(q.art)}" alt="">`:`<img class="gart" src="${HG.art('hufi')}" style="width:40px;height:40px">`}<div class="v4Grow" style="min-width:0"><b style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(q.title)}</b><small class="v4Mut">${esc(q.sub||'')} · ${esc(q.n||nm(q.by))}</small></div><button class="hzB" data-play="${i}" title="Play">${IC.play}</button><button class="hzB" data-del="${esc(q.id)}" title="Remove">${HG('trash')}</button></div>`).join('')||'<div class="v4Empty">The queue is empty.</div>'}</div>
+      ${st.q.length?'<div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB bad" data-clear>Clear queue</button></div>':''}</div>
+      <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Voice channel</h4><select class="v4In" id="hfVc"><option value="">Pick where Hufi plays</option>${st.vcs.map(v=>`<option value="${esc(v.id)}"${v.id==st.vc?' selected':''}>${esc(v.name)}</option>`).join('')}</select>
+        <p class="v4Mut" style="margin:10px 0 0">While music plays, Hufi Music joins that call. Everyone in the call hears the same song at the same spot.</p></div>
+        <div class="v4Card"><h4>About Spotify</h4><p class="v4Mut" style="margin:0">Spotify songs play through Spotify’s own player. Sign in to Spotify once in the player (desktop app) to hear full songs; without signing in, Spotify only allows 30-second previews. Uploaded audio files always play in full.</p></div></div></div></div>`});
+  m.act.innerHTML='';const add=()=>{const v=$('#hfUrl').value.trim();if(v){A('add',{url:v});$('#hfUrl').value=''}};$('#hfUrl').onkeydown=e=>{if(e.key=='Enter')add()};
+  $('#hfVc').onchange=e=>A('vc',{vc:e.target.value});
+  m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+    if(d.h)A(d.h);else if(d.add!==undefined)add();else if(d.play)A('play',{i:+d.play});else if(d.del)A('del',{id:d.del});else if(d.clear!==undefined){if(await hzAsk('Clear the whole queue?'))A('clear')}
+    else if(d.upf!==undefined){const f=await pickFile('audio/*');if(!f)return;toast('Uploading '+f.name+'…',true);try{const url=await upApp(f,'aud');const dur=await new Promise(r=>{const a=new Audio();a.preload='metadata';a.onloadedmetadata=()=>r(a.duration||0);a.onerror=()=>r(0);a.src=base+url});A('addf',{url,name:f.name.replace(/\.[^.]+$/,''),dur})}catch(er){toast(er.message)}}}}};
+/* the player: whoever is in the voice channel hears the queue (Spotify through its embed player, files through an audio element) */
+const HF={};let hfSkew=0,hfCur=null,hfAudio=null,spApi=null,spCtl=null,spUri='',spReady=false,spWant=null,spLoading=false;
+const dock=()=>{let d=$('#hufiDock');if(!d){d=document.createElement('div');d.id='hufiDock';d.hidden=true;d.innerHTML=`<div class="hd"><img alt=""><div><b></b><small></small></div><button class="mini" data-d="pp">${IC.pause}</button><button class="mini" data-d="next">${IC.next}</button><button class="mini" data-d="min" title="Hide the player">${IC.min}</button></div><div class="sp"><div id="hfSp"></div></div><label class="v4Mut" style="display:grid;gap:4px" id="hfVolL">Music volume<input type="range" min="0" max="100" id="hfVol"></label>`;document.body.append(d);
+  d.onclick=e=>{const b=e.target.closest('[data-d]');if(!b||!hfCur)return;if(b.dataset.d=='min'){d.classList.toggle('min');b.innerHTML=d.classList.contains('min')?IC.up:IC.min;return}send({t:'app',ch:hfCur.ch,a:b.dataset.d=='pp'?'toggle':'next'})};
+  const v=d.querySelector('#hfVol');v.value=+(LS.get('huddle.hfvol')||70);v.oninput=()=>{LS.set('huddle.hfvol',v.value);if(hfAudio)hfAudio.volume=v.value/100}}return d};
+const spLoad=()=>{if(spApi||spLoading)return;spLoading=true;window.onSpotifyIframeApiReady=api=>{spApi=api;hfTick()};const s=document.createElement('script');s.src='https://open.spotify.com/embed/iframe-api/v1';s.async=true;document.head.append(s)};
+const hfPos=s=>s.on?Date.now()+hfSkew-s.at:(s.off||0);
+const hfStop=()=>{if(hfAudio){hfAudio.pause();hfAudio.removeAttribute('src');hfAudio.load();hfAudio=null}if(spCtl){try{spCtl.pause()}catch{}}const d=$('#hufiDock');if(d)d.hidden=true;hfCur=null};
+function hfTick(){const s=voice&&vch&&Object.values(HF).find(x=>x.vc===vch&&x.it);if(!s){if(hfCur)hfStop();return}
+  const d=dock(),it=s.it;d.hidden=false;d.querySelector('.hd img').src=it.art||HG.art('hufi');d.querySelector('b').textContent=it.title;d.querySelector('small').textContent=(s.on?'Hufi Music · ':'Paused · ')+(it.sub||'');
+  d.querySelector('[data-d=pp]').innerHTML=s.on?IC.pause:IC.play;const same=hfCur&&hfCur.it&&hfCur.it.id===it.id;hfCur=s;
+  if(it.k==='f'){d.querySelector('.sp').style.display='none';d.querySelector('#hfVolL').style.display='';if(spCtl){try{spCtl.pause()}catch{}}
+    if(!hfAudio||!same){if(hfAudio)hfAudio.pause();hfAudio=new Audio(base+it.url);hfAudio.volume=(+(LS.get('huddle.hfvol')||70))/100;hfAudio.onended=()=>hfCur&&send({t:'app',ch:hfCur.ch,a:'ended',i:(AS[hfCur.ch]||{}).i??-1})}
+    hfAudio.muted=!!deaf;const want=hfPos(s)/1000;if(Math.abs(hfAudio.currentTime-want)>1.5&&isFinite(want))try{hfAudio.currentTime=want}catch{}
+    if(s.on&&hfAudio.paused)hfAudio.play().catch(()=>{});if(!s.on&&!hfAudio.paused)hfAudio.pause();return}
+  if(hfAudio){hfAudio.pause();hfAudio=null}d.querySelector('.sp').style.display='';d.querySelector('#hfVolL').style.display='none';
+  const uri='spotify:'+it.kind+':'+it.sid;spWant={uri,on:s.on&&!deaf,pos:hfPos(s)};if(!spApi)return spLoad();
+  if(!spCtl){const host=$('#hfSp');spApi.createController(host,{uri,width:'100%',height:it.kind==='track'||it.kind==='episode'?80:152},c=>{spCtl=c;spUri=uri;
+      c.addListener('ready',()=>{spReady=true;spSync(true)});
+      c.addListener('playback_update',e=>{const p=e.data||{};if(!hfCur||!hfCur.it)return;const k=hfCur.it.kind;if(!p.isPaused&&p.duration&&p.position>=p.duration-1200&&(k==='track'||k==='episode')&&hfCur.on&&!spCtl._ended){spCtl._ended=1;send({t:'app',ch:hfCur.ch,a:'ended',i:(AS[hfCur.ch]||{}).i??-1})}})});return}
+  if(spUri!==uri){spUri=uri;spReady=false;spCtl._ended=0;spCtl.loadUri(uri);setTimeout(()=>{spReady=true;spSync(true)},1500);return}spSync(!same)}
+const spSync=force=>{if(!spCtl||!spReady||!spWant)return;try{if(spWant.on){if(force)spCtl.seek(Math.max(0,spWant.pos/1000));spCtl.resume?spCtl.resume():spCtl.play()}else spCtl.pause()}catch{}};
+const _on14=on;on=function(d){
+  if(d&&d.t=='hufi'){hfSkew=d.srv-Date.now();if(d.it)HF[d.ch]=d;else delete HF[d.ch];hfTick();return}
+  if(d&&d.t=='sb')return sbHear(d);
+  const r=_on14.apply(this,arguments);
+  if(d&&d.t=='app'&&d.s&&(chObj(d.ch)||{}).app==='hufi'){const s=d.s,it=s.q[s.i];hfSkew=s.srv-Date.now();if(it&&(s.on||s.i>=0))HF[d.ch]={ch:d.ch,vc:s.vc,on:s.on,at:s.at,off:s.off,it:{...it,kind:it.kind||''}};else delete HF[d.ch];hfTick()}
+  if(d&&(d.t=='init'||d.t=='profiles'))botProfile();
+  if(d&&d.t=='users'){hfVoiceCheck();sbBtn()}
+  if(d&&d.t=='guild'){sbBtn();sbPaint()}
+  return r};
+let hfLastVc='';const hfVoiceCheck=()=>{const v=voice?vch:'';if(v===hfLastVc)return;hfLastVc=v;if(v){const g=gOf(v);if(g)g.channels.filter(c=>c.type=='app'&&c.app=='hufi').forEach(c=>send({t:'app',ch:c.id,a:'get'}))}hfTick()};
+setInterval(()=>{hfVoiceCheck();if(hfCur&&hfCur.on)hfTick()},3000);
+const botProfile=()=>{P['bot:hufi']={name:'Hufi Music',color:'#16a34a',avatar:HG.art('hufi'),bio:'Plays music in this call.'}};botProfile();
+/* ================= Soundboard ================= */
+const sbVol=()=>{try{return JSON.parse(LS.get('huddle.sbvol')||'{}')}catch{return {}}},sbSet=(o,v)=>{const m=sbVol();if(v==null)delete m[o];else m[o]=v;LS.set('huddle.sbvol',JSON.stringify(m))};
+let sbTab='s';
+const sbG=()=>vch&&!vch.startsWith('dm:')?gOf(vch):null;
+const sbBtn=()=>{const leave=$('#bLeave');if(!leave)return;let b=$('#bSB');if(!b){b=document.createElement('button');b.id='bSB';b.className='cb';b.type='button';b.title='Soundboard';b.setAttribute('aria-label','Soundboard');b.innerHTML=IC.sb;leave.before(b);b.onclick=e=>{e.stopPropagation();sbOpen(b)}}b.hidden=!(voice&&sbG())};
+const sbOpen=anchor=>{let p=$('#sbPop');if(p){p.remove();return}p=document.createElement('div');p.id='sbPop';document.body.append(p);const r=anchor.getBoundingClientRect();
+  p.style.left=Math.max(8,Math.min(r.left+r.width/2-190,innerWidth-388))+'px';p.style.bottom=(innerHeight-r.top+8)+'px';sbPaint();
+  setTimeout(()=>addEventListener('mousedown',function h(e){const q=$('#sbPop');if(!q){removeEventListener('mousedown',h);return}if(!q.contains(e.target)&&!e.target.closest('#bSB')){q.remove();removeEventListener('mousedown',h)}}),0)};
+function sbPaint(){const p=$('#sbPop');if(!p)return;const g=sbG();if(!g){p.remove();return}const S=g.sounds||[],can=hasP(g,'sounds'),mod=hasP(g,'sbmute'),off=(g.sbOff||{})[oid],x=g.channels.find(c=>c.id==vch),use=x&&chAllow(g,x,'soundboard'),vols=sbVol();
+  const people=users.filter(u=>u.voice==vch&&u.id!=me&&!u.bot&&!u.guest);
+  p.innerHTML=`<div class="t"><button data-t="s" aria-pressed="${sbTab=='s'}">Sounds</button><button data-t="v" aria-pressed="${sbTab=='v'}">Volume</button><span class="v4Grow"></span><small class="v4Mut" style="align-self:center;padding-right:6px">${S.length}/50</small></div><div class="b">
+   ${sbTab=='s'?`${off?'<div class="v4Mut" style="color:#ffb347">A moderator turned the soundboard off for you in this server.</div>':!use?'<div class="v4Mut">You can’t use the soundboard in this channel.</div>':''}
+    <div class="sbGrid">${S.map(s=>`<div class="s"><button data-p="${esc(s.id)}" title="Play ${esc(s.name)}"${off||!use?' disabled':''}>${esc(s.name)}</button>${can?`<button class="x" data-x="${esc(s.id)}" title="Remove">${IC.x}</button>`:''}</div>`).join('')}</div>
+    ${!S.length?'<div class="v4Empty">No sounds yet.'+(can?' Upload the first one.':'')+'</div>':''}
+    ${can?`<div class="v4Row"><button class="hzB" data-up${S.length>=50?' disabled':''}>${HG('upload')}Upload a sound</button><small class="v4Mut">MP3, OGG, WAV or M4A up to 1 MB</small></div>`:''}`
+   :`<label class="sbP"><span class="v4Mut">All</span><input type="range" min="0" max="100" value="${+(LS.get('huddle.sbMaster')||80)}" data-master><span class="v4Mut">${+(LS.get('huddle.sbMaster')||80)}%</span></label>
+    <div class="v4Mut">How loud each person’s sounds are for you. Only you hear the change.</div>
+    ${people.map(u=>{const o=u.oid||u.id,v=vols[o]==null?100:vols[o],sbo=(g.sbOff||{})[o];return `<div class="sbP">${avs(o,nm(o))}<div><b style="font-size:13px">${esc(nm(o))}</b><input type="range" min="0" max="100" value="${v}" data-vo="${esc(o)}"></div><div style="display:grid;gap:4px"><button class="mt${v==0?' on':''}" data-mu="${esc(o)}">${v==0?'Muted':'Mute'}</button>${mod&&o!=oid?`<button class="mt${sbo?' on':''}" data-off="${esc(o)}" title="Turn the soundboard on or off for them in this server">${sbo?'Off for all':'Turn off'}</button>`:''}</div></div>`}).join('')||'<div class="v4Empty">No one else is in this call.</div>'}`}</div>`;
+  p.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+    if(d.t){sbTab=d.t;return sbPaint()}if(d.p)return send({t:'sbplay',g:g.id,id:d.p});
+    if(d.x){if(await hzAsk('Remove this sound for everyone?'))send({t:'sbdel',g:g.id,id:d.x});return}
+    if(d.mu){const v=sbVol()[d.mu];sbSet(d.mu,v===0?null:0);return sbPaint()}
+    if(d.off){send({t:'sboff',g:g.id,o:d.off,on:!(g.sbOff||{})[d.off]});return}
+    if(d.up!==undefined){const f=await pickFile('audio/*,.mp3,.ogg,.wav,.m4a');if(!f)return;if(f.size>1048576)return toast('Sounds can be up to 1 MB.');const name=f.name.replace(/\.[^.]+$/,'').slice(0,24),ext=(f.name.split('.').pop()||'').toLowerCase();
+      const r=await fetch(base+'/sound?g='+encodeURIComponent(g.id)+'&name='+encodeURIComponent(name)+'&ext='+encodeURIComponent(ext),{method:'POST',headers:{'x-token':HT||''},body:f});if(!r.ok)toast(await r.text()||'Upload failed.');else toast('Sound added.',true)}};
+  p.oninput=e=>{const t=e.target;if(t.dataset.master!==undefined){LS.set('huddle.sbMaster',t.value);t.nextElementSibling.textContent=t.value+'%'}else if(t.dataset.vo){sbSet(t.dataset.vo,+t.value===100?null:+t.value);const mb=p.querySelector(`[data-mu="${CSS.escape(t.dataset.vo)}"]`);if(mb){mb.classList.toggle('on',+t.value===0);mb.textContent=+t.value===0?'Muted':'Mute'}}}}
+function sbHear(d){if(!voice||d.vc!==vch||deaf)return;const v=sbVol()[d.by],per=v==null?1:v/100,master=+(LS.get('huddle.sbMaster')||80)/100,vol=Math.min(1,per*master*(d.vol||1));
+  const chip=document.createElement('div');chip.className='sbChip';chip.textContent=nm(d.by)+' played '+d.name+(per===0?' (muted for you)':'');document.body.append(chip);setTimeout(()=>chip.remove(),2300);
+  if(vol<=0)return;const a=new Audio(base+d.url);a.volume=vol;a.play().catch(()=>{})}
+sbBtn();
+/* ================= GIF Bot ================= */
+let gbEdit=null,gbRes=[];
+const gbSearch=async q=>{const r=await fetch(base+'/gif?q='+encodeURIComponent(q),{headers:{'x-token':HT||''}});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error=='nokey'?'GIF search is not set up on this host.':(j.error||'Search failed'));return j.items||[]};
+R.gifbot={full(st,m){m.body.className='hzAB';const ed=gbEdit;
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">
+    <div class="v4Card"><h4>${esc(st.name)} <span class="v4Pill">${st.on?'On':'Off'}</span></h4><p class="v4Mut" style="margin:0">When someone says a keyword, ${esc(st.name)} sometimes answers with a matching GIF. Each keyword has its own chance and cooldown, so it stays fun instead of spammy.</p></div>
+    ${st.edit?`<div class="v4Card"><h4>Settings</h4><div class="v4Form"><label>Bot name<input id="gbN" maxlength="24" value="${esc(st.name)}"></label><label>Status<select id="gbOn"><option value="1"${st.on?' selected':''}>On</option><option value="0"${st.on?'':' selected'}>Off</option></select></label></div>
+      <div class="v4Mut" style="margin:12px 0 6px">Listens in (none ticked = every text channel)</div><div class="hzRolePick">${st.texts.map(c=>`<label><input type="checkbox" value="${esc(c.id)}"${st.chans.includes(c.id)?' checked':''}><span># ${esc(c.name)}</span></label>`).join('')}</div>
+      <div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB on" data-cfg>Save settings</button></div></div>`:''}
+    ${st.edit&&ed?`<div class="v4Card"><h4>${ed.id?'Edit keyword':'New keyword'}</h4><div class="v4Form"><label>Keywords (comma separated)<input id="gbK" value="${esc((ed.kw||[]).join(', '))}" placeholder="hello, hi, hey"></label><label>Reply text (optional)<input id="gbS" maxlength="140" value="${esc(ed.say||'')}" placeholder="Hey {user}!"></label>
+      <label>Chance to answer: <b id="gbCv">${ed.chance||50}%</b><input type="range" id="gbC" min="1" max="100" value="${ed.chance||50}"></label><label>Cooldown (seconds)<input id="gbD" type="number" min="5" value="${ed.cd||120}"></label></div>
+      <div class="v4Mut" style="margin:12px 0 6px">GIFs to pick from (${(ed.gifs||[]).length} chosen). Or leave none and give a search word to grab a fresh GIF each time.</div>
+      <div class="v4Row"><input class="v4In v4Grow" id="gbQ" placeholder="Search GIFs" value="${esc(ed.lastQ||'')}"><button class="hzB" data-gs>Search</button><input class="v4In" id="gbQS" placeholder="Search word for random GIFs" style="max-width:240px" value="${esc(ed.q||'')}"></div>
+      ${(ed.gifs||[]).length?`<div class="gbGifs" style="margin-top:8px">${ed.gifs.map((x,i)=>`<button class="on" data-grm="${i}" title="Remove"><img src="${esc(x.small)}" alt=""></button>`).join('')}</div>`:''}
+      ${gbRes.length?`<div class="v4Mut" style="margin:10px 0 6px">Results: click to add</div><div class="gbGifs">${gbRes.map((x,i)=>`<button data-gad="${i}" class="${(ed.gifs||[]).some(y=>y.id==x.id)?'on':''}"><img src="${esc(x.small)}" alt="" loading="lazy"></button>`).join('')}</div>`:''}
+      <div class="v4Row" style="justify-content:flex-end;margin-top:12px"><button class="hzB" data-gx>Cancel</button><button class="hzB on" data-gsv>Save keyword</button></div></div>`:''}
+    <div class="v4Card"><h4>Keywords <span>${st.rules.length}/50</span></h4><div class="v4List">${st.rules.map(r=>`<div class="gbRule">${r.gifs[0]?`<img src="${esc(r.gifs[0].small)}" alt="">`:`<img class="gart" src="${HG.art('gifbot')}">`}<div><div>${r.kw.map(k=>`<span class="kw">${esc(k)}</span>`).join('')}</div><small class="v4Mut">${r.chance}% chance · every ${r.cd}s at most · ${r.gifs.length?r.gifs.length+' GIFs':'searches “'+esc(r.q)+'”'}${r.say?' · says “'+esc(r.say)+'”':''}</small></div>${st.edit?`<div class="v4Row"><button class="hzB" data-ge="${esc(r.id)}">${HG('pencil')}</button><button class="hzB" data-gd="${esc(r.id)}">${HG('trash')}</button></div>`:'<span></span>'}</div>`).join('')||'<div class="v4Empty">No keywords yet.</div>'}</div>
+      ${st.edit&&!ed?'<div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB on" data-gn>Add keyword</button></div>':''}</div>${mgrBox(st,'GIF Bot')}</div>`});
+  m.act.innerHTML='';const c=$('#gbC');if(c)c.oninput=()=>{$('#gbCv').textContent=c.value+'%'};
+  const keep=()=>{if(!gbEdit)return;gbEdit.kw=$('#gbK').value.split(',').map(x=>x.trim()).filter(Boolean);gbEdit.say=$('#gbS').value;gbEdit.chance=+$('#gbC').value;gbEdit.cd=+$('#gbD').value;gbEdit.q=$('#gbQS').value;gbEdit.lastQ=$('#gbQ').value};
+  m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+    if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
+    if(d.cfg!==undefined){A('cfg',{name:$('#gbN').value,on:$('#gbOn').value=='1',chans:[...b.closest('.v4Card').querySelectorAll('.hzRolePick input:checked')].map(i=>i.value)});return toast('Saved.',true)}
+    if(d.gn!==undefined){gbEdit={gifs:[],chance:50,cd:120};gbRes=[];return R.gifbot.full(st,m)}
+    if(d.ge){const r=st.rules.find(x=>x.id==d.ge);gbEdit=JSON.parse(JSON.stringify(r));gbRes=[];return R.gifbot.full(st,m)}
+    if(d.gd){if(await hzAsk('Delete this keyword?'))A('rdel',{id:d.gd});return}
+    if(d.gx!==undefined){gbEdit=null;gbRes=[];return R.gifbot.full(st,m)}
+    if(d.gs!==undefined){keep();try{gbRes=await gbSearch($('#gbQ').value.trim()||'funny')}catch(er){toast(er.message)}return R.gifbot.full(st,m)}
+    if(d.gad){keep();const x=gbRes[+d.gad];const i=gbEdit.gifs.findIndex(y=>y.id==x.id);if(i>=0)gbEdit.gifs.splice(i,1);else if(gbEdit.gifs.length<20)gbEdit.gifs.push({id:x.id,title:x.title,small:x.small,big:x.big,w:x.pw,h:x.ph});return R.gifbot.full(st,m)}
+    if(d.grm){keep();gbEdit.gifs.splice(+d.grm,1);return R.gifbot.full(st,m)}
+    if(d.gsv!==undefined){keep();A('rule',{...gbEdit});gbEdit=null;gbRes=[]}}}};
+/* ================= Levels ================= */
+R.levels={full(st,m){m.body.className='hzAB';const me=st.me,pct=Math.round(me.into/me.need*100),c=st.cfg;
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap"><div class="lvCard">${avs(oid,nm(oid))}<div style="min-width:0"><small class="v4Mut">Rank #${me.rank}</small><h3 style="margin:2px 0 0;font-size:22px">${esc(nm(oid))}</h3>
+      <div class="lvBar"><i style="width:${pct}%"></i></div><small class="v4Mut">${me.into.toLocaleString()} / ${me.need.toLocaleString()} XP to level ${me.l+1} · ${me.m.toLocaleString()} messages · ${fmtMin(me.v)} in voice</small></div><div class="lvLv"><small>Level</small><b>${me.l}</b></div></div>
+    ${!st.on?'<div class="v4Card v4Mut">Levels are turned off in this server.</div>':''}
+    <div class="v4Two"><div class="v4Card"><h4>Leaderboard</h4><div class="v4List">${st.top.map((t,i)=>`<div class="lvRow"><b>${i+1}</b>${avs(t.o,t.n)}<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.n)}</span><span class="v4Mut">${t.xp.toLocaleString()} XP</span><span class="v4Pill">Lv ${t.l}</span></div>`).join('')||'<div class="v4Empty">No one has XP yet. Start chatting!</div>'}</div></div>
+      <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Role rewards</h4>${st.rewards.length?`<div class="v4List">${st.rewards.slice().sort((a,b)=>a.lvl-b.lvl).map(r=>{const ro=st.rolesAll.find(x=>x.id==r.role);return `<div class="v4Li"><span class="v4Pill">Level ${r.lvl}</span><span style="color:${esc((ro||{}).color||'var(--tx)')}">@${esc((ro||{}).name||'role')}</span></div>`}).join('')}</div>`:'<div class="v4Mut">No role rewards yet.</div>'}</div>
+      <div class="v4Card"><h4>How XP works</h4><p class="v4Mut" style="margin:0">${c?'':'Chatting earns XP (once a minute at most), and so does every minute you spend in a voice call with someone else.'}${c?`Each message earns ${c.min}-${c.max} XP (at most every ${c.cd}s). Each minute in voice with someone else earns ${c.vxp} XP.`:''}</p></div></div></div>
+    ${c?`<div class="v4Card"><h4>Level settings</h4><div class="v4Form"><label>Status<select id="lvOn"><option value="1"${st.on?' selected':''}>On</option><option value="0"${st.on?'':' selected'}>Off</option></select></label><label>XP per message (min)<input id="lvMin" type="number" value="${c.min}"></label><label>XP per message (max)<input id="lvMax" type="number" value="${c.max}"></label><label>Message cooldown (s)<input id="lvCd" type="number" value="${c.cd}"></label><label>XP per voice minute<input id="lvV" type="number" value="${c.vxp}"></label>
+      <label>Level-up announcements<select id="lvAnn"><option value="">Don’t announce</option>${st.texts.map(t=>`<option value="${esc(t.id)}"${t.id==c.ann?' selected':''}># ${esc(t.name)}</option>`).join('')}</select></label><label style="grid-column:1/-1">Announcement ({user}, {level})<input id="lvMsg" maxlength="200" value="${esc(c.msg)}"></label></div>
+      <div class="v4Mut" style="margin:14px 0 6px">Role rewards (given automatically when someone reaches the level; you can only pick roles below your own)</div><div class="v4List" id="lvRw">${c.rewards.map(r=>`<div class="v4Row"><input class="v4In" type="number" min="1" value="${r.lvl}" style="width:90px" data-l><select class="v4In v4Grow" data-r>${roleOpts(st,r.role,'Pick a role')}</select><button class="hzB" data-rwdel>${HG('trash')}</button></div>`).join('')}</div>
+      <div class="v4Row" style="margin-top:10px"><button class="hzB" data-rwadd>${HG('plus')}Add reward</button><span class="v4Grow"></span><button class="hzB bad" data-lvreset>Reset everyone’s XP</button><button class="hzB on" data-lvsave>Save</button></div></div>`:''}${mgrBox(st,'Levels')}</div>`});
+  m.act.innerHTML='';m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+    if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
+    if(d.rwadd!==undefined){$('#lvRw').insertAdjacentHTML('beforeend',`<div class="v4Row"><input class="v4In" type="number" min="1" value="5" style="width:90px" data-l><select class="v4In v4Grow" data-r>${roleOpts(st,'','Pick a role')}</select><button class="hzB" data-rwdel>${HG('trash')}</button></div>`);return}
+    if(d.rwdel!==undefined)return b.closest('.v4Row').remove();
+    if(d.lvreset!==undefined){if(await hzAsk('Reset XP for everyone in this server? This can’t be undone.'))A('reset');return}
+    if(d.lvsave!==undefined){A('cfg',{on:$('#lvOn').value=='1',min:+$('#lvMin').value,max:+$('#lvMax').value,cd:+$('#lvCd').value,vxp:+$('#lvV').value,ann:$('#lvAnn').value,msg:$('#lvMsg').value,
+      rewards:[...$('#lvRw').children].map(r=>({lvl:+r.querySelector('[data-l]').value,role:r.querySelector('[data-r]').value})).filter(r=>r.role)});toast('Level settings saved.',true)}}}};
+/* ================= Economy ================= */
+const ecImg=(it,st)=>`<div class="ecImg" ${it.img?`style="background-image:url('${esc(base+it.img)}')"`:''}>${it.img?'':it.kind=='role'?`<span class="v4Pill" style="font-size:14px">@${esc((st.rolesAll.find(r=>r.id==it.role)||{}).name||'role')}</span>`:`<img class="gart" src="${HG.art('eco')}">`}</div>`;
+let ecEdit=null,ecImgUrl='';
+R.eco={full(st,m){m.body.className='hzAB';const tab=T('eco','store'),$$=n=>esc(st.sym)+Math.round(n).toLocaleString('en-US'),inv=Object.entries(st.inv).filter(([,n])=>n>0),itm=id=>st.items.find(x=>x.id==id);
+  const people=st.people.filter(p=>p.o!=oid);
+  const body={
+    store:`<div class="ecGrid">${st.items.map(it=>`<div class="ecItem">${ecImg(it,st)}<div class="ecBody"><b>${esc(it.name)}</b>${it.desc?`<p>${esc(it.desc)}</p>`:''}<div class="v4Row"><span class="ecPrice">${$$(it.price)}</span><span class="v4Grow"></span><span class="v4Mut">${it.stock===null?'Unlimited':it.stock?it.stock+' left':'Sold out'}</span></div>
+      <div class="v4Row">${it.kind=='item'?`<input class="v4In" type="number" min="1" value="1" style="width:64px" data-q="${esc(it.id)}">`:''}<button class="hzB on v4Grow" data-buy="${esc(it.id)}"${it.stock===0?' disabled':''}>Buy</button>${st.edit?`<button class="hzB" data-iedit="${esc(it.id)}">${HG('pencil')}</button>`:''}</div></div></div>`).join('')||'<div class="v4Empty">The store is empty.'+(st.edit?' Add items in Manage.':'')+'</div>'}</div>`,
+    bag:`<div class="ecGrid">${inv.map(([id,n])=>{const it=itm(id);if(!it)return '';return `<div class="ecItem">${ecImg(it,st)}<div class="ecBody"><b>${esc(it.name)} <span class="v4Pill">× ${n}</span></b>
+      ${it.sell?`<button class="hzB" data-sell="${esc(id)}">Sell back for ${$$(it.sell)}</button>`:''}${it.trade?`<div class="v4Row"><input class="v4In" type="number" min="1" max="${n}" value="1" style="width:60px" data-lq="${esc(id)}"><input class="v4In v4Grow" type="number" min="0" placeholder="Price" data-lp="${esc(id)}"><button class="hzB" data-list="${esc(id)}">List</button></div>`:''}</div></div>`}).join('')||'<div class="v4Empty">You don’t own anything yet.</div>'}</div>`,
+    market:`<div class="v4List">${st.market.map(l=>{const it=itm(l.item)||{name:'Item'};return `<div class="v4Li">${it.img?`<img src="${esc(base+it.img)}" style="width:40px;height:40px;border-radius:8px;object-fit:cover">`:''}<div class="v4Grow"><b>${l.qty}× ${esc(it.name)}</b><br><small class="v4Mut">sold by ${esc(l.n)}</small></div><span class="ecPrice">${$$(l.price)}</span>${l.by==oid||st.edit?`<button class="hzB" data-unl="${esc(l.id)}">Take down</button>`:''}${l.by!=oid?`<button class="hzB on" data-bl="${esc(l.id)}">Buy</button>`:''}</div>`}).join('')||'<div class="v4Empty">Nothing for sale from other members right now.</div>'}</div>`,
+    earn:`<div class="v4Two"><div class="v4Card"><h4>Jobs</h4><div class="v4List">${st.jobs.map(j=>`<div class="v4Li"><div class="v4Grow"><b>${esc(j.name)}</b><br><small class="v4Mut">${$$(j.min)}-${$$(j.max)} · every ${left(j.cd*1000)}${j.role?' · needs @'+esc((st.rolesAll.find(r=>r.id==j.role)||{}).name||'role'):''}</small></div><button class="hzB on" data-work="${esc(j.id)}"${j.ready||!j.ok?' disabled':''}>${!j.ok?'Locked':j.ready?left(j.ready):'Work'}</button></div>`).join('')||'<div class="v4Empty">No jobs yet.</div>'}</div></div>
+      <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Income</h4>${st.inc.filter(i=>i.mine).map(i=>`<div class="v4Li" style="margin-bottom:6px"><span class="v4Grow">@${esc((st.rolesAll.find(r=>r.id==i.role)||{}).name||'role')}: ${$$(i.amt)} every ${i.every}h</span><small class="v4Mut">${i.ready?left(i.ready):'Ready'}</small></div>`).join('')||'<div class="v4Mut">None of your roles pays income.</div>'}<button class="hzB on" data-col style="margin-top:8px"${st.inc.some(i=>i.mine&&!i.ready)?'':' disabled'}>Collect</button></div>
+      <div class="v4Card"><h4>Steal</h4>${st.rob.on?`<p class="v4Mut" style="margin:0 0 8px">${st.rob.chance}% chance to take ${st.rob.min}-${st.rob.max}% of their ${esc(st.name)}. Get caught and you pay them ${st.rob.fine}% of yours.</p><div class="v4Row"><select class="v4In v4Grow" id="ecRob">${people.map(p=>`<option value="${esc(p.o)}">${esc(p.n)}</option>`).join('')}</select><button class="hzB bad" data-rob${st.rob.ready?' disabled':''}>${st.rob.ready?left(st.rob.ready):'Rob'}</button></div>`:'<div class="v4Mut">Stealing is turned off here.</div>'}</div>
+      <div class="v4Card"><h4>Pay someone</h4><div class="v4Row"><select class="v4In v4Grow" id="ecPayO">${people.map(p=>`<option value="${esc(p.o)}">${esc(p.n)}</option>`).join('')}</select><input class="v4In" id="ecPayN" type="number" min="1" placeholder="Amount" style="width:100px"><button class="hzB on" data-pay>Pay</button></div></div></div></div>`,
+    top:`<div class="v4List">${st.top.map((t,i)=>`<div class="lvRow"><b>${i+1}</b>${avs(t.o,t.n)}<span>${esc(t.n)}</span><span></span><span class="ecPrice">${$$(t.b)}</span></div>`).join('')}</div><div class="v4Card" style="margin-top:14px"><h4>${st.edit?'Activity':'Your activity'}</h4><div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li"><span class="v4Grow">${esc(l.s)}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Mut">Nothing yet.</div>'}</div></div>`,
+    manage:st.edit?`<div class="v4Card"><h4>Currency</h4><div class="v4Form"><label>Name<input id="ecName" maxlength="20" value="${esc(st.name)}"></label><label>Symbol<input id="ecSym" maxlength="4" value="${esc(st.sym)}"></label><label>Starting balance<input id="ecStart" type="number" value="${st.startBal||''}" placeholder="unchanged"></label>
+        <label>Stealing<select id="ecRobOn"><option value="1"${st.rob.on?' selected':''}>Allowed</option><option value="0"${st.rob.on?'':' selected'}>Off</option></select></label><label>Steal success %<input id="ecCh" type="number" value="${st.rob.chance}"></label><label>Steal takes min %<input id="ecRmin" type="number" value="${st.rob.min}"></label><label>Steal takes max %<input id="ecRmax" type="number" value="${st.rob.max}"></label><label>Fine if caught %<input id="ecFine" type="number" value="${st.rob.fine}"></label><label>Steal cooldown (s)<input id="ecRcd" type="number" value="${st.rob.cd}"></label></div>
+        <div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB on" data-ecfg>Save</button></div></div>
+      <div class="v4Card"><h4>Give or take ${esc(st.name)}</h4><div class="v4Row"><select class="v4In v4Grow" id="ecGO">${st.people.map(p=>`<option value="${esc(p.o)}">${esc(p.n)}</option>`).join('')}</select><input class="v4In" id="ecGN" type="number" placeholder="Amount (negative takes)" style="width:200px"><button class="hzB on" data-give>Apply</button></div></div>
+      <div class="v4Card"><h4>${ecEdit&&ecEdit.id?'Edit store item':'New store item'}</h4><div class="v4Form"><label>Type<select id="eiK"><option value="item">Item (anything you make up)</option><option value="role"${ecEdit&&ecEdit.kind=='role'?' selected':''}>Role</option></select></label><label>Name<input id="eiN" maxlength="40" value="${esc((ecEdit||{}).name||'')}"></label><label>Role (for role items)<select id="eiR">${roleOpts(st,(ecEdit||{}).role)}</select></label>
+          <label>Price<input id="eiP" type="number" min="0" value="${(ecEdit||{}).price??100}"></label><label>Store buys back for (0 = no)<input id="eiS" type="number" min="0" value="${(ecEdit||{}).sell??0}"></label><label>How many exist (blank = unlimited)<input id="eiQ" type="number" min="0" value="${(ecEdit||{}).stock??''}"></label>
+          <label>Members can resell<select id="eiT"><option value="1">Yes</option><option value="0"${ecEdit&&ecEdit.trade===false?' selected':''}>No</option></select></label><label style="grid-column:1/-1">Description<input id="eiD" maxlength="200" value="${esc((ecEdit||{}).desc||'')}"></label></div>
+        <div class="v4Row" style="margin-top:10px">${ecImgUrl?`<img src="${esc(base+ecImgUrl)}" style="width:60px;height:60px;border-radius:10px;object-fit:cover">`:''}<button class="hzB" data-eimg>${HG('image')}${ecImgUrl?'Change image':'Add image'}</button><span class="v4Grow"></span>${ecEdit&&ecEdit.id?`<button class="hzB bad" data-idel="${esc(ecEdit.id)}">Delete</button><button class="hzB" data-ix>Cancel</button>`:''}<button class="hzB on" data-isave>${ecEdit&&ecEdit.id?'Save item':'Add to store'}</button></div></div>
+      <div class="v4Two"><div class="v4Card"><h4>Jobs</h4><div class="v4List">${st.jobs.map(j=>`<div class="v4Li"><span class="v4Grow">${esc(j.name)} · ${$$(j.min)}-${$$(j.max)} · ${left(j.cd*1000)}</span><button class="hzB" data-jdel="${esc(j.id)}">${HG('trash')}</button></div>`).join('')}</div>
+          <div class="v4Form" style="margin-top:10px"><label>Job<input id="ejN" maxlength="30" placeholder="Pizza delivery"></label><label>Pays min<input id="ejA" type="number" value="20"></label><label>Pays max<input id="ejB" type="number" value="60"></label><label>Cooldown (s)<input id="ejC" type="number" value="3600"></label><label>Needs role<select id="ejR">${roleOpts(st,'','Anyone')}</select></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-jadd>Add job</button></div></div>
+        <div class="v4Card"><h4>Role income</h4><div class="v4List">${st.inc.map(i=>`<div class="v4Li"><span class="v4Grow">@${esc((st.rolesAll.find(r=>r.id==i.role)||{}).name||'role')}: ${$$(i.amt)} every ${i.every}h</span><button class="hzB" data-incdel="${esc(i.id)}">${HG('trash')}</button></div>`).join('')}</div>
+          <div class="v4Form" style="margin-top:10px"><label>Role<select id="eiRole">${roleOpts(st,'','Pick a role')}</select></label><label>Amount<input id="eiAmt" type="number" value="100"></label><label>Every (hours)<input id="eiEv" type="number" value="24"></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-incadd>Add income</button></div></div></div>${mgrBox(st,'the economy')}`:''};
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap"><div class="v4Wallet"><img class="gart" src="${HG.art('eco')}" style="width:46px;height:46px"><div class="v4Grow"><small>Your ${esc(st.name)}</small><span class="v4Big">${$$(st.bal)}</span></div></div>
+    ${tabs([['store','Store'],['bag','My stuff'],['market','Market'],['earn','Earn'],['top','Richest'],st.edit&&['manage','Manage']],tab)}${body[tab]||''}</div>`});
+  m.act.innerHTML='';
+  m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset,v=id=>($('#'+id)||{}).value;
+    if(d.tab){sel.eco=d.tab;return R.eco.full(st,m)}if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
+    if(d.buy){const q=m.body.querySelector(`[data-q="${CSS.escape(d.buy)}"]`);return A('buy',{item:d.buy,qty:q?+q.value:1})}
+    if(d.sell)return A('sellback',{item:d.sell,qty:1});
+    if(d.list){const q=m.body.querySelector(`[data-lq="${CSS.escape(d.list)}"]`).value,p=m.body.querySelector(`[data-lp="${CSS.escape(d.list)}"]`).value;if(p==='')return toast('Set a price.');return A('list',{item:d.list,qty:+q,price:+p})}
+    if(d.unl)return A('unlist',{id:d.unl});if(d.bl)return A('buyl',{id:d.bl});if(d.work)return A('work',{id:d.work});if(d.col!==undefined)return A('collect');
+    if(d.rob!==undefined)return A('rob',{o:v('ecRob')});if(d.pay!==undefined)return A('pay',{o:v('ecPayO'),amt:+v('ecPayN')});
+    if(d.ecfg!==undefined){A('cfg',{name:v('ecName'),sym:v('ecSym'),start:v('ecStart')===''?undefined:+v('ecStart'),robOn:v('ecRobOn')=='1',chance:+v('ecCh'),rmin:+v('ecRmin'),rmax:+v('ecRmax'),fine:+v('ecFine'),rcd:+v('ecRcd')});return toast('Saved.',true)}
+    if(d.give!==undefined)return A('give',{o:v('ecGO'),amt:+v('ecGN')});
+    if(d.iedit){ecEdit=st.items.find(x=>x.id==d.iedit);ecImgUrl=ecEdit.img||'';sel.eco='manage';return R.eco.full(st,m)}
+    if(d.ix!==undefined){ecEdit=null;ecImgUrl='';return R.eco.full(st,m)}
+    if(d.idel){if(await hzAsk('Delete this item from the store and from everyone’s inventory?')){A('idel',{id:d.idel});ecEdit=null;ecImgUrl=''}return}
+    if(d.eimg!==undefined){const f=await pickFile('image/*');if(!f)return;try{ecImgUrl=await upApp(f,'img');R.eco.full(st,m)}catch(er){toast(er.message)}return}
+    if(d.isave!==undefined){A('item',{id:ecEdit&&ecEdit.id,kind:v('eiK'),name:v('eiN'),role:v('eiR'),price:+v('eiP'),sell:+v('eiS'),stock:v('eiQ'),trade:v('eiT')=='1',desc:v('eiD'),img:ecImgUrl});ecEdit=null;ecImgUrl='';return toast('Store updated.',true)}
+    if(d.jadd!==undefined)return A('job',{name:v('ejN'),min:+v('ejA'),max:+v('ejB'),cd:+v('ejC'),role:v('ejR')});if(d.jdel)return A('jdel',{id:d.jdel});
+    if(d.incadd!==undefined)return A('inc',{role:v('eiRole'),amt:+v('eiAmt'),every:+v('eiEv')});if(d.incdel)return A('incdel',{id:d.incdel})}},
+  ev(st,ev){if(ev.k=='eco'&&ev.o==oid)toast(ev.msg,true)}};
+/* ================= Trading Cards ================= */
+const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN"><span>${esc(c.name||'Card name')}</span><small>${esc(c.cost||'')}</small></div>
+  <div class="tcA" ${c.art?`style="background-image:url('${esc(base+c.art)}')"`:''}>${c.art?'':'Card art'}</div><div class="tcT"><span>${esc(c.type||'Type')}</span><i class="tcG ${esc(c.rarity||'common')}" title="${esc(c.rarity||'common')}"></i></div>
+  <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
+let tcDraft=null,tcGot=null,tcOffer={to:'',give:[],get:[]};
+R.cards={full(st,m){m.body.className='hzAB';const tab=T('cards','mine'),mine=st.cards.filter(c=>c.owner==oid),theirs=st.cards.filter(c=>c.owner==tcOffer.to&&tcOffer.to);
+  const dr=tcDraft||{rarity:'common',frame:'#8b6bff'};
+  const body={
+    mine:mine.length?`<div class="tcGrid">${mine.map(c=>tcCard(c)).join('')}</div>`:'<div class="v4Empty">You don’t own any cards yet. Open a pack!</div>',
+    open:`<div class="v4Card" style="text-align:center;display:grid;gap:14px;justify-items:center"><img class="gart" src="${HG.art('cards')}" style="width:96px;height:96px"><div><b style="font-size:18px">Packs have ${st.pack} card${st.pack==1?'':'s'}</b><div class="v4Mut">${st.free} unclaimed card${st.free==1?'':'s'} left · one pack every ${st.cd}h</div></div>
+      <button class="hzB on" data-open${st.next||!st.free?' disabled':''} style="font-size:15px;padding:10px 22px">${st.next?'Next pack in '+left(st.next):!st.free?'All cards claimed':'Open a pack'}</button>
+      ${tcGot?`<div class="tcReveal">${tcGot.map((id,i)=>{const c=st.cards.find(x=>x.id==id);return c?`<div class="tcFlip" style="animation-delay:${i*.25}s">${tcCard(c)}</div>`:''}).join('')}</div>`:''}</div>`,
+    all:`<div class="tcGrid">${st.cards.map(c=>`<div style="display:grid;gap:22px">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button><select class="v4In v4Grow" data-grant="${esc(c.id)}"><option value="">In packs</option>${st.people.concat([{o:oid,n:nm(oid)}]).map(p=>`<option value="${esc(p.o)}"${p.o==c.owner?' selected':''}>${esc(p.n)}</option>`).join('')}</select></div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
+    trade:`<div class="v4Card"><h4>Open offers</h4><div class="v4List">${st.trades.map(t=>{const nmz=ids=>ids.map(id=>esc((st.cards.find(c=>c.id==id)||{}).name||'?')).join(', ')||'nothing';return `<div class="v4Li"><div class="v4Grow">${t.from==oid?`You offer <b>${nmz(t.give)}</b> to ${esc(t.tn)} for <b>${nmz(t.get)}</b>`:`${esc(t.fn)} offers <b>${nmz(t.give)}</b> for your <b>${nmz(t.get)}</b>`}</div>${t.to==oid?`<button class="hzB on" data-tok="${esc(t.id)}">Accept</button><button class="hzB" data-tno="${esc(t.id)}">Decline</button>`:`<button class="hzB" data-tcan="${esc(t.id)}">Cancel</button>`}</div>`}).join('')||'<div class="v4Mut">No open offers.</div>'}</div></div>
+      <div class="v4Card"><h4>Make an offer</h4><select class="v4In" id="tcTo"><option value="">Trade with…</option>${st.people.map(p=>`<option value="${esc(p.o)}"${p.o==tcOffer.to?' selected':''}>${esc(p.n)}</option>`).join('')}</select>
+        <div class="v4Mut" style="margin:12px 0 6px">You give (click to pick)</div><div class="tcGrid">${mine.map(c=>`<div class="tcPick${tcOffer.give.includes(c.id)?' on':''}" data-tg="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">You have no cards.</span>'}</div>
+        ${tcOffer.to?`<div class="v4Mut" style="margin:26px 0 6px">You get</div><div class="tcGrid">${theirs.map(c=>`<div class="tcPick${tcOffer.get.includes(c.id)?' on':''}" data-tw="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">They have no cards.</span>'}</div>`:''}
+        <div class="v4Row" style="justify-content:flex-end;margin-top:26px"><button class="hzB on" data-toffer${tcOffer.to?'':' disabled'}>Send offer</button></div></div>`,
+    make:st.edit?`<div class="v4Two"><div class="v4Card"><h4>${dr.id?'Edit card':'Create a card'}</h4><div class="v4Form" id="tcF"><label>Name<input data-k="name" maxlength="40" value="${esc(dr.name||'')}"></label><label>Cost<input data-k="cost" maxlength="12" value="${esc(dr.cost||'')}" placeholder="3 + 2"></label>
+        <label>Type line<input data-k="type" maxlength="50" value="${esc(dr.type||'')}" placeholder="Creature: Dragon"></label><label>Rarity<select data-k="rarity">${['common','uncommon','rare','mythic'].map(r=>`<option${r==dr.rarity?' selected':''}>${r}</option>`).join('')}</select></label>
+        <label>Frame color<input data-k="frame" type="color" value="${esc(dr.frame||'#8b6bff')}"></label><label>Set<input data-k="set" maxlength="20" value="${esc(dr.set||'')}"></label><label>Power<input data-k="pow" maxlength="4" value="${esc(dr.pow||'')}"></label><label>Toughness<input data-k="tou" maxlength="4" value="${esc(dr.tou||'')}"></label>
+        <label style="grid-column:1/-1">Rules text<textarea data-k="text" maxlength="400">${esc(dr.text||'')}</textarea></label><label style="grid-column:1/-1">Flavor text<input data-k="flavor" maxlength="200" value="${esc(dr.flavor||'')}"></label></div>
+        <div class="v4Row" style="margin-top:10px"><button class="hzB" data-tart>${HG('image')}${dr.art?'Change art':'Upload art'}</button><span class="v4Grow"></span>${dr.id?`<button class="hzB bad" data-tdel="${esc(dr.id)}">Delete</button><button class="hzB" data-tx>Cancel</button>`:''}<button class="hzB on" data-tsave>${dr.id?'Save card':'Create card'}</button></div></div>
+      <div class="v4Card" style="display:grid;justify-items:center;align-content:start;gap:12px"><h4 style="justify-self:stretch">Preview</h4><div id="tcPrev">${tcCard(dr)}</div><p class="v4Mut" style="margin:0;text-align:center">Every card is one of one: only one person can own it.</p></div></div>
+      <div class="v4Card"><h4>Packs</h4><div class="v4Form"><label>Cards per pack<input id="tcPk" type="number" min="1" max="10" value="${st.pack}"></label><label>Hours between packs<input id="tcCd" type="number" min="0" value="${st.cd}"></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-tpk>Save</button></div></div>${mgrBox(st,'Trading Cards')}`:'',
+    log:`<div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li"><span class="v4Grow">${esc(l.s)}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Empty">Nothing yet.</div>'}</div>`};
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${tabs([['mine','My collection ('+mine.length+')'],['open','Open packs'],['all','All cards ('+st.cards.length+')'],['trade','Trades'+(st.trades.some(t=>t.to==oid)?' •':'')],['log','History'],st.edit&&['make','Create']],tab)}${body[tab]||''}</div>`});
+  m.act.innerHTML='';const f=$('#tcF');if(f)f.oninput=()=>{tcDraft=Object.assign({},dr,Object.fromEntries([...f.querySelectorAll('[data-k]')].map(i=>[i.dataset.k,i.value])));$('#tcPrev').innerHTML=tcCard(tcDraft)};
+  const to=$('#tcTo');if(to)to.onchange=()=>{tcOffer={to:to.value,give:tcOffer.give,get:[]};R.cards.full(st,m)};
+  m.body.onchange=e=>{const s=e.target.closest('[data-grant]');if(s)A('grant',{id:s.dataset.grant,o:s.value})};
+  m.body.onclick=async e=>{const b=e.target.closest('button,[data-tg],[data-tw]');if(!b)return;const d=b.dataset;
+    if(d.tab){sel.cards=d.tab;tcGot=null;return R.cards.full(st,m)}if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
+    if(d.open!==undefined)return A('open');
+    if(d.tg){const a=tcOffer.give,i=a.indexOf(d.tg);i>=0?a.splice(i,1):a.push(d.tg);return R.cards.full(st,m)}
+    if(d.tw){const a=tcOffer.get,i=a.indexOf(d.tw);i>=0?a.splice(i,1):a.push(d.tw);return R.cards.full(st,m)}
+    if(d.toffer!==undefined){A('offer',tcOffer);tcOffer={to:'',give:[],get:[]};return toast('Offer sent.',true)}
+    if(d.tok)return A('trade',{id:d.tok,ok:true});if(d.tno)return A('trade',{id:d.tno,ok:false});if(d.tcan)return A('trade',{id:d.tcan,ok:'cancel'});
+    if(d.ced){tcDraft={...st.cards.find(c=>c.id==d.ced)};sel.cards='make';return R.cards.full(st,m)}
+    if(d.tx!==undefined){tcDraft=null;return R.cards.full(st,m)}
+    if(d.tdel){if(await hzAsk('Delete this card? Whoever owns it loses it.')){A('cdel',{id:d.tdel});tcDraft=null}return}
+    if(d.tart!==undefined){const fl=await pickFile('image/*');if(!fl)return;try{tcDraft={...dr,...(tcDraft||{}),art:await upApp(fl,'img')};R.cards.full(st,m)}catch(er){toast(er.message)}return}
+    if(d.tsave!==undefined){A('card',{...dr,...(tcDraft||{})});tcDraft=null;return toast('Card saved.',true)}
+    if(d.tpk!==undefined){A('packcfg',{pack:+$('#tcPk').value,cd:+$('#tcCd').value});return toast('Saved.',true)}}},
+  ev(st,ev,m){if(ev.k=='pack'&&ev.o==oid){tcGot=ev.got;sel.cards='open';if(m)send({t:'app',ch:m.ch,a:'get'})}}};
+/* ================= Anti-Spam ================= */
+R.antispam={full(st,m){m.body.className='hzAB';const c=st.cfg;
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap"><div class="v4Card"><h4>Anti-Spam <span class="v4Pill">${c.on?'Watching':'Off'}</span></h4><p class="v4Mut" style="margin:0">Flags anyone who sends ${c.msgs} messages in ${c.secs} seconds, repeats the same message ${c.dup} times, or mentions ${c.men}+ people at once. Moderators are never flagged.
+      ${c.act=='warn'?' It warns them in chat.':c.act=='timeout'?' It times them out for '+left(c.tmo*1000)+'.':' First it warns them; if they keep going within 10 minutes, it times them out for '+left(c.tmo*1000)+'.'}${c.del?' Their spam messages are removed.':''}</p></div>
+    ${st.edit?`<div class="v4Card"><h4>Settings</h4><div class="v4Form"><label>Status<select id="asOn"><option value="1"${c.on?' selected':''}>On</option><option value="0"${c.on?'':' selected'}>Off</option></select></label><label>Messages…<input id="asM" type="number" min="2" value="${c.msgs}"></label><label>…within seconds<input id="asS" type="number" min="1" value="${c.secs}"></label><label>Same message repeated<input id="asD" type="number" min="2" value="${c.dup}"></label><label>Mentions in one message<input id="asMe" type="number" min="2" value="${c.men}"></label>
+      <label>What to do<select id="asA"><option value="both"${c.act=='both'?' selected':''}>Warn, then time out</option><option value="warn"${c.act=='warn'?' selected':''}>Only warn</option><option value="timeout"${c.act=='timeout'?' selected':''}>Time out right away</option></select></label><label>Timeout length (s)<input id="asT" type="number" min="10" value="${c.tmo}"></label><label>Remove spam messages<select id="asDel"><option value="1"${c.del?' selected':''}>Yes</option><option value="0"${c.del?'':' selected'}>No</option></select></label></div>
+      <div class="v4Mut" style="margin:12px 0 6px">Roles that are never flagged</div><div class="hzRolePick" id="asEx">${st.rolesAll.map(r=>`<label style="--rc:${esc(r.color||'#8e8d98')}"><input type="checkbox" value="${esc(r.id)}"${c.exempt.includes(r.id)?' checked':''}><span>@${esc(r.name)}</span></label>`).join('')||'<span class="v4Mut">No roles yet.</span>'}</div>
+      <div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB on" data-ascfg>Save</button></div></div>
+      <div class="v4Card"><h4>Recent actions ${st.log.length?'<button class="hzB" data-asclr>Clear</button>':''}</h4><div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow"><b>${esc(l.n)}</b> ${l.act=='timeout'?'timed out':'warned'} for ${esc(l.why)}${l.ch?' in #'+esc(l.ch):''}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Mut">Nothing flagged yet.</div>'}</div></div>${mgrBox(st,'Anti-Spam')}`:''}</div>`});
+  m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));if(d.asclr!==undefined)return A('logclear');
+    if(d.ascfg!==undefined){A('cfg',{on:$('#asOn').value=='1',msgs:+$('#asM').value,secs:+$('#asS').value,dup:+$('#asD').value,men:+$('#asMe').value,act:$('#asA').value,tmo:+$('#asT').value,del:$('#asDel').value=='1',exempt:[...$('#asEx').querySelectorAll('input:checked')].map(i=>i.value)});toast('Anti-Spam saved.',true)}}}};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
