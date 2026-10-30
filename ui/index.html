@@ -230,7 +230,7 @@ aside .sd{border-color:var(--panel)}#meBtn .sd{border-color:var(--raise);width:1
 .tab,.vr{min-height:46px}.tab{padding-top:4px;padding-bottom:4px}.vr{padding-top:4px;padding-bottom:4px}.vr{display:flex;align-items:center}.vr .cg{margin-left:auto;float:none}
 .icrow{display:flex;align-items:center;gap:8px}.icrow .prev{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--raise);border:1px solid var(--line);font-size:22px;flex:none}.icrow .prev .ci{margin:0}
 .icrow button{padding:5px 12px;font-size:14px}.icrow small{color:var(--dim);flex:1;min-width:0}
-/* selected channel / DM / friends: hollow outline that glows in the theme's accent colour */
+/* selected channel / DM / friends: hollow outline that glows in the theme's accent color */
 .tab.sel,.tab.sel.hasg{background:transparent;background-image:none;color:var(--tx);border-color:var(--ac);text-shadow:none;box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 38%,transparent),0 0 12px color-mix(in srgb,var(--ac) 50%,transparent),inset 0 0 9px color-mix(in srgb,var(--ac) 30%,transparent)}
 .tab.sel .cg,.tab.sel .cg:hover{color:var(--tx)}
 /* rounder images */
@@ -1137,7 +1137,7 @@ html:not([data-contrast=high]) #nav .tab.sel .ci.d{opacity:1;color:var(--ac)}
 <div id="prof"></div>
 <div id="drop">Drop files to share</div>
 
-<script>/* Huddle illustrated icons: full-colour SVG artwork for default text/voice channels and the Friends / Community / Public Showcase tabs */
+<script>/* Huddle illustrated icons: full-color SVG artwork for default text/voice channels and the Friends / Community / Public Showcase tabs */
 window.HZI=(()=>{
 const L=(id,...c)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${c.map((x,i)=>`<stop offset="${i/(c.length-1)}" stop-color="${x}"/>`).join('')}</linearGradient>`,
 W=(b,d)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2.5" stdDeviation="1.5" flood-color="#000" flood-opacity=".35"/></filter><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>${d}</defs><g filter="url(#s)">${b}</g></svg>`),
@@ -1460,7 +1460,7 @@ function addMsg(m){const box=$('#msgs');box.querySelector('.empty:not(.up)')?.re
     f=ty.startsWith('image/')?`<a href="${u}" target="_blank"><img src="${u}" alt=""></a>`:ty.startsWith('video/')?`<video src="${u}" controls></video>`:ty.startsWith('audio/')?`<audio src="${u}" controls></audio>`:'';
     f+=`<a class="file" href="${u}?dl" download>📎 ${esc(m.file.name)} <span style="color:var(--dim)">${fmt(m.file.size)}</span></a>`}
   const rp=m.r?`<div class="rep" data-j="${esc(m.r.id)}" title="Jump to message">↪ <b>${esc(m.r.from)}</b>${emo(esc(m.r.text))}</div>`:'';
-  el.innerHTML=`<div class="bd"><div class="meta">${avs(m.o,nm,'s22')}<b class="mn" data-o="${esc(m.o||'')}" style="${nameSt(m.o,nm)}">${esc(nm)}</b>${callB(m.o)}${rbadge(m.o,m.ch)}<time>${tm}</time></div>${rp}<div class="bw"><div class="bub" title="${tm}"><div class="t${jumbo(m.text)?' big':''}">${render(m.text)}</div>${f}${m.poll&&window.pollHtml?pollHtml(m):''}<span class="ed"${m.edited?'':' hidden'}>(edited)</span></div><div class="rxs">${rxHtml(m)}</div></div></div>`;
+  el.innerHTML=`<div class="bd"><div class="meta">${avs(m.o,nm,'s22')}<b class="mn" data-o="${esc(m.o||'')}" style="${nameSt(m.o,nm)}">${esc(nm)}</b>${callB(m.o)}${rbadge(m.o,m.ch)}<time>${tm}</time></div>${rp}<div class="bw"><div class="bub" title="${tm}"><div class="t${jumbo(m.text)?' big':''}">${render(m.text)}</div>${f}${m.poll&&window.pollHtml?pollHtml(m):''}${m.gif&&window.gifHtml?gifHtml(m):''}<span class="ed"${m.edited?'':' hidden'}>(edited)</span></div><div class="rxs">${rxHtml(m)}</div></div></div>`;
   box.append(el);if(near||mn)box.scrollTop=1e9;
   el.querySelectorAll('img').forEach(i=>i.onload=()=>near&&(box.scrollTop=1e9))}
 function repaint(){const b=$('#msgs'),s=b.scrollTop,h=hist[cur]||[];last=null;b.innerHTML=welcomeH(cur);
@@ -2015,9 +2015,9 @@ function setDialog(){sRefresh=null;const TABS=[['ap','Appearance'],['nt','Notifi
     const show=t=>{box.querySelectorAll('[data-t]').forEach(b=>b.setAttribute('aria-selected',b.dataset.t==t));box.querySelectorAll('[data-p]').forEach(p=>p.hidden=p.dataset.p!=t);if(t!='av'&&micTestStream)stopMicTest();if(t=='av'&&window.avDraw)window.avDraw()};
     const draw=()=>{const th=LS.get('huddle.theme')||'midnight',ac=LS.get('huddle.accent')||'';
       ap.innerHTML=`<div class="fl">Theme<div class="ths">${THEMES.map(([k,n,b,r,a])=>`<button class="th" data-th="${k}" aria-pressed="${k==th}"><span class="pvw" style="background:${b}"><i style="background:${r}"></i><i style="background:${a}"></i></span>${n}</button>`).join('')}</div></div>
-      <div class="fl">Accent colour<div class="sws">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-pressed="${c==ac}" aria-label="Accent ${c}"></button>`).join('')}<button id="acr">Theme default</button></div></div>
-      <div class="efx"><div class="eft"><b>Server profile glow</b><small>Glow is configured separately for each server and is visible to everyone in that server. Right-click a server icon and choose “Name, icon &amp; colour”.</small></div></div>
-      <div class="efx"><div class="eft"><b>Chat colour codes</b><small>Type a code before text; everyone sees the colour and the code itself is hidden.</small></div><div class="pfx" style="gap:6px">${[['^0','#111111','Black'],['^1','#ff4d4d','Red'],['^2','#4ade80','Green'],['^3','#ffd43b','Yellow'],['^4','#60a5fa','Blue'],['^5','#22d3ee','Cyan'],['^6','#e879f9','Magenta'],['^7','#ffffff','White'],['^8','#fb923c','Orange'],['^9','#a1a1aa','Gray']].map(([c,col,n])=>`<span style="display:inline-flex;gap:4px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 7px"><b>${c}</b><span style="color:${col}">${n}</span></span>`).join('')}</div><small class="hint">Example: <code>^1Warning ^2all clear</code></small></div>
+      <div class="fl">Accent color<div class="sws">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-pressed="${c==ac}" aria-label="Accent ${c}"></button>`).join('')}<button id="acr">Theme default</button></div></div>
+      <div class="efx"><div class="eft"><b>Server profile glow</b><small>Glow is configured separately for each server and is visible to everyone in that server. Right-click a server icon and choose “Name, icon &amp; color”.</small></div></div>
+      <div class="efx"><div class="eft"><b>Chat color codes</b><small>Type a code before text; everyone sees the color and the code itself is hidden.</small></div><div class="pfx" style="gap:6px">${[['^0','#111111','Black'],['^1','#ff4d4d','Red'],['^2','#4ade80','Green'],['^3','#ffd43b','Yellow'],['^4','#60a5fa','Blue'],['^5','#22d3ee','Cyan'],['^6','#e879f9','Magenta'],['^7','#ffffff','White'],['^8','#fb923c','Orange'],['^9','#a1a1aa','Gray']].map(([c,col,n])=>`<span style="display:inline-flex;gap:4px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 7px"><b>${c}</b><span style="color:${col}">${n}</span></span>`).join('')}</div><small class="hint">Example: <code>^1Warning ^2all clear</code></small></div>
       <label class="tg"><span><b>Reduce motion</b><small>Turn off animations and transitions.</small></span><input type="checkbox" role="switch" id="rm"${LS.get('huddle.motion')?' checked':''}></label>`};
     ap.onclick=e=>{const t=e.target.closest('[data-th]'),s=e.target.closest('.sw[data-c]');
       if(t)LS.set('huddle.theme',t.dataset.th);else if(s)LS.set('huddle.accent',s.dataset.c);else if(e.target.closest('#acr'))LS.set('huddle.accent','');else return;applyLook();serverGlowSync();draw()};
@@ -2050,7 +2050,7 @@ function setDialog(){sRefresh=null;const TABS=[['ap','Appearance'],['nt','Notifi
     box.querySelector('.tabs2').onclick=e=>{const b=e.target.closest('[data-t]');if(b)show(b.dataset.t)};
     $('#gx').onclick=closeM;$('#so').onclick=()=>{fatal=true;const t=tokGet();if(t)send({t:'forget',token:t});tokDel();CRED=null;setTimeout(()=>{try{ws&&ws.close()}catch{}location.reload()},80)};show('ap');draw()})}
 $('#setBtn').onclick=setDialog;
-const PERMS=[['admin','Administrator','Every permission below, and access to every channel setting. Only the owner can give this, and admins still cannot act on people ranked above them.'],['pins','Pin messages','Pin and unpin important messages in channels.'],['audit','View audit log','See who kicked, banned, timed out, changed roles, channels or settings, and when.'],['channels','Manage channels','Create, rename and delete channels and categories.'],['invites','Manage invites','Create and reset invite codes.'],['emojis','Manage custom emojis','Upload and remove shared custom emoji images and GIFs.'],['kick','Kick members','Remove people from the server.'],['nicks','Manage nicknames','Change other members’ nicknames in this server only.'],['mute','Mute members','Server-mute people in voice. They cannot unmute until you do.'],['deafen','Deafen members','Server-deafen people in voice so they cannot hear anyone.'],['vkick','Disconnect from voice','Kick people out of a voice channel (they can rejoin).'],['timeout','Timeout members','Stop someone from sending messages and files for a set time.'],['ban','Ban members','Remove people and stop them rejoining with the invite code. Can also unban.'],['server','Manage server','Change the server name, icon, colour and description, and make a new invite code.'],['msgs','Manage messages','Delete other people’s messages.'],['roles','Manage roles and permissions','Create and edit roles, give them to people, and set what each role can do in each channel. You can only hand out permissions you have yourself.']];
+const PERMS=[['admin','Administrator','Every permission below, and access to every channel setting. Only the owner can give this, and admins still cannot act on people ranked above them.'],['pins','Pin messages','Pin and unpin important messages in channels.'],['audit','View audit log','See who kicked, banned, timed out, changed roles, channels or settings, and when.'],['channels','Manage channels','Create, rename and delete channels and categories.'],['invites','Manage invites','Create and reset invite codes.'],['emojis','Manage custom emojis','Upload and remove shared custom emoji images and GIFs.'],['kick','Kick members','Remove people from the server.'],['nicks','Manage nicknames','Change other members’ nicknames in this server only.'],['mute','Mute members','Server-mute people in voice. They cannot unmute until you do.'],['deafen','Deafen members','Server-deafen people in voice so they cannot hear anyone.'],['vkick','Disconnect from voice','Kick people out of a voice channel (they can rejoin).'],['timeout','Timeout members','Stop someone from sending messages and files for a set time.'],['ban','Ban members','Remove people and stop them rejoining with the invite code. Can also unban.'],['server','Manage server','Change the server name, icon, color and description, and make a new invite code.'],['msgs','Manage messages','Delete other people’s messages.'],['roles','Manage roles and permissions','Create and edit roles, give them to people, and set what each role can do in each channel. You can only hand out permissions you have yourself.']];
 const nickOf=(o,ch)=>{const g=ch?Object.values(G).find(x=>x.channels.some(c=>c.id==ch)):G[sel];return(g&&g.nicks&&g.nicks[o])||''};
 function nickRefresh(){document.querySelectorAll('#msgs b.mn').forEach(b=>{const o=b.dataset.o,n=nickOf(o,cur)||(P[o]||{}).name;if(n)b.textContent=n})}
 function nickDialog(o){const gid=sel,g=G[gid];if(!g)return;modal(`<h3>Change nickname</h3><p style="margin:0;color:var(--dim)">Only changes how <b>${esc((P[o]||{}).name||'this person')}</b> appears in <b>${esc(g.name)}</b>.</p><input id="nk" maxlength="32" placeholder="No nickname" value="${esc((g.nicks||{})[o]||'')}" autocomplete="off"><div class="pact"><button id="gx">Cancel</button><button class="off" id="nkr">Reset</button><button class="on" id="nks">Save</button></div>`,()=>{
@@ -2067,9 +2067,9 @@ const rbadge=(o,ch)=>{const r=roleTop(o,ch);if(!r)return'';return r.badge?`<span
 let sRefresh=null;
 function sDialog(g,tab){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g.color||'',glow=SGFX.includes(g.glow||'')?g.glow:'',glowColor=/^#[0-9a-f]{6}$/i.test(g.glowColor||'')?g.glowColor:'#ff5c93',glowIntensity=['1','2','3'].includes(String(g.glowIntensity||'2'))?String(g.glowIntensity||'2'):'2',rid='',dr=null;
   modal(`<div class="sdlg"><h3>Server settings</h3><div class="tabs2" role="tablist">${[...(g.owner==oid||hasP(g,'server')?[['o','Overview']]:[]),...(g.owner==oid||hasP(g,'roles')?[['r','Roles'],['m','Members']]:[])].map(([k,t])=>`<button role="tab" data-t="${k}">${t}</button>`).join('')}</div>
-  <section data-p="o"><div style="display:flex;gap:8px;align-items:center"><button id="su">Upload icon</button><button id="sr">Remove</button><input type="color" id="sc" value="${col||'#3a1b2c'}" title="Server colour" style="width:46px;padding:2px"></div>
+  <section data-p="o"><div style="display:flex;gap:8px;align-items:center"><button id="su">Upload icon</button><button id="sr">Remove</button><input type="color" id="sc" value="${col||'#3a1b2c'}" title="Server color" style="width:46px;padding:2px"></div>
   <input id="sn" maxlength="32" value="${esc(g.name)}" aria-label="Server name"><textarea id="sd" rows="2" maxlength="200" placeholder="Description">${esc(g.desc||'')}</textarea>
-  <div class="efx"><div class="eft"><b>Server profile glow</b><small>Everyone in this server sees this effect. It is off by default; people with Manage server permission can change it.</small></div><div class="pfx"><label>Style <select id="sgstyle">${[['','Off'],['soft','Soft'],['neon','Neon'],['pulse','Pulse'],['comet','Comet'],['aurora','Aurora'],['rainbow','Rainbow'],['ember','Ember'],['electric','Electric'],['orbit','Orbit'],['prism','Prism'],['starlight','Starlight'],['plasma','Plasma']].map(([v,n])=>`<option value="${v}"${(g.glow||'')==v?' selected':''}>${n}</option>`).join('')}</select></label><label>Colour <input type="color" id="sgcolor" value="${/^#[0-9a-f]{6}$/i.test(g.glowColor||'')?g.glowColor:'#ff5c93'}"></label><label>Intensity <select id="sgintensity">${[['1','Soft'],['2','Medium'],['3','Strong']].map(([v,n])=>`<option value="${v}"${String(g.glowIntensity||'2')==v?' selected':''}>${n}</option>`).join('')}</select></label></div></div><div class="sg-preview"><span id="sipreview" class="ri sg-preview-icon" aria-hidden="true">${esc([g.name||'?'][0][0].toUpperCase())}</span><div><b id="sgpreviewname">${esc(glow?glow[0].toUpperCase()+glow.slice(1):'Glow off')}</b><small>Live preview · effects update as you edit; only Save changes applies them.</small></div></div><div>Invite code: <code>${esc(g.code)}</code> <button id="sg">New code</button></div></section>
+  <div class="efx"><div class="eft"><b>Server profile glow</b><small>Everyone in this server sees this effect. It is off by default; people with Manage server permission can change it.</small></div><div class="pfx"><label>Style <select id="sgstyle">${[['','Off'],['soft','Soft'],['neon','Neon'],['pulse','Pulse'],['comet','Comet'],['aurora','Aurora'],['rainbow','Rainbow'],['ember','Ember'],['electric','Electric'],['orbit','Orbit'],['prism','Prism'],['starlight','Starlight'],['plasma','Plasma']].map(([v,n])=>`<option value="${v}"${(g.glow||'')==v?' selected':''}>${n}</option>`).join('')}</select></label><label>Color <input type="color" id="sgcolor" value="${/^#[0-9a-f]{6}$/i.test(g.glowColor||'')?g.glowColor:'#ff5c93'}"></label><label>Intensity <select id="sgintensity">${[['1','Soft'],['2','Medium'],['3','Strong']].map(([v,n])=>`<option value="${v}"${String(g.glowIntensity||'2')==v?' selected':''}>${n}</option>`).join('')}</select></label></div></div><div class="sg-preview"><span id="sipreview" class="ri sg-preview-icon" aria-hidden="true">${esc([g.name||'?'][0][0].toUpperCase())}</span><div><b id="sgpreviewname">${esc(glow?glow[0].toUpperCase()+glow.slice(1):'Glow off')}</b><small>Live preview · effects update as you edit; only Save changes applies them.</small></div></div><div>Invite code: <code>${esc(g.code)}</code> <button id="sg">New code</button></div></section>
   <section data-p="r" hidden><div class="rg"><div class="rls"><div id="rls"></div><button id="rnew">＋ New role</button></div><div id="red"></div></div></section>
   <section data-p="m" hidden><div id="sm"></div></section>
   <input type="file" id="sf" accept="image/png,image/jpeg,image/gif,image/webp" hidden><div class="pact"><button id="gx">Close</button><button class="on" id="ss">Save changes</button></div></div>`,()=>{
@@ -2079,12 +2079,12 @@ function sDialog(g,tab){const gid=g.id,now=()=>G[gid]||g;let ic=g.icon||'',col=g
     const pv=()=>{const c=$('#red .chip');if(!c||!dr)return;c.style.setProperty('--rc',dr.color);c.dataset.gl=dr.glow||'';c.lastChild.textContent=dr.name||'New role';box.querySelectorAll('#red .sw[data-c]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c==dr.color))};
     const drawR=()=>{const rs=now().roles||[];if(rid&&rid!='new'&&!rs.some(r=>r.id==rid)){rid='';dr=null}
       $('#rls').innerHTML=rs.map(r=>`<button class="rli${r.id==rid?' sel':''}" data-r="${r.id}"><i class="dot" style="background:${esc(r.color)}"></i><span class="nn">${esc(r.name)}</span><small>${Object.values(now().mroles||{}).filter(a=>a.includes(r.id)).length}</small></button>`).join('')||'<div class="cat-e">No roles yet</div>';
-      if(!dr){$('#red').innerHTML='<div class="empty">Roles give people a colour and permissions.<br>Pick a role to edit it, or create a new one.</div>';return}
+      if(!dr){$('#red').innerHTML='<div class="empty">Roles give people a color and permissions.<br>Pick a role to edit it, or create a new one.</div>';return}
       $('#red').innerHTML=`<span class="chip" data-gl="${esc(dr.glow||'')}" style="--rc:${esc(dr.color)};justify-self:start"><i class="dot"></i><span>${esc(dr.name||'New role')}</span></span><label class="fl">Role name<input id="rn" maxlength="24" value="${esc(dr.name)}" placeholder="e.g. Moderator"><small class="hint">What the role is called. Shown on profile cards and chat badges.</small></label>
-      <div class="fl">Colour<div class="sws">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-pressed="${c==dr.color}" aria-label="Colour ${c}"></button>`).join('')}<label class="sw cu" title="Custom colour"><input type="color" id="rcu" value="${dr.color}"></label></div><small class="hint">The colour of members’ names in the member list and in chat.</small></div>
+      <div class="fl">Color<div class="sws">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-pressed="${c==dr.color}" aria-label="Color ${c}"></button>`).join('')}<label class="sw cu" title="Custom color"><input type="color" id="rcu" value="${dr.color}"></label></div><small class="hint">The color of members’ names in the member list and in chat.</small></div>
       <label class="fl">Glow<select id="rgl">${[['','Off'],['soft','Soft'],['strong','Strong'],['pulse','Pulse (animated)'],['neon','Neon flicker'],['rainbow','Rainbow cycle'],['shimmer','Shimmer sweep'],['aurora','Aurora flow'],['ember','Ember']].map(([v,t])=>`<option value="${v}"${(dr.glow||'')==v?' selected':''}>${t}</option>`).join('')}</select><small class="hint">A glowing light around the role tag on profile cards and chat badges.</small></label>
-      <div class="rrow"><label class="fl">Name style<select id="rst">${[['','Normal'],['bold','Bold'],['italic','Italic']].map(([v,t])=>`<option value="${v}"${(dr.style||'')==v?' selected':''}>${t}</option>`).join('')}</select><small class="hint">Makes member names in this role bold or italic.</small></label><label class="fl">Name effect<select id="rnf">${[['','None'],['flow','Flowing gradient'],['shimmer','Shimmer'],['neon','Neon'],['rainbow','Rainbow']].map(([v,t])=>`<option value="${v}"${(dr.nfx||'')==v?' selected':''}>${t}</option>`).join('')}</select><small class="hint">Animates member names. Uses the role colours.</small></label></div>
-      <div class="fl">Gradient end colour<div class="icrow"><input type="color" id="rc2" value="${dr.color2||dr.color}" style="width:56px;padding:2px"><button type="button" id="rc2x">No gradient</button></div><small class="hint">Blends a second colour into member names. Click “No gradient” to remove it.</small></div>
+      <div class="rrow"><label class="fl">Name style<select id="rst">${[['','Normal'],['bold','Bold'],['italic','Italic']].map(([v,t])=>`<option value="${v}"${(dr.style||'')==v?' selected':''}>${t}</option>`).join('')}</select><small class="hint">Makes member names in this role bold or italic.</small></label><label class="fl">Name effect<select id="rnf">${[['','None'],['flow','Flowing gradient'],['shimmer','Shimmer'],['neon','Neon'],['rainbow','Rainbow']].map(([v,t])=>`<option value="${v}"${(dr.nfx||'')==v?' selected':''}>${t}</option>`).join('')}</select><small class="hint">Animates member names. Uses the role colors.</small></label></div>
+      <div class="fl">Gradient end color<div class="icrow"><input type="color" id="rc2" value="${dr.color2||dr.color}" style="width:56px;padding:2px"><button type="button" id="rc2x">No gradient</button></div><small class="hint">Blends a second color into member names. Click “No gradient” to remove it.</small></div>
       <label class="tg"><span><b>Show badge in chat</b><small>Adds a small role tag next to the name on messages.</small></span><input type="checkbox" role="switch" id="rbd"${dr.badge?' checked':''}></label>
       <div class="fl">Permissions${PERMS.map(([k,t,d])=>`<label class="tg"><span><b>${t}</b><small>${d}</small></span><input type="checkbox" role="switch" data-k="${k}"${dr.perms.includes(k)?' checked':''}${now().owner==oid||hasP(now(),k)?'':' disabled'}></label>`).join('')}</div>
       <div class="pact">${rid!='new'?'<button type="button" id="rup" title="Move up: higher roles outrank lower ones">▲ Up</button><button type="button" id="rdn" title="Move down">▼ Down</button><button class="off" id="rd">Delete role</button>':''}<button class="on" id="rs">${rid=='new'?'Create role':'Save role'}</button></div>`};
@@ -2115,7 +2115,7 @@ const catOpts=(g,sel)=>'<option value="">No category</option>'+(g.categories||[]
 function chDialog(g,pre){modal('<h3>Create channel</h3><input id="cn" placeholder="channel-name" maxlength="24"><select id="ct"><option value="text">Text channel</option><option value="voice">Voice channel</option></select>'+((g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':'')+'<label class="tg"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"></label><button class="on" id="chc">Create</button><button id="gx">Cancel</button>',()=>{
   $('#cn').focus();$('#chc').onclick=()=>{const n=$('#cn').value.trim();if(n&&send({t:'chadd',g:g.id,name:n,type:$('#ct').value,cat:$('#cc')?$('#cc').value:'',nsfw:$('#c18').checked}))closeM()};$('#cn').onkeydown=e=>{if(e.key=='Enter')$('#chc').click()};$('#gx').onclick=closeM})}
 function gMenu(btn,g0,pt){const g=g0||G[sel],r=pt||btn.getBoundingClientRect(),own=g.owner==oid,mc=hasP(g,'channels'),sv=hasP(g,'server'),rl=hasP(g,'roles');
-  const sp=((P[oid]||{}).serverPrivacy||{})[g.id]||{};cm.innerHTML=[['mute',mG(g.id)?'Unmute server'+muteTag(MUTE.g[g.id]):'Mute server…'],['inv','Copy invite code'],...(sv||hasP(g,'invites')?[['gen','New invite code']]:[]),...(sv?[['name','Name, icon & colour']]:[]),['pfr',`<span>Block friend requests from this server</span><em class="st${sp.friendRequests?' on':''}">${sp.friendRequests?'Enabled':'Disabled'}</em>`],['pdm',`<span>Block DMs from this server</span><em class="st${sp.dms?' on':''}">${sp.dms?'Enabled':'Disabled'}</em>`],...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(hasP(g,'audit')?[['audit','Audit log']]:[]),...(hasP(g,'emojis')?[['emojis','Manage custom emojis']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':a=='pfr'||a=='pdm'?` class="tg" role="switch" aria-checked="${!!sp[a=='pfr'?'friendRequests':'dms']}"`:''}>${t}</button>`).join('');cm.hidden=false;
+  const sp=((P[oid]||{}).serverPrivacy||{})[g.id]||{};cm.innerHTML=[['mute',mG(g.id)?'Unmute server'+muteTag(MUTE.g[g.id]):'Mute server…'],['inv','Copy invite code'],...(sv||hasP(g,'invites')?[['gen','New invite code']]:[]),...(sv?[['name','Name, icon & color']]:[]),['pfr',`<span>Block friend requests from this server</span><em class="st${sp.friendRequests?' on':''}">${sp.friendRequests?'Enabled':'Disabled'}</em>`],['pdm',`<span>Block DMs from this server</span><em class="st${sp.dms?' on':''}">${sp.dms?'Enabled':'Disabled'}</em>`],...(rl?[['roles','Roles & permissions'],['mem','Members']]:[]),...(hasP(g,'audit')?[['audit','Audit log']]:[]),...(hasP(g,'emojis')?[['emojis','Manage custom emojis']]:[]),...(mc?[['ch','Create channel'],['cat','Create category']]:[]),...(hasP(g,'ban')?[['bans','Banned members']]:[]),...(own?[['del','Delete server']]:[['leave','Leave server']])].map(([a,t])=>`<button data-a="${a}"${a=='del'||a=='leave'?' class="danger"':a=='pfr'||a=='pdm'?` class="tg" role="switch" aria-checked="${!!sp[a=='pfr'?'friendRequests':'dms']}"`:''}>${t}</button>`).join('');cm.hidden=false;
   cm.style.left=Math.max(4,Math.min(r.left,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(r.bottom+4,innerHeight-cm.offsetHeight-8))+'px';
   cm.onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const a=b.dataset.a;
     if((a=='del'||a=='leave')&&!b.dataset.sure){b.dataset.sure=1;b.textContent='Click again to confirm';return}
@@ -2143,7 +2143,7 @@ $('#stBtn').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();
   cm.style.left=Math.max(4,Math.min(r.left,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,r.top-cm.offsetHeight-6)+'px';
   cm.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;cmClose();myStatus=b.dataset.s;LS.set('huddle.st',myStatus);const mu=users.find(u=>u.id==me);if(mu){mu.status=myStatus;roster()}send({t:'status',s:myStatus});stPaint()}};
 stPaint();
-/* ---------- profiles: avatars, colours, editor ---------- */
+/* ---------- profiles: avatars, colors, editor ---------- */
 // right-click a person (members list or chat avatar): view profile, message, and (server owner) toggle roles
 function userMenu(e,o){const g=G[sel];if(!o||!P[o])return false;e.preventDefault();
   const own=g&&g.owner==oid&&g.members.includes(o),rs=(g&&g.roles)||[],cur=((g&&g.mroles)||{})[o]||[];
@@ -2203,9 +2203,9 @@ function openProfile(o,edit,anchor){if(!o)return;if(!edit)return showCard(o,anch
     <label class="pfl"><textarea id="pbio" maxlength="140" rows="2" placeholder="A line about you" aria-label="About you"></textarea><small class="hint">About me</small></label>
     <div class="pfd"><label class="pfl"><input id="ppn" maxlength="24" placeholder="Pronouns (optional)" aria-label="Pronouns" autocomplete="off"><small class="hint">Pronouns</small></label><label class="pfl"><input id="ppl" maxlength="40" placeholder="Currently playing" aria-label="Currently playing" autocomplete="off"><small class="hint">Currently playing</small></label></div>
     <label class="pfl"><input id="pcs" maxlength="60" placeholder="Custom status" aria-label="Custom status" autocomplete="off"><small class="hint">A short note under your online status, like “Back at 8”.</small></label>
-    <div class="sws" role="group" aria-label="Colour">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="Colour ${c}"></button>`).join('')}<label class="sw cu" title="Custom colour"><input type="color" id="pcu" value="#ff5c93" aria-label="Custom colour"></label></div>
-    <small class="hint">Your accent colour. Tints your name, photo fallback and card.</small>
-    ${window.persHTML?persHTML():''}<div class="efxh">Effects</div><div class="efx"><div class="eft"><b>Profile gradient</b><small>Tints your card, and fills your banner when it has no image</small></div><div class="pfx"><label>Left <input type="color" id="pgl" value="#ff5c93"></label><label>Right <input type="color" id="pgr" value="#ffc27a"></label><button id="pgc">Clear</button></div></div><div class="efx"><div class="eft"><b>Photo effect</b><small>Animated light around your profile picture</small></div><div class="pfx"><label>Style <select id="pfx"><option value="">None</option><option value="ring">Ring</option><option value="glow">Soft glow</option><option value="neon">Neon</option><option value="pulse">Pulse</option><option value="breathe">Breathe</option><option value="flicker">Flicker</option><option value="heartbeat">Heartbeat</option><option value="dash">Dashed ring (spinning)</option><option value="comet">Comet</option><option value="sparkle">Sparkles</option><option value="orbit">Orbit (uses your gradient)</option><option value="rainbow">Rainbow</option><option value="aurora">Aurora</option><option value="ripple">Ripple</option><option value="fire">Fire</option><option value="electric">Electric</option><option value="halo">Halo</option><option value="glitch">Glitch</option></select></label><label>Colour <input type="color" id="prc" value="#ff5c93"></label></div></div><div class="efx"><div class="eft"><b>Card glow</b><small>Light around your whole profile card</small></div><div class="pfx"><label>Style <select id="pgs"><option value="">Off</option><option value="steady">Steady</option><option value="breathe">Breathe</option><option value="flicker">Neon flicker</option><option value="heartbeat">Heartbeat</option><option value="aurora">Aurora (2 colours)</option><option value="sweep">Comet (2 colours)</option><option value="rainbow">Rainbow</option></select></label></div><div class="pfx" id="pgrow" style="display:none"><label>Colour <input type="color" id="pgc1"></label><label>Second <input type="color" id="pgc2"></label><label>Intensity <select id="pgi"><option value="1">Soft</option><option value="2">Medium</option><option value="3">Strong</option></select></label></div></div><div class="efx"><div class="eft"><b>Name style</b><small>How your name looks on your profile card</small></div><div class="pfx"><label>Style <select id="pnf"><option value="">Plain (your colour)</option><option value="gradient">Gradient</option><option value="flow">Flowing gradient</option><option value="shimmer">Shimmer</option><option value="neon">Neon</option><option value="rainbow">Rainbow</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="pulse">Pulse</option></select></label></div><div class="pfx" id="pnrow" style="display:none"><label>Colour <input type="color" id="pnc1"></label><label>Second <input type="color" id="pnc2"></label><span id="npv" class="npv">Preview</span></div></div><div class="efx"><div class="eft"><b>Banner effect</b><small>Animated overlay on top of your banner</small></div><div class="pfx"><label>Style <select id="pbf"><option value="">None</option><option value="shine">Shine sweep</option><option value="aurora">Aurora wash</option><option value="scan">Scanlines</option><option value="sparkle">Sparkles</option></select></label><label id="pbl" style="display:none">Colour <input type="color" id="pbc"></label></div></div>
+    <div class="sws" role="group" aria-label="Color">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}<label class="sw cu" title="Custom color"><input type="color" id="pcu" value="#ff5c93" aria-label="Custom color"></label></div>
+    <small class="hint">Your accent color. Tints your name, photo fallback and card.</small>
+    ${window.persHTML?persHTML():''}<div class="efxh">Effects</div><div class="efx"><div class="eft"><b>Profile gradient</b><small>Tints your card, and fills your banner when it has no image</small></div><div class="pfx"><label>Left <input type="color" id="pgl" value="#ff5c93"></label><label>Right <input type="color" id="pgr" value="#ffc27a"></label><button id="pgc">Clear</button></div></div><div class="efx"><div class="eft"><b>Photo effect</b><small>Animated light around your profile picture</small></div><div class="pfx"><label>Style <select id="pfx"><option value="">None</option><option value="ring">Ring</option><option value="glow">Soft glow</option><option value="neon">Neon</option><option value="pulse">Pulse</option><option value="breathe">Breathe</option><option value="flicker">Flicker</option><option value="heartbeat">Heartbeat</option><option value="dash">Dashed ring (spinning)</option><option value="comet">Comet</option><option value="sparkle">Sparkles</option><option value="orbit">Orbit (uses your gradient)</option><option value="rainbow">Rainbow</option><option value="aurora">Aurora</option><option value="ripple">Ripple</option><option value="fire">Fire</option><option value="electric">Electric</option><option value="halo">Halo</option><option value="glitch">Glitch</option></select></label><label>Color <input type="color" id="prc" value="#ff5c93"></label></div></div><div class="efx"><div class="eft"><b>Card glow</b><small>Light around your whole profile card</small></div><div class="pfx"><label>Style <select id="pgs"><option value="">Off</option><option value="steady">Steady</option><option value="breathe">Breathe</option><option value="flicker">Neon flicker</option><option value="heartbeat">Heartbeat</option><option value="aurora">Aurora (2 colors)</option><option value="sweep">Comet (2 colors)</option><option value="rainbow">Rainbow</option></select></label></div><div class="pfx" id="pgrow" style="display:none"><label>Color <input type="color" id="pgc1"></label><label>Second <input type="color" id="pgc2"></label><label>Intensity <select id="pgi"><option value="1">Soft</option><option value="2">Medium</option><option value="3">Strong</option></select></label></div></div><div class="efx"><div class="eft"><b>Name style</b><small>How your name looks on your profile card</small></div><div class="pfx"><label>Style <select id="pnf"><option value="">Plain (your color)</option><option value="gradient">Gradient</option><option value="flow">Flowing gradient</option><option value="shimmer">Shimmer</option><option value="neon">Neon</option><option value="rainbow">Rainbow</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="pulse">Pulse</option></select></label></div><div class="pfx" id="pnrow" style="display:none"><label>Color <input type="color" id="pnc1"></label><label>Second <input type="color" id="pnc2"></label><span id="npv" class="npv">Preview</span></div></div><div class="efx"><div class="eft"><b>Banner effect</b><small>Animated overlay on top of your banner</small></div><div class="pfx"><label>Style <select id="pbf"><option value="">None</option><option value="shine">Shine sweep</option><option value="aurora">Aurora wash</option><option value="scan">Scanlines</option><option value="sparkle">Sparkles</option></select></label><label id="pbl" style="display:none">Color <input type="color" id="pbc"></label></div></div>
     <p id="pferr" class="perr" role="alert"></p><div class="pact"><button id="pcx">Cancel</button><button id="psv" class="on">Save profile</button></div>
     <input type="file" id="pfile" accept="image/png,image/jpeg,image/gif,image/webp" hidden><input type="file" id="bfile" accept="image/*" hidden>`:''}</div></div>`;
   m.style.display='grid';pcPaint();$('#pcx').onclick=closeProfile;
@@ -2871,7 +2871,7 @@ window.HZDECO_OLD={sparkle:'sparkles',flame:'flames',cat:'catears',stars:'orbit'
 window.hzDecoSvg=d=>{const x=window.HZDECO[window.HZDECO_OLD[d]||d];return x?`<svg viewBox="-20 -30 140 150" aria-hidden="true">${DEFS}${x.s}</svg>`:''};
 })();
 
-/* ---- profile card themes: [id, name, background-image, glow colour] ---- */
+/* ---- profile card themes: [id, name, background-image, glow color] ---- */
 (()=>{
 const L=(a,b,c)=>`linear-gradient(160deg,${a} 0%,${b} 55%,${c} 100%)`;
 window.HZTHEMES=[
@@ -3139,7 +3139,7 @@ const SCENES={
   hologram:()=>L('l-iri')+L('l-scan')+L('l-scanbar',{c:'#99ffff'})+glitch(6,['#ff4dd8','#4dfff3','#ffe94d'])+sparks(6,['#99ffff','#ff99ff'],[2,3.5]),
   lava:()=>glow(50,'0cqh',140,'#ffb34d',3)+glow(50,'100cqh',90,'#ff4d6d',4)+blobs(9,['#ff4d6d','#ff7a45','#ffb34d','#ff5c8a'])+L('l-glass'),
   matrix:()=>code(16,'#00ff41')+L('l-scan')+L('l-vig')};
-/* ---- banner effects (the banner keeps your colour as --b1) ---- */
+/* ---- banner effects (the banner keeps your color as --b1) ---- */
 const BANNERS=[['shine','Shine'],['sparkle','Sparkles'],['aurora','Aurora'],['stars','Starfield'],['meteors','Meteor shower'],['galaxy','Galaxy'],['nebula','Nebula'],['snow','Snowfall'],['rain','Rain'],['storm','Thunderstorm'],['petals','Petals'],['embers','Embers'],['fireflies','Fireflies'],['bubbles','Bubbles'],['confetti','Confetti'],['hearts','Hearts'],['bokeh','Bokeh'],['waves','Waves'],['fog','Fog'],['lasers','Lasers'],['matrix','Matrix'],['glitch','Glitch'],['scan','Scanlines'],['vhs','VHS']];
 const B1='var(--b1,#fff)';
 Object.assign(SCENES,{
@@ -3392,7 +3392,7 @@ const tf=()=>{const im=V.querySelector('.stage img');if(im)im.style.transform=`t
 const draw=()=>{const it=L[k];if(!it)return close();z=1;px=py=0;
   const nm=(P[it.o]||{}).name||it.from||'',when=it.ts?new Date(it.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
   V.innerHTML=`<header><div class="who">${it.o?avs(it.o,nm,'s28'):''}<span><b>${esc(nm||it.name)}</b><small>${esc(it.name)}${when?' · '+when:''}${it.size?' · '+fmt(it.size):''}</small></span></div>
-    ${it.type.startsWith('image/')?`<button data-a="zi" title="Zoom (scroll or double-click)">${HI.zoom}</button>`:''}<button data-a="dl" title="Download">${HI.down}</button><button data-a="cp" title="Copy link">${HI.copy}</button><button data-a="ext" title="Open in browser">${HI.ext}</button><button data-a="x" title="Close (Esc)">${HI.x}</button></header>
+    ${it.type.startsWith('image/')?`<button data-a="zi" title="Zoom (scroll or double-click)">${HI.zoom}</button>`:''}<button data-a="dl" title="Download">${HI.down}</button><button data-a="cp" title="Copy link">${HI.copy}</button>${it.noExt?'':`<button data-a="ext" title="Open in browser">${HI.ext}</button>`}<button data-a="x" title="Close (Esc)">${HI.x}</button></header>
     <div class="stage">${it.type.startsWith('video/')?`<video src="${esc(it.u)}" controls autoplay playsinline></video>`:`<img src="${esc(it.u)}" alt="${esc(it.name)}" draggable="false">`}
     <button class="nav p" data-a="p" title="Previous (←)"${k>0?'':' hidden'}>${HI.left}</button><button class="nav n" data-a="n" title="Next (→)"${k<L.length-1?'':' hidden'}>${HI.right}</button></div>
     <footer>${L.length>1?`<div class="strip">${L.map((x,i)=>`<button data-i="${i}" class="${i==k?'on':''}" title="${esc(x.name)}">${x.type.startsWith('image/')?`<img src="${esc(x.u)}" alt="" loading="lazy">`:'<i>▶</i>'}</button>`).join('')}</div>`:''}</footer>`;
@@ -3562,7 +3562,7 @@ const studio=()=>{const sel=$('#sgstyle'),pre=$('.sg-preview');if(!sel||!pre||$(
       <div class="sgInfo"><b id="sgName"></b><small id="sgSlot2"></small><small>Live preview. Nothing changes for others until you press Save changes.</small>
       <div class="row"><button type="button" id="sgUp">${HI.upload} Upload icon or GIF</button><button type="button" id="sgRm">${HI.trash} Remove icon</button></div></div></div>
     <div class="sgGrid">${SGS.map(([v,t])=>`<button type="button" data-v="${v}"><span class="sgMini" data-sfx="${v}"></span>${t}</button>`).join('')}</div>
-    <div class="sgOpts"><div class="sgSw"><span class="lbl">Colour</span>${SGC.map(c=>`<button type="button" data-c="${c}" style="background:${c}" aria-label="Colour ${c}"></button>`).join('')}<span id="sgColSlot"></span></div>
+    <div class="sgOpts"><div class="sgSw"><span class="lbl">Color</span>${SGC.map(c=>`<button type="button" data-c="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}<span id="sgColSlot"></span></div>
       <div><span class="lbl">Intensity</span><span class="sgSeg">${[['1','Soft'],['2','Medium'],['3','Strong']].map(([v,t])=>`<button type="button" data-v="${v}">${t}</button>`).join('')}</span></div></div>`;
   pre.replaceWith(s);efx.hidden=true;efx.style.display='none';
   $('#sgSlot').replaceWith(pv);$('#sgSlot2').replaceWith(nm);$('#sgColSlot').replaceWith(col);
@@ -3646,7 +3646,7 @@ addEventListener('resize',()=>setTimeout(dmPaint,0));
   b.onclick=()=>{LS.set('huddle.dmPanel',dmOn()?'off':'on');dmPaint()};(pin||tb.lastChild).after(b)}}
 let lastCur=null;setInterval(()=>{if(cur!==lastCur){lastCur=cur;dmPaint()}},250);
 
-/* ---- 3. screen share: resolution, frame rate, bitrate, content type and colour (HDR / SDR) ---- */
+/* ---- 3. screen share: resolution, frame rate, bitrate, content type and color (HDR / SDR) ---- */
 const SS_DEF={res:'1080',fps:'60',br:'12',hint:'motion',color:'auto'};
 const ssGet=()=>{try{return {...SS_DEF,...JSON.parse(LS.get('huddle.ss')||'{}')}}catch{return {...SS_DEF}}};
 const RES={'720':[1280,720],'1080':[1920,1080],'1440':[2560,1440],'2160':[3840,2160],src:null};
@@ -3663,19 +3663,19 @@ const opt=(k,v,t,s)=>`<option value="${v}"${s[k]==v?' selected':''}>${t}</option
 window.hzSsOpts=()=>{const s=ssGet();return `<div class="ssOpts">
   <label>Resolution<select data-ss="res">${opt('res','720','720p',s)}${opt('res','1080','1080p',s)}${opt('res','1440','1440p',s)}${opt('res','2160','4K',s)}${opt('res','src','Source (native)',s)}</select></label>
   <label>Frame rate<select data-ss="fps">${opt('fps','15','15 fps',s)}${opt('fps','30','30 fps',s)}${opt('fps','60','60 fps',s)}${opt('fps','120','120 fps',s)}</select></label>
-  <label>Quality<select data-ss="br">${opt('br','2.5','Data saver (2.5 Mbps)',s)}${opt('br','6','Balanced (6 Mbps)',s)}${opt('br','12','High (12 Mbps)',s)}${opt('br','25','Ultra (25 Mbps)',s)}${opt('br','50','Max (50 Mbps)',s)}</select></label>
+  <label>Quality<select data-ss="br">${opt('br','2.5','Data saver',s)}${opt('br','6','Balanced',s)}${opt('br','12','High',s)}${opt('br','25','Ultra',s)}${opt('br','50','Max',s)}</select></label>
   <label>Optimise for<select data-ss="hint">${opt('hint','motion','Motion (games, video)',s)}${opt('hint','detail','Text and detail (code, docs)',s)}</select></label>
-  <label>Colour<select data-ss="color">${opt('color','auto','Auto',s)}${opt('color','sdr','Force SDR (fixes washed-out colours)',s)}${opt('color','hdr','HDR (10-bit, experimental)',s)}</select></label>
+  <label>Color<select data-ss="color">${opt('color','auto','Auto',s)}${opt('color','sdr','Force SDR',s)}${opt('color','hdr','HDR',s)}</select></label>
   <div class="ssNote" id="ssNote"></div></div>`};
-const note=()=>{const n=$('#ssNote');if(!n)return;const s=ssGet();
-  n.innerHTML=(s.color=='hdr'?'<b>HDR:</b> prefers 10-bit codecs (AV1 / VP9 profile 2) when your PC and the viewer support them, otherwise it falls back to SDR automatically. ':s.color=='sdr'?'<b>Force SDR:</b> keeps the stream 8-bit sRGB, which fixes the washed-out look when sharing from an HDR monitor. ':'')+
+const note=window.hzSsNote=()=>{const n=$('#ssNote');if(!n)return;const s=ssGet();
+  n.innerHTML=(s.color=='hdr'?'<b>HDR:</b> Allows the stream to use HDR. Sometimes this can lead to over-bright streams. ':s.color=='sdr'?'<b>Force SDR:</b> Forces SDR on the stream if you are using HDR. This can help reduce over-bright streams. ':'')+
     ((+s.br>=25||s.res=='2160'||s.res=='src')?'High settings need a fast upload; viewers on slow connections get a lower quality automatically.':'Higher settings need more upload speed.')};
 document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.ss;if(!k)return;const s=ssGet(),was=s.color;s[k]=e.target.value;LS.set('huddle.ss',JSON.stringify(s));note();
-  if(k=='color'&&window.api&&window.api.set){window.api.set({ssColor:s.color}).catch(()=>{});if(s.color!=was&&(s.color=='sdr'||was=='sdr'))toast('Colour mode saved. Restart Huddle once so Force SDR applies to the whole app.',true)}
+  if(k=='color'&&window.api&&window.api.set){window.api.set({ssColor:s.color}).catch(()=>{});if(s.color!=was&&(s.color=='sdr'||was=='sdr'))toast('Color mode saved. Restart Huddle once so Force SDR applies to the whole app.',true)}
   /* already sharing? apply the new settings to the live stream */
   if(typeof vtrack!='undefined'&&vtrack&&vtrack._scr){const c=hzSsConstraints().video;vtrack.applyConstraints(c).catch(()=>{});vtrack.contentHint=hzSsHint();Object.values(pcs).forEach(o=>tuneV(o))}},true);
 new MutationObserver(()=>{if($('#ssNote')&&!$('#ssNote').innerHTML)note()}).observe($('#picker'),{childList:true,subtree:true});
-/* keep the desktop app's colour mode in step (used at startup for Force SDR) */
+/* keep the desktop app's color mode in step (used at startup for Force SDR) */
 idle(()=>{try{const c=ssGet().color;window.api&&window.api.set&&window.api.set({ssColor:c}).catch(()=>{})}catch{}});
 
 /* warm-up triggers */
@@ -3683,6 +3683,90 @@ const _on2=on;on=function(d){_on2(d);if(d.t=='init'||d.t=='profiles')warm();if([
 warm();
 })();
 </script>
+
+<style id="huddle-v8">
+/* ---------- Huddle v8: GIFs (via the host, from GIPHY), device and share menus ---------- */
+#gifBtn{display:grid;place-items:center;height:38px;padding:0 9px;border-radius:12px;font:800 12px/1 system-ui,sans-serif;letter-spacing:.06em}
+#gifBtn:hover,#gifBtn[aria-expanded=true]{background:var(--hi);color:var(--ac)}
+#gifP{position:absolute;right:22px;bottom:88px;z-index:40;width:min(420px,calc(100% - 44px));height:min(470px,62vh);display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--panel);box-shadow:var(--shadow-2,0 10px 40px #0008);animation:hzMenu .16s var(--ease-out,ease) both}
+#gifP[hidden]{display:none}
+#gifP input{width:100%;padding:9px 12px;border-radius:12px}
+#gifP .gH{font-size:12px;color:var(--dim);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+#gifP .gG{overflow-y:auto;min-height:0;display:flex;gap:8px;align-items:flex-start;padding-right:2px}
+#gifP .gC{flex:1;min-width:0}
+#gifP .gG button{display:block;width:100%;padding:0;margin:0 0 8px;border:0;border-radius:10px;overflow:hidden;background:var(--raise);cursor:pointer}
+#gifP .gG button:hover{outline:2px solid var(--ac);outline-offset:-2px}
+#gifP .gG img{display:block;width:100%;height:auto}
+#gifP .gF{display:flex;justify-content:flex-end;font-size:11px;color:var(--dim);font-weight:700;letter-spacing:.08em}
+#gifP .gE{flex:1;color:var(--dim);font-size:13px;padding:24px 8px;text-align:center;line-height:1.5}
+.gifM{position:relative;display:inline-block;margin-top:6px;max-width:min(320px,100%);border-radius:12px;overflow:hidden;line-height:0}
+.gifM img{display:block;max-width:100%;height:auto;cursor:zoom-in}
+.gifM span{position:absolute;right:6px;bottom:6px;font:800 9px/1 system-ui,sans-serif;letter-spacing:.08em;color:#fff;background:#0008;padding:3px 5px;border-radius:5px;line-height:1}
+/* right-click menus on the call controls */
+#cm .hzMenuT{padding:6px 12px 4px;font-size:12px;color:var(--dim);font-weight:600}
+#cm button.hzDev{display:flex;gap:8px;align-items:center;text-align:left;max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cm button.hzDev i{width:14px;font-style:normal;color:var(--ac)}
+#cm.hzSsMenu{width:min(520px,94vw);padding:10px}
+#cm.hzSsMenu .ssOpts{margin:4px 0 0}
+</style>
+<script id="huddle-v8-js">
+(()=>{
+/* ---- GIFs: searched through the Huddle host (its GIPHY key never reaches anyone), shown and sent inside the app ---- */
+const P_=document.createElement('div');P_.id='gifP';P_.hidden=true;P_.setAttribute('role','dialog');P_.setAttribute('aria-label','GIFs');
+P_.innerHTML='<input id="gifQ" placeholder="Search GIFs" maxlength="60" autocomplete="off"><div class="gH" id="gifH">Trending</div><div class="gG" id="gifG"></div><div class="gF">POWERED BY GIPHY</div>';
+$('main').append(P_);
+const btn=document.createElement('button');btn.id='gifBtn';btn.type='button';btn.title='Send a GIF';btn.setAttribute('aria-label','Send a GIF');btn.setAttribute('aria-expanded','false');btn.textContent='GIF';
+$('#emBtn').before(btn);
+let q='',next=0,busy=false,gen=0,tq=0;
+const G_=$('#gifG');
+let colH=[0,0];const cols=()=>{G_.innerHTML='<div class="gC"></div><div class="gC"></div>';colH=[0,0]};
+const load=async(reset)=>{if(busy&&!reset)return;if(reset){gen++;next=0;cols();G_.scrollTop=0}if(next===null)return;const my=gen;busy=true;
+  try{const r=await fetch(base+'/gif?q='+encodeURIComponent(q)+'&offset='+next,{headers:{'x-token':HT||''}}),d=await r.json().catch(()=>({}));if(my!==gen)return;
+    if(!r.ok){next=null;G_.innerHTML=`<div class="gE">${d.error=='nokey'?'GIFs are not set up on this server yet.<br>The host can add a free GIPHY key (see START-HERE.txt).':esc(d.error||'GIFs are unavailable right now.')}</div>`;return}
+    if(!d.items.length&&!G_.querySelector('button')){G_.innerHTML='<div class="gE">No GIFs found. Try another search.</div>';next=null;return}
+    if(!G_.querySelector('.gC'))cols();const cs=G_.querySelectorAll('.gC');
+    d.items.forEach(g=>{const k=colH[0]<=colH[1]?0:1;colH[k]+=(+g.ph||150)/(+g.pw||200);cs[k].insertAdjacentHTML('beforeend',`<button type="button" data-id="${esc(g.id)}" title="${esc(g.title)}"><img src="${esc(g.small)}" width="${+g.pw||200}" height="${+g.ph||150}" alt="${esc(g.title)}" loading="lazy"></button>`)});next=d.next}
+  catch{if(my===gen&&!G_.querySelector('button'))G_.innerHTML='<div class="gE">Could not reach the server.</div>'}finally{if(my===gen)busy=false}};
+const open=()=>{if(!cur)return toast('Open a channel or conversation first.');P_.hidden=false;btn.setAttribute('aria-expanded','true');if(!G_.querySelector('button'))load(true);setTimeout(()=>$('#gifQ').focus(),30)};
+const close=()=>{P_.hidden=true;btn.setAttribute('aria-expanded','false')};
+btn.onclick=()=>P_.hidden?open():close();
+$('#gifQ').oninput=e=>{clearTimeout(tq);tq=setTimeout(()=>{q=e.target.value.trim();$('#gifH').textContent=q?'Results for “'+q+'”':'Trending';load(true)},350)};
+G_.addEventListener('scroll',()=>{if(G_.scrollTop+G_.clientHeight>G_.scrollHeight-300)load(false)},{passive:true});
+G_.onclick=e=>{const b=e.target.closest('button[data-id]');if(!b)return;
+  if(!send({t:'gifmsg',ch:cur,id:b.dataset.id,reply:replyTo&&replyTo.id}))return toast('Not connected. Try again in a moment.');clearReply();close();$('#txt').focus()};
+addEventListener('mousedown',e=>{if(!P_.hidden&&!P_.contains(e.target)&&e.target!==btn)close()});
+addEventListener('keydown',e=>{if(e.key=='Escape'&&!P_.hidden)close()});
+/* GIF messages */
+window.gifHtml=m=>{const g=m.gif,w=Math.min(320,+g.w||240),h=Math.round(w*((+g.h||180)/(+g.w||240)));return `<div class="gifM"><img src="${esc(g.small)}" width="${w}" height="${h}" alt="${esc(g.title||'GIF')}" loading="lazy" data-gifbig="${esc(g.big||g.small)}"><span>GIPHY</span></div>`};
+document.addEventListener('click',e=>{const im=e.target.closest('.gifM img');if(!im)return;e.preventDefault();e.stopPropagation();const el=im.closest('.m'),m=el&&(hist[cur]||[]).find(x=>x.id==el.dataset.id);
+  hzView.open([{u:im.dataset.gifbig,type:'image/gif',name:(m&&m.gif&&m.gif.title)||'GIF',o:m&&m.o,from:m&&m.from,ts:m&&m.ts,noExt:true}],0)},true);
+
+/* ---- right-click the mic for inputs, the headset for outputs, screen share for its settings ---- */
+const place=e=>{cm.hidden=false;cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY-cm.offsetHeight-6,innerHeight-cm.offsetHeight-8))+'px'};
+const devMenu=async(e,kind)=>{const list=(await devList()).filter(d=>d.kind==kind),curId=kind=='audioinput'?micId:spkId;
+  if(kind=='audiooutput'&&!canSink)return toast('Choosing an output device is not supported here.');
+  cm.classList.remove('hzSsMenu');
+  cm.innerHTML=`<div class="hzMenuT">${kind=='audioinput'?'Input device':'Output device'}</div>`+[{deviceId:'',label:'Default'},...list.filter(d=>d.deviceId&&d.deviceId!='default'&&d.deviceId!='communications')].map(d=>`<button class="hzDev" data-d="${esc(d.deviceId)}"><i>${(curId||'')==d.deviceId?'✓':''}</i>${esc(d.label||'Unnamed device')}</button>`).join('');
+  place(e);
+  cm.onclick=ev=>{const b=ev.target.closest('button[data-d]');if(!b)return;const v=b.dataset.d;cmClose();
+    if(kind=='audioinput'){micId=v;LS.set('huddle.mic',v);switchMic();toast('Microphone: '+b.textContent.replace('✓','').trim(),true)}
+    else{spkId=v;LS.set('huddle.spk',v);applySinks();toast('Output: '+b.textContent.replace('✓','').trim(),true)}}};
+const ssMenu=e=>{cm.classList.add('hzSsMenu');cm.innerHTML='<div class="hzMenuT">Screen share settings</div>'+hzSsOpts();place(e);hzSsNote();cm.onclick=()=>{}};
+document.addEventListener('contextmenu',e=>{const b=e.target.closest('#bMic,#bDeaf,#bScr');if(!b)return;e.preventDefault();
+  if(b.id=='bMic')devMenu(e,'audioinput');else if(b.id=='bDeaf')devMenu(e,'audiooutput');else ssMenu(e)});
+new MutationObserver(()=>{if(cm.hidden)cm.classList.remove('hzSsMenu')}).observe(cm,{attributes:true,attributeFilter:['hidden']});
+{const t={bMic:'Right-click to choose your microphone',bDeaf:'Right-click to choose your output device',bScr:'Right-click for screen share settings'};
+ for(const id in t){const b=$('#'+id);if(b&&!b.title.includes('Right-click'))b.title=(b.title?b.title+' · ':'')+t[id]}}
+})();
+</script>
+
+
+
+
+
+
+
+
 
 
 
