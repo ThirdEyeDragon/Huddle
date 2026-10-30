@@ -4818,15 +4818,15 @@ cm.addEventListener('click',e=>{const b=e.target.closest('[data-a="hzcall"]');if
 function guestBtn(){let b=$('#bGuest');const leave=$('#bLeave');if(!b&&leave){b=document.createElement('button');b.id='bGuest';b.className='cb';b.type='button';b.title='Invite someone to this call by link';b.setAttribute('aria-label','Invite someone to this call by link');b.innerHTML=HG('link')+'<span>Invite</span>';leave.before(b);b.onclick=()=>callDialog(gOf(vch),vch)}
   if(b)b.hidden=!(typeof vch=='string'&&vch&&!vch.startsWith('dm:')&&canCall(gOf(vch),vch))}
 guestBtn();
-/* ================= add a server: create, import a Discord template, or join ================= */
+/* ================= add a server: create, import a server template, or join ================= */
 let tplWait=0;
 const tplBusy=on=>{clearTimeout(tplWait);document.querySelectorAll('#tpP,#tpC').forEach(b=>{b.disabled=on;if(b.dataset.l)b.innerHTML=on?'Reading template…':b.dataset.l});if(on)tplWait=setTimeout(()=>tplBusy(false),10000)};
 gDialog=function(){
-  modal(`<div class="hzGD"><h3>Add a server</h3><p class="sub">Start fresh, copy the layout of a Discord server template, or join with an invite.</p>
+  modal(`<div class="hzGD"><h3>Add a server</h3><p class="sub">Start fresh, copy the layout of a server template, or join with an invite.</p>
     <div class="hzGDs"><span class="hzGDi">${HG.img('text')}</span><div><b>Create a server</b><small>Starts with a #general channel. Add voice channels any time.</small></div></div>
     <div class="hzCDrow"><input id="gn" placeholder="New server name" maxlength="32" autocomplete="off"><button class="on" id="gc">Create</button></div>
-    <div class="hzGDs"><span class="hzGDi">${HG.img('discord')}</span><div><b>Import from a Discord template</b><small>Paste a template link (discord.new/… or discord.com/template/…). Huddle copies its categories, text and voice channels, roles and channel permissions. Messages, members and bots are never copied.</small></div></div>
-    <div class="hzCDrow"><input id="tpL" placeholder="https://discord.new/AbCdEf123456" maxlength="120" autocomplete="off" spellcheck="false"><button id="tpP" data-l="Preview">Preview</button></div>
+    <div class="hzGDs"><span class="hzGDi">${HG.img('discord')}</span><div><b>Import a server template</b><small>Paste a server template link. Huddle copies its categories, text and voice channels, roles and channel permissions. Messages, members and bots are never copied.</small></div></div>
+    <div class="hzCDrow"><input id="tpL" placeholder="Paste a template link" maxlength="120" autocomplete="off" spellcheck="false"><button id="tpP" data-l="Preview">Preview</button></div>
     <div id="tpV"></div>
     <div class="hzGDs"><span class="hzGDi">${HG.img('hullo')}</span><div><b>Join a server</b><small>Paste an invite code someone gave you.</small></div></div>
     <div class="hzCDrow"><input id="gj" placeholder="Invite code" maxlength="16" autocomplete="off"><button id="gjb">Join</button></div>
@@ -4834,7 +4834,7 @@ gDialog=function(){
     $('#gn').focus();$('#gx').onclick=closeM;
     $('#gc').onclick=()=>{const n=$('#gn').value.trim();if(!n){$('#gn').focus();return toast('Name your server.')}if(send({t:'gcreate',name:n}))closeM()};
     $('#gjb').onclick=()=>{const c=$('#gj').value.trim();if(!c){$('#gj').focus();return toast('Paste an invite code.')}if(send({t:'gjoin',code:c}))closeM()};
-    $('#tpP').onclick=()=>{const l=$('#tpL').value.trim();if(!l){$('#tpL').focus();return toast('Paste a Discord template link.')}$('#tpV').innerHTML='';if(send({t:'tplpeek',link:l}))tplBusy(true);else toast('Not connected. Try again in a moment.')};
+    $('#tpP').onclick=()=>{const l=$('#tpL').value.trim();if(!l){$('#tpL').focus();return toast('Paste a template link.')}$('#tpV').innerHTML='';if(send({t:'tplpeek',link:l}))tplBusy(true);else toast('Not connected. Try again in a moment.')};
     $('#gn').onkeydown=e=>{if(e.key=='Enter')$('#gc').click()};$('#gj').onkeydown=e=>{if(e.key=='Enter')$('#gjb').click()};$('#tpL').onkeydown=e=>{if(e.key=='Enter')$('#tpP').click()}})};
 function tplShow(d){const v=$('#tpV');tplBusy(false);if(!v)return;const t=d.tpl,cats=[{id:'',name:''},...t.cats];
   const chH=x=>`<span class="hzGDch">${HG(x.type=='voice'?'spk':'hash')}${esc(x.name)}${x.priv?HG('lock'):''}</span>`;
@@ -5181,6 +5181,8 @@ const _o=on;on=function(d){_o(d);if(d&&(d.t=='init'||d.t=='profiles')){devPaint(
 .tcc.holo:hover::before{background-position:85% 85%}
 .tcHolo{position:absolute;top:5px;right:5px;font:900 9px/1 system-ui;letter-spacing:.12em;padding:3px 6px;border-radius:99px;color:#111;background:linear-gradient(90deg,#ff9be6,#9bfaff,#fff59b);box-shadow:0 1px 4px #0008}
 #hufiDock .hd{cursor:pointer}
+.tcN{container-type:inline-size}.tcNm{white-space:nowrap;overflow:hidden;font-size:min(13px,calc((100cqw - var(--c,0) * 15px - 22px) / (var(--n) * .58)))}.tcc.sm .tcNm{font-size:min(11px,calc((100cqw - var(--c,0) * 12px - 16px) / (var(--n) * .58)))}
+.tcN{min-width:0}.tcN .tcNm{min-width:0;flex:1}.tcN small{flex:none}
 .v4Card,.v4List>*,.v4Two>*{min-width:0}.hfQ .v4Li b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #hufiDock{width:320px}#hufiDock>*{min-width:0;max-width:100%}#hufiDock input[type=range]{box-sizing:border-box;min-width:0;max-width:100%;margin:0}
 #hufiDock{box-sizing:border-box;max-width:calc(100vw - 32px);overflow:hidden}#hufiDock .sp{overflow:hidden;border-radius:12px;min-width:0}#hufiDock iframe{width:100%!important;display:block}
@@ -5304,7 +5306,7 @@ R.hufi={full(st,m){m.body.className='hzAB';const it=st.q[st.i],g=gNow(),vcN=(st.
       ${st.q.length?'<div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB bad" data-clear>Clear queue</button></div>':''}</div>
       <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Voice channel</h4><select class="v4In" id="hfVc"><option value="">Pick where Hufi plays</option>${st.vcs.map(v=>`<option value="${esc(v.id)}"${v.id==st.vc?' selected':''}>${esc(v.name)}</option>`).join('')}</select>
         <p class="v4Mut" style="margin:10px 0 0">While music plays, Hufi Music joins that call. Everyone in the call hears the same song at the same spot.</p></div>
-        <div class="v4Card"><h4>How it works</h4><p class="v4Mut" style="margin:0">Paste a Spotify song, album or playlist, or a YouTube link. Hufi Music finds each song and streams it into the call, like a Discord music bot. Nobody has to sign in to anything. Uploaded audio files play too.</p></div></div></div></div>`});
+        <div class="v4Card"><h4>How it works</h4><p class="v4Mut" style="margin:0">Paste a Spotify song, album or playlist, or a YouTube link. Hufi Music finds each song and plays it in the call.</p></div></div></div></div>`});
   m.act.innerHTML='';const add=()=>{const v=$('#hfUrl').value.trim();if(v){A('add',{url:v});$('#hfUrl').value=''}};$('#hfUrl').onkeydown=e=>{if(e.key=='Enter')add()};
   $('#hfVc').onchange=e=>A('vc',{vc:e.target.value});
   m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
@@ -5494,10 +5496,11 @@ const tcArt=spec=>{if(ARTC[spec])return ARTC[spec];const[,sd,col]=spec.split(':'
     `<rect width="${W}" height="${H}" fill="url(#s)"/><circle cx="${sunX}" cy="${sunY}" r="${sunR*3}" fill="url(#g)" opacity=".55"/><circle cx="${sunX}" cy="${sunY}" r="${sunR}" fill="${P[3]}" opacity=".9"/>`+
     `<path d="${ridge(R(90,120),18,7)}" fill="${P[1]}" opacity=".55"/><path d="${ridge(R(125,150),14,9)}" fill="${P[0]}" opacity=".75"/>${fg}</svg>`;
   return ARTC[spec]='data:image/svg+xml,'+encodeURIComponent(svg)};
-const tcArtCss=a=>!a?'':/^b:/.test(a)?`style="background-image:url('${tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
-const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${c.holo?' holo':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN"><span>${esc(c.name||'Card name')}</span><small class="tcCost">${tcCost(c.cost)}</small></div>
+const tcArtCss=a=>!a?'':/^b2?:/.test(a)?`style="background-image:url('${(window.hzCardArt&&hzCardArt(a))||tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
+const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${c.holo?' holo':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN" style="--n:${Math.max(6,(c.name||'Card name').length)};--c:${(String(c.cost||'').match(/\d+|[RUGWBC]/g)||[]).length}"><span class="tcNm">${esc(c.name||'Card name')}</span><small class="tcCost">${tcCost(c.cost)}</small></div>
   <div class="tcA" ${tcArtCss(c.art)}>${c.art?'':'Card art'}${c.holo?'<b class="tcHolo">HOLO</b>':''}</div><div class="tcT"><span>${esc(c.type||'Type')}</span><i class="tcG ${esc(c.rarity||'common')}" title="${esc(c.rarity||'common')}"></i></div>
   <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1${c.value?' · worth '+Number(c.value).toLocaleString():''}${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
+window.hzTcCard=c=>tcCard(c);
 let tcDraft=null,tcGot=null,tcOffer={to:'',give:[],get:[]};
 let tcOwner='';
 R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st.free?'open':'mine';const tab=sel.cards,mine=st.cards.filter(c=>c.owner==oid),theirs=st.cards.filter(c=>c.owner==tcOffer.to&&tcOffer.to);
@@ -5507,7 +5510,7 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
     open:`<div class="v4Card" style="text-align:center;display:grid;gap:14px;justify-items:center"><img class="gart" src="${HG.art('cards')}" style="width:96px;height:96px"><div>${st.first&&st.free?'<b style="font-size:20px;display:block;margin-bottom:4px">Welcome! Your first pack is free and ready.</b>':''}<b style="font-size:18px">Packs have ${st.pack} card${st.pack==1?'':'s'}</b><div class="v4Mut">${st.free} unclaimed card${st.free==1?'':'s'} left · one pack every ${st.cd}h · cards can only be traded, never sold</div></div>
       <button class="hzB on" data-open${st.next||!st.free?' disabled':''} style="font-size:15px;padding:10px 22px">${st.next?'Next pack in '+left(st.next):!st.free?'All cards claimed':'Open a pack'}</button>
       ${tcGot?`<div class="tcReveal">${tcGot.map((id,i)=>{const c=st.cards.find(x=>x.id==id);return c?`<div class="tcFlip" style="animation-delay:${i*.25}s">${tcCard(c)}</div>`:''}).join('')}</div>`:''}</div>`,
-    all:`<div class="v4Row" style="margin-bottom:12px">${st.edit?'<button class="hzB" data-tdef>Add the default set (120 cards)</button>':''}<span class="v4Mut">Show</span><select class="v4In" id="tcOw" style="max-width:260px"><option value="">Every card</option><option value="-"${tcOwner=='-'?' selected':''}>Still in packs</option>${st.people.concat([{o:oid,n:nm(oid)+' (you)'}]).map(p=>`<option value="${esc(p.o)}"${p.o==tcOwner?' selected':''}>${esc(p.n)}’s cards</option>`).join('')}</select></div><div class="tcGrid">${st.cards.filter(c=>!tcOwner||(tcOwner=='-'?!c.owner:c.owner==tcOwner)).map(c=>`<div style="display:grid;gap:22px">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button><select class="v4In v4Grow" data-grant="${esc(c.id)}"><option value="">In packs</option>${st.people.concat([{o:oid,n:nm(oid)}]).map(p=>`<option value="${esc(p.o)}"${p.o==c.owner?' selected':''}>${esc(p.n)}</option>`).join('')}</select></div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
+    all:`<div class="v4Row" style="margin-bottom:12px">${st.edit?'<button class="hzB" data-tdef>Add the default sets</button>':`<span class="v4Mut">${st.sealed||0} cards are still sealed in packs.</span>`}<span class="v4Mut">Show</span><select class="v4In" id="tcOw" style="max-width:260px"><option value="">Every card</option><option value="-"${tcOwner=='-'?' selected':''}>Still in packs</option>${st.people.concat([{o:oid,n:nm(oid)+' (you)'}]).map(p=>`<option value="${esc(p.o)}"${p.o==tcOwner?' selected':''}>${esc(p.n)}’s cards</option>`).join('')}</select></div><div class="tcGrid">${st.cards.filter(c=>!tcOwner||(tcOwner=='-'?!c.owner:c.owner==tcOwner)).map(c=>`<div style="display:grid;gap:22px;width:150px;align-content:start">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button>${c.owner?`<button class="hzB v4Grow" data-ret="${esc(c.id)}">Back to packs (${esc(c.on||'')})</button>`:'<span class="v4Mut v4Grow">Sealed in a pack</span>'}</div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
     trade:`<div class="v4Card"><h4>Open offers</h4><div class="v4List">${st.trades.map(t=>{const nmz=ids=>ids.map(id=>esc((st.cards.find(c=>c.id==id)||{}).name||'?')).join(', ')||'nothing';return `<div class="v4Li"><div class="v4Grow">${t.from==oid?`You offer <b>${nmz(t.give)}</b> to ${esc(t.tn)} for <b>${nmz(t.get)}</b>`:`${esc(t.fn)} offers <b>${nmz(t.give)}</b> for your <b>${nmz(t.get)}</b>`}</div>${t.to==oid?`<button class="hzB on" data-tok="${esc(t.id)}">Accept</button><button class="hzB" data-tno="${esc(t.id)}">Decline</button>`:`<button class="hzB" data-tcan="${esc(t.id)}">Cancel</button>`}</div>`}).join('')||'<div class="v4Mut">No open offers.</div>'}</div></div>
       <div class="v4Card"><h4>Make an offer</h4><select class="v4In" id="tcTo"><option value="">Trade with…</option>${st.people.map(p=>`<option value="${esc(p.o)}"${p.o==tcOffer.to?' selected':''}>${esc(p.n)}</option>`).join('')}</select>
         <div class="v4Mut" style="margin:12px 0 6px">You give (click to pick)</div><div class="tcGrid">${mine.map(c=>`<div class="tcPick${tcOffer.give.includes(c.id)?' on':''}" data-tg="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">You have no cards.</span>'}</div>
@@ -5521,7 +5524,7 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
       <div class="v4Card" style="display:grid;justify-items:center;align-content:start;gap:12px"><h4 style="justify-self:stretch">Preview</h4><div id="tcPrev">${tcCard(dr)}</div><p class="v4Mut" style="margin:0;text-align:center">Every card is one of one: only one person can own it.</p></div></div>
       <div class="v4Card"><h4>Packs</h4><div class="v4Form"><label>Cards per pack<input id="tcPk" type="number" min="1" max="10" value="${st.pack}"></label><label>Hours between packs<input id="tcCd" type="number" min="0" value="${st.cd}"></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-tpk>Save</button></div></div>${mgrBox(st,'Trading Cards')}`:'',
     log:`<div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li"><span class="v4Grow">${esc(l.s)}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Empty">Nothing yet.</div>'}</div>`};
-  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${tabs([['mine','My collection ('+mine.length+')'],['open','Open packs'],['all','All cards ('+st.cards.length+')'],['trade','Trades'+(st.trades.some(t=>t.to==oid)?' •':'')],['log','History'],st.edit&&['make','Create']],tab)}${body[tab]||''}</div>`});
+  keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${tabs([['mine','My collection ('+mine.length+')'],['open','Open packs'],['all',st.edit?'Card list ('+st.cards.length+')':'Discovered ('+st.cards.length+')'],['trade','Trades'+(st.trades.some(t=>t.to==oid)?' •':'')],['log','History'],st.edit&&['make','Create']],tab)}${body[tab]||''}</div>`});
   m.act.innerHTML='';const f=$('#tcF');if(f)f.oninput=()=>{tcDraft=Object.assign({},dr,Object.fromEntries([...f.querySelectorAll('[data-k]')].map(i=>[i.dataset.k,i.value])));$('#tcPrev').innerHTML=tcCard(tcDraft)};
   const dfl=m.body.querySelector('[data-tdef]');if(dfl)dfl.onclick=e=>{e.stopPropagation();A('defaults');toast('Adding the default set…',true)};const ow=$('#tcOw');if(ow)ow.onchange=()=>{tcOwner=ow.value;R.cards.full(st,m)};const to=$('#tcTo');if(to)to.onchange=()=>{tcOffer={to:to.value,give:tcOffer.give,get:[]};R.cards.full(st,m)};
   m.body.onchange=e=>{const s=e.target.closest('[data-grant]');if(s)A('grant',{id:s.dataset.grant,o:s.value})};
@@ -5531,7 +5534,7 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
     if(d.tg){const a=tcOffer.give,i=a.indexOf(d.tg);i>=0?a.splice(i,1):a.push(d.tg);return R.cards.full(st,m)}
     if(d.tw){const a=tcOffer.get,i=a.indexOf(d.tw);i>=0?a.splice(i,1):a.push(d.tw);return R.cards.full(st,m)}
     if(d.toffer!==undefined){A('offer',tcOffer);tcOffer={to:'',give:[],get:[]};return toast('Offer sent.',true)}
-    if(d.tok)return A('trade',{id:d.tok,ok:true});if(d.tno)return A('trade',{id:d.tno,ok:false});if(d.tcan)return A('trade',{id:d.tcan,ok:'cancel'});
+    if(d.ret){hzAsk('Put this card back into the packs? Its owner loses it.').then(y=>y&&A('grant',{id:d.ret,o:''}));return}if(d.tok)return A('trade',{id:d.tok,ok:true});if(d.tno)return A('trade',{id:d.tno,ok:false});if(d.tcan)return A('trade',{id:d.tcan,ok:'cancel'});
     if(d.ced){tcDraft={...st.cards.find(c=>c.id==d.ced)};sel.cards='make';return R.cards.full(st,m)}
     if(d.tx!==undefined){tcDraft=null;return R.cards.full(st,m)}
     if(d.tdel){if(await hzAsk('Delete this card? Whoever owns it loses it.')){A('cdel',{id:d.tdel});tcDraft=null}return}
@@ -5896,6 +5899,249 @@ const _on16=on;on=function(d){if(d&&d.t=='perr'&&bWait){bErr=d.msg;bWait=false;c
 setInterval(()=>{const b=$('#bSB');if(b&&!b.querySelector('span'))b.insertAdjacentHTML('beforeend','<span>Sounds</span>')},1000);
 })();
 </script>
+
+<style id="huddle-v17">
+/* ---------- Huddle v17: sealed packs you swipe open ---------- */
+.pkSt{display:grid;justify-items:center;gap:14px;padding:18px 10px 28px;user-select:none}
+.pkInfo{text-align:center}.pkInfo b{display:block;font-size:20px}.pkInfo small{color:var(--dim);font-size:13px}
+.pkWrap{perspective:900px;filter:drop-shadow(0 18px 30px #000b)}
+.pk{position:relative;width:230px;height:330px;transform-style:preserve-3d;animation:pkFloat 4s ease-in-out infinite}
+@keyframes pkFloat{50%{transform:translateY(-6px) rotateX(3deg) rotateY(-4deg)}}
+.pkWrap.locked .pk{animation:none;filter:grayscale(.7) brightness(.6)}
+.pkBody{position:absolute;inset:44px 0 0;border-radius:0 0 16px 16px;overflow:hidden;display:grid;place-items:center;align-content:center;gap:10px;
+  background:conic-gradient(from 210deg,#5b21b6,#db2777,#f59e0b,#10b981,#2563eb,#7c3aed,#5b21b6);box-shadow:inset 0 0 0 3px #ffffff40,inset 0 -40px 60px #0006}
+.pkBody::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(115deg,#ffffff00 0 14px,#ffffff1a 14px 16px),radial-gradient(120% 60% at 30% 0%,#ffffff55,transparent 60%);mix-blend-mode:overlay}
+.pkBody::after{content:'';position:absolute;inset:-40%;background:linear-gradient(105deg,transparent 40%,#ffffff70 50%,transparent 60%);animation:pkShine 3.2s ease-in-out infinite}
+@keyframes pkShine{from{transform:translateX(-60%)}to{transform:translateX(60%)}}
+.pkBody img{width:96px;height:96px;position:relative;z-index:1;filter:drop-shadow(0 4px 10px #0008)}
+.pkName{position:relative;z-index:1;text-align:center;font:900 26px/1 system-ui;letter-spacing:.14em;color:#fff;text-shadow:0 2px 0 #0006,0 0 18px #fff8}.pkName small{display:block;font-size:11px;letter-spacing:.3em;margin-top:6px;opacity:.85}
+.pkTop{position:absolute;left:0;right:0;top:0;height:48px;border-radius:16px 16px 0 0;cursor:grab;touch-action:none;outline:none;
+  background:linear-gradient(180deg,#c4b5fd,#8b5cf6);box-shadow:inset 0 0 0 3px #ffffff50;transform-origin:0% 100%;transition:transform .12s;
+  -webkit-mask:linear-gradient(#000,#000);clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.pkTop:active{cursor:grabbing}.pkTop:focus-visible{box-shadow:inset 0 0 0 3px #fff,0 0 0 3px var(--ac)}
+.pkTop .ln{position:absolute;left:0;right:0;bottom:4px;height:0;border-bottom:2px dashed #ffffffaa}
+.pkTop .cut{position:absolute;left:0;bottom:2px;height:6px;width:calc(var(--t,0)*100%);background:linear-gradient(90deg,#fff,#fde047);box-shadow:0 0 14px #fde047,0 0 4px #fff;border-radius:3px}
+.pkTop .txt{position:absolute;inset:0 0 10px;display:flex;align-items:center;justify-content:center;gap:8px;font:800 12.5px system-ui;letter-spacing:.06em;color:#2e1065;text-transform:uppercase}
+.pkTop .txt svg{width:22px;height:14px;animation:pkNudge 1.2s ease-in-out infinite}@keyframes pkNudge{50%{transform:translateX(6px)}}
+.pkTop.torn{animation:pkFly .7s cubic-bezier(.3,.6,.4,1) forwards;pointer-events:none}
+@keyframes pkFly{to{transform:translate(120px,-160px) rotate(-38deg);opacity:0}}
+.pk.burst .pkBody{animation:pkShake .45s ease-in-out}
+@keyframes pkShake{20%{transform:translateX(-4px) rotate(-1deg)}40%{transform:translateX(4px) rotate(1deg)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.pk.burst::after{content:'';position:absolute;left:10%;right:10%;top:30px;height:40px;border-radius:50%;background:radial-gradient(#fff,#fde04799 40%,transparent 70%);filter:blur(6px);animation:pkGlow 1.4s ease-out forwards}
+@keyframes pkGlow{0%{opacity:0;transform:scale(.4)}30%{opacity:1;transform:scale(1.4,2)}100%{opacity:0;transform:scale(2,4) translateY(-30px)}}
+.pkHint{color:var(--dim);font-size:13px;margin:0;text-align:center}
+.pkRev{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;perspective:1200px;min-height:330px;align-items:center}
+.pkC{position:relative;margin-bottom:34px;width:220px;aspect-ratio:63/88;cursor:pointer;opacity:0;transform:translateY(120px) scale(.7);animation:pkRise .7s cubic-bezier(.2,1.1,.3,1) forwards}
+@keyframes pkRise{to{opacity:1;transform:none}}
+.pkC .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.2,.8,.2,1)}
+.pkC.on .in{transform:rotateY(180deg)}
+.pkC .bk,.pkC .fr{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px}
+.pkC .fr{transform:rotateY(180deg)}.pkC .fr .tcc{width:100%;height:100%}
+.pkC .bk{background:radial-gradient(circle at 50% 40%,#7c3aed,#2e1065 70%);box-shadow:0 10px 26px #0009,inset 0 0 0 6px #c4b5fd55,inset 0 0 0 9px #1e0b3a;display:grid;place-items:center}
+.pkC .bk::before{content:'';position:absolute;inset:16px;border-radius:8px;border:2px solid #c4b5fd66;background:repeating-linear-gradient(45deg,#ffffff08 0 8px,transparent 8px 16px)}
+.pkC .bk img{width:84px;height:84px;position:relative;opacity:.9}
+.pkC:not(.on):hover .in{transform:rotateY(-10deg) translateY(-6px)}
+.pkC.on.r-rare .fr{box-shadow:0 0 0 2px #fbbf24,0 0 30px #fbbf24aa}.pkC.on.r-mythic .fr{box-shadow:0 0 0 2px #f97316,0 0 40px #f97316cc,0 0 80px #ef444488}
+.pkC.on.holo .fr{animation:pkHolo 1.6s ease-out}@keyframes pkHolo{0%{filter:brightness(2.2) saturate(2)}100%{filter:none}}
+.pkC .rl{position:absolute;left:50%;bottom:-44px;transform:translateX(-50%);white-space:nowrap;font:800 12px system-ui;letter-spacing:.1em;text-transform:uppercase;opacity:0;transition:opacity .4s .5s}
+.pkC.on .rl{opacity:1}.rl.common{color:#a1a1aa}.rl.uncommon{color:#cbd5e1}.rl.rare{color:#fbbf24}.rl.mythic{color:#fb923c}
+.pkDone{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+</style>
+<script id="huddle-v17-art">
+/* Card art for Trading Cards: "b2:<seed>:<school>:<subject>" -> an SVG painting (scene + creature or spell).
+   Everything is drawn here from the seed, so every card looks different and nothing is downloaded. */
+(()=>{
+const PAL={R:{sky:['#1f0705','#6b1a0c','#c2410c'],g:'#ff8a3d',a:'#ffd166',s:'#170605',m:'#3a0e08'},U:{sky:['#030a1c','#0f2f63','#1e6fb0'],g:'#4fc3ff',a:'#e0f6ff',s:'#050d1c',m:'#0b2348'},
+  G:{sky:['#03140a','#14432a','#3f7d3c'],g:'#86efac',a:'#fdf6b2',s:'#06120a',m:'#0e2f17'},W:{sky:['#2a2216','#8a6d3b','#e8cf8e'],g:'#fff1b8',a:'#ffffff',s:'#2a2013',m:'#5a4626'},
+  B:{sky:['#05030a','#1e0f2e','#4a2163'],g:'#c084fc',a:'#f0e1ff',s:'#040208',m:'#170b24'},C:{sky:['#0c0e12','#2b313b','#5b6676'],g:'#9fd7ff',a:'#f1f5f9',s:'#0a0c10',m:'#1c2129'}};
+const CACHE={};
+const rng=s=>{let x=(s>>>0)||1;return()=>(x=(x*16807)%2147483647)/2147483647};
+/* ---------- subjects: drawn around (0,0), roughly 240 wide and 200 tall, ground at y=60 ---------- */
+const P=d=>`<path d="${d}" class="s"/>`,PL=d=>`<path d="${d}" class="l"/>`,G=d=>`<path d="${d}" class="g"/>`,E=(x,y,r=3.2)=>`<circle cx="${x}" cy="${y}" r="${r}" class="e"/>`;
+const hum=(o={})=>{let s='';const robe=o.robe,k=o.k||1;
+  if(o.wings=='feather')s+=P('M-14 -48Q-95 -125-128 -55Q-104 -66-100 -48Q-116 -42-110 -20Q-86 -36-20 -18Z')+P('M14 -48Q95 -125 128 -55Q104 -66 100 -48Q116 -42 110 -20Q86 -36 20 -18Z');
+  if(o.wings=='bat')s+=P('M-16 -46L-70 -100L-74 -72L-104 -84L-96 -52L-124 -50L-60 -20L-20 -20Z')+P('M16 -46L70 -100L74 -72L104 -84L96 -52L124 -50L60 -20L20 -20Z');
+  if(o.cape)s+=P('M-26 -56Q-30 -84-14 -86L-58 60L58 60L14 -86Q30 -84 26 -56Z');
+  if(o.tail)s+=PL('M10 40Q70 50 80 10Q84 -4 96 -2')+P('M92 -10L104 -2L92 6Z');
+  s+=robe?P('M-24 -54Q0 -62 24 -54L46 60L-46 60Z'):P(`M-${22*k} -54Q0 -62 ${22*k} -54L${30*k} 8L${22*k} 60L${8*k} 60L${4*k} 18L-${4*k} 18L-${8*k} 60L-${22*k} 60L-${30*k} 8Z`);
+  s+=P(`M-${22*k} -50L-${44*k} -8L-${36*k} -4L-${16*k} -34Z`)+P(`M${22*k} -50L${46*k} -14L${38*k} -8L${16*k} -34Z`);
+  s+=`<circle cx="0" cy="${-72}" r="${15*k}" class="s"/>`;
+  if(o.ears)s+=P('M-13 -76L-38 -88L-12 -66Z')+P('M13 -76L38 -88L12 -66Z');
+  if(o.horns)s+=P('M-9 -84Q-32 -102-26 -124Q-18 -102-3 -90Z')+P('M9 -84Q32 -102 26 -124Q18 -102 3 -90Z');
+  if(o.hat=='wizard')s+=P('M-30 -80L30 -80L26 -74L-26 -74Z')+P('M-18 -80L4 -136L18 -80Z');
+  if(o.hat=='witch')s+=P('M-34 -80L34 -80L30 -73L-30 -73Z')+P('M-18 -80Q-6 -108 16 -134Q8 -110 18 -80Z');
+  if(o.hat=='helm')s+=P('M-17 -90L17 -90L17 -60L-17 -60Z')+G('M-12 -76h24v3h-24z')+P('M0 -90Q24 -114 40 -102Q22 -98 6 -88Z');
+  if(o.hat=='hood')s+=P('M-24 -58Q-22 -102 0 -102Q22 -102 24 -58L14 -60Q12 -88 0 -88Q-12 -88-14 -60Z');
+  if(o.hat=='crown')s+=G('M-14 -88l4 -12 5 8 5 -10 5 10 5 -8 4 12z');
+  if(o.halo)s+=`<ellipse cx="0" cy="-100" rx="20" ry="6" fill="none" stroke="var(--a)" stroke-width="3" filter="url(#gl)"/>`;
+  if(o.collar)s+=P('M-24 -56L-34 -96L-12 -66Z')+P('M24 -56L34 -96L12 -66Z');
+  if(o.staff)s+=PL('M46 -110L40 60')+`<circle cx="46" cy="-114" r="9" class="g" filter="url(#gl)"/>`;
+  if(o.sword)s+=`<path d="M44 -14L74 -96L80 -92L52 -10Z" fill="var(--a)" opacity=".85"/>`+PL('M38 -18L58 -6');
+  if(o.shield)s+=P('M-60 -36L-26 -36L-26 -4Q-26 20-43 30Q-60 20-60 -4Z')+G('M-47 -30h8v52h-8zM-56 -12h26v8h-26z');
+  if(o.bow)s+=`<path d="M-50 -90Q-90 -30-50 30" fill="none" stroke="var(--s)" stroke-width="5"/><path d="M-50 -90L-50 30" stroke="var(--a)" stroke-width="1.2"/>`+PL('M-50 -30L20 -40');
+  if(o.club)s+=P('M44 -14L70 -100Q84 -110 88 -94L58 -8Z');
+  if(o.broom)s+=PL('M-70 40L60 -40')+P('M-70 40L-104 52L-96 32Z');
+  if(o.daggers)s+=`<path d="M-44 -6L-60 -30L-56 -6Z M46 -12L62 -36L58 -12Z" fill="var(--a)"/>`;
+  if(o.tusks)s+=`<path d="M-6 -62l-2 8 4-6zM6 -62l2 8-4-6z" fill="var(--a)"/>`;
+  s+=E(-5,o.hat=='hood'?-74:-74,2.6)+E(5,-74,2.6);return s};
+const quad=(o={})=>{let s='';
+  if(o.wings)s+=P('M-10 -30L-60 -110L-50 -70L-90 -86L-70 -50L-104 -52L-40 -14Z');
+  s+=P('M-80 20Q-84 -18-50 -26Q0 -34 46 -26L58 -32Q70 -42 80 -40'+(o.beak?'L104 -46L88 -32L96 -28L80 -20':'L98 -30Q104 -18 92 -14L80 -10')+'Q74 4 64 6Q40 18-40 16Q-62 20-80 20Z');
+  s+=P('M-66 14L-74 60L-62 60L-54 18Z')+P('M-40 14L-44 60L-32 60L-28 16Z')+P('M30 10L34 60L46 60L44 8Z')+P('M52 4L62 60L74 60L64 2Z');
+  if(o.mane)s+=P('M44 -30Q40 -60 64 -62Q86 -60 88 -40Q76 -50 70 -36Q60 -48 54 -30Z');
+  if(o.horn)s+=`<path d="M78 -42L96 -86L86 -40Z" fill="var(--a)" filter="url(#gl)"/>`;
+  if(o.ears)s+=P('M66 -40L70 -58L76 -42Z');
+  if(o.tail)s+=PL('M-78 0Q-110 -4-116 -36');
+  s+=E(84,-34,2.8);if(o.wings)s+=P('M0 -30L-20 -112L-6 -72L-40 -80L-22 -44L-50 -40L4 -12Z');return s};
+const S={
+  dragon:r=>P('M-10 -20L-70 -95L-62 -60L-100 -78L-82 -40L-118 -48L-60 0Z')+P('M-60 20Q-50 -25 0 -25Q45 -25 60 15Q40 35 0 32Q-40 34-60 20Z')+P('M30 -15Q50 -50 70 -75L105 -82L96 -70L108 -64L80 -58Q65 -35 55 0Z')
+    +P('M84 -80L92 -100L96 -80ZM74 -76L78 -96L84 -78Z')+P('M-55 18Q-95 40-125 25Q-110 22-100 12L-118 8L-95 2Q-75 8-60 8Z')+P('M-35 28L-40 62L-24 62L-20 30ZM25 28L30 62L46 62L38 26Z')
+    +P('M10 -20L-20 -100L-8 -62L-40 -70L-22 -38L-50 -36L-5 0Z')+E(90,-70)+(r()<.5?`<path d="M106 -74Q140 -84 160 -60Q140 -70 120 -60Q140 -50 150 -30Q124 -52 104 -64Z" fill="url(#fi)" filter="url(#gl)"/>`:''),
+  serpent:r=>`<path d="M-120 60Q-90 -40-50 20Q-20 70 10 10Q40 -60 80 -10Q100 10 96 -40" fill="none" stroke="var(--s)" stroke-width="24" stroke-linecap="round"/><path d="M-120 60Q-90 -40-50 20Q-20 70 10 10Q40 -60 80 -10Q100 10 96 -40" fill="none" stroke="var(--g)" stroke-width="2" stroke-dasharray="4 10" opacity=".6"/>`
+    +P('M80 -44Q90 -70 112 -70L132 -60L114 -52Q104 -40 104 -30Z')+P('M100 -66L104 -86L110 -68Z')+E(112,-62),
+  kraken:r=>[[-50,1],[-25,1],[0,1],[25,-1],[50,-1]].map(([x,k],i)=>`<path d="M${x} -10Q${x+k*-40} 30 ${x+k*-60} ${50-i*4}Q${x+k*-80} 70 ${x+k*-100} 40" fill="none" stroke="var(--s)" stroke-width="${14-i%2*3}" stroke-linecap="round"/>`).join('')
+    +P('M-56 -6Q-70 -110 0 -116Q70 -110 56 -6Q30 10 0 8Q-30 10-56 -6Z')+E(-20,-34,6)+E(20,-34,6),
+  phoenix:r=>`<g filter="url(#gl)"><path d="M0 -40Q-60 -110-130 -90Q-80 -70-90 -40Q-120 -40-120 -14Q-60 -30-10 0Z" fill="url(#fi)"/><path d="M0 -40Q60 -110 130 -90Q80 -70 90 -40Q120 -40 120 -14Q60 -30 10 0Z" fill="url(#fi)"/><path d="M-14 0Q-40 60-20 90Q0 40 0 20Q0 40 20 90Q40 60 14 0Z" fill="url(#fi)"/></g>`
+    +P('M-12 -40Q0 -60 12 -40L10 6Q0 14-10 6Z')+P('M0 -54Q8 -78 24 -72Q14 -66 12 -52Z')+P('M2 -66L-6 -90L6 -70ZM8 -68L8 -94L14 -70Z')+E(10,-62,2.4),
+  griffin:()=>quad({wings:1,beak:1,tail:1}),wolf:()=>P('M-40 60L-38 10Q-45 -20-20 -35L-2 -62L20 -110L28 -98L48 -118L40 -90Q46 -74 32 -60Q48 -40 40 -14Q56 12 50 60Z')+P('M-2 -66L-10 -92L8 -76Z')+P('M-38 50Q-80 52-88 20Q-66 36-40 30Z')+E(24,-90,2.6),
+  bear:()=>P('M-90 60Q-100 0-56 -26Q-24 -46 18 -40Q44 -62 70 -48L96 -42Q102 -22 86 -16L82 10Q88 40 82 60L58 60L54 30Q20 40-22 36L-28 60Z')+'<circle cx="60" cy="-58" r="8" class="s"/><circle cx="78" cy="-55" r="7" class="s"/>'+E(84,-36),
+  cat:()=>P('M-100 40Q-80 10-40 5Q0 0 40 -5L60 -25L66 -42L72 -28L82 -40L84 -22Q100 -10 95 5L80 15Q85 35 80 50L65 50L62 25Q20 35-40 32L-45 50L-60 50L-58 30Q-80 35-95 50Q-118 62-124 40Q-110 46-100 40Z')+E(84,-14,2.6),
+  spider:()=>{let s='';for(let i=0;i<4;i++)for(const k of[-1,1])s+=`<path d="M${k*10} ${-14+i*8}Q${k*(60+i*10)} ${-70+i*22} ${k*(96+i*6)} ${36+i*6}" fill="none" stroke="var(--s)" stroke-width="5" stroke-linecap="round"/>`;
+    return s+'<circle cx="0" cy="10" r="30" class="s"/><circle cx="0" cy="-34" r="19" class="s"/>'+E(-7,-40,3)+E(7,-40,3)+E(-3,-48,2)+E(3,-48,2)+G('M-6 0l6 14 6-14-6 6z')},
+  bat:()=>P('M0 -10Q-30 -46-60 -30Q-80 -56-118 -20Q-100 -10-96 6Q-76 -6-66 12Q-50 0-40 16Q-25 0 0 12Z')+P('M0 -10Q30 -46 60 -30Q80 -56 118 -20Q100 -10 96 6Q76 -6 66 12Q50 0 40 16Q25 0 0 12Z')+'<ellipse cx="0" cy="0" rx="16" ry="24" class="s"/>'+P('M-10 -18L-14 -38L-2 -22ZM10 -18L14 -38L2 -22Z')+E(-5,-10,2.4)+E(5,-10,2.4),
+  owl:()=>PL('M-110 58L110 52')+P('M0 -70Q46 -70 46 -10Q46 50 0 56Q-46 50-46 -10Q-46 -70 0 -70Z')+P('M-30 -62L-40 -92L-16 -68ZM30 -62L40 -92L16 -68Z')+'<circle cx="-16" cy="-34" r="13" fill="var(--m)"/><circle cx="16" cy="-34" r="13" fill="var(--m)"/>'+E(-16,-34,6)+E(16,-34,6)+G('M-5 -22l5 10 5-10z'),
+  goblin:()=>`<g transform="scale(.82) translate(0 14)">${hum({ears:1,daggers:1})}</g>`,orc:()=>`<g transform="scale(1.12)">${hum({k:1.3,tusks:1,club:1})}</g>`,troll:()=>`<g transform="scale(1.2)">${hum({k:1.4,tusks:1,ears:1,club:1})}</g>`,
+  giant:()=>`<g transform="scale(1.45) translate(0 -14)">${hum({k:1.3,club:1})}</g>`+P('M-120 60L-96 20L-70 60ZM70 60L94 26L118 60Z'),
+  golem:()=>P('M-42 -62h84v74h-84Z')+P('M-20 -96h40v30h-40Z')+P('M-66 -58h22v86h-22ZM44 -58h22v86h-22Z')+P('M-36 12h26v48h-26ZM10 12h26v48h-26Z')+G('M-20 -40l14 18-6 14 18 10M18 -54l-10 20')+E(-8,-82,3.4)+E(8,-82,3.4),
+  construct:()=>P('M-40 -60h80v70h-80Z')+P('M-18 -94h36v28h-36Z')+PL('M0 -94v-16')+`<circle cx="0" cy="-112" r="5" class="g" filter="url(#gl)"/>`+P('M-64 -56h20v60h-20ZM44 -56h20v60h-20Z')+P('M-34 10h22v50h-22ZM12 10h22v50h-22Z')
+    +`<circle cx="0" cy="-26" r="17" fill="none" stroke="var(--g)" stroke-width="4" stroke-dasharray="6 4" filter="url(#gl)"/>`+E(-8,-80,3)+E(8,-80,3),
+  knight:()=>hum({hat:'helm',sword:1,shield:1}),angel:()=>hum({robe:1,wings:'feather',halo:1,sword:1}),demon:()=>`<g transform="scale(1.1)">${hum({wings:'bat',horns:1,tail:1})}</g>`,
+  imp:()=>`<g transform="scale(.75) translate(0 30)">${hum({wings:'bat',horns:1,tail:1,ears:1})}</g>`,vampire:()=>hum({cape:1,collar:1}),witch:()=>hum({robe:1,hat:'witch',broom:1})+`<g transform="translate(-80 30)">${P('M-26 0Q-30 30 0 32Q30 30 26 0Z')}<ellipse cx="0" cy="0" rx="26" ry="6" class="g"/></g>`,
+  wizard:()=>hum({robe:1,hat:'wizard',staff:1}),druid:()=>hum({robe:1,hat:'hood',staff:1})+G('M-40 40q10-20 20 0q-10 6-20 0zM-70 50q8-16 16 0q-8 5-16 0z'),elf:()=>hum({hat:'hood',bow:1,ears:1}),
+  skeleton:()=>`<g stroke="var(--a)" stroke-width="5" stroke-linecap="round" fill="none"><path d="M0 -50V20M-20 -40h40M-22 -28h44M-20 -16h40M-16 -4h32M-24 -50L-40 0M24 -50L42 0M-10 20L-16 60M10 20L16 60"/></g><circle cx="0" cy="-72" r="17" fill="var(--a)"/><circle cx="-6" cy="-74" r="5" fill="var(--s)"/><circle cx="6" cy="-74" r="5" fill="var(--s)"/>`+E(-6,-74,2)+E(6,-74,2)+G('M-8 -60h16v6h-16z'),
+  skull:()=>hum({k:1.1})+P('M20 -48L86 -44L86 -34L20 -36Z')+P('M-20 -46L60 -30L60 -20L-20 -34Z')+G('M-14 -20l-6 20M10 0l8 18'),
+  ghost:()=>`<path d="M-44 60Q-56 -70 0 -90Q56 -70 44 60L30 44L16 62L0 44L-16 62L-30 44Z" fill="var(--g)" opacity=".42" stroke="var(--a)" stroke-width="2" filter="url(#gl)"/><ellipse cx="-14" cy="-40" rx="7" ry="10" fill="var(--s)"/><ellipse cx="14" cy="-40" rx="7" ry="10" fill="var(--s)"/><ellipse cx="0" cy="-12" rx="8" ry="11" fill="var(--s)"/>`,
+  mermaid:()=>P('M-90 60Q-60 20 0 30Q60 20 90 60Z')+P('M-10 -50Q0 -58 10 -50L16 0Q30 30 60 20Q70 10 82 18Q66 26 70 40Q50 30 30 40Q0 40-14 0Z')+'<circle cx="0" cy="-66" r="13" class="s"/>'+P('M-12 -70Q-30 -40-24 -10L-12 -40Z')+E(4,-68,2.4),
+  slime:()=>`<path d="M-80 58Q-90 -4-44 -26Q0 -56 44 -26Q90 -4 80 58Z" fill="var(--g)" opacity=".75" stroke="var(--a)" stroke-width="2"/><ellipse cx="-24" cy="-14" rx="12" ry="7" fill="#fff" opacity=".45"/><circle cx="-16" cy="10" r="7" fill="var(--s)"/><circle cx="16" cy="10" r="7" fill="var(--s)"/><path d="M-12 30Q0 38 12 30" stroke="var(--s)" stroke-width="3" fill="none"/>`,
+  mushroom:()=>[[0,0,1],[-70,24,.55],[66,30,.45]].map(([x,y,k])=>`<g transform="translate(${x} ${y}) scale(${k})">${P('M-14 -20L-18 60L18 60L14 -20Z')}<path d="M-56 -18Q-56 -76 0 -80Q56 -76 56 -18Z" fill="var(--g)" stroke="var(--s)" stroke-width="3"/><circle cx="-20" cy="-50" r="7" fill="var(--a)"/><circle cx="14" cy="-58" r="5" fill="var(--a)"/><circle cx="28" cy="-34" r="6" fill="var(--a)"/></g>`).join('')+E(-6,20)+E(6,20),
+  sphinx:()=>P('M-100 60Q-104 20-70 14L40 10Q50 -20 40 -40Q50 -76 76 -76Q104 -76 106 -40Q110 -20 96 0L100 60Z')+P('M44 -40Q40 -90 76 -94Q112 -90 108 -40L96 -50Q92 -78 76 -78Q60 -78 56 -50Z')+E(70,-50,2.6)+E(84,-50,2.6)+G('M60 -88h32v4h-32z'),
+  hydra:r=>P('M-70 60Q-80 0-30 -6Q30 -10 60 20Q70 40 64 60Z')+[[-40,-90],[0,-110],[40,-96],[-70,-60],[74,-60]].map(([x,y])=>`<path d="M0 0Q${x*.4} ${y*.5} ${x} ${y}" fill="none" stroke="var(--s)" stroke-width="13" stroke-linecap="round"/>`+P(`M${x-10} ${y-6}L${x+16} ${y-2}L${x+4} ${y+8}Z`)+E(x+4,y-2,2.2)).join(''),
+  unicorn:()=>P('M-60 60Q-50 0-10 -40Q10 -70 40 -78L70 -70Q90 -60 92 -48L80 -40L60 -46Q50 -20 40 10Q30 40 30 60Z')+`<path d="M48 -76L70 -124L58 -74Z" fill="var(--a)" filter="url(#gl)"/>`+P('M20 -70Q-10 -60-20 -30Q-30 -10-40 0Q-28 -30-34 -40Q-18 -50-10 -72Z')+E(66,-62,2.6),
+  elemental:()=>`<g filter="url(#gl)"><path d="M-40 60Q-60 0-30 -40Q-40 -70-10 -100Q-14 -70 0 -60Q10 -96 30 -110Q24 -70 36 -40Q60 -10 40 60Z" fill="url(#fi)"/></g>`+E(-10,-30,4)+E(12,-30,4),
+  beetle:()=>P('M-70 30Q-74 -40 0 -46Q74 -40 70 30Q50 50 0 50Q-50 50-70 30Z')+PL('M0 -46V50')+P('M-20 -46Q-10 -72 0 -70Q10 -72 20 -46Z')+P('M0 -70Q-4 -96 10 -110Q6 -90 8 -70Z')+[-1,1].map(k=>PL(`M${k*60} 0L${k*96} -20M${k*64} 20L${k*100} 30M${k*50} 40L${k*80} 60`)).join('')+E(-8,-56,2.4)+E(8,-56,2.4),
+  treant:()=>`<g opacity=".9">${[[-60,-96,40],[0,-118,48],[58,-96,38],[-30,-70,34],[34,-70,34]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="var(--m)" stroke="var(--g)" stroke-width="2" stroke-opacity=".5"/>`).join('')}</g>`+P('M-30 60Q-24 0-34 -40Q-46 -70-76 -88Q-40 -84-24 -60Q-20 -96 0 -112Q6 -86 10 -60Q30 -90 64 -96Q36 -70 30 -40Q22 0 30 60Z')+P('M-30 60L-52 64L-28 46ZM30 60L54 64L28 46Z')+E(-10,-20,4)+E(12,-20,4)+G('M-10 4q10 8 22 0'),
+  fireball:()=>`<g filter="url(#gl)"><path d="M30 -10Q-40 -60-120 -90Q-60 -40-110 -20Q-50 -10-90 30Q-20 10 30 30Z" fill="url(#fi)" opacity=".85"/><circle cx="40" cy="10" r="46" fill="url(#fi)"/><circle cx="40" cy="10" r="22" fill="var(--a)"/></g>`,
+  bolt:()=>P('M-120 -70Q-110 -100-70 -96Q-60 -120-20 -112Q10 -130 40 -108Q80 -116 96 -90Q126 -88 120 -64Z')+`<path d="M10 -70L-20 -10L6 -10L-22 60L40 -24L12 -24L36 -70Z" fill="var(--a)" filter="url(#gl)"/>`,
+  wave:()=>`<path d="M-140 60Q-100 -40 0 -80Q80 -100 110 -40Q80 -60 60 -40Q90 -10 60 10Q30 -30 0 0Q-40 40-60 60Z" fill="var(--g)" opacity=".8" stroke="var(--a)" stroke-width="2"/><path d="M-130 60Q-80 30-30 40Q20 50 140 30V60Z" fill="var(--m)"/>`+G('M60 -40q10-10 22-6'),
+  tornado:()=>[0,1,2,3,4,5].map(i=>`<ellipse cx="${(i%2?6:-6)+i*3}" cy="${-90+i*28}" rx="${84-i*13}" ry="${12-i}" fill="none" stroke="var(--a)" stroke-width="${5-i*.5}" opacity="${.9-i*.1}"/>`).join('')+G('M-90 50q20-10 40 0M50 40q20-8 40 0'),
+  potion:()=>`<path d="M-12 -86h24v30Q42 -36 42 8Q42 54 0 54Q-42 54-42 8Q-42 -36-12 -56Z" fill="var(--m)" stroke="var(--a)" stroke-width="3"/><path d="M-38 10Q-20 0 0 8Q20 16 38 6Q40 50 0 50Q-40 50-38 10Z" fill="var(--g)" filter="url(#gl)"/>`+[[-10,20,5],[12,30,4],[2,-6,3],[-4,-30,3]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="var(--a)" opacity=".8"/>`).join('')+P('M-16 -96h32v12h-32Z'),
+  rune:()=>`<g filter="url(#gl)" fill="none" stroke="var(--g)"><circle r="70" stroke-width="4"/><circle r="52" stroke-width="2"/><path d="M0 -70L61 35L-61 35Z" stroke-width="3"/><path d="M0 70L-61 -35L61 -35Z" stroke-width="3"/></g><circle r="14" fill="var(--a)" filter="url(#gl)"/>`,
+  skullspell:()=>`<g filter="url(#gl)"><path d="M-50 40Q-70 -40-20 -90Q-30 -50 0 -60Q20 -110 50 -100Q30 -60 60 -30Q70 10 50 40Z" fill="var(--g)" opacity=".6"/></g><path d="M-34 -10Q-34 -56 0 -56Q34 -56 34 -10Q34 10 20 14V30H-20V14Q-34 10-34 -10Z" fill="var(--a)"/><circle cx="-13" cy="-12" r="9" fill="var(--s)"/><circle cx="13" cy="-12" r="9" fill="var(--s)"/>`+E(-13,-12,3)+E(13,-12,3),
+  shield:()=>`<g filter="url(#gl)">${[0,1,2,3,4,5,6,7].map(i=>`<path d="M0 0L${Math.cos(i*.785)*140} ${Math.sin(i*.785)*140}" stroke="var(--a)" stroke-width="8" opacity=".14"/>`).join('')}</g><path d="M-50 -70H50V-10Q50 40 0 64Q-50 40-50 -10Z" fill="var(--m)" stroke="var(--a)" stroke-width="5"/><path d="M-6 -56h12v104h-12zM-38 -20h76v12h-76z" fill="var(--g)"/>`,
+  sword:()=>P('M-90 60Q-80 20-40 14L40 14Q80 20 90 60Z')+`<path d="M-6 20L-6 -100L0 -116L6 -100L6 20Z" fill="var(--a)" filter="url(#gl)"/><path d="M-26 -40h52v8h-52z" fill="var(--g)"/><path d="M-4 -40v-28h8v28z" fill="var(--s)"/>`,
+  crown:()=>P('M-90 60Q-90 20-50 18H50Q90 20 90 60Z')+`<path d="M-56 10L-64 -50L-30 -20L0 -64L30 -20L64 -50L56 10Z" fill="var(--a)" stroke="var(--s)" stroke-width="3"/>`+[[-40,-6],[0,-14],[40,-6]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" class="g" filter="url(#gl)"/>`).join(''),
+  orb:()=>P('M-40 60L-26 20H26L40 60Z')+`<circle cx="0" cy="-30" r="50" fill="var(--g)" opacity=".35" stroke="var(--a)" stroke-width="3" filter="url(#gl)"/><path d="M-26 -40Q0 -70 26 -40Q0 -10-26 -40Z" fill="var(--a)" opacity=".7"/><ellipse cx="-18" cy="-52" rx="10" ry="6" fill="#fff" opacity=".5"/>`,
+  tome:()=>`<path d="M-100 20L0 34L100 20L100 -50L0 -36L-100 -50Z" fill="var(--a)" stroke="var(--s)" stroke-width="4"/><path d="M0 -36V34" stroke="var(--s)" stroke-width="3"/>`+G('M-80 -26h60M-80 -12h56M-80 2h60M20 -26h60M24 -12h56M20 2h48')+`<g filter="url(#gl)">${[[-30,-80],[10,-100],[44,-76],[-60,-90]].map(([x,y])=>`<path d="M${x} ${y}l4 -10 4 10 -4 6z" fill="var(--g)"/>`).join('')}</g>`};
+/* ---------- the scene behind the subject ---------- */
+const scene=(p,C,r,W,H)=>{let s='';const kind=['peaks','hills','sea','forest','ruins','cave'][C=='U'?(r()<.6?2:0):C=='G'?(r()<.6?3:1):C=='C'?(r()<.5?4:5):C=='B'?(r()<.5?4:5):C=='W'?(r()<.5?1:4):Math.floor(r()*2)];
+  const ridge=(y0,amp,n,f,o)=>{let d=`M0 ${H}L0 ${y0}`;for(let i=1;i<=n;i++)d+=`L${(i*W/n).toFixed(0)} ${(y0+(r()*2-1)*amp).toFixed(0)}`;return `<path d="${d}L${W} ${H}z" fill="${f}" opacity="${o}"/>`};
+  const sx=40+r()*240,sy=24+r()*50,sr=12+r()*20;s+=`<circle cx="${sx}" cy="${sy}" r="${sr*3.2}" fill="url(#rg)" opacity=".55"/><circle cx="${sx}" cy="${sy}" r="${sr}" fill="${p.a}" opacity=".85"/>`;
+  if(C=='B'||C=='U')for(let i=0;i<22;i++)s+=`<circle cx="${(r()*W).toFixed(0)}" cy="${(r()*H*.5).toFixed(0)}" r="${(r()*1.3+.3).toFixed(1)}" fill="#fff" opacity="${(r()*.7+.2).toFixed(2)}"/>`;
+  if(kind=='peaks')s+=ridge(70+r()*20,34,6,p.sky[1],.8)+ridge(110+r()*20,20,8,p.m,.9);
+  if(kind=='hills')s+=`<path d="M0 ${H}V140Q80 ${100+r()*20} 160 130T320 120V${H}Z" fill="${p.sky[1]}" opacity=".8"/><path d="M0 ${H}V170Q100 ${140+r()*20} 200 165T320 160V${H}Z" fill="${p.m}"/>`;
+  if(kind=='sea')s+=`<rect y="140" width="${W}" height="80" fill="${p.m}"/>`+[0,1,2].map(i=>`<path d="M0 ${150+i*18}Q40 ${144+i*18} 80 ${150+i*18}T160 ${150+i*18}T240 ${150+i*18}T320 ${150+i*18}" fill="none" stroke="${p.g}" stroke-width="1.5" opacity=".35"/>`).join('');
+  if(kind=='forest'){s+=ridge(120,10,6,p.m,.9);for(let i=0;i<12;i++){const x=r()*W,h=40+r()*60;s+=`<path d="M${x} ${180-h}l${14+r()*8} ${h}h-${28+r()*16}z" fill="${p.s}" opacity=".85"/>`}}
+  if(kind=='ruins'){s+=ridge(150,8,6,p.m,.9);for(let i=0;i<5;i++){const x=r()*W,h=40+r()*70,w=10+r()*12;s+=`<rect x="${x}" y="${170-h}" width="${w}" height="${h}" fill="${p.s}" opacity=".8"/>`}}
+  if(kind=='cave')s+=`<path d="M0 0H${W}V${H}H0Z M30 ${H}Q40 40 160 ${30+r()*20}Q280 40 290 ${H}Z" fill="${p.s}" fill-rule="evenodd" opacity=".9"/>`;
+  return s+`<rect y="${H-28}" width="${W}" height="28" fill="${p.s}" opacity=".55"/>`};
+window.hzCardArt=spec=>{if(CACHE[spec])return CACHE[spec];const m=/^b2?:(\d+):([RUGWBC])(?::([a-z]+))?$/.exec(spec||'');if(!m)return '';
+  const seed=+m[1],C=m[2],sub=S[m[3]]?m[3]:({R:'fireball',U:'wave',G:'treant',W:'shield',B:'skullspell',C:'orb'})[C],p=PAL[C],r=rng(seed),W=320,H=220;
+  const flip=r()<.5&&!['rune','tome','shield','crown','orb','potion','sword','tornado'].includes(sub),sc=(1.0+r()*.16).toFixed(2),dx=(r()*30-15).toFixed(0);
+  const body=(S[sub]||S.treant)(r).replace(/var\(--([sgam])\)/g,(x,k)=>p[k]); // SVG attributes can't read CSS variables
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice">`+
+    `<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.sky[0]}"/><stop offset=".6" stop-color="${p.sky[1]}"/><stop offset="1" stop-color="${p.sky[2]}"/></linearGradient>`+
+    `<radialGradient id="rg"><stop offset="0" stop-color="${p.a}"/><stop offset="1" stop-color="${p.g}" stop-opacity="0"/></radialGradient>`+
+    `<radialGradient id="fi" cx=".6" cy=".5"><stop offset="0" stop-color="#fff7c2"/><stop offset=".35" stop-color="#ffb347"/><stop offset=".75" stop-color="${C=='U'?'#38bdf8':C=='B'?'#a855f7':C=='G'?'#4ade80':'#ef4444'}"/><stop offset="1" stop-color="${p.s}" stop-opacity="0"/></radialGradient>`+
+    `<filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`+
+    `<style>.s{fill:${p.s};stroke:${p.g};stroke-width:2.2;stroke-linejoin:round;stroke-opacity:.7}.l{fill:none;stroke:${p.s};stroke-width:6;stroke-linecap:round}.g{fill:${p.g}}.e{fill:${p.a};filter:url(#gl)}</style></defs>`+
+    `<rect width="${W}" height="${H}" fill="url(#sk)"/>${scene(p,C,r,W,H)}<ellipse cx="${160+ +dx}" cy="${H-24}" rx="110" ry="12" fill="#000" opacity=".35"/>`+
+    `<g transform="translate(${160+ +dx} ${H-74}) scale(${flip?-sc:sc} ${sc})">${body}</g>`+
+    `<rect width="${W}" height="${H}" fill="url(#rg)" opacity=".06"/></svg>`;
+  return CACHE[spec]='data:image/svg+xml,'+encodeURIComponent(svg)};
+})();
+
+</script>
+<script id="huddle-v17-js">
+(()=>{
+const R=window.HZRENDER,A=(a,x)=>send(Object.assign({t:'app',ch:cur,a},x||{}));
+const left=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return s>=3600?Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m':s>=60?Math.floor(s/60)+'m '+(s%60)+'s':s+'s'};
+/* a sealed pack: swipe (or drag) across the top strip to tear it open; the server only then deals the cards */
+const PK={ph:'sealed',got:[],ch:'',el:null,until:0};
+const ARROW='<svg viewBox="0 0 22 14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h17M13 2l6 5-6 5"/></svg>';
+const cardData=id=>((window.HZAS[PK.ch]||{}).cards||[]).find(c=>c.id===id);
+const tcHtml=c=>{const t=document.querySelector('#hzApp .tcc');return window.hzTcCard?hzTcCard(c):''};
+function stage(st){if(!PK.el){PK.el=document.createElement('div');PK.el.className='pkSt'}const el=PK.el,ready=!st.next&&st.free>0;
+  if(PK.ph==='reveal'){if(el.dataset.got===PK.got.join(','))return el;el.dataset.got=PK.got.join(',');
+    el.innerHTML=`<div class="pkInfo"><b>Your new cards</b><small>Click a card to flip it</small></div><div class="pkRev">${PK.got.map((id,i)=>{const c=cardData(id)||{};return `<div class="pkC r-${c.rarity||'common'}${c.holo?' holo':''}" data-id="${id}" style="animation-delay:${.15+i*.18}s" tabindex="0"><div class="in"><div class="bk"><img class="gart" src="${HG.art('cards')}" alt=""></div><div class="fr">${window.hzTcCard?hzTcCard(c):''}</div></div><span class="rl ${c.rarity||'common'}">${c.holo?'Holo ':''}${c.rarity||''}</span></div>`}).join('')}</div>
+      <div class="pkDone"><button class="hzB" data-pkall>Flip all</button></div>`;return el}
+  delete el.dataset.got;const key=PK.ph+'|'+ready+'|'+st.free+'|'+st.pack;if(el.dataset.k===key)return el;el.dataset.k=key;
+  el.innerHTML=`<div class="pkInfo"><b>${st.free?'Huddle pack':'All cards found'}</b><small>${st.pack} card${st.pack==1?'':'s'} per pack · ${st.free} still sealed${st.first?' · your first pack is free':''}</small></div>
+    <div class="pkWrap${ready?'':' locked'}"><div class="pk"><div class="pkTop" tabindex="${ready?0:-1}" role="button" aria-label="Tear the pack open"><span class="ln"></span><span class="cut"></span><span class="txt">${ready?'Swipe to open '+ARROW:st.free?'Next pack in <b data-pku="'+(Date.now()+st.next)+'">'+left(st.next)+'</b>':'Sold out'}</span></div>
+      <div class="pkBody"><img class="gart" src="${HG.art('cards')}" alt=""><div class="pkName">HUDDLE<small>Trading Cards</small></div></div></div></div>
+    <p class="pkHint">${ready?'Drag across the top of the pack to tear it open.':st.free?'You can open another pack when the timer runs out.':'Every card has been claimed.'}</p>`;
+  if(ready)armTear(el.querySelector('.pkTop'));return el}
+function armTear(top){let x0=null,w=1,done=false;const set=t=>top.style.setProperty('--t',Math.min(1,t));
+  const finish=()=>{if(done)return;done=true;set(1);top.classList.add('torn');const pk=top.closest('.pk');pk.classList.add('burst');PK.ph='opening';PK.ch=cur;PK.until=Date.now()+8000;setTimeout(()=>A('open'),380)};
+  top.onpointerdown=e=>{x0=e.clientX;w=top.getBoundingClientRect().width;top.setPointerCapture(e.pointerId)};
+  top.onpointermove=e=>{if(x0==null||done)return;const t=Math.abs(e.clientX-x0)/w;set(t);top.style.transform=`rotate(${-t*5}deg)`;if(t>=.78)finish()};
+  top.onpointerup=top.onpointercancel=()=>{if(done)return;x0=null;set(0);top.style.transform=''};
+  top.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();finish()}}}
+setInterval(()=>document.querySelectorAll('[data-pku]').forEach(b=>{const ms=+b.dataset.pku-Date.now();if(ms<=0){b.removeAttribute('data-pku');if(cur)send({t:'app',ch:cur,a:'get'})}else b.textContent=left(ms)}),1000);
+const flip=c=>{if(!c||c.classList.contains('on'))return;const d=cardData(c.dataset.id);if(d&&window.hzTcCard){c.querySelector('.fr').innerHTML=hzTcCard(d);c.className=`pkC r-${d.rarity}${d.holo?' holo':''}`;c.querySelector('.rl').className='rl '+d.rarity;c.querySelector('.rl').textContent=(d.holo?'Holo ':'')+d.rarity}
+  c.classList.add('on');c.style.animation='none';c.style.opacity=1;c.style.transform='none';
+  const all=[...PK.el.querySelectorAll('.pkC')];if(all.every(x=>x.classList.contains('on'))){const b=PK.el.querySelector('.pkDone');if(b)b.innerHTML='<span class="v4Mut" style="align-self:center">Added to your collection.</span><button class="hzB on" data-pkback>Done</button>'}};
+const _full=R.cards.full,_ev=R.cards.ev;
+R.cards.full=function(st,m){_full.call(this,st,m);const on=m.body.querySelector('.v4Tabs [data-tab=open][aria-pressed=true]');if(!on)return;
+  if(PK.ch&&PK.ch!==cur){PK.ph='sealed';PK.got=[]}if(PK.ph==='opening'&&Date.now()>PK.until)PK.ph='sealed';
+  const box=m.body.querySelector('.v4Wrap>.v4Card');if(box)box.replaceWith(stage(st));
+  if(!PK.el.dataset.wired){PK.el.dataset.wired=1;PK.el.addEventListener('click',e=>{const c=e.target.closest('.pkC');if(c)return flip(c);
+    if(e.target.closest('[data-pkall]'))return PK.el.querySelectorAll('.pkC').forEach((c,i)=>setTimeout(()=>flip(c),i*220));
+    if(e.target.closest('[data-pkback]')){PK.ph='sealed';PK.got=[];delete PK.el.dataset.k;const s=window.HZAS[cur];if(s)R.cards.full(s,m)}});
+    PK.el.addEventListener('keydown',e=>{const c=e.target.closest('.pkC');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();flip(c)}})}};
+R.cards.ev=function(st,ev,m){if(ev.k==='pack'&&ev.o===oid){PK.ph='reveal';PK.got=ev.got;PK.ch=m?m.ch:cur}return _ev&&_ev.call(this,st,ev,m)};
+/* a pack that the server refused (timer, sold out) goes back to sealed */
+const _on17=on;on=function(d){if(d&&d.t==='perr'&&PK.ph==='opening'){PK.ph='sealed';if(PK.el)delete PK.el.dataset.k;const s=window.HZAS[cur];if(s&&$('#hzApp')&&$('#hzApp').dataset.app==='cards')setTimeout(()=>R.cards.full(s,{body:$('#hzApp .hzAB'),act:$('#hzApp .hzAA'),ch:cur}),50)}return _on17.apply(this,arguments)};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
