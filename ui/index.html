@@ -3611,11 +3611,11 @@ const gradOn=b=>b.dataset.l?(pf.gl||'').toLowerCase()==b.dataset.l&&(pf.gr||'').
 /* scenes for theme and banner tiles: built while the tile is on screen (or hovered / chosen), removed otherwise */
 /* while scrolling, new scenes wait; afterwards they are built a few per frame so nothing stutters */
 let pkScrolling=false,pkQ=new Set(),pkRaf=0;
-const fxNow=b=>{const th=b.parentElement.classList.contains('hzThG'),v=b.dataset.v,want=v&&(b.dataset.vis||b.classList.contains('run'));
+const fxNow=b=>{const th=b.parentElement.classList.contains('hzThG'),v=b.dataset.v,want=v&&(b.dataset.vis||b.classList.contains('run'))&&!b.closest('.pfOff');
   hzFxSet(th?b:b.querySelector('.bnM'),want?(th?v:'b-'+v):'')};
 const pkPump=()=>{pkRaf=0;let n=0;for(const b of pkQ){pkQ.delete(b);if(b.isConnected)fxNow(b);if(++n>=12)break}if(pkQ.size)pkRaf=requestAnimationFrame(pkPump)};
 const fxTile=b=>{const host=b.parentElement.classList.contains('hzThG')?b:b.querySelector('.bnM'),has=!!host.querySelector(':scope>.hzFx');
-  const want=!!b.dataset.v&&!!(b.dataset.vis||b.classList.contains('run'));if(has==want&&!(want&&b.classList.contains('run')))return;
+  const want=!!b.dataset.v&&!!(b.dataset.vis||b.classList.contains('run'))&&!b.closest('.pfOff');if(has==want&&!(want&&b.classList.contains('run')))return;
   if(!want||b.classList.contains('run'))return fxNow(b);pkQ.add(b);if(!pkRaf)pkRaf=requestAnimationFrame(pkPump)};
 window.hzRunPaint=()=>{const pr=$('#prof');if(!pr)return;
   pr.querySelectorAll('.hzRun>button').forEach(b=>{const g=b.parentElement;
@@ -5170,13 +5170,15 @@ const _o=on;on=function(d){_o(d);if(d&&(d.t=='init'||d.t=='profiles')){devPaint(
 .hfQ img{width:40px;height:40px;border-radius:6px;object-fit:cover}
 #hufiDock{position:fixed;right:16px;bottom:86px;z-index:60;width:320px;border-radius:16px;background:#0c120e;border:1px solid #166534;box-shadow:0 16px 40px #000c;padding:10px;display:grid;gap:8px;color:#fff}
 #hufiDock[hidden]{display:none}
+.v4Card,.v4List>*,.v4Two>*{min-width:0}.hfQ .v4Li b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hufiDock{width:320px}#hufiDock>*{min-width:0;max-width:100%}#hufiDock input[type=range]{box-sizing:border-box;min-width:0;max-width:100%;margin:0}
 #hufiDock{box-sizing:border-box;max-width:calc(100vw - 32px);overflow:hidden}#hufiDock .sp{overflow:hidden;border-radius:12px;min-width:0}#hufiDock iframe{width:100%!important;display:block}
 #hzApp .hzB svg{width:16px;height:16px;flex:none}
 .v4Form input[type=color]{height:38px;padding:3px 5px;cursor:pointer}
 #hufiDock .hd{display:flex;gap:10px;align-items:center}#hufiDock .hd img{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#111}
 #hufiDock .hd div{flex:1;min-width:0}#hufiDock b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px}#hufiDock small{opacity:.7;font-size:11.5px}
 #hufiDock .mini{all:unset;cursor:pointer;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#ffffff14}#hufiDock .mini svg{width:16px;height:16px}
-#hufiDock .sp iframe{border-radius:12px}#hufiDock.min .sp{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+
 #hufiDock input[type=range]{width:100%;accent-color:#22c55e}
 /* soundboard */
 #bSB svg{width:20px;height:20px}
@@ -5235,7 +5237,9 @@ const keepScroll=(m,fn)=>{const y=m.body.scrollTop;fn();m.body.scrollTop=y};
 const sel={};const T=(app,def)=>sel[app]||(sel[app]=def);
 /* ================= Blackjack ================= */
 let bjChip=5;
-const wallet=(st,label)=>`<div class="v4Wallet"><img class="gart" src="${HG.art(label)}" style="width:44px;height:44px"><div class="v4Grow"><small>Your money</small><span class="v4Big">${money(st.me.b)}</span></div>${st.me.refill?'<button class="hzB on" data-refill>Get a free $10</button>':st.me.b<1?`<span class="v4Mut">Free $10 in ${left(st.me.refillIn)}</span>`:''}</div>`;
+const wallet=(st,label)=>`<div class="v4Wallet"><img class="gart" src="${HG.art(label)}" style="width:44px;height:44px"><div class="v4Grow"><small>Your money</small><span class="v4Big">${money(st.me.b)}</span></div>${st.me.refill?'<button class="hzB on" data-refill>Get a free $10</button>':st.me.b<1?`<span class="v4Mut">Free $10 in <b data-rat="${st.me.refillAt}">${left(st.me.refillAt-Date.now())}</b></span>`:''}</div>`;
+/* live countdown to the free $10; when it is ready the app asks for a fresh view so the button appears */
+setInterval(()=>document.querySelectorAll('[data-rat]').forEach(e=>{const ms=+e.dataset.rat-Date.now();if(ms<=0){e.removeAttribute('data-rat');if(cur)send({t:'app',ch:cur,a:'get'})}else e.textContent=left(ms)}),1000);
 const topList=st=>`<div class="v4Card"><h4>Richest players</h4><div class="v4List">${st.top.map((t,i)=>`<div class="v4Li"><b style="width:18px;color:var(--dim)">${i+1}</b>${avs(t.o,t.n)}<span class="v4Grow">${esc(t.n)}</span><b>${money(t.b)}</b></div>`).join('')||'<div class="v4Empty">No one has played yet.</div>'}</div></div>`;
 R.blackjack={full(st,m){m.body.className='hzAB';const h=st.hand,live=h&&!h.done,res={win:'You win!',blackjack:'Blackjack!',push:'Push: your bet comes back',lose:'Dealer wins',bust:'Bust!'};
   keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${wallet(st,'blackjack')}<div class="v4Two"><div class="bjTable">
@@ -5245,7 +5249,7 @@ R.blackjack={full(st,m){m.body.className='hzAB';const h=st.hand,live=h&&!h.done,
     <div class="v4Row">${live?`<button class="hzB on" data-bj="hit">Hit</button><button class="hzB" data-bj="stand">Stand</button>${h.dbl?'<button class="hzB" data-bj="double">Double down</button>':''}`:
       `<div class="chips">${[1,5,10,25,100].map(v=>`<button class="chip" style="--k:${{1:'#64748b',5:'#dc2626',10:'#2563eb',25:'#16a34a',100:'#111'}[v]}" data-chip="${v}" aria-pressed="${v==bjChip}">$${v}</button>`).join('')}</div><input class="v4In" id="bjBet" type="number" min="1" value="${bjChip}" style="width:90px"><button class="hzB on" data-bj="deal">Deal</button>`}</div></div>
     <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Recent hands</h4><div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow">${esc(l.n)} <span class="v4Mut">${l.res}</span></span><b style="color:${l.net>0?'#4ade80':l.net<0?'#f87171':'var(--dim)'}">${l.net>0?'+':l.net<0?'−':''}${money(Math.abs(l.net))}</b></div>`).join('')||'<div class="v4Empty">No hands yet.</div>'}</div></div>${topList(st)}</div></div>
-    <p class="v4Mut" style="text-align:center">Fake money only. Dealer stands on 17, blackjack pays 3 to 2. If you run out, you get a free $10 once a day.</p></div>`});
+    <p class="v4Mut" style="text-align:center">Fake money only. Dealer stands on 17, blackjack pays 3 to 2. Blackjack has its own wallet: if you run out, you get a free $10 once a day.</p></div>`});
   m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b)return;
     if(b.dataset.chip){bjChip=+b.dataset.chip;$('#bjBet').value=bjChip;m.body.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c==b));return}
     if(b.dataset.refill!==undefined)return A('refill');const a=b.dataset.bj;if(a=='deal')A('deal',{bet:+$('#bjBet').value});else if(a)A(a)}}};
@@ -5266,7 +5270,7 @@ R.roulette={full(st,m){m.body.className='hzAB';const total=Object.values(rlBets)
     <div class="rlHist">${st.log.filter(l=>l.o==oid).slice(-14).reverse().map(l=>`<span style="background:${rlCol(l.num)}">${l.num}</span>`).join('')}</div></div>
     <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Your bets <span>${money(total)}</span></h4><div class="rlBoard">${board}</div>
       <div class="v4Row" style="margin-top:12px"><div class="chips">${[1,5,10,25,100].map(v=>`<button class="chip" style="--k:${{1:'#64748b',5:'#dc2626',10:'#2563eb',25:'#16a34a',100:'#111'}[v]}" data-chip="${v}" aria-pressed="${v==rlChip}">$${v}</button>`).join('')}</div><span class="v4Grow"></span><button class="hzB" data-clear>Clear</button><button class="hzB on" data-spin${total?'':' disabled'}>Spin</button></div>
-      <p class="v4Mut" style="margin:10px 0 0">Click the board to stack chips. Numbers pay 35 to 1, dozens 2 to 1, colors and halves 1 to 1.</p></div>
+      <p class="v4Mut" style="margin:10px 0 0">Click the board to stack chips. Numbers pay 35 to 1, dozens 2 to 1, colors and halves 1 to 1. Roulette has its own wallet: run out and you get a free $10 every 5 minutes.</p></div>
       <div class="v4Card"><h4>Table</h4><div class="v4List">${st.log.slice(-10).reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow">${esc(l.n)}</span><span class="rlHist"><span style="background:${rlCol(l.num)}">${l.num}</span></span><b style="color:${l.pay>l.total?'#4ade80':'#f87171'}">${l.pay>l.total?'+'+money(l.pay-l.total):'−'+money(l.total-l.pay)}</b></div>`).join('')||'<div class="v4Empty">No spins yet.</div>'}</div></div>${topList(st)}</div></div></div>`;
     const w=m.body.querySelector('.rlWheel');if(w){w.style.transition='none';w.style.transform=`rotate(${rlRot}deg)`}});
   m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b||rlSpinning)return;
@@ -5284,44 +5288,41 @@ R.hufi={full(st,m){m.body.className='hzAB';const it=st.q[st.i],g=gNow(),vcN=(st.
   keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap"><div class="hfNow"><div class="hfArt" ${hfArt(it)}>${it&&it.art?'':HG.img('hufi')}</div><div style="min-width:0"><small>${st.on?'Now playing':it?'Paused':'Nothing playing'}${vcN?' in '+esc(vcN):''}</small><h3>${it?esc(it.title):'Queue some music'}</h3><small>${it?esc(it.sub||'')+' · added by '+esc(it.n||nm(it.by)):'Paste a Spotify link or upload audio below.'}</small>
       <div class="hfCtl"><button data-h="prev" title="Previous">${IC.prev}</button><button class="pp" data-h="toggle" title="${st.on?'Pause':'Play'}">${st.on?IC.pause:IC.play}</button><button data-h="next" title="Next">${IC.next}</button><button data-h="loop" title="Repeat the queue" aria-pressed="${st.loop}">${IC.loop}</button></div>
       ${st.vc&&!inVc?`<p style="margin:10px 0 0;opacity:.8;font-size:12.5px">Join ${esc(vcN||'the voice channel')} to hear it.</p>`:''}</div></div>
-    <div class="v4Two"><div class="v4Card hfQ"><h4>Queue <span>${st.q.length}/100</span></h4><div class="v4Row" style="margin-bottom:10px"><input class="v4In v4Grow" id="hfUrl" placeholder="Paste a Spotify link (song, album, playlist)"><button class="hzB on" data-add>Add</button><button class="hzB" data-upf>${HG('upload')}Audio file</button></div>
-      <div class="v4List">${st.q.map((q,i)=>`<div class="v4Li${i==st.i?' cur':''}">${q.art?`<img src="${esc(q.art)}" alt="">`:`<img class="gart" src="${HG.art('hufi')}" style="width:40px;height:40px">`}<div class="v4Grow" style="min-width:0"><b style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(q.title)}</b><small class="v4Mut">${esc(q.sub||'')} · ${esc(q.n||nm(q.by))}</small></div><button class="hzB" data-play="${i}" title="Play">${IC.play}</button><button class="hzB" data-del="${esc(q.id)}" title="Remove">${HG('trash')}</button></div>`).join('')||'<div class="v4Empty">The queue is empty.</div>'}</div>
+    <div class="v4Two"><div class="v4Card hfQ"><h4>Queue <span>${st.q.length}/100</span></h4><div class="v4Row" style="margin-bottom:10px"><input class="v4In v4Grow" id="hfUrl" placeholder="Paste a Spotify or YouTube link"><button class="hzB on" data-add>Add</button><button class="hzB" data-upf>${HG('upload')}Audio file</button></div>
+      <div class="v4List">${st.q.map((q,i)=>`<div class="v4Li${i==st.i?' cur':''}">${q.art?`<img src="${esc(q.art)}" alt="">`:`<img class="gart" src="${HG.art('hufi')}" style="width:40px;height:40px">`}<div class="v4Grow" style="min-width:0"><b style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(q.title)}</b><small class="v4Mut"${q.err?' style="color:#f87171"':''}>${q.err?esc(q.err):q.loading?'Finding it…':esc(q.sub||'')+(q.dur?' · '+Math.floor(q.dur/60)+':'+String(q.dur%60).padStart(2,'0'):'')+' · '+esc(q.n||nm(q.by))}</small></div><button class="hzB" data-play="${i}" title="Play">${IC.play}</button><button class="hzB" data-del="${esc(q.id)}" title="Remove">${HG('trash')}</button></div>`).join('')||'<div class="v4Empty">The queue is empty.</div>'}</div>
       ${st.q.length?'<div class="v4Row" style="justify-content:flex-end;margin-top:10px"><button class="hzB bad" data-clear>Clear queue</button></div>':''}</div>
       <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Voice channel</h4><select class="v4In" id="hfVc"><option value="">Pick where Hufi plays</option>${st.vcs.map(v=>`<option value="${esc(v.id)}"${v.id==st.vc?' selected':''}>${esc(v.name)}</option>`).join('')}</select>
         <p class="v4Mut" style="margin:10px 0 0">While music plays, Hufi Music joins that call. Everyone in the call hears the same song at the same spot.</p></div>
-        <div class="v4Card"><h4>About Spotify</h4><p class="v4Mut" style="margin:0">Spotify songs play through Spotify’s own player. Sign in to Spotify once in the player (desktop app) to hear full songs; without signing in, Spotify only allows 30-second previews. Uploaded audio files always play in full.</p></div></div></div></div>`});
+        <div class="v4Card"><h4>How it works</h4><p class="v4Mut" style="margin:0">Paste a Spotify song, album or playlist, or a YouTube link. Hufi Music finds each song and streams it into the call, like a Discord music bot. Nobody has to sign in to anything. Uploaded audio files play too.</p></div></div></div></div>`});
   m.act.innerHTML='';const add=()=>{const v=$('#hfUrl').value.trim();if(v){A('add',{url:v});$('#hfUrl').value=''}};$('#hfUrl').onkeydown=e=>{if(e.key=='Enter')add()};
   $('#hfVc').onchange=e=>A('vc',{vc:e.target.value});
   m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
     if(d.h)A(d.h);else if(d.add!==undefined)add();else if(d.play)A('play',{i:+d.play});else if(d.del)A('del',{id:d.del});else if(d.clear!==undefined){if(await hzAsk('Clear the whole queue?'))A('clear')}
     else if(d.upf!==undefined){const f=await pickFile('audio/*');if(!f)return;toast('Uploading '+f.name+'…',true);try{const url=await upApp(f,'aud');const dur=await new Promise(r=>{const a=new Audio();a.preload='metadata';a.onloadedmetadata=()=>r(a.duration||0);a.onerror=()=>r(0);a.src=base+url});A('addf',{url,name:f.name.replace(/\.[^.]+$/,''),dur})}catch(er){toast(er.message)}}}}};
 /* the player: whoever is in the voice channel hears the queue (Spotify through its embed player, files through an audio element) */
-const HF={};let hfSkew=0,hfCur=null,hfAudio=null,spApi=null,spCtl=null,spUri='',spReady=false,spWant=null,spLoading=false;
-const dock=()=>{let d=$('#hufiDock');if(!d){d=document.createElement('div');d.id='hufiDock';d.hidden=true;d.innerHTML=`<div class="hd"><img alt=""><div><b></b><small></small></div><button class="mini" data-d="pp">${IC.pause}</button><button class="mini" data-d="next">${IC.next}</button><button class="mini" data-d="min" title="Hide the player">${IC.min}</button></div><div class="sp"><div id="hfSp"></div></div><label class="v4Mut" style="display:grid;gap:4px" id="hfVolL">Music volume<input type="range" min="0" max="100" id="hfVol"></label>`;document.body.append(d);
-  d.onclick=e=>{const b=e.target.closest('[data-d]');if(!b||!hfCur)return;if(b.dataset.d=='min'){d.classList.toggle('min');b.innerHTML=d.classList.contains('min')?IC.up:IC.min;return}send({t:'app',ch:hfCur.ch,a:b.dataset.d=='pp'?'toggle':'next'})};
+const HF={};let hfSkew=0,hfCur=null,hfAudio=null,hfSrc='';
+const hfUrl=it=>it.k==='f'?base+it.url:base+'/hufi/a/'+it.id+'?k='+encodeURIComponent(it.key||'');
+const dock=()=>{let d=$('#hufiDock');if(!d){d=document.createElement('div');d.id='hufiDock';d.hidden=true;d.innerHTML=`<div class="hd"><img alt=""><div><b></b><small></small></div><button class="mini" data-d="pp">${IC.pause}</button><button class="mini" data-d="next">${IC.next}</button><button class="mini" data-d="min" title="Hide the volume">${IC.min}</button></div><label class="v4Mut" style="display:grid;gap:4px" id="hfVolL">Music volume<input type="range" min="0" max="100" id="hfVol"></label>`;document.body.append(d);
+  d.onclick=e=>{const b=e.target.closest('[data-d]');if(!b||!hfCur)return;if(b.dataset.d=='min'){d.classList.toggle('min');$('#hfVolL').hidden=d.classList.contains('min');b.innerHTML=d.classList.contains('min')?IC.up:IC.min;return}send({t:'app',ch:hfCur.ch,a:b.dataset.d=='pp'?'toggle':'next'})};
   const v=d.querySelector('#hfVol');v.value=+(LS.get('huddle.hfvol')||70);v.oninput=()=>{LS.set('huddle.hfvol',v.value);if(hfAudio)hfAudio.volume=v.value/100}}return d};
-const spLoad=()=>{if(spApi||spLoading)return;spLoading=true;window.onSpotifyIframeApiReady=api=>{spApi=api;hfTick()};const s=document.createElement('script');s.src='https://open.spotify.com/embed/iframe-api/v1';s.async=true;document.head.append(s)};
 const hfPos=s=>s.on?Date.now()+hfSkew-s.at:(s.off||0);
-const hfStop=()=>{if(hfAudio){hfAudio.pause();hfAudio.removeAttribute('src');hfAudio.load();hfAudio=null}if(spCtl){try{spCtl.pause()}catch{}}const d=$('#hufiDock');if(d)d.hidden=true;hfCur=null};
+const hfStop=()=>{if(hfAudio){hfAudio.pause();hfAudio.removeAttribute('src');hfAudio.load();hfAudio=null;hfSrc=''}const d=$('#hufiDock');if(d)d.hidden=true;hfCur=null};
+/* every song (uploaded, or found from a Spotify / YouTube link) streams from the host as plain audio: no Spotify account needed */
 function hfTick(){const s=voice&&vch&&Object.values(HF).find(x=>x.vc===vch&&x.it);if(!s){if(hfCur)hfStop();return}
-  const d=dock(),it=s.it;d.hidden=false;d.querySelector('.hd img').src=it.art||HG.art('hufi');d.querySelector('b').textContent=it.title;d.querySelector('small').textContent=(s.on?'Hufi Music · ':'Paused · ')+(it.sub||'');
-  d.querySelector('[data-d=pp]').innerHTML=s.on?IC.pause:IC.play;const same=hfCur&&hfCur.it&&hfCur.it.id===it.id;hfCur=s;
-  if(it.k==='f'){d.querySelector('.sp').style.display='none';d.querySelector('#hfVolL').style.display='';if(spCtl){try{spCtl.pause()}catch{}}
-    if(!hfAudio||!same){if(hfAudio)hfAudio.pause();hfAudio=new Audio(base+it.url);hfAudio.volume=(+(LS.get('huddle.hfvol')||70))/100;hfAudio.onended=()=>hfCur&&send({t:'app',ch:hfCur.ch,a:'ended',i:(AS[hfCur.ch]||{}).i??-1})}
-    hfAudio.muted=!!deaf;const want=hfPos(s)/1000;if(Math.abs(hfAudio.currentTime-want)>1.5&&isFinite(want))try{hfAudio.currentTime=want}catch{}
-    if(s.on&&hfAudio.paused)hfAudio.play().catch(()=>{});if(!s.on&&!hfAudio.paused)hfAudio.pause();return}
-  if(hfAudio){hfAudio.pause();hfAudio=null}d.querySelector('.sp').style.display='';d.querySelector('#hfVolL').style.display='none';
-  const uri='spotify:'+it.kind+':'+it.sid;spWant={uri,on:s.on&&!deaf,pos:hfPos(s)};if(!spApi)return spLoad();
-  if(!spCtl){const host=$('#hfSp');spApi.createController(host,{uri,width:'100%',height:it.kind==='track'||it.kind==='episode'?80:152},c=>{spCtl=c;spUri=uri;
-      c.addListener('ready',()=>{spReady=true;spSync(true)});
-      c.addListener('playback_update',e=>{const p=e.data||{};if(!hfCur||!hfCur.it)return;const k=hfCur.it.kind;if(!p.isPaused&&p.duration&&p.position>=p.duration-1200&&(k==='track'||k==='episode')&&hfCur.on&&!spCtl._ended){spCtl._ended=1;send({t:'app',ch:hfCur.ch,a:'ended',i:(AS[hfCur.ch]||{}).i??-1})}})});return}
-  if(spUri!==uri){spUri=uri;spReady=false;spCtl._ended=0;spCtl.loadUri(uri);setTimeout(()=>{spReady=true;spSync(true)},1500);return}spSync(!same)}
-const spSync=force=>{if(!spCtl||!spReady||!spWant)return;try{if(spWant.on){if(force)spCtl.seek(Math.max(0,spWant.pos/1000));spCtl.resume?spCtl.resume():spCtl.play()}else spCtl.pause()}catch{}};
+  const d=dock(),it=s.it;d.hidden=false;d.querySelector('.hd img').src=it.art||HG.art('hufi');d.querySelector('b').textContent=it.title;
+  d.querySelector('small').textContent=it.err?it.err:(s.on?'Hufi Music · ':'Paused · ')+(it.sub||'');d.querySelector('[data-d=pp]').innerHTML=s.on?IC.pause:IC.play;hfCur=s;
+  if(it.err||it.loading){if(hfAudio)hfAudio.pause();return}
+  const src=hfUrl(it);if(!hfAudio||hfSrc!==src){if(hfAudio)hfAudio.pause();hfSrc=src;hfAudio=new Audio(src);hfAudio.preload='auto';hfAudio.volume=(+(LS.get('huddle.hfvol')||70))/100;
+    hfAudio.onended=()=>hfCur&&send({t:'app',ch:hfCur.ch,a:'ended',i:(AS[hfCur.ch]||{}).i??-1});hfAudio.onerror=()=>{if(hfCur)d.querySelector('small').textContent='Couldn’t load this song, skipping soon…'}}
+  hfAudio.muted=!!deaf;const want=hfPos(s)/1000,seekOk=hfAudio.readyState>=1;
+  if(seekOk&&isFinite(want)&&Math.abs(hfAudio.currentTime-want)>2)try{hfAudio.currentTime=want}catch{}
+  else if(!seekOk)hfAudio.onloadedmetadata=()=>{try{if(hfCur)hfAudio.currentTime=hfPos(hfCur)/1000}catch{}};
+  if(s.on&&hfAudio.paused)hfAudio.play().catch(()=>{});if(!s.on&&!hfAudio.paused)hfAudio.pause()}
 const _on14=on;on=function(d){
   if(d&&d.t=='hufi'){hfSkew=d.srv-Date.now();if(d.it)HF[d.ch]=d;else delete HF[d.ch];hfTick();return}
   if(d&&d.t=='sb')return sbHear(d);
   const r=_on14.apply(this,arguments);
-  if(d&&d.t=='app'&&d.s&&(chObj(d.ch)||{}).app==='hufi'){const s=d.s,it=s.q[s.i];hfSkew=s.srv-Date.now();if(it&&(s.on||s.i>=0))HF[d.ch]={ch:d.ch,vc:s.vc,on:s.on,at:s.at,off:s.off,it:{...it,kind:it.kind||''}};else delete HF[d.ch];hfTick()}
+  if(d&&d.t=='app'&&d.s&&(chObj(d.ch)||{}).app==='hufi'){const s=d.s,it=s.q[s.i];hfSkew=s.srv-Date.now();if(it&&(s.on||s.i>=0))HF[d.ch]={ch:d.ch,vc:s.vc,on:s.on,at:s.at,off:s.off,it:{...it}};else delete HF[d.ch];hfTick()}
   if(d&&(d.t=='init'||d.t=='profiles'))botProfile();
   if(d&&d.t=='users'){hfVoiceCheck();sbBtn()}
   if(d&&d.t=='guild'){sbBtn();sbPaint()}
@@ -5412,6 +5413,7 @@ R.levels={full(st,m){m.body.className='hzAB';const me=st.me,pct=Math.round(me.in
 /* ================= Economy ================= */
 const ecImg=(it,st)=>`<div class="ecImg" ${it.img?`style="background-image:url('${esc(base+it.img)}')"`:''}>${it.img?'':it.kind=='role'?`<span class="v4Pill" style="font-size:14px">@${esc((st.rolesAll.find(r=>r.id==it.role)||{}).name||'role')}</span>`:`<img class="gart" src="${HG.art('eco')}">`}</div>`;
 let ecEdit=null,ecImgUrl='';
+let ecLook='';
 R.eco={full(st,m){m.body.className='hzAB';const tab=T('eco','store'),$$=n=>esc(st.sym)+Math.round(n).toLocaleString('en-US'),inv=Object.entries(st.inv).filter(([,n])=>n>0),itm=id=>st.items.find(x=>x.id==id);
   const people=st.people.filter(p=>p.o!=oid);
   const body={
@@ -5424,6 +5426,9 @@ R.eco={full(st,m){m.body.className='hzAB';const tab=T('eco','store'),$$=n=>esc(s
       <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Income</h4>${st.inc.filter(i=>i.mine).map(i=>`<div class="v4Li" style="margin-bottom:6px"><span class="v4Grow">@${esc((st.rolesAll.find(r=>r.id==i.role)||{}).name||'role')}: ${$$(i.amt)} every ${i.every}h</span><small class="v4Mut">${i.ready?left(i.ready):'Ready'}</small></div>`).join('')||'<div class="v4Mut">None of your roles pays income.</div>'}<button class="hzB on" data-col style="margin-top:8px"${st.inc.some(i=>i.mine&&!i.ready)?'':' disabled'}>Collect</button></div>
       <div class="v4Card"><h4>Steal</h4>${st.rob.on?`<p class="v4Mut" style="margin:0 0 8px">${st.rob.chance}% chance to take ${st.rob.min}-${st.rob.max}% of their ${esc(st.name)}. Get caught and you pay them ${st.rob.fine}% of yours.</p><div class="v4Row"><select class="v4In v4Grow" id="ecRob">${people.map(p=>`<option value="${esc(p.o)}">${esc(p.n)}</option>`).join('')}</select><button class="hzB bad" data-rob${st.rob.ready?' disabled':''}>${st.rob.ready?left(st.rob.ready):'Rob'}</button></div>`:'<div class="v4Mut">Stealing is turned off here.</div>'}</div>
       <div class="v4Card"><h4>Pay someone</h4><div class="v4Row"><select class="v4In v4Grow" id="ecPayO">${people.map(p=>`<option value="${esc(p.o)}">${esc(p.n)}</option>`).join('')}</select><input class="v4In" id="ecPayN" type="number" min="1" placeholder="Amount" style="width:100px"><button class="hzB on" data-pay>Pay</button></div></div></div></div>`,
+    people:(()=>{const who=ecLook&&st.people.find(p=>p.o==ecLook),their=who?Object.entries((st.invs||{})[who.o]||{}).filter(([,n])=>n>0):[];
+      return `<div class="v4Two"><div class="v4Card"><h4>Members</h4><div class="v4List">${st.people.slice().sort((a,b)=>((st.bals||{})[b.o]||0)-((st.bals||{})[a.o]||0)).map(p=>`<button class="v4Li" data-look="${esc(p.o)}" style="all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;border:1px solid ${p.o==ecLook?'var(--c)':'var(--line)'};background:var(--bg)">${avs(p.o,p.n)}<span class="v4Grow">${esc(p.n)}${p.o==oid?' <small class="v4Mut">(you)</small>':''}</span><span class="v4Mut">${Object.values((st.invs||{})[p.o]||{}).reduce((a,n)=>a+n,0)} items</span><b class="ecPrice">${$$((st.bals||{})[p.o]||0)}</b></button>`).join('')}</div></div>
+        <div class="v4Card"><h4>${who?esc(who.n)+'’s stuff':'Pick someone'}</h4>${who?`<div class="v4Row" style="margin-bottom:10px">${avs(who.o,who.n)}<b class="v4Big" style="font-size:24px">${$$((st.bals||{})[who.o]||0)}</b></div>${their.length?`<div class="ecGrid">${their.map(([id,n])=>{const it=itm(id);return it?`<div class="ecItem">${ecImg(it,st)}<div class="ecBody"><b>${esc(it.name)} <span class="v4Pill">× ${n}</span></b>${it.desc?`<p>${esc(it.desc)}</p>`:''}</div></div>`:''}).join('')}</div>`:'<div class="v4Mut">They don’t own anything yet.</div>'}<p class="v4Mut" style="margin:10px 0 0">Just looking: this can’t take or change anything.</p>`:'<div class="v4Mut">Click a member to see what they own.</div>'}</div></div>`})(),
     top:`<div class="v4List">${st.top.map((t,i)=>`<div class="lvRow"><b>${i+1}</b>${avs(t.o,t.n)}<span>${esc(t.n)}</span><span></span><span class="ecPrice">${$$(t.b)}</span></div>`).join('')}</div><div class="v4Card" style="margin-top:14px"><h4>${st.edit?'Activity':'Your activity'}</h4><div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li"><span class="v4Grow">${esc(l.s)}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Mut">Nothing yet.</div>'}</div></div>`,
     manage:st.edit?`<div class="v4Card"><h4>Currency</h4><div class="v4Form"><label>Name<input id="ecName" maxlength="20" value="${esc(st.name)}"></label><label>Symbol<input id="ecSym" maxlength="4" value="${esc(st.sym)}"></label><label>Starting balance<input id="ecStart" type="number" value="${st.startBal||''}" placeholder="unchanged"></label>
         <label>Stealing<select id="ecRobOn"><option value="1"${st.rob.on?' selected':''}>Allowed</option><option value="0"${st.rob.on?'':' selected'}>Off</option></select></label><label>Steal success %<input id="ecCh" type="number" value="${st.rob.chance}"></label><label>Steal takes min %<input id="ecRmin" type="number" value="${st.rob.min}"></label><label>Steal takes max %<input id="ecRmax" type="number" value="${st.rob.max}"></label><label>Fine if caught %<input id="ecFine" type="number" value="${st.rob.fine}"></label><label>Steal cooldown (s)<input id="ecRcd" type="number" value="${st.rob.cd}"></label></div>
@@ -5438,10 +5443,10 @@ R.eco={full(st,m){m.body.className='hzAB';const tab=T('eco','store'),$$=n=>esc(s
         <div class="v4Card"><h4>Role income</h4><div class="v4List">${st.inc.map(i=>`<div class="v4Li"><span class="v4Grow">@${esc((st.rolesAll.find(r=>r.id==i.role)||{}).name||'role')}: ${$$(i.amt)} every ${i.every}h</span><button class="hzB" data-incdel="${esc(i.id)}">${HG('trash')}</button></div>`).join('')}</div>
           <div class="v4Form" style="margin-top:10px"><label>Role<select id="eiRole">${roleOpts(st,'','Pick a role')}</select></label><label>Amount<input id="eiAmt" type="number" value="100"></label><label>Every (hours)<input id="eiEv" type="number" value="24"></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-incadd>Add income</button></div></div></div>${mgrBox(st,'the economy')}`:''};
   keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap"><div class="v4Wallet"><img class="gart" src="${HG.art('eco')}" style="width:46px;height:46px"><div class="v4Grow"><small>Your ${esc(st.name)}</small><span class="v4Big">${$$(st.bal)}</span></div></div>
-    ${tabs([['store','Store'],['bag','My stuff'],['market','Market'],['earn','Earn'],['top','Richest'],st.edit&&['manage','Manage']],tab)}${body[tab]||''}</div>`});
+    ${tabs([['store','Store'],['bag','My stuff'],['market','Market'],['earn','Earn'],['people','People'],['top','Richest'],st.edit&&['manage','Manage']],tab)}${body[tab]||''}</div>`});
   m.act.innerHTML='';
   m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset,v=id=>($('#'+id)||{}).value;
-    if(d.tab){sel.eco=d.tab;return R.eco.full(st,m)}if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
+    if(d.tab){sel.eco=d.tab;return R.eco.full(st,m)}if(d.look){ecLook=d.look;return R.eco.full(st,m)}if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
     if(d.buy){const q=m.body.querySelector(`[data-q="${CSS.escape(d.buy)}"]`);return A('buy',{item:d.buy,qty:q?+q.value:1})}
     if(d.sell)return A('sellback',{item:d.sell,qty:1});
     if(d.list){const q=m.body.querySelector(`[data-lq="${CSS.escape(d.list)}"]`).value,p=m.body.querySelector(`[data-lp="${CSS.escape(d.list)}"]`).value;if(p==='')return toast('Set a price.');return A('list',{item:d.list,qty:+q,price:+p})}
@@ -5460,16 +5465,17 @@ R.eco={full(st,m){m.body.className='hzAB';const tab=T('eco','store'),$$=n=>esc(s
 /* ================= Trading Cards ================= */
 const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN"><span>${esc(c.name||'Card name')}</span><small>${esc(c.cost||'')}</small></div>
   <div class="tcA" ${c.art?`style="background-image:url('${esc(base+c.art)}')"`:''}>${c.art?'':'Card art'}</div><div class="tcT"><span>${esc(c.type||'Type')}</span><i class="tcG ${esc(c.rarity||'common')}" title="${esc(c.rarity||'common')}"></i></div>
-  <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
+  <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1 · trade only${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
 let tcDraft=null,tcGot=null,tcOffer={to:'',give:[],get:[]};
-R.cards={full(st,m){m.body.className='hzAB';const tab=T('cards','mine'),mine=st.cards.filter(c=>c.owner==oid),theirs=st.cards.filter(c=>c.owner==tcOffer.to&&tcOffer.to);
+let tcOwner='';
+R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st.free?'open':'mine';const tab=sel.cards,mine=st.cards.filter(c=>c.owner==oid),theirs=st.cards.filter(c=>c.owner==tcOffer.to&&tcOffer.to);
   const dr=tcDraft||{rarity:'common',frame:'#8b6bff'};
   const body={
     mine:mine.length?`<div class="tcGrid">${mine.map(c=>tcCard(c)).join('')}</div>`:'<div class="v4Empty">You don’t own any cards yet. Open a pack!</div>',
-    open:`<div class="v4Card" style="text-align:center;display:grid;gap:14px;justify-items:center"><img class="gart" src="${HG.art('cards')}" style="width:96px;height:96px"><div><b style="font-size:18px">Packs have ${st.pack} card${st.pack==1?'':'s'}</b><div class="v4Mut">${st.free} unclaimed card${st.free==1?'':'s'} left · one pack every ${st.cd}h</div></div>
+    open:`<div class="v4Card" style="text-align:center;display:grid;gap:14px;justify-items:center"><img class="gart" src="${HG.art('cards')}" style="width:96px;height:96px"><div>${st.first&&st.free?'<b style="font-size:20px;display:block;margin-bottom:4px">Welcome! Your first pack is free and ready.</b>':''}<b style="font-size:18px">Packs have ${st.pack} card${st.pack==1?'':'s'}</b><div class="v4Mut">${st.free} unclaimed card${st.free==1?'':'s'} left · one pack every ${st.cd}h · cards can only be traded, never sold</div></div>
       <button class="hzB on" data-open${st.next||!st.free?' disabled':''} style="font-size:15px;padding:10px 22px">${st.next?'Next pack in '+left(st.next):!st.free?'All cards claimed':'Open a pack'}</button>
       ${tcGot?`<div class="tcReveal">${tcGot.map((id,i)=>{const c=st.cards.find(x=>x.id==id);return c?`<div class="tcFlip" style="animation-delay:${i*.25}s">${tcCard(c)}</div>`:''}).join('')}</div>`:''}</div>`,
-    all:`<div class="tcGrid">${st.cards.map(c=>`<div style="display:grid;gap:22px">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button><select class="v4In v4Grow" data-grant="${esc(c.id)}"><option value="">In packs</option>${st.people.concat([{o:oid,n:nm(oid)}]).map(p=>`<option value="${esc(p.o)}"${p.o==c.owner?' selected':''}>${esc(p.n)}</option>`).join('')}</select></div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
+    all:`<div class="v4Row" style="margin-bottom:12px"><span class="v4Mut">Show</span><select class="v4In" id="tcOw" style="max-width:260px"><option value="">Every card</option><option value="-"${tcOwner=='-'?' selected':''}>Still in packs</option>${st.people.concat([{o:oid,n:nm(oid)+' (you)'}]).map(p=>`<option value="${esc(p.o)}"${p.o==tcOwner?' selected':''}>${esc(p.n)}’s cards</option>`).join('')}</select></div><div class="tcGrid">${st.cards.filter(c=>!tcOwner||(tcOwner=='-'?!c.owner:c.owner==tcOwner)).map(c=>`<div style="display:grid;gap:22px">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button><select class="v4In v4Grow" data-grant="${esc(c.id)}"><option value="">In packs</option>${st.people.concat([{o:oid,n:nm(oid)}]).map(p=>`<option value="${esc(p.o)}"${p.o==c.owner?' selected':''}>${esc(p.n)}</option>`).join('')}</select></div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
     trade:`<div class="v4Card"><h4>Open offers</h4><div class="v4List">${st.trades.map(t=>{const nmz=ids=>ids.map(id=>esc((st.cards.find(c=>c.id==id)||{}).name||'?')).join(', ')||'nothing';return `<div class="v4Li"><div class="v4Grow">${t.from==oid?`You offer <b>${nmz(t.give)}</b> to ${esc(t.tn)} for <b>${nmz(t.get)}</b>`:`${esc(t.fn)} offers <b>${nmz(t.give)}</b> for your <b>${nmz(t.get)}</b>`}</div>${t.to==oid?`<button class="hzB on" data-tok="${esc(t.id)}">Accept</button><button class="hzB" data-tno="${esc(t.id)}">Decline</button>`:`<button class="hzB" data-tcan="${esc(t.id)}">Cancel</button>`}</div>`}).join('')||'<div class="v4Mut">No open offers.</div>'}</div></div>
       <div class="v4Card"><h4>Make an offer</h4><select class="v4In" id="tcTo"><option value="">Trade with…</option>${st.people.map(p=>`<option value="${esc(p.o)}"${p.o==tcOffer.to?' selected':''}>${esc(p.n)}</option>`).join('')}</select>
         <div class="v4Mut" style="margin:12px 0 6px">You give (click to pick)</div><div class="tcGrid">${mine.map(c=>`<div class="tcPick${tcOffer.give.includes(c.id)?' on':''}" data-tg="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">You have no cards.</span>'}</div>
@@ -5485,7 +5491,7 @@ R.cards={full(st,m){m.body.className='hzAB';const tab=T('cards','mine'),mine=st.
     log:`<div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li"><span class="v4Grow">${esc(l.s)}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Empty">Nothing yet.</div>'}</div>`};
   keepScroll(m,()=>{m.body.innerHTML=`<div class="v4Wrap">${tabs([['mine','My collection ('+mine.length+')'],['open','Open packs'],['all','All cards ('+st.cards.length+')'],['trade','Trades'+(st.trades.some(t=>t.to==oid)?' •':'')],['log','History'],st.edit&&['make','Create']],tab)}${body[tab]||''}</div>`});
   m.act.innerHTML='';const f=$('#tcF');if(f)f.oninput=()=>{tcDraft=Object.assign({},dr,Object.fromEntries([...f.querySelectorAll('[data-k]')].map(i=>[i.dataset.k,i.value])));$('#tcPrev').innerHTML=tcCard(tcDraft)};
-  const to=$('#tcTo');if(to)to.onchange=()=>{tcOffer={to:to.value,give:tcOffer.give,get:[]};R.cards.full(st,m)};
+  const ow=$('#tcOw');if(ow)ow.onchange=()=>{tcOwner=ow.value;R.cards.full(st,m)};const to=$('#tcTo');if(to)to.onchange=()=>{tcOffer={to:to.value,give:tcOffer.give,get:[]};R.cards.full(st,m)};
   m.body.onchange=e=>{const s=e.target.closest('[data-grant]');if(s)A('grant',{id:s.dataset.grant,o:s.value})};
   m.body.onclick=async e=>{const b=e.target.closest('button,[data-tg],[data-tw]');if(!b)return;const d=b.dataset;
     if(d.tab){sel.cards=d.tab;tcGot=null;return R.cards.full(st,m)}if(d.mgrsave!==undefined)return mgrSave(b.closest('.v4Card'));
@@ -5514,6 +5520,50 @@ R.antispam={full(st,m){m.body.className='hzAB';const c=st.cfg;
     if(d.ascfg!==undefined){A('cfg',{on:$('#asOn').value=='1',msgs:+$('#asM').value,secs:+$('#asS').value,dup:+$('#asD').value,men:+$('#asMe').value,act:$('#asA').value,tmo:+$('#asT').value,del:$('#asDel').value=='1',exempt:[...$('#asEx').querySelectorAll('input:checked')].map(i=>i.value)});toast('Anti-Spam saved.',true)}}}};
 })();
 </script>
+
+<style id="huddle-v15">
+/* ---------- Huddle v15: the profile editor shows one section at a time ---------- */
+.pfOff{display:none!important}
+.pfTabs{position:sticky;top:-1px;z-index:6;display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px;padding:10px 0;background:var(--panel);border-bottom:1px solid var(--line)}
+.pfTabs button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--dim);background:var(--raise);border:1px solid var(--line);white-space:nowrap}
+.pfTabs button:hover{color:var(--tx)}
+.pfTabs button[aria-selected=true]{color:#fff;background:var(--ac);border-color:transparent}
+.pfTabs .sep{width:1px;align-self:stretch;background:var(--line);margin:2px 4px}
+</style>
+<script id="huddle-v15-js">
+(()=>{
+/* Only the open section exists on screen: the others are display:none, and their animated tiles are not even built
+   (the tile code skips anything inside .pfOff). Switching tabs builds that section's tiles and drops the old ones. */
+const label=el=>((el.querySelector('.eft b')||{}).textContent||'').trim();
+function tabify(){const pc=$('#prof .pc');if(!pc||pc.dataset.pfTabs||!pc.querySelector('.hzPers')||!pc.querySelector('.efx'))return;const ph=pc.querySelector('.phead');if(!ph)return;pc.dataset.pfTabs=1;
+  const secs=[],me=[];let n=ph.nextElementSibling;while(n&&!n.classList.contains('efxh')){if(!/^(INPUT)$/.test(n.tagName)&&!n.classList.contains('pact')&&n.id!='pferr')me.push(n);n=n.nextElementSibling}
+  if(me.length)secs.push({k:'me',t:'Profile',els:me,grp:0});
+  pc.querySelectorAll('.hzPers>.hzSec').forEach((el,i)=>secs.push({k:'p'+i,t:{'Avatar decoration':'Decoration','Profile card theme':'Card theme','Name font':'Name font','Interests':'Interests'}[label(el)]||label(el),els:[el],grp:1}));
+  pc.querySelectorAll(':scope>.efx').forEach((el,i)=>secs.push({k:'e'+i,t:label(el)||'Effect',els:[el],grp:2}));
+  pc.querySelectorAll(':scope>.efxh').forEach(h=>h.classList.add('pfOff'));
+  const bar=document.createElement('div');bar.className='pfTabs';bar.setAttribute('role','tablist');let last=-1;
+  bar.innerHTML=secs.map(s=>{const sep=last>=0&&s.grp!==last?'<span class="sep"></span>':'';last=s.grp;return sep+`<button type="button" role="tab" data-k="${s.k}">${esc(s.t)}</button>`}).join('');ph.after(bar);
+  const show=k=>{if(!secs.some(s=>s.k==k))k=secs[0].k;secs.forEach(s=>s.els.forEach(e=>e.classList.toggle('pfOff',s.k!==k)));bar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k==k));LS.set('huddle.pfTab',k);
+    try{window.hzRunPaint&&hzRunPaint()}catch{}};
+  bar.onclick=e=>{const b=e.target.closest('button[data-k]');if(b)show(b.dataset.k)};show(LS.get('huddle.pfTab')||'me')}
+new MutationObserver(()=>{if($('#prof').style.display=='grid')requestAnimationFrame(tabify)}).observe($('#prof'),{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
