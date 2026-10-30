@@ -5727,14 +5727,14 @@ function paintStage(){const s=stEl();s.hidden=!stage.length;s.innerHTML=stage.ma
   (stage.length?`<span class="hint">Press <b>Enter</b> to send${stage.length>1?' all '+stage.length:''}. Anything you type goes with it.</span>`:'')}
 const _upload=upload;upload=function(files){if(!cur)return;[...files].slice(0,10).forEach(f=>{const img=/^image\//.test(f.type),vid=/^video\//.test(f.type);stage.push({kind:'file',f,name:f.name,vid,url:img||vid?URL.createObjectURL(f):''})});
   if(stage.length>10)stage=stage.slice(-10);paintStage();$('#txt').focus()};
-document.addEventListener('click',e=>{const b=e.target.closest('#gifG button[data-id]');if(!b)return;e.preventDefault();e.stopImmediatePropagation();const im=b.querySelector('img');
-  stage.push({kind:'gif',id:b.dataset.id,small:im?im.src:''});paintStage();const p=$('#gifP');if(p)p.hidden=true;$('#txt').focus()},true);
+document.addEventListener('click',e=>{const b=e.target.closest('#gifG button[data-id],#gifG2 button[data-id]');if(!b)return;e.preventDefault();e.stopImmediatePropagation();const im=b.querySelector('img');
+  stage.push({kind:'gif',id:b.dataset.id,small:im?im.src:'',gif:(window.hzGifMeta||{})[b.dataset.id]});paintStage();const p=$('#gifP');if(p)p.hidden=true;$('#txt').focus()},true);
 async function sendStage(){if(!cur)return;if(myTmo())return toast('You are timed out for '+tLeft(myTmo()-Date.now())+'.');const items=stage;stage=[];paintStage();
   let text=$('#txt').value.trim();$('#txt').value='';$('#txt').dispatchEvent(new Event('input'));const reply=replyTo&&replyTo.id;clearReply();
   const files=items.filter(i=>i.kind=='file'),gifs=items.filter(i=>i.kind=='gif');
   if(files.length&&!canFile(cur)){toast('You do not have permission to send files in this channel.');files.length=0}
   if(text&&!files.length){send({t:'msg',ch:cur,text,reply});text=''}
-  for(const it of gifs)send({t:'gifmsg',ch:cur,id:it.id,reply});
+  for(const it of gifs){send({t:'gifmsg',ch:cur,id:it.id,reply,gif:it.gif});try{window.hzGifRecent&&hzGifRecent(it.gif||{id:it.id,small:it.small})}catch{}}
   for(const it of files){const note=document.createElement('div');note.className='empty up';note.textContent='Uploading '+it.name+'…';$('#msgs').append(note);
     try{const r=await fetch(base+`/upload?ch=${encodeURIComponent(cur)}&name=${encodeURIComponent(it.name)}${text?'&text='+encodeURIComponent(text):''}${reply?'&reply='+reply:''}`,{method:'POST',headers:{'x-token':HT||''},body:it.f});if(!r.ok)throw 0;text=''}
     catch{toast('Could not upload '+it.name+' (limit 100 MB).')}note.remove();if(it.url)URL.revokeObjectURL(it.url)}}
@@ -6334,6 +6334,134 @@ R.afk={full(st,m){m.body.className='hzAB';const c=st.cfg,vn=id=>(st.vcs.find(v=>
     if(d.afs!==undefined){A('cfg',{on:$('#afOn').value=='1',to:$('#afTo').value,mins:+$('#afM').value,muted:$('#afMu').value=='1',watch:[...$('#afW').querySelectorAll('input:checked')].map(i=>i.value),exempt:[...$('#afX').querySelectorAll('input:checked')].map(i=>i.value)});toast('Away Mover saved.',true)}}}};
 })();
 </script>
+
+<style id="huddle-v19">
+/* ---------- Huddle v19 ---------- */
+/* every title that used the old serif face now uses the sign-in "Huddle" face (people's own chosen name fonts stay) */
+:root{--title:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,"Helvetica Neue",sans-serif}
+.mono,.wm,#chtitle,.wlc h2,.sdlg h3,.soon b,.comHd h2,.lfgG,.hzcb h3,.lfgT1,#lfgL .empty b,#gh>b,#gh .ghGuild>b,.hzMainHd h2,.ri,.hzi,
+#modal .pk:not(.hzShell)>h3,#modal .pk:not(.hzShell)>div>h3:first-child,
+.ppName:not([class*="hzNf-"]),.npv:not([class*="hzNf-"]),#pname:not([class*="hzNf-"]),.pn:not([class*="hzNf-"]),.hzPick.pknf>button b:not([class*="hzNf-"]){font-family:var(--title)!important;font-style:normal!important;font-weight:800!important;letter-spacing:-.025em}
+#gh>b,#gh .ghGuild>b{font-size:19px!important}
+.ri{font-weight:900!important}
+/* sign-in: a livelier loading animation */
+#login .orbit{width:136px;height:136px;margin:22px auto 6px}
+#login .orbit::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 18%,color-mix(in srgb,var(--ac) 40%,transparent) 40%,var(--ac) 72%,var(--ac2,#ffc27a) 92%,transparent);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));animation:lwSpin 1.05s linear infinite;filter:drop-shadow(0 0 8px var(--ac))}
+#login .orbit::after{display:block!important;content:'';position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ac) 32%,transparent),transparent 62%);animation:lwHalo 2.2s ease-in-out infinite;pointer-events:none}
+#login .orbit img{inset:30px!important;width:76px!important;height:76px!important;animation:lwLogo 2.4s cubic-bezier(.45,0,.2,1) infinite!important}
+#login .orbit b{display:block!important;position:absolute;inset:-12px;animation:lwOrbit 3s linear infinite}#login .orbit b::before{content:'';position:absolute;left:50%;top:0;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--ac);box-shadow:0 0 14px var(--ac)}
+#login .orbit b:nth-of-type(2){inset:-20px;animation-duration:4.4s;animation-direction:reverse}#login .orbit b:nth-of-type(2)::before{background:var(--ac2,#ffc27a);box-shadow:0 0 14px var(--ac2,#ffc27a);width:7px;height:7px}
+#login .orbit b:nth-of-type(3){inset:-4px;animation-duration:2.2s;animation-delay:-1s}#login .orbit b:nth-of-type(3)::before{background:#fff;box-shadow:0 0 12px #fff;width:5px;height:5px}
+@keyframes lwSpin{to{transform:rotate(360deg)}}@keyframes lwOrbit{to{transform:rotate(360deg)}}
+@keyframes lwHalo{50%{transform:scale(1.12);opacity:.6}}
+@keyframes lwLogo{0%,100%{transform:scale(.94) rotate(-6deg)}50%{transform:scale(1.07) rotate(6deg)}}
+.lgWait{display:none;text-align:center;font:700 14px var(--title);letter-spacing:.02em;color:var(--dim);margin-bottom:6px}#login.wait .lgWait{display:block}
+.lgWait i{font-style:normal;animation:lwDot 1.2s ease-in-out infinite}.lgWait i:nth-child(2){animation-delay:.2s}.lgWait i:nth-child(3){animation-delay:.4s}@keyframes lwDot{0%,60%,100%{opacity:.2}30%{opacity:1}}
+.lgWait::after{content:'';display:block;width:150px;height:3px;margin:12px auto 0;border-radius:99px;background:linear-gradient(90deg,transparent,var(--ac),var(--ac2,#ffc27a),transparent) 0 0/200% 100%;animation:lwBar 1.3s linear infinite}@keyframes lwBar{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){#login .orbit::before,#login .orbit b,#login .orbit img,#login .orbit::after,.lgWait::after{animation:none!important}}
+/* GIF picker tabs + favorite stars */
+.gTabs{display:flex;gap:4px;margin:8px 0 2px}.gTabs button{all:unset;cursor:pointer;flex:1;text-align:center;padding:6px 8px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--dim);background:var(--raise)}
+.gTabs button[aria-pressed=true]{background:var(--ac);color:#fff}
+#gifG button[data-id],#gifG2 button[data-id]{position:relative}
+.gStar{position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#000a;color:#fff;opacity:0;transition:opacity .15s,transform .15s;z-index:2}
+.gStar svg{width:15px;height:15px}button[data-id]:hover .gStar,.gStar.on{opacity:1}.gStar.on{color:#fde047}.gStar:hover{transform:scale(1.12)}
+#gifG[hidden],#gifG2[hidden]{display:none!important}
+#gifG2{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-content:start;align-items:start;overflow:auto;flex:1;min-height:0;height:260px;margin-top:0}#gifG2 button[data-id]{all:unset;cursor:pointer;position:relative;border-radius:10px;overflow:hidden;background:var(--raise);min-height:80px}#gifG2 img{display:block;width:100%;height:auto}.gEmpty{grid-column:1/-1;padding:30px 10px;text-align:center;color:var(--dim);font-size:13px}
+/* mic test: hear yourself */
+.hzHear{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px}.hzHear small{color:var(--dim)}
+</style>
+<script id="huddle-v19-js">
+(()=>{
+/* ---------- device names without the USB id tags, e.g. "Microphone (HyperX QuadCast S) (03f0:0294)" -> "Microphone (HyperX QuadCast S)" ---------- */
+const tidy=l=>String(l||'').replace(/\s*\((?:[0-9a-f]{4}:[0-9a-f]{4})\)/gi,'').trim();
+for(const C of [window.MediaDeviceInfo,window.MediaStreamTrack]){try{const d=Object.getOwnPropertyDescriptor(C.prototype,'label');if(d&&d.get&&d.configurable)Object.defineProperty(C.prototype,'label',{configurable:true,enumerable:d.enumerable,get(){return tidy(d.get.call(this))}})}catch{}}
+/* ---------- sign-in loader: orbiting dots + caption ---------- */
+{const o=document.querySelector('#login .orbit');if(o&&!o.querySelector('b'))o.insertAdjacentHTML('afterbegin','<b></b><b></b><b></b>');
+ if(o&&!document.querySelector('.lgWait'))o.insertAdjacentHTML('afterend','<div class="lgWait">Signing you in<i>.</i><i>.</i><i>.</i></div>')}
+/* ---------- mic test: hear yourself (loopback) ---------- */
+let mon=null;
+const monSync=()=>{const want=LS.get('huddle.hearSelf')==='1'&&micTestStream&&micTestContext&&micTestContext.state!=='closed';
+  if(want&&!mon){try{const src=micTestContext.createMediaStreamSource(micTestStream),g=micTestContext.createGain();g.gain.value=1;src.connect(g).connect(micTestContext.destination);
+      if(spkId&&micTestContext.setSinkId)micTestContext.setSinkId(spkId).catch(()=>{});mon={src,g,ctx:micTestContext}}catch{}}
+  else if(mon&&(!want||mon.ctx!==micTestContext)){try{mon.src.disconnect();mon.g.disconnect()}catch{}mon=null}};
+setInterval(monSync,250);
+const hearUi=()=>{const b=$('#mtestBtn');if(!b||document.getElementById('hzHear'))return;const box=b.closest('.mtest')||b.parentElement;
+  box.insertAdjacentHTML('beforeend',`<label class="hzHear tg" id="hzHear"><span><b>Hear yourself</b> <small>Plays your mic back to you during the test. Use headphones to avoid echo.</small></span><input type="checkbox" role="switch" id="hzHearI"${LS.get('huddle.hearSelf')==='1'?' checked':''}></label>`);
+  $('#hzHearI').onchange=e=>{LS.set('huddle.hearSelf',e.target.checked?'1':'0');monSync()}};
+new MutationObserver(()=>{if($('#mtestBtn'))hearUi()}).observe($('#modal'),{childList:true,subtree:true});
+/* ---------- GIFs: Trending / Favorites / Recent ---------- */
+const META=window.hzGifMeta=window.hzGifMeta||{};
+{const f=window.fetch;window.fetch=function(u,o){const p=f.apply(this,arguments);try{if(/\/gif\?/.test(String(u&&u.url||u)))p.then(r=>r.clone().json().then(j=>(j.items||[]).forEach(g=>{META[g.id]=g}))).catch(()=>{})}catch{}return p}}
+const L=k=>{try{return JSON.parse(LS.get(k)||'[]')}catch{return []}},S=(k,v)=>LS.set(k,JSON.stringify(v));
+const favs=()=>L('huddle.gifFav'),isFav=id=>favs().some(g=>g.id===id);
+window.hzGifRecent=g=>{if(!g||!g.id||!g.small)return;S('huddle.gifRecent',[g,...L('huddle.gifRecent').filter(x=>x.id!==g.id)].slice(0,40))};
+const STAR='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
+let gTab='trend';
+const gSetup=()=>{const P_=$('#gifP'),G=$('#gifG');if(!P_||!G||P_.querySelector('.gTabs'))return;
+  $('#gifQ').insertAdjacentHTML('afterend','<div class="gTabs"><button data-gt="trend" aria-pressed="true">Trending</button><button data-gt="fav" aria-pressed="false">Favorites</button><button data-gt="rec" aria-pressed="false">Recent</button></div>');
+  G.insertAdjacentHTML('afterend','<div class="gG2" id="gifG2" hidden></div>');
+  P_.querySelector('.gTabs').onclick=e=>{const b=e.target.closest('[data-gt]');if(b)gShow(b.dataset.gt)};
+  $('#gifQ').addEventListener('input',()=>{if(gTab!=='trend')gShow('trend')});
+  new MutationObserver(stars).observe(G,{childList:true});stars()};
+const gShow=t=>{gTab=t;const P_=$('#gifP');P_.querySelectorAll('.gTabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.gt===t));const G=$('#gifG'),G2=$('#gifG2'),H=$('#gifH');
+  if(t==='trend'){G.hidden=false;G2.hidden=true;H.textContent=$('#gifQ').value.trim()?'Results for “'+$('#gifQ').value.trim()+'”':'Trending';return}
+  const list=t==='fav'?favs():L('huddle.gifRecent');list.forEach(g=>{META[g.id]=META[g.id]||g});if(!G.hidden&&G.offsetHeight)G2.style.height=G.offsetHeight+'px';G.hidden=true;G2.hidden=false;H.textContent=t==='fav'?'Your favorites':'Recently sent';
+  G2.innerHTML=list.map(g=>`<button data-id="${esc(g.id)}" title="${esc(g.title||'GIF')}"><img src="${esc(g.small)}" alt="" loading="lazy"></button>`).join('')||`<div class="gEmpty">${t==='fav'?'Tap the star on any GIF to save it here.':'GIFs you send show up here.'}</div>`;stars()};
+function stars(){document.querySelectorAll('#gifG button[data-id],#gifG2 button[data-id]').forEach(b=>{let s=b.querySelector('.gStar');if(!s){s=document.createElement('span');s.className='gStar';s.innerHTML=STAR;s.title='Favorite';b.append(s)}s.classList.toggle('on',isFav(b.dataset.id))})}
+addEventListener('click',e=>{const s=e.target.closest&&e.target.closest('.gStar');if(!s)return;e.preventDefault();e.stopImmediatePropagation();const b=s.closest('button[data-id]'),id=b.dataset.id,im=b.querySelector('img');
+  let list=favs();if(list.some(g=>g.id===id))list=list.filter(g=>g.id!==id);else{const g=META[id]||{id,small:im?im.src:'',big:im?im.src:'',title:'GIF'};list=[g,...list].slice(0,100)}S('huddle.gifFav',list);
+  if(gTab==='fav')gShow('fav');else stars()},true);
+const iv=setInterval(()=>{if($('#gifP')){gSetup();if($('#gifP .gTabs'))clearInterval(iv)}},500);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
