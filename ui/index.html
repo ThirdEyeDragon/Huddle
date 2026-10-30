@@ -2016,7 +2016,7 @@ function setDialog(){sRefresh=null;const TABS=[['ap','Appearance'],['nt','Notifi
     const draw=()=>{const th=LS.get('huddle.theme')||'midnight',ac=LS.get('huddle.accent')||'';
       ap.innerHTML=`<div class="fl">Theme<div class="ths">${THEMES.map(([k,n,b,r,a])=>`<button class="th" data-th="${k}" aria-pressed="${k==th}"><span class="pvw" style="background:${b}"><i style="background:${r}"></i><i style="background:${a}"></i></span>${n}</button>`).join('')}</div></div>
       <div class="fl">Accent color<div class="sws">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-pressed="${c==ac}" aria-label="Accent ${c}"></button>`).join('')}<button id="acr">Theme default</button></div></div>
-      <div class="efx"><div class="eft"><b>Server profile glow</b><small>Glow is configured separately for each server and is visible to everyone in that server. Right-click a server icon and choose “Name, icon &amp; color”.</small></div></div>
+      <div class="efx"><div class="eft"><b>Server profile glow</b><small>Glow is configured separately for each server and is visible to everyone in that server. Right-click a server icon and choose “Settings”.</small></div></div>
       <div class="efx"><div class="eft"><b>Chat color codes</b><small>Type a code before text; everyone sees the color and the code itself is hidden.</small></div><div class="pfx" style="gap:6px">${[['^0','#111111','Black'],['^1','#ff4d4d','Red'],['^2','#4ade80','Green'],['^3','#ffd43b','Yellow'],['^4','#60a5fa','Blue'],['^5','#22d3ee','Cyan'],['^6','#e879f9','Magenta'],['^7','#ffffff','White'],['^8','#fb923c','Orange'],['^9','#a1a1aa','Gray']].map(([c,col,n])=>`<span style="display:inline-flex;gap:4px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 7px"><b>${c}</b><span style="color:${col}">${n}</span></span>`).join('')}</div><small class="hint">Example: <code>^1Warning ^2all clear</code></small></div>
       <label class="tg"><span><b>Reduce motion</b><small>Turn off animations and transitions.</small></span><input type="checkbox" role="switch" id="rm"${LS.get('huddle.motion')?' checked':''}></label>`};
     ap.onclick=e=>{const t=e.target.closest('[data-th]'),s=e.target.closest('.sw[data-c]');
@@ -3743,22 +3743,283 @@ document.addEventListener('click',e=>{const im=e.target.closest('.gifM img');if(
 
 /* ---- right-click the mic for inputs, the headset for outputs, screen share for its settings ---- */
 const place=e=>{cm.hidden=false;cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY-cm.offsetHeight-6,innerHeight-cm.offsetHeight-8))+'px'};
-const devMenu=async(e,kind)=>{const list=(await devList()).filter(d=>d.kind==kind),curId=kind=='audioinput'?micId:spkId;
-  if(kind=='audiooutput'&&!canSink)return toast('Choosing an output device is not supported here.');
+const DI={audioinput:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',audiooutput:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="2"/><rect x="17" y="14" width="4" height="6" rx="2"/>',videoinput:'<rect x="3" y="7" width="13" height="10" rx="2"/><path d="m16 11 5-3v8l-5-3"/>'};
+const DT={audioinput:'Input device',audiooutput:'Output device',videoinput:'Camera'};
+const devMenu=async(e,kind)=>{if(kind=='audiooutput'&&!canSink)return toast('Choosing an output device is not supported here.');
+  const list=(await devList()).filter(d=>d.kind==kind),curId=kind=='audioinput'?micId:kind=='audiooutput'?spkId:(typeof camId!='undefined'?camId:'');
+  const ic=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${DI[kind]}</svg>`;
+  const opts=(kind=='videoinput'?[]:[{deviceId:'',label:'Default'}]).concat(list.filter(d=>d.deviceId&&d.deviceId!='default'&&d.deviceId!='communications'));
   cm.classList.remove('hzSsMenu');
-  cm.innerHTML=`<div class="hzMenuT">${kind=='audioinput'?'Input device':'Output device'}</div>`+[{deviceId:'',label:'Default'},...list.filter(d=>d.deviceId&&d.deviceId!='default'&&d.deviceId!='communications')].map(d=>`<button class="hzDev" data-d="${esc(d.deviceId)}"><i>${(curId||'')==d.deviceId?'✓':''}</i>${esc(d.label||'Unnamed device')}</button>`).join('');
+  cm.innerHTML=`<div class="hzM"><div class="hzMG">${DT[kind]}</div>`+(opts.length?opts.map((d,i)=>{const on=(curId||'')==d.deviceId||(!curId&&kind=='videoinput'&&i==0);return `<button class="hzMi hzDev" data-d="${esc(d.deviceId)}" aria-checked="${on}"><span class="mi">${ic}</span><span class="t">${esc(d.label||(kind=='videoinput'?'Camera '+(i+1):'Unnamed device'))}</span><span class="chk">${on?'✓':''}</span></button>`}).join(''):'<div class="hzMG" style="text-transform:none;letter-spacing:0;font-weight:500">No devices found.</div>')+'</div>';
   place(e);
-  cm.onclick=ev=>{const b=ev.target.closest('button[data-d]');if(!b)return;const v=b.dataset.d;cmClose();
-    if(kind=='audioinput'){micId=v;LS.set('huddle.mic',v);switchMic();toast('Microphone: '+b.textContent.replace('✓','').trim(),true)}
-    else{spkId=v;LS.set('huddle.spk',v);applySinks();toast('Output: '+b.textContent.replace('✓','').trim(),true)}}};
-const ssMenu=e=>{cm.classList.add('hzSsMenu');cm.innerHTML='<div class="hzMenuT">Screen share settings</div>'+hzSsOpts();place(e);hzSsNote();cm.onclick=()=>{}};
-document.addEventListener('contextmenu',e=>{const b=e.target.closest('#bMic,#bDeaf,#bScr');if(!b)return;e.preventDefault();
-  if(b.id=='bMic')devMenu(e,'audioinput');else if(b.id=='bDeaf')devMenu(e,'audiooutput');else ssMenu(e)});
+  cm.onclick=ev=>{const b=ev.target.closest('button[data-d]');if(!b)return;const v=b.dataset.d,name=b.querySelector('.t').textContent;cmClose();
+    if(kind=='audioinput'){micId=v;LS.set('huddle.mic',v);switchMic();toast('Microphone: '+name,true)}
+    else if(kind=='audiooutput'){spkId=v;LS.set('huddle.spk',v);applySinks();toast('Output: '+name,true)}
+    else{camId=v;LS.set('huddle.cam',v);if(typeof vtrack!='undefined'&&vtrack&&!vtrack._scr)startCam();toast('Camera: '+name,true)}}};
+const ssMenu=e=>{cm.classList.add('hzSsMenu');cm.innerHTML='<div class="hzM"><div class="hzMG">Screen share settings</div>'+hzSsOpts()+'</div>';place(e);hzSsNote();cm.onclick=()=>{}};
+/* both control sets: the call screen (b…) and the bottom-left panel (s…) */
+document.addEventListener('contextmenu',e=>{const b=e.target.closest('#bMic,#bDeaf,#bScr,#bCam,#sMic,#sDeaf,#sScr,#sCam');if(!b)return;e.preventDefault();e.stopPropagation();
+  const k=b.id.slice(1);if(k=='Mic')devMenu(e,'audioinput');else if(k=='Deaf')devMenu(e,'audiooutput');else if(k=='Cam')devMenu(e,'videoinput');else ssMenu(e)},true);
 new MutationObserver(()=>{if(cm.hidden)cm.classList.remove('hzSsMenu')}).observe(cm,{attributes:true,attributeFilter:['hidden']});
-{const t={bMic:'Right-click to choose your microphone',bDeaf:'Right-click to choose your output device',bScr:'Right-click for screen share settings'};
+{const t={bMic:'Right-click to choose your microphone',bDeaf:'Right-click to choose your output device',bScr:'Right-click for screen share settings',bCam:'Right-click to choose your camera',sMic:'Right-click to choose your microphone',sDeaf:'Right-click to choose your output device',sScr:'Right-click for screen share settings',sCam:'Right-click to choose your camera'};
  for(const id in t){const b=$('#'+id);if(b&&!b.title.includes('Right-click'))b.title=(b.title?b.title+' · ':'')+t[id]}}
 })();
 </script>
+
+<style id="huddle-v9">
+/* ---------- Huddle v9: redesigned right-click menus and settings windows ---------- */
+/* ===== context menus ===== */
+#cm{width:256px;min-width:0;padding:6px;border-radius:16px;display:block;max-height:min(82vh,640px);overflow-y:auto;overflow-x:hidden;
+  background:color-mix(in srgb,var(--panel) 94%,transparent);border:1px solid color-mix(in srgb,var(--tx) 12%,var(--line));box-shadow:0 22px 60px #000b,0 0 0 1px #ffffff06}
+#cm.hzSsMenu{width:min(540px,94vw)}
+.hzM{display:grid;grid-template-columns:minmax(0,1fr);gap:1px}
+.hzMHd{display:flex;gap:10px;align-items:center;padding:8px 8px 10px;margin:-2px -2px 4px;border-radius:12px 12px 0 0;border-bottom:1px solid var(--line);
+  background:radial-gradient(240px 80px at 0 0,color-mix(in srgb,var(--hdc,var(--ac)) 22%,transparent),transparent 70%)}
+.hzMHd .hi{width:36px;height:36px;border-radius:11px;flex:none;display:grid;place-items:center;overflow:hidden;font-weight:800;font-size:15px;color:#fff;background:var(--hdc,var(--ac))}
+.hzMHd .hi img{width:100%;height:100%;object-fit:cover}
+.hzMHd .hi.round{border-radius:50%}
+.hzMHd .hi .avw,.hzMHd .hi .av{--s:36px}
+.hzMHd .ht{min-width:0}.hzMHd b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hzMHd small{display:block;font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hzMG{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);padding:8px 10px 3px}
+.hzMSep{height:1px;background:var(--line);margin:5px 6px}
+#cm .hzMi{display:flex!important;align-items:center;gap:10px;width:100%;max-width:none;min-width:0;padding:7px 10px!important;border:0!important;border-radius:10px!important;background:transparent;box-shadow:none!important;
+  font-size:13.5px;color:var(--tx);text-align:left;white-space:nowrap;overflow:hidden;cursor:pointer}
+#cm .hzMi .mi{width:18px;height:18px;flex:none;color:var(--dim);display:grid;place-items:center}
+#cm .hzMi .mi svg{width:18px;height:18px}
+#cm .hzMi .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+#cm .hzMi .kb{margin-left:auto;font-size:11px;color:var(--dim)}
+#cm .hzMi:hover,#cm .hzMi:focus-visible{background:var(--hi)!important}
+#cm .hzMi:hover .mi{color:var(--ac)}
+#cm .hzMi.danger,#cm .hzMi.danger .mi{color:var(--bad)}
+#cm .hzMi.danger:hover{background:color-mix(in srgb,var(--bad) 15%,transparent)!important}
+#cm .hzMi .chk{margin-left:auto;width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;flex:none}
+#cm .hzMi[aria-checked=true] .chk{background:var(--ac);border-color:var(--ac);color:#140810}
+#cm .hzMi .dot{width:10px;height:10px;border-radius:50%;flex:none;margin:0 4px}
+/* switches in menus */
+#cm .hzMi em.st{margin-left:auto;font-size:0;width:32px;height:18px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background .2s}
+#cm .hzMi em.st::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s var(--ease-out,ease)}
+#cm .hzMi em.st.on{background:var(--ac)}#cm .hzMi em.st.on::after{left:16px}
+#cm .hzMi>span:not(.mi):not(.t):not(.chk){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+/* quick actions (server menu) */
+.hzMQ{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:2px 2px 6px}
+#cm .hzMQ .hzMi{display:grid!important;justify-items:center;gap:5px;padding:10px 4px!important;border:1px solid var(--line)!important;background:var(--raise);font-size:11.5px;white-space:normal;text-align:center}
+#cm .hzMQ .hzMi .t{flex:none}
+/* reaction bar (message menu) */
+.hzMRx{display:flex;gap:1px;padding:4px;margin:0 0 4px;background:var(--raise);border-radius:12px}
+.hzMRx button{flex:1;min-width:0;box-shadow:none!important;border:0!important;background:transparent!important;padding:5px 0!important;font-size:17px;text-align:center;border-radius:9px!important;line-height:1;transition:transform .15s var(--ease-out,ease)}
+.hzMRx button:hover{transform:scale(1.22);background:var(--hi)!important}
+/* ===== settings windows (app settings + server settings) ===== */
+#modal .pk.hzShell{width:min(1100px,96vw)!important;max-width:96vw!important;height:min(780px,92vh)!important;max-height:92vh!important;padding:0!important;overflow:hidden!important;display:block!important}
+.hzShell>.sdlg{display:grid!important;grid-template-columns:252px minmax(0,1fr);grid-template-rows:minmax(0,1fr)!important;align-content:stretch!important;height:100%!important;min-height:0!important;gap:0!important}
+.hzSide{display:flex;flex-direction:column;gap:2px;padding:18px 12px 14px;min-height:0;overflow-y:auto;background:color-mix(in srgb,var(--bg) 65%,var(--panel));border-right:1px solid var(--line)}
+.hzSideHd{display:flex;gap:11px;align-items:center;padding:4px 8px 16px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.hzSideHd .hi{width:44px;height:44px;border-radius:14px;flex:none;display:grid;place-items:center;overflow:hidden;font-weight:800;font-size:18px;color:#fff;background:var(--hdc,var(--ac))}
+.hzSideHd .hi img{width:100%;height:100%;object-fit:cover}.hzSideHd .hi .avw,.hzSideHd .hi .av{--s:44px}.hzSideHd .hi.round{border-radius:50%}
+.hzSideHd b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}.hzSideHd small{color:var(--dim);font-size:12px}
+.hzSide .hzGrp{font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.09em;font-weight:700;margin:12px 12px 4px}
+.hzSide .tabs2{display:flex!important;flex-direction:column;gap:2px;width:auto!important;max-width:none!important;background:none!important;border:0!important;padding:0!important;border-radius:0!important;margin:0!important}
+.hzSide .tabs2 button,.hzSide .hzNav{box-shadow:none;display:flex!important;align-items:center;gap:11px;justify-content:flex-start;width:100%;padding:9px 12px!important;border-radius:10px!important;border:0!important;
+  background:transparent!important;color:var(--dim)!important;font-weight:500;font-size:14px;text-align:left;box-shadow:none}
+.hzSide .tabs2 button svg,.hzSide .hzNav svg{width:18px;height:18px;flex:none}
+.hzSide .tabs2 button:hover,.hzSide .hzNav:hover{background:var(--hi)!important;color:var(--tx)!important}
+.hzSide .tabs2 button[aria-selected=true]{background:var(--acs)!important;color:var(--tx)!important;box-shadow:inset 3px 0 0 var(--ac)!important}
+.hzSide .tabs2 button[aria-selected=true] svg{color:var(--ac)}
+.hzSide .hzNav.danger{color:var(--bad)!important}.hzSide .hzNav.danger:hover{background:color-mix(in srgb,var(--bad) 14%,transparent)!important}
+.hzSide .hzFoot{margin-top:auto;padding-top:10px;border-top:1px solid var(--line);display:grid;gap:2px}
+.hzMain{display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:0;min-width:0}
+.hzMainHd{display:flex;align-items:center;gap:12px;padding:20px 28px 10px}
+.hzMainHd h2{margin:0;font:600 25px var(--serif);flex:1}
+.hzMainHd .hzX{width:36px;height:36px;padding:0;border-radius:12px;display:grid;place-items:center;flex:none}
+.hzBody{overflow-y:auto;padding:6px 28px 26px;min-height:0;scroll-behavior:smooth}
+.hzBody>section{display:grid;gap:14px;align-content:start;animation:hzIn .22s var(--ease-out,ease) both}
+.hzBody>section[hidden]{display:none!important}
+.hzMain>.pact{display:flex;justify-content:flex-end;gap:8px;margin:0!important;padding:12px 28px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--panel) 90%,var(--bg))}
+.hzMain>.pact:empty,.hzMain>.pact:not(:has(>:not([hidden]))){display:none}
+/* cards and fields used inside settings */
+.hzCard{display:grid;gap:12px;padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--raise),color-mix(in srgb,var(--raise) 55%,var(--bg)))}
+.hzCard>h4{margin:0;font-size:15px}.hzCard>.sub{margin:-6px 0 0;color:var(--dim);font-size:12.5px;line-height:1.45}
+.hzField{display:grid;gap:6px}.hzField>span{font-size:11px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.hzField input:not([type=color]),.hzField textarea{width:100%;padding:10px 12px;border-radius:11px}
+.hzRow2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:end}
+.hzInv{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hzInv code{flex:1;min-width:180px;padding:10px 12px;border-radius:11px;background:var(--bg);border:1px solid var(--line);font-size:14px;letter-spacing:.04em}
+.hzBody .tg{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--raise) 70%,transparent)}
+.hzBody .fl{gap:8px}
+/* roles + members */
+.hzBody .rg{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;align-items:start}
+.hzBody .rls{display:grid;gap:4px;align-content:start;position:sticky;top:0;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.hzBody .rli{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:10px;border:1px solid transparent;background:transparent;text-align:left}
+.hzBody .rli:hover{background:var(--hi)}.hzBody .rli .nn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.hzBody #red{display:grid;gap:12px;padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--raise),color-mix(in srgb,var(--raise) 55%,var(--bg)))}
+.hzBody #red .fl>.tg{border-radius:0;border-width:0 0 1px;background:none;padding:11px 2px}
+.hzBody #sm{display:grid;gap:6px}
+.hzBody .mrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--raise) 70%,transparent);transition:background .15s}
+.hzBody .mrow:hover{background:var(--raise)}
+.hzBody .mwho{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+/* the other dialogs get the same look */
+#modal .pk:not(.hzShell){padding:22px 24px!important}
+#modal .pk:not(.hzShell)>h3,#modal .pk:not(.hzShell)>div>h3:first-child{margin:0 0 6px;font:600 22px var(--serif)}
+#modal .pk:not(.hzShell) .pact{padding-top:12px;margin-top:4px;border-top:1px solid var(--line)}
+@media (max-width:760px){.hzShell>.sdlg{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.hzSide{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}.hzSideHd,.hzSide .hzGrp,.hzSide .hzFoot{display:none}.hzSide .tabs2{flex-direction:row!important}}
+</style>
+<script id="huddle-v9-js">
+(()=>{
+const I=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const IC={
+  user:'<circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-3.8 3.8-6 7.5-6s6.7 2.2 7.5 6"/>',msg:'<path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.3A8 8 0 1 1 21 12z"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/>',bellOff:'<path d="M8.5 3.7A6 6 0 0 1 18 8c0 2.2.4 3.9.9 5M6 8c0 7-3 8-3 8h13"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/><path d="M3 3l18 18"/>',
+  note:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',userPlus:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M19 8v6M16 11h6"/>',
+  userX:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M16.5 8.5l5 5M21.5 8.5l-5 5"/>',
+  pin:'<path d="M15 3.5 20.5 9l-3 1.2-3.6 3.6.5 4.2-1.5 1.5-4.4-4.4L4 19.6M9.5 8.6l3.6-3.6z"/><path d="m8.5 9.6 6 6"/>',folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  folderPlus:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10.5v5M9.5 13h5"/>',block:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',refresh:'<path d="M20 11a8 8 0 0 0-14.8-4M4 4v4h4M4 13a8 8 0 0 0 14.8 4M20 20v-4h-4"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  shield:'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>',users:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18 14.8c1.9.7 3 2.4 3 5.2"/>',
+  smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.6"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" />',
+  hash:'<path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"/>',hammer:'<path d="M13.5 6.5l4 4M12 8l-8.5 8.5a1.5 1.5 0 0 0 2 2L14 10M15 3.5l5.5 5.5-2.5 2.5L12.5 6z"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',logout:'<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/>',
+  reply:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5A5.5 5.5 0 0 1 20 14.5V20"/>',copy:'<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',msgX:'<path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.3A8 8 0 1 1 21 12z"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/>',
+  tag:'<path d="M20 12 12 20 3 11V4h7z"/><circle cx="7.5" cy="8.5" r="1.4"/>',home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+  palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-1-.8-1.4-.8-2.4 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="14.5" cy="7" r="1.2"/>',
+  mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',headset:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="2"/><rect x="17" y="14" width="4" height="6" rx="2"/>',
+  access:'<circle cx="12" cy="4.5" r="1.8"/><path d="M5 8l7 2 7-2M12 10v4l-3.5 6.5M12 14l3.5 6.5"/>',star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+  sliders:'<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+  monitor:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',camera:'<rect x="3" y="7" width="13" height="10" rx="2"/><path d="m16 11 5-3v8l-5-3"/>',
+  dots:'<circle cx="6" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="18" cy="12" r="1.3" fill="currentColor"/>',x:'<path d="M6 6l12 12M18 6 6 18"/>'};
+const svg=k=>I(IC[k]||IC.dots);
+/* which icon each menu action gets, and a cleaner label where the old one was clunky */
+const AIC={mute:'bellOff',view:'user',dm:'msg',note:'note',fr:'userPlus',pin:'pin',dmcat:'folder',block:'block',inv:'link',gen:'refresh',name:'gear',roles:'shield',mem:'users',emojis:'smile',audit:'list',
+  ch:'hash',cat:'folderPlus',bans:'hammer',del:'trash',leave:'logout',reply:'reply',copy:'copy',edit:'edit',to:'clock',perm:'lock',pfr:'userX',pdm:'msgX',sbfr:'userX',rxm:'smile',role:'tag'};
+const RELABEL={name:'Server settings',roles:'Roles & permissions',mem:'Members',emojis:'Custom emojis',audit:'Audit log',bans:'Bans',gen:'New invite code',inv:'Invite people',ch:'Create channel',cat:'Create category',
+  pfr:'Block friend requests',pdm:'Block DMs',edit:'Edit channel',perm:'Permissions',view:'View profile'};
+let ctxTarget=null;
+document.addEventListener('contextmenu',e=>{ctxTarget=e.target},true);
+document.addEventListener('mousedown',e=>{if(!cm.contains(e.target))ctxTarget=e.target},true);
+const iconOf=(o,n)=>{const p=P[o]||{};return avh(n||p.name||'?',p.color||colOf(o,n||p.name||'?'),p.avatar)};
+const prep=(b,a,map)=>{if(b.classList.contains('hzMi'))return b;b.classList.add('hzMi');map=map||{};
+  const hasEl=b.querySelector('span,em,i,b');let txt=b.textContent.trim();
+  if(!hasEl){let checked=null;if(/^✓\s/.test(txt)){checked=true;txt=txt.replace(/^✓\s*/,'')}else if(/\s✓$/.test(txt)){checked=true;txt=txt.replace(/\s*✓$/,'')}
+    txt=txt.replace(/^[^\p{L}\p{N}(]+/u,'');const lab=(a&&map[a]&&!/^(Click again)/.test(txt))?map[a]:txt;b.innerHTML=`<span class="t">${esc(lab)}</span>`;if(checked!==null)b.setAttribute('aria-checked','true')}
+  if(!b.querySelector('.mi'))b.insertAdjacentHTML('afterbegin',`<span class="mi">${svg(AIC[a]||'dots')}</span>`);
+  if(b.classList.contains('tg')){const st=b.querySelector('em.st'),sp=b.querySelector('span:not(.mi)');if(st)st.textContent='';if(sp&&map[a])sp.textContent=map[a]}
+  return b};
+const sep=()=>{const d=document.createElement('div');d.className='hzMSep';return d};
+const grp=t=>{const d=document.createElement('div');d.className='hzMG';d.textContent=t;return d};
+function decorate(){if(cm.hidden||cm.querySelector(':scope>.hzM')||cm.classList.contains('hzSsMenu'))return;
+  const kids=[...cm.children];if(!kids.length)return;
+  const btns=[...cm.querySelectorAll('button')],A=b=>b.dataset.a||'',has=a=>btns.some(b=>A(b)==a);
+  if(btns.some(b=>b.classList.contains('hzDev')))return;
+  const M=document.createElement('div');M.className='hzM';const t=ctxTarget;
+  let MAP={};const put=(list,label,into=M)=>{const bs=list.filter(Boolean);if(!bs.length)return;if(label)into.append(grp(label));bs.forEach(b=>into.append(prep(b,A(b),MAP)))};
+  const byA=a=>btns.find(b=>A(b)==a),rest=used=>btns.filter(b=>!used.includes(b));
+  let used=[];
+  if(has('inv')){ /* ---- server menu ---- */
+    MAP=RELABEL;
+    const gid=t&&t.closest&&t.closest('[data-g]')&&t.closest('[data-g]').dataset.g,g=G[gid&&G[gid]?gid:sel]||{};
+    const on=users.filter(u=>g.members&&g.members.includes(u.oid)&&(u.status||'online')!='offline').length;
+    M.insertAdjacentHTML('beforeend',`<div class="hzMHd" style="--hdc:${esc(g.color||'var(--ac)')}"><span class="hi">${g.icon?`<img src="${esc(assetUrl(g.icon))}" alt="">`:esc([...(g.name||'?')][0].toUpperCase())}</span><span class="ht"><b>${esc(g.name||'Server')}</b><small>${(g.members||[]).length} members · ${on} online</small></span></div>`);
+    const q=document.createElement('div');q.className='hzMQ';
+    [['inv','Invite'],['mute',null],['name','Settings']].forEach(([a,l])=>{const b=byA(a);if(!b)return;used.push(b);prep(b,a,MAP);const lab=l||(/^Unmute/.test(b.textContent)?'Unmute':'Mute');b.querySelector('.t').textContent=lab;if(a=='mute')b.querySelector('.mi').innerHTML=svg(/Unmute/.test(lab)?'bell':'bellOff');q.append(b)});
+    M.append(q);
+    const manage=['roles','mem','emojis','audit','bans','gen'].map(byA),create=['ch','cat'].map(byA),priv=['pfr','pdm'].map(byA),danger=['del','leave'].map(byA);
+    used.push(...manage,...create,...priv,...danger);
+    put(manage,'Manage');put(create,'Create');put(priv,'Privacy');put(rest(used),'');
+    if(danger.some(Boolean)){M.append(sep());put(danger,'')}
+  } else if(has('rx')||has('rxm')){ /* ---- message menu ---- */
+    const row=document.createElement('div');row.className='hzMRx';btns.filter(b=>A(b)=='rx'||A(b)=='rxm').forEach(b=>{used.push(b);row.append(b)});M.append(row);
+    const main=['reply','copy','pin','edit'].map(byA),mod=[byA('to')],danger=[byA('del')];used.push(...main,...mod,...danger);
+    put(main,'');put(rest(used),'');if(mod.some(Boolean)){M.append(sep());put(mod,'')}if(danger.some(Boolean)){M.append(sep());put(danger,'')}
+  } else if(!has('view')&&!has('reply')&&(has('perm')||has('edit'))){ /* ---- channel menu ---- */
+    MAP={edit:'Edit channel',perm:'Permissions'};const c=t&&t.closest&&t.closest('[data-c],[data-v]'),id=c&&(c.dataset.c||c.dataset.v),g=G[sel],x=g&&g.channels.find(k=>k.id==id);
+    if(x)M.insertAdjacentHTML('beforeend',`<div class="hzMHd"><span class="hi" style="background:var(--raise);color:var(--tx)">${svg(x.type=='voice'?'headset':'hash')}</span><span class="ht"><b>${esc(x.name)}</b><small>${x.type=='voice'?'Voice channel':'Text channel'}</small></span></div>`);
+    const danger=[byA('del')];used.push(...danger);put(rest(used),'');if(danger.some(Boolean)){M.append(sep());put(danger,'')}
+  } else if(has('view')){ /* ---- person (member list / DM row) ---- */
+    let o=t&&t.closest&&t.closest('[data-o]')&&t.closest('[data-o]').dataset.o;if(!o&&t&&t.closest&&t.closest('[data-c]')){const ch=t.closest('[data-c]').dataset.c;if(String(ch).startsWith('dm:'))o=dmO(ch)}
+    const p=P[o]||{};
+    if(o)M.insertAdjacentHTML('beforeend',`<div class="hzMHd" style="--hdc:${esc(p.color||'var(--ac)')}"><span class="hi round">${iconOf(o)}</span><span class="ht"><b>${esc(p.name||'Someone')}</b><small>${esc(tagOf?tagOf(o):'')}${p.cs?' · '+esc(p.cs):''}</small></span></div>`);
+    const main=['view','dm','note','fr','pin','dmcat'].map(byA),roles=btns.filter(b=>A(b)=='role'),notif=[byA('mute')],danger=[byA('block')];
+    used.push(...main,...roles,...notif,...danger);
+    put(main,'');put(notif,'');
+    if(roles.length){M.append(sep());M.append(grp('Roles'));roles.forEach(b=>{const on=/^✓/.test(b.textContent.trim());const dot=b.querySelector('.dot');const col=dot?dot.style.background:'';b.classList.add('hzMi');
+      b.innerHTML=`<span class="mi"><span class="dot" style="background:${esc(col)}"></span></span><span class="t">${esc(b.textContent.replace(/^✓\s*/,'').trim())}</span><span class="chk">${on?'✓':''}</span>`;b.setAttribute('aria-checked',on);M.append(b)})}
+    const other=kids.filter(k=>k.tagName!='BUTTON'&&!k.querySelector('button'));other.forEach(k=>{if(/No roles/.test(k.textContent)){k.className='hzMG';k.style.textTransform='none';k.style.letterSpacing='0';k.style.fontWeight='500';M.append(k)}});
+    put(rest(used),'');if(danger.some(Boolean)){M.append(sep());put(danger,'')}
+  } else if(btns.some(b=>b.dataset.s)){ /* ---- status ---- */
+    M.append(grp('Set status'));btns.forEach(b=>{const on=/✓/.test(b.textContent),d=b.querySelector('.sd2'),col=d?d.style.background:'';b.classList.add('hzMi');
+      b.innerHTML=`<span class="mi"><span class="dot" style="background:${esc(col)};width:12px;height:12px"></span></span><span class="t">${esc(b.textContent.replace('✓','').trim())}</span>${on?'<span class="chk">✓</span>':''}`;if(on)b.setAttribute('aria-checked','true');M.append(b)});
+  } else if(btns.some(b=>b.dataset.ms)){ /* ---- mute for… ---- */
+    const head=kids.find(k=>k.tagName=='DIV');if(head){M.append(grp(head.textContent.trim()))}
+    btns.forEach(b=>{const v=b.dataset.ms;b.classList.add('hzMi');const tx=b.textContent.replace(/^←\s*/,'');b.innerHTML=`<span class="mi">${svg(v=='b'?'reply':v=='x'?'edit':'clock')}</span><span class="t">${esc(tx)}</span>`;if(v=='b')M.append(sep());M.append(b)});
+  } else { /* ---- anything else: same look ---- */
+    kids.forEach(k=>{if(k.tagName=='BUTTON')M.append(prep(k,A(k)));else if(k.querySelector&&k.querySelector('button')){k.querySelectorAll('button').forEach(b=>prep(b,A(b)));M.append(k)}else{k.className='hzMG';k.removeAttribute('style');M.append(k)}});
+  }
+  cm.replaceChildren(M);
+  /* keep it on screen now that it has a new size */
+  requestAnimationFrame(()=>{const r=cm.getBoundingClientRect();if(r.right>innerWidth-8)cm.style.left=Math.max(4,innerWidth-r.width-8)+'px';if(r.bottom>innerHeight-8)cm.style.top=Math.max(4,innerHeight-r.height-8)+'px'})}
+new MutationObserver(decorate).observe(cm,{childList:true,attributes:true,attributeFilter:['hidden']});
+
+/* ===== settings windows: sidebar + header + content, for app settings and server settings ===== */
+const TIC={o:'home',r:'shield',m:'users',ap:'palette',nt:'bell',av:'mic',ac:'access',pv:'lock',rp:'star',ad:'sliders'};
+let shellG=null;
+const _sd=sDialog;sDialog=function(g){shellG=g;return _sd.apply(this,arguments)};
+const _st=setDialog;setDialog=function(){shellG=null;return _st.apply(this,arguments)};
+function shell(){const pk=$('#modal .pk'),d=pk&&pk.querySelector(':scope>.sdlg');if(!d||d.dataset.hz)return;
+  const tabs=d.querySelector(':scope>.tabs2'),h=d.querySelector(':scope>h3'),pact=d.querySelector(':scope>.pact');if(!tabs)return;d.dataset.hz=1;pk.classList.add('hzShell');
+  const server=!!d.querySelector('[data-p=o],#rls'),g=server?(shellG&&G[shellG.id]||shellG):null;
+  const side=document.createElement('nav');side.className='hzSide';side.setAttribute('aria-label','Settings sections');
+  if(server&&g)side.insertAdjacentHTML('beforeend',`<div class="hzSideHd" style="--hdc:${esc(g.color||'var(--ac)')}"><span class="hi">${g.icon?`<img src="${esc(assetUrl(g.icon))}" alt="">`:esc([...(g.name||'?')][0].toUpperCase())}</span><span><b>${esc(g.name)}</b><small>Server settings</small></span></div>`);
+  else{const me_=P[oid]||{};side.insertAdjacentHTML('beforeend',`<div class="hzSideHd"><span class="hi round">${iconOf(oid,myName)}</span><span><b>${esc(me_.name||myName||'You')}</b><small>User settings</small></span></div>`)}
+  tabs.querySelectorAll('button[data-t]').forEach(b=>{if(!b.querySelector('svg'))b.insertAdjacentHTML('afterbegin',svg(TIC[b.dataset.t]||'dots'))});
+  side.append(tabs);
+  const nav=(icon,label,fn,cls)=>{const b=document.createElement('button');b.type='button';b.className='hzNav'+(cls?' '+cls:'');b.innerHTML=svg(icon)+`<span>${esc(label)}</span>`;b.onclick=fn;return b};
+  if(server&&g){const extra=[];
+    if(hasP(g,'emojis'))extra.push(nav('smile','Custom emojis',()=>{closeM();emojiDialog()}));
+    if(hasP(g,'audit'))extra.push(nav('list','Audit log',()=>{closeM();auditOpen(g)}));
+    if(hasP(g,'ban'))extra.push(nav('hammer','Bans',()=>{closeM();banDialog(g)}));
+    if(extra.length){side.append(grp('More'));extra.forEach(x=>side.append(x))}
+    const foot=document.createElement('div');foot.className='hzFoot';foot.append(nav('link','Copy invite code',()=>{copyText(g.code)}));side.append(foot);
+  }else{side.append(grp('Profile'));side.append(nav('user','Edit profile',()=>{closeM();openProfile(oid,true)}));
+    const so=pact&&pact.querySelector('#so');if(so){const foot=document.createElement('div');foot.className='hzFoot';const b=nav('logout','Sign out',()=>so.click(),'danger');foot.append(b);side.append(foot);so.hidden=true}}
+  const main=document.createElement('div');main.className='hzMain';
+  main.innerHTML=`<div class="hzMainHd"><h2 id="hzTabT"></h2><button type="button" class="hzX" title="Close (Esc)" aria-label="Close">${svg('x')}</button></div><div class="hzBody"></div>`;
+  const body=main.querySelector('.hzBody');d.querySelectorAll(':scope>section').forEach(s=>body.append(s));
+  if(pact)main.append(pact);
+  if(h)h.remove();d.replaceChildren(side,main);
+  main.querySelector('.hzX').onclick=()=>{const gx=$('#gx');if(gx&&gx.textContent.trim()!='Done')gx.click();else closeM()};
+  const title=()=>{const s=tabs.querySelector('[aria-selected=true]');$('#hzTabT').textContent=s?s.textContent.trim():'';body.scrollTop=0;
+    if(pact){const ss=pact.querySelector('#ss');pact.hidden=!!ss&&ss.hidden&&!pact.querySelector('button:not([hidden]):not(#gx)')}};
+  new MutationObserver(title).observe(tabs,{attributes:true,subtree:true,attributeFilter:['aria-selected']});title();
+  if(server)overview(body,g)}
+/* server overview, as cards: identity, glow, invite */
+function overview(body,g){const ov=body.querySelector('[data-p=o]');if(!ov||ov.dataset.hz)return;ov.dataset.hz=1;
+  const sn=$('#sn'),sd=$('#sd'),sc=$('#sc'),row=sc&&sc.parentElement,studio=$('#sgStudio'),code=ov.querySelector('code'),inv=code&&code.parentElement;
+  const card=(t,sub)=>{const c=document.createElement('div');c.className='hzCard';c.innerHTML=`<h4>${t}</h4>${sub?`<p class="sub">${sub}</p>`:''}`;return c};
+  const field=(label,el)=>{const f=document.createElement('label');f.className='hzField';f.innerHTML=`<span>${label}</span>`;f.append(el);return f};
+  const id=card('Server profile','How your server appears in everyone’s server list.');
+  if(sn)id.append(field('Server name',sn));if(sd){sd.rows=3;id.append(field('Description',sd))}
+  if(sc){const r2=document.createElement('div');r2.className='hzRow2';const hint=document.createElement('p');hint.className='sub';hint.style.margin='0';hint.textContent='The background behind your server’s first letter when it has no icon.';r2.append(hint,field('Color',sc));id.append(r2)}
+  if(row){row.hidden=true;row.style.display='none'}
+  ov.prepend(id);if(studio)id.after(studio);
+  if(inv&&code){const c=card('Invite','Anyone with this code can join. Making a new one stops the old one working.');const box=document.createElement('div');box.className='hzInv';
+    const cp=document.createElement('button');cp.type='button';cp.className='on';cp.textContent='Copy';cp.onclick=()=>copyText(code.textContent);
+    const ng=$('#sg');box.append(code,cp);if(ng)box.append(ng);c.append(box);inv.remove();ov.append(c)}}
+new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:true});
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
