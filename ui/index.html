@@ -1222,8 +1222,20 @@ const STAR=(cx,cy,r,f)=>{let d='';for(let i=0;i<10;i++){const a=Math.PI/5*i-Math
 const SP=(x,y,s,f)=>`<path transform="translate(${x} ${y}) scale(${s})" d="M0-6C.6-2 2-.6 6 0 2 .6.6 2 0 6-.6 2-2 .6-6 0-2-.6-.6-2 0-6z" fill="${f}"/>`;
 const disc=(x,y,g,side,ring)=>`<path d="M${x-25} ${y}v8a25 11 0 0 0 50 0v-8z" fill="${side}"/><ellipse cx="${x}" cy="${y}" rx="25" ry="11" fill="url(#${g})"/><ellipse cx="${x}" cy="${y}" rx="16" ry="6.8" fill="none" stroke="${ring}" stroke-width="2.2"/><ellipse cx="${x}" cy="${y}" rx="9" ry="3.8" fill="none" stroke="${ring}" stroke-width="1.6"/>`;
 const ART={
-  text:W(`<path d="M23 12H73A15 15 0 0 1 88 27V55A15 15 0 0 1 73 70H44L26 86V70H23A15 15 0 0 1 8 55V27A15 15 0 0 1 23 12Z" fill="url(#a)"/><path transform="translate(3.5 0)" d="M39 25l-4 32M57 25l-4 32M25 35h42M22 47h42" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>`,L('a','#cbd5e1','#94a3b8','#64748b')),
-  voice:W(`<path d="M14 36h14l20-17v58L28 60H14a5 5 0 0 1-5-5V41a5 5 0 0 1 5-5z" fill="url(#a)"/><path d="M60 36a16 16 0 0 1 0 24M70 26a30 30 0 0 1 0 44" fill="none" stroke="url(#a)" stroke-width="7" stroke-linecap="round"/>`,L('a','#86efac','#22c55e','#15803d')),
+  text:W(`<path d="M42 8h38a12 12 0 0 1 12 12v20a12 12 0 0 1-12 12h-2v10L66 52H42a12 12 0 0 1-12-12V20A12 12 0 0 1 42 8z" fill="url(#b)"/><circle cx="56" cy="30" r="3.6" fill="#fff" opacity=".85"/><circle cx="67" cy="30" r="3.6" fill="#fff" opacity=".85"/><circle cx="78" cy="30" r="3.6" fill="#fff" opacity=".85"/>
+<g stroke="#070709" stroke-width="3.5" paint-order="stroke"><path d="M18 34h38a12 12 0 0 1 12 12v22a12 12 0 0 1-12 12H34L20 91V80h-2A12 12 0 0 1 6 68V46a12 12 0 0 1 12-12z" fill="url(#a)"/></g><path d="M34 46l-3 22M46 46l-3 22M26 52.5h23M24 62h23" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M14 42h10" stroke="#fff" stroke-opacity=".55" stroke-width="3.5" stroke-linecap="round"/>`,L('a','#ffa3c4','#ff5c93','#e0407c')+L('b','#c9bfff','#9a8bff','#6f5fe6')),
+  voice:W(`<g transform="translate(48 48) scale(.86) translate(-48 -48)"><path d="M14 30a20 20 0 0 0 0 26M7 23a30 30 0 0 0 0 40M82 30a20 20 0 0 1 0 26M89 23a30 30 0 0 1 0 40" fill="none" stroke="#7ff0dc" stroke-opacity=".75" stroke-width="4.5" stroke-linecap="round"/><rect x="34" y="8" width="28" height="46" rx="14" fill="url(#a)"/><path d="M40 22h16M40 31h16M40 40h16" stroke="#0b3b35" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/><path d="M37 14a10 10 0 0 1 8-4" stroke="#fff" stroke-opacity=".6" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M23 44a25 25 0 0 0 50 0" fill="none" stroke="url(#a)" stroke-width="7" stroke-linecap="round"/><path d="M48 70v11M36 86h24" stroke="url(#a)" stroke-width="7" stroke-linecap="round"/></g>`,L('a','#8ff5e2','#3fe0c5','#1f9e8b')),
+  friends:W(`<circle cx="35" cy="46" r="24" fill="url(#a)"/><circle cx="28" cy="42" r="2.8" fill="#3a0d1f"/><circle cx="42" cy="42" r="2.8" fill="#3a0d1f"/><path d="M26 52q9 8 18 0" fill="none" stroke="#3a0d1f" stroke-width="3" stroke-linecap="round"/>
+<g stroke="#070709" stroke-width="3.5" paint-order="stroke"><circle cx="62" cy="54" r="24" fill="url(#b)"/></g><circle cx="55" cy="50" r="2.8" fill="#0b3b35"/><circle cx="69" cy="50" r="2.8" fill="#0b3b35"/><path d="M54 60q8 7 16 0" fill="none" stroke="#0b3b35" stroke-width="3" stroke-linecap="round"/>
+<path d="M78 32c-7-5-13-9-13-15a6.5 6.5 0 0 1 13-2.4A6.5 6.5 0 0 1 91 17c0 6-6 10-13 15z" fill="#ff5c93" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>`,L('a','#ffb3cc','#ff7aa8','#e0407c')+L('b','#8ff5e2','#3fe0c5','#1f9e8b')),
+  community:W(`<circle cx="22" cy="40" r="11" fill="url(#b)"/><path d="M4 80c0-14 8-22 18-22s18 8 18 22z" fill="url(#b)"/><circle cx="74" cy="40" r="11" fill="url(#c)"/><path d="M56 80c0-14 8-22 18-22s18 8 18 22z" fill="url(#c)"/>
+<g stroke="#070709" stroke-width="3.5" paint-order="stroke"><circle cx="48" cy="36" r="14.5" fill="url(#a)"/><path d="M23 88c0-19 11-29 25-29s25 10 25 29z" fill="url(#a)"/></g>${SP(48,11,1.15,'#fff7ed')}${SP(84,18,.8,'#fde68a')}`,L('a','#ffe0b0','#ffc27a','#f5a257')+L('b','#8ff5e2','#3fe0c5')+L('c','#d6ccff','#9a8bff')),
+  showcase:W(`<g transform="translate(48 48) scale(.86) translate(-48 -48)"><g transform="rotate(-11 48 50)"><rect x="16" y="14" width="56" height="64" rx="6" fill="#ece8ff"/><rect x="22" y="20" width="44" height="40" rx="3" fill="url(#b)"/></g>
+<g transform="rotate(7 48 50)"><rect x="24" y="16" width="56" height="66" rx="6" fill="#fff"/><rect x="30" y="22" width="44" height="42" rx="3" fill="url(#a)"/><circle cx="62" cy="33" r="5" fill="#fff"/><path d="M30 64l14-17 10 10 7-7 13 14z" fill="#fff" opacity=".92"/></g>
+<g stroke="#070709" stroke-width="3" paint-order="stroke">${STAR(76,74,13,'#fbbf24')}</g></g>`,L('a','#c4b8ff','#9a8bff','#6f5fe6')+L('b','#ffd9a3','#ffc27a','#f5a257')),
+  duo:W(`<path d="M48 7l35 13v24c0 23-15 38-35 44C28 82 13 67 13 44V20z" fill="url(#a)"/><path d="M48 16l26 10v18c0 17-11 29-26 34z" fill="#fff" opacity=".14"/>
+<circle cx="37" cy="38" r="8.5" fill="#fff"/><path d="M22 64c1.5-9 7.5-14 15-14s13.5 5 15 14z" fill="#fff"/><circle cx="60" cy="38" r="8.5" fill="#fff" opacity=".55"/><path d="M45 64c1.5-9 7.5-14 15-14s13.5 5 15 14z" fill="#fff" opacity=".55"/>
+<g transform="rotate(-35 74 74)"><rect x="60" y="68" width="16" height="12" rx="6" fill="none" stroke="#fde68a" stroke-width="4"/><rect x="72" y="68" width="16" height="12" rx="6" fill="none" stroke="#f59e0b" stroke-width="4"/></g>`,L('a','#67e8f9','#22d3ee','#0e7490')),
   stickers:W(`<g transform="rotate(-8 48 48)"><path d="M22 14H70A12 12 0 0 1 82 26V58L58 82H22A12 12 0 0 1 10 70V26A12 12 0 0 1 22 14Z" fill="url(#a)"/><path d="M82 58 58 82V69A11 11 0 0 1 69 58Z" fill="#ffe4f1"/>${STAR(45,46,19,'#fff')}${SP(68,26,1,'#fff')}</g>`,L('a','#ffb0d6','#f472b6','#db2777')),
   scribble:W(`<path d="M9 74c9-13 16 6 25-6s13-17 21-6 9 8 17-2" fill="none" stroke="url(#b)" stroke-width="7" stroke-linecap="round"/><g transform="rotate(45 60 36)"><rect x="52" y="4" width="16" height="44" rx="3.5" fill="url(#a)"/><rect x="52" y="13" width="16" height="5" fill="#fff" opacity=".75"/><path d="M52 48h16l-8 17z" fill="#fde7c4"/><path d="M56.3 57h7.4L60 65z" fill="#0c4a6e"/></g>`,L('a','#7dd3fc','#38bdf8','#0369a1')+L('b','#f472b6','#a78bfa','#38bdf8')),
   checkers:W(`${disc(58,34,'k','#0b0b0d','#ffffff30')}${disc(40,58,'r','#8f1414','#ffffff55')}`,L('k','#5a5a63','#2a2a30','#0f0f12')+L('r','#ff8f8f','#ef4444','#b91c1c')),
@@ -1247,25 +1259,8 @@ return IC})();
   const fill=()=>document.querySelectorAll('[data-ic]:empty').forEach(e=>e.innerHTML=HG(e.dataset.ic));fill();document.addEventListener('DOMContentLoaded',fill)})();
 
 </script>
-<script>/* Huddle illustrated icons: full-color SVG artwork for default text/voice channels and the Friends / Community / Public Showcase tabs */
-window.HZI=(()=>{
-const L=(id,...c)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${c.map((x,i)=>`<stop offset="${i/(c.length-1)}" stop-color="${x}"/>`).join('')}</linearGradient>`,
-W=(b,d)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2.5" stdDeviation="1.5" flood-color="#000" flood-opacity=".35"/></filter><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>${d}</defs><g filter="url(#s)">${b}</g></svg>`),
-SP=(x,y,s,f)=>`<path transform="translate(${x} ${y}) scale(${s})" d="M0-6C.6-2 2-.6 6 0 2 .6.6 2 0 6-.6 2-2 .6-6 0-2-.6-.6-2 0-6z" fill="${f}"/>`,
-PH='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z',
-PK=L('pk','#ff8fb6','#ff5c93','#e0407c'),TL=L('tl','#7ff0dc','#3fe0c5','#22b5a0'),PC=L('pc','#ffd9a3','#ffc27a','#f5a257'),
-t=W(`<path d="M23 12H73A15 15 0 0 1 88 27V55A15 15 0 0 1 73 70H44L26 86V70H23A15 15 0 0 1 8 55V27A15 15 0 0 1 23 12Z" fill="url(#pk)"/>
-<path transform="translate(3.5 0)" d="M39 25l-4 32M57 25l-4 32M25 35h42M22 47h42" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>`,PK),
-v=W(`<path transform="translate(7.2 7.2) scale(3.4)" d="${PH}" fill="url(#tl)"/>`,TL),
-fr=W(`<circle cx="63" cy="33" r="12" fill="url(#tl)"/><path d="M40 76c0-14 10-24 23-24s23 10 23 24z" fill="url(#tl)"/>
-<g stroke="#070709" stroke-width="3.5" paint-order="stroke"><circle cx="35" cy="38" r="14" fill="url(#pk)"/><path d="M8 88c0-18 12-31 27-31s27 13 27 31z" fill="url(#pk)"/></g>`,PK+TL),
-com=W(`<g transform="translate(48 48) scale(.8) translate(-48 -56)"><path d="M24 30h48c10 0 17 8 19 22l3 16c1 8-4 14-11 14-5 0-8-3-12-8l-4-5H29l-4 5c-4 5-7 8-12 8-7 0-12-6-11-14l3-16C7 38 14 30 24 30z" fill="url(#pc)"/>
-<path d="M23 43h8v5h5v8h-5v5h-8v-5h-5v-8h5z" fill="#3b2412"/><circle cx="68" cy="47" r="5" fill="#3b2412"/><circle cx="78" cy="57" r="5" fill="#3b2412"/></g>`,PC),
-sc=W(`<clipPath id="c"><rect x="8" y="14" width="80" height="68" rx="15"/></clipPath>
-<rect x="8" y="14" width="80" height="68" rx="15" fill="url(#lv)"/>
-<g clip-path="url(#c)"><circle cx="65" cy="37" r="8.5" fill="#fff"/><path d="M6 84L31 48 50 70 62 57 90 88z" fill="#fff"/></g>`,
-L('lv','#c4b8ff','#9a8bff','#6f5fe6'));
-return{t,v,fr,com,sc}})();
+<script>/* Huddle illustrated icons: the default text/voice channel artwork and the Friends / Community / Public Showcase tabs (drawn in hz-glyphs) */
+window.HZI={t:HG.art('text'),v:HG.art('voice'),fr:HG.art('friends'),com:HG.art('community'),sc:HG.art('showcase')};
 </script>
 <style>
 /* illustrated icons: default channel pictures + Friends / Community / Public Showcase */
@@ -1379,7 +1374,7 @@ async function connect(name){
   base=cfg.server.replace(/\/+$/,'');
   let sock;try{sock=new WebSocket(base.replace(/^http/,'ws'))}catch{return retry('Server address not valid yet. Retrying…')}
   ws=sock;
-  sock.onopen=()=>send({t:'join',mode:CRED.mode,email:CRED.email,password:CRED.password,token:CRED.token,remember:!!CRED.remember,name,pass:cfg.password,key:KEY});
+  sock.onopen=()=>send({t:'join',mode:CRED.mode,email:CRED.email,password:CRED.password,token:CRED.token,remember:!!CRED.remember,name,pass:cfg.password,key:KEY,dev:(()=>{try{let v=localStorage.getItem('huddle.dev');if(!/^[\w-]{20,64}$/.test(v||'')){v=crypto.randomUUID();localStorage.setItem('huddle.dev',v)}return v}catch{return ''}})()});
   sock.onmessage=ev=>{lastRx=Date.now();try{on(JSON.parse(ev.data))}catch(e){console.error(e)}};
   sock.onclose=()=>lost(sock);
 }
@@ -4124,7 +4119,7 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 <style id="huddle-v10">
 /* ---------- Huddle v10: app channels + invites with limits ---------- */
 /* create channel */
-#modal .pk:has(>.hzCD),#modal .pk:has(>.hzIvD),#modal .pk:has(>.hzGD){width:min(680px,94vw)!important;padding:22px!important}
+#modal .pk:has(>.hzCD),#modal .pk:has(>.hzIvD),#modal .pk:has(>.hzGD),#modal .pk:has(>.hzTd){width:min(680px,94vw)!important;padding:22px!important}
 .hzGD{display:grid;gap:12px;min-width:0}.hzGD h3{margin:0;font-size:20px}.hzGD .sub{margin:-6px 0 0;color:var(--dim);font-size:13px}
 .hzGDs{display:flex;gap:12px;align-items:center;margin-top:6px}.hzGDs b{display:block;font-size:14px}.hzGDs small{display:block;color:var(--dim);font-size:12px;line-height:1.4}
 .hzGDi{width:36px;height:36px;flex:none;display:block;border-radius:10px;padding:4px;box-sizing:border-box;background:color-mix(in srgb,var(--tx) 6%,transparent)}
@@ -4342,6 +4337,33 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 .hzInvR button,.hzInvNew button{margin:0;padding:6px 10px;width:auto}
 #hzApp .hzB .gi,.hzSeg .gi{margin-right:5px}.hzTags span .gi,.hzSug .gi,#hzTagL .gi{width:1em;height:1em;margin-right:4px}
 @media (max-width:700px){.hzInvMk{grid-template-columns:1fr}.hzCkSd{width:100%}}
+/* declutter */
+.hzTidy{all:unset;cursor:pointer;display:inline-flex;gap:7px;align-items:center;padding:7px 13px;border-radius:999px;font-size:13px;font-weight:700;color:#06231c;background:linear-gradient(135deg,#a7f3d0,#3fe0c5);box-shadow:0 4px 16px #3fe0c540;transition:transform .15s,filter .15s;flex:none}
+.hzTidy:hover{filter:brightness(1.07);transform:translateY(-1px)}.hzTidy[hidden]{display:none}.hzTidy .gi{width:16px;height:16px}
+.hzTidy em{font-style:normal;background:#06231c26;padding:0 8px;border-radius:99px;font-size:11.5px;font-variant-numeric:tabular-nums}
+.hzRO{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--tx) 10%,transparent);color:var(--dim);display:inline-flex;gap:5px;align-items:center}.hzRO[hidden]{display:none}
+.hzTd{display:grid;gap:14px;min-width:0}.hzTdH{display:flex;gap:12px;align-items:center}.hzTdH>img{width:46px;height:46px;flex:none}.hzTdH h3{margin:0}.hzTdH .sub{margin:2px 0 0;color:var(--dim);font-size:13px}
+.hzTdL{display:grid;gap:8px}
+.hzTdR{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid var(--line);cursor:pointer;background:color-mix(in srgb,var(--tx) 3%,transparent);margin:0;transition:border-color .15s,background .15s}
+.hzTdR:has(input:checked){border-color:#3fe0c5;background:color-mix(in srgb,#3fe0c5 10%,transparent)}.hzTdR.bad:has(input:checked){border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.hzTdR input{width:18px;height:18px;margin:0;flex:none;accent-color:#3fe0c5}.hzTdR.bad input{accent-color:var(--bad)}
+.hzTdR .grow{flex:1;min-width:0}.hzTdR b{display:block;font-size:14px}.hzTdR small{display:block;color:var(--dim);font-size:12px;line-height:1.4}
+.hzTdR em{font-style:normal;font-weight:800;font-size:15px;min-width:34px;text-align:center;padding:4px 8px;border-radius:10px;background:color-mix(in srgb,var(--tx) 8%,transparent);font-variant-numeric:tabular-nums}
+#hzApp .hzRow .hzB .gi{margin:0}
+/* hullo */
+.hzHlHero{display:flex;gap:14px;align-items:center}.hzHlHero>img{width:52px;height:52px;flex:none}.hzHlHero h4{margin:0 0 4px;font-size:15px}
+.hzRolePick{display:flex;flex-wrap:wrap;gap:6px}.hzRolePick label{display:inline-flex;gap:6px;align-items:center;margin:0;padding:5px 10px;border-radius:99px;border:1px solid color-mix(in srgb,var(--rc) 45%,transparent);color:var(--rc);font-size:12.5px;cursor:pointer}
+.hzRolePick label:has(input:checked){background:color-mix(in srgb,var(--rc) 20%,transparent)}.hzRolePick input{width:14px;height:14px;margin:0;accent-color:var(--rc)}
+/* duo splice */
+.hzDuoHero{display:flex;gap:16px;align-items:center;padding:18px;border-radius:18px;border:1px solid #22d3ee66;background:linear-gradient(135deg,#22d3ee1f,transparent 70%)}
+.hzDuoHero>img{width:62px;height:62px;flex:none}.hzDuoHero h3{margin:0;font-size:18px}.hzDuoHero p{margin:3px 0 0;color:var(--dim);font-size:13px}.hzDuoHero .grow{flex:1;min-width:0}
+.hzDuoHero.lock{border-color:#f8717188;background:linear-gradient(135deg,#f8717126,transparent 70%);animation:hzDuoP 2s ease-in-out infinite}
+@keyframes hzDuoP{50%{box-shadow:0 0 0 1px #f8717166,0 0 26px #f8717133}}
+.hzDuoRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.hzDuoRow label{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--dim);margin:0}.hzDuoRow select{width:auto;margin:0;padding:6px 10px}
+.hzDuoGrp{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-width:0;font-size:13.5px}.hzDuoGrp i{color:var(--dim);display:inline-flex}
+.hzDuoK{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 16%,transparent)}
+/* guest call links */
+.hzCl .hzInvR code{overflow-wrap:anywhere}#bGuest .gi{width:18px;height:18px}
 </style>
 <script id="huddle-v10-js">
 (()=>{
@@ -4356,9 +4378,12 @@ const APPS={
   hullo:{n:'Hullo',d:'Welcomes new members to the server.',c:'#fb923c',slug:'welcome'},
   modpro:{n:'Moderate Pro',d:'Tickets, server logs and deleted messages.',c:'#60a5fa',slug:'moderation'},
   stats:{n:'Community Stats',d:'Joins, leaves, chat and voice activity over time.',c:'#2dd4bf',slug:'stats'},
+  duo:{n:'Duo Splice',d:'Raid protection and bans for second accounts.',c:'#22d3ee',slug:'duo-splice'},
   leaders:{n:'Leaderboards',d:'Top members by messages and time in voice.',c:'#fbbf24',slug:'leaderboards'}
 };
 window.HZAPPS=APPS;
+/* app channels have their own permissions, like text and voice channels */
+try{if(!CHP.some(p=>p[3]=='app'))CHP.push(['view','View app','See this app channel and open it.','app'],['use','Use the app','Draw, play, apply for roles, open tickets and change things in this app. Without it people can only look.','app'])}catch{}
 const AS={};window.HZAS=AS; // channel id -> latest state from the server
 let mounted=null;          // {ch, app, cleanup}
 const gNow=()=>G[sel]||{};
@@ -4399,21 +4424,44 @@ const isApp=c=>{const x=c&&chObj(c);return !!(x&&x.type=='app'&&APPS[x.app])};
 function unmount(){if(!mounted)return;try{mounted.cleanup&&mounted.cleanup()}catch{}mounted=null;$('#hzApp')?.remove();const b=$('#bar');if(b)b.style.visibility=cur?'':'hidden'}
 function mount(){const c=cur;if(!isApp(c)){unmount();return}if(mounted&&mounted.ch===c)return;unmount();
   const x=chObj(c),a=APPS[x.app],sec=document.createElement('section');sec.id='hzApp';sec.style.setProperty('--c',a.c);sec.dataset.app=x.app;
-  sec.innerHTML=`<div class="hzAH"><span class="ic">${HG.img(x.app)}</span><div class="tt"><h2>${esc(x.name)}</h2><p>${a.n} · ${a.d}</p></div><div class="hzAA"></div></div><div class="hzAB"><div class="hzEmpty">Loading…</div></div>`;
+  sec.innerHTML=`<div class="hzAH"><span class="ic">${HG.img(x.app)}</span><div class="tt"><h2>${esc(x.name)} <span class="hzRO" hidden>${HG('eye')}View only</span></h2><p>${a.n} · ${a.d}</p></div><div class="hzAA"></div><button class="hzTidy" hidden title="Clear out old stuff in this app"></button></div><div class="hzAB"><div class="hzEmpty">Loading…</div></div>`;
   $('main').append(sec);const bar=$('#bar');if(bar)bar.style.visibility='hidden';
-  mounted={ch:c,app:x.app,cleanup:null,el:sec,body:sec.querySelector('.hzAB'),act:sec.querySelector('.hzAA')};
+  mounted={ch:c,app:x.app,cleanup:null,el:sec,body:sec.querySelector('.hzAB'),act:sec.querySelector('.hzAA')};sec.querySelector('.hzTidy').onclick=tidySheet;
   send({t:'app',ch:c,a:'get'});if(AS[c])paint()}
 const _hzOpen=openCh;openCh=function(){const r=_hzOpen.apply(this,arguments);try{mount()}catch(e){console.error(e)}return r};
-function paint(){if(!mounted)return;const st=AS[mounted.ch];if(!st)return;const R=RENDER[mounted.app];if(R)try{R.full(st,mounted)}catch(e){console.error(e)}}
+function paint(){if(!mounted)return;const st=AS[mounted.ch];if(!st)return;const R=RENDER[mounted.app];if(R)try{R.full(st,mounted)}catch(e){console.error(e)}tidyRefresh()}
 const _hzOn=on;on=function(d){
-  if(d&&d.t=='app'){if(d.s){AS[d.ch]=d.s;if(mounted&&mounted.ch==d.ch)paint()}else if(d.ev&&AS[d.ch]){const ch=d.ch,R=RENDER[(chObj(ch)||{}).app];if(R&&R.ev)try{R.ev(AS[ch],d.ev,mounted&&mounted.ch==ch?mounted:null)}catch(e){console.error(e)}}return}
+  if(d&&d.t=='app'){if(d.s){AS[d.ch]=d.s;if(mounted&&mounted.ch==d.ch)paint()}else if(d.ev&&AS[d.ch]){const ch=d.ch,R=RENDER[(chObj(ch)||{}).app];if(R&&R.ev)try{R.ev(AS[ch],d.ev,mounted&&mounted.ch==ch?mounted:null)}catch(e){console.error(e)}if(mounted&&mounted.ch==ch)tidyRefresh()}return}
   if(d&&d.t=='invmade')return invMade(d);
+  if(d&&d.t=='vinvmade')return clMade(d);
   const r=_hzOn.apply(this,arguments);
-  if(d&&d.t=='guild'&&d.g){invRefresh(d.g.id);if(mounted&&mounted.app=='hullo'&&d.g.id==sel)paint()}
+  if(d&&d.t=='users')guestBtn();
+  if(d&&d.t=='guild'&&d.g){invRefresh(d.g.id);clRefresh();if(mounted&&d.g.id==sel)tidyRefresh();if(mounted&&mounted.app=='hullo'&&d.g.id==sel)paint()}
   return r};
 
 /* ================= the apps ================= */
 const RENDER={};
+/* ---------- Declutter: every app says what can be cleared; one sheet clears it ---------- */
+const TIDY={
+  stickers:st=>[{k:'mine',t:'My stickers',d:'Take every sticker you put on this wall off it.',n:st.items.filter(i=>i.o==oid).length},...(isModG(gNow())?[{k:'all',t:'The whole wall',d:'Moderators: clear every sticker for everyone.',n:st.items.length,bad:1}]:[])],
+  scribble:st=>[{k:'mine',t:'My drawing',d:'Erase every line you drew.',n:(st.strokes||[]).filter(x=>x.o==oid).length},...(isModG(gNow())?[{k:'all',t:'The whole canvas',d:'Moderators: wipe the canvas for everyone.',n:(st.strokes||[]).length,bad:1}]:[])],
+  one:st=>(st.pl.includes(oid)||isModG(gNow()))?[{k:'log',t:'Game log',d:'Clear the list of moves under the table.',n:st.log.length}]:[],
+  puzzle:st=>st.img&&(st.done||st.by==oid||isModG(gNow()))?[{k:'done',t:st.done?'The finished puzzle':'The puzzle in progress',d:st.done?'Take the finished picture off the table so a new one can start.':'Remove it for everyone. Nobody can finish it after this.',n:1,bad:!st.done}]:[],
+  huroler:st=>st.rev?[{k:'reviewed',t:'Reviewed applications',d:'Delete every approved and denied application. Pending ones stay.',n:st.apps.filter(a=>a.st!='pending').length}]:[{k:'mine',t:'My finished applications',d:'Remove your approved and denied applications from your list.',n:st.apps.filter(a=>a.o==oid&&a.st!='pending').length}],
+  modpro:st=>[...(st.mod?[{k:'closed',t:'Closed tickets',d:'Delete every closed ticket from the list. Open tickets stay.',n:st.tickets.filter(t=>!t.open).length},{k:'dels',t:'Deleted messages',d:'Empty the deleted-messages log, including saved images.',n:st.dels.length,bad:1}]:[{k:'mine',t:'My closed tickets',d:'Remove your closed tickets from your list.',n:st.tickets.filter(t=>!t.open).length}]),
+    ...(st.owner?[{k:'log',t:'Server log',d:'Owner only: start the server log fresh. The clean-up itself is logged.',n:st.log.length,bad:1}]:[])],
+  hullo:st=>st.edit?[{k:'joins',t:'Recent joins list',d:'Clear the list of people who joined.',n:st.feed.length}]:[],
+  duo:st=>st.mod?[{k:'log',t:'Activity list',d:'Clear Duo Splice activity. The counters and settings stay.',n:st.log.length}]:[]};
+function tidyRefresh(){if(!mounted)return;const b=mounted.el.querySelector('.hzTidy'),ro=mounted.el.querySelector('.hzRO'),T=TIDY[mounted.app],st=AS[mounted.ch];if(ro)ro.hidden=chCan(mounted.ch,'use');if(!b)return;
+  const list=T&&st&&chCan(mounted.ch,'use')?T(st).filter(x=>x.n>0):[],n=list.reduce((a,x)=>a+x.n,0);b.hidden=!list.length;const h=`${HG('sparkle')}<span>Declutter</span><em>${n>999?'999+':n}</em>`;if(b.innerHTML!==h)b.innerHTML=h}
+function tidySheet(){if(!mounted)return;const T=TIDY[mounted.app],st=AS[mounted.ch];if(!T||!st)return;const list=T(st).filter(x=>x.n>0);if(!list.length)return toast('Nothing to clean up here.',true);const ch=mounted.ch,a=APPS[mounted.app],app=mounted.app;
+  modal(`<div class="hzTd"><div class="hzTdH">${HG.img(app)}<div><h3>Declutter ${esc(a.n)}</h3><p class="sub">Pick what to clear out. This can’t be undone.</p></div></div>
+    <div class="hzTdL">${list.map(x=>`<label class="hzTdR${x.bad?' bad':''}"><input type="checkbox" value="${x.k}"${x.bad?'':' checked'}><span class="grow"><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span><em>${x.n}</em></label>`).join('')}</div>
+    <div class="hzCDact"><button id="gx">Cancel</button><button class="on" id="tdGo">Clear selected</button></div></div>`,()=>{
+    const pick=()=>[...document.querySelectorAll('.hzTdR input:checked')].map(i=>i.value),upd=()=>{const w=pick(),n=w.reduce((s,k)=>s+(list.find(x=>x.k==k)||{n:0}).n,0);$('#tdGo').disabled=!w.length;$('#tdGo').textContent=w.length?'Clear '+n+' item'+(n==1?'':'s'):'Clear selected'};
+    document.querySelectorAll('.hzTdR input').forEach(i=>i.onchange=upd);upd();$('#gx').onclick=closeM;
+    $('#tdGo').onclick=async()=>{const what=pick();if(!what.length)return;if(what.some(k=>(list.find(x=>x.k==k)||{}).bad)&&!await hzAsk('Some of this is cleared for everyone, not just you. Continue?'))return;
+      send({t:'app',ch,a:'tidy',what});closeM();toast('All tidied up.',true)}})}
 
 /* ---------- Sticker Together ---------- */
 const STK=['😀','😂','🥹','😍','🥳','😎','🤯','😭','😤','🤡','👍','👏','🙌','🔥','💯','❤️','💜','💙','⭐','✨','🎉','🎮','🍕','🍩','🐱','🐶','🦊','🐸','👻','💀','🌈','⚡','🚀','🏆','💎','🌸','🍀','🎵','👀','🫶'];
@@ -4536,17 +4584,17 @@ RENDER.one={full(st,m){m.body.className='hzAB';const me=st.pl.indexOf(oid),myTur
 
 /* ---------- Huroler: role applications ---------- */
 RENDER.huroler={full(st,m){m.body.className='hzAB';const g=gNow(),rn=id=>((g.roles||[]).find(r=>r.id==id)||{}).name||'(deleted role)',rc=id=>((g.roles||[]).find(r=>r.id==id)||{}).color||'var(--ac)';
-  const mine=st.apps.filter(a=>a.o==oid),pend=st.rev?st.apps.filter(a=>a.st=='pending'):[],done=st.rev?st.apps.filter(a=>a.st!='pending').slice(-30).reverse():[];
+  const mine=st.apps.filter(a=>a.o==oid&&!(a.hide&&!st.rev)),pend=st.rev?st.apps.filter(a=>a.st=='pending'):[],done=st.rev?st.apps.filter(a=>a.st!='pending').slice(-30).reverse():[];
   const fname=id=>(st.forms.find(f=>f.id==id)||{}).title||'Application';
   const ansH=a=>{const f=st.forms.find(x=>x.id==a.f);return `<div class="hzAns">${a.ans.map((x,i)=>`<div><i>${esc(f?f.qs[i]||'':'Answer '+(i+1))}</i>${esc(x)}</div>`).join('')}</div>`};
   m.body.innerHTML=`<div class="hzGrid" style="max-width:860px;margin:0 auto">
     <div class="hzAc"><h4>Apply for a role</h4>${st.forms.length?`<div class="hzList">${st.forms.map(f=>`<div class="hzRow"><span class="hzTag" style="background:color-mix(in srgb,${rc(f.role)} 25%,transparent);color:${rc(f.role)}">@${esc(rn(f.role))}</span><div class="grow"><b>${esc(f.title)}</b><br><small>${f.qs.length} question${f.qs.length>1?'s':''}</small></div>
       ${st.rev?`<button class="hzB" data-edit="${f.id}">Edit</button><button class="hzB bad" data-fdel="${f.id}">Delete</button>`:''}<button class="hzB on" data-apply="${f.id}">Apply</button></div>`).join('')}</div>`:`<div class="hzMuted">No application forms yet.${st.rev?' Create one so members can apply.':''}</div>`}
       ${st.rev?'<div style="margin-top:10px"><button class="hzB on" data-new>New application form</button></div>':''}</div>
-    ${mine.length?`<div class="hzAc"><h4>Your applications</h4><div class="hzList">${mine.slice().reverse().map(a=>`<div class="hzRow"><div class="grow"><b>${esc(fname(a.f))}</b><br><small>Sent ${ago(a.ts)}${a.note?' · Note: '+esc(a.note):''}</small></div><span class="hzTag ${a.st}">${a.st}</span>${a.st=='pending'?`<button class="hzB" data-wd="${a.id}">Withdraw</button>`:''}</div>`).join('')}</div></div>`:''}
+    ${mine.length?`<div class="hzAc"><h4>Your applications</h4><div class="hzList">${mine.slice().reverse().map(a=>`<div class="hzRow"><div class="grow"><b>${esc(fname(a.f))}</b><br><small>Sent ${ago(a.ts)}${a.note?' · Note: '+esc(a.note):''}</small></div><span class="hzTag ${a.st}">${a.st}</span>${a.st=='pending'?`<button class="hzB" data-wd="${a.id}">Withdraw</button>`:`<button class="hzB" data-dis="${a.id}" title="${st.rev?'Delete this application':'Remove from my list'}">${HG('trash')}</button>`}</div>`).join('')}</div></div>`:''}
     ${st.rev?`<div class="hzAc"><h4>Waiting for review (${pend.length})</h4>${pend.length?`<div class="hzList">${pend.map(a=>`<div class="hzRow" style="display:block"><div style="display:flex;gap:10px;align-items:center">${avs(a.o,nm(a.o),'s28')}<div class="grow"><b>${esc(nm(a.o))}</b> → <span style="color:${rc((st.forms.find(f=>f.id==a.f)||{}).role)}">@${esc(rn((st.forms.find(f=>f.id==a.f)||{}).role))}</span><br><small>${esc(fname(a.f))} · ${ago(a.ts)}</small></div>
       <button class="hzB bad" data-deny="${a.id}">Deny</button><button class="hzB on" data-ok="${a.id}">Approve</button></div>${ansH(a)}</div>`).join('')}</div>`:'<div class="hzMuted">Nothing to review.</div>'}</div>
-    ${done.length?`<div class="hzAc"><h4>Recently reviewed</h4><div class="hzList">${done.map(a=>`<div class="hzRow"><div class="grow"><b>${esc(nm(a.o))}</b> · ${esc(fname(a.f))}<br><small>${a.st} by ${esc(nm(a.by))} ${a.at?ago(a.at):''}${a.note?' · '+esc(a.note):''}</small></div><span class="hzTag ${a.st}">${a.st}</span></div>`).join('')}</div></div>`:''}`:''}</div>`;
+    ${done.length?`<div class="hzAc"><h4>Recently reviewed</h4><div class="hzList">${done.map(a=>`<div class="hzRow"><div class="grow"><b>${esc(nm(a.o))}</b> · ${esc(fname(a.f))}<br><small>${a.st} by ${esc(nm(a.by))} ${a.at?ago(a.at):''}${a.note?' · '+esc(a.note):''}</small></div><span class="hzTag ${a.st}">${a.st}</span><button class="hzB" data-dis="${a.id}" title="Delete this application">${HG('trash')}</button></div>`).join('')}</div></div>`:''}`:''}</div>`;
   m.act.innerHTML='';
   m.body.onclick=async e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
     if(d.apply){const f=st.forms.find(x=>x.id==d.apply);if(!f)return;modal(`<h3>${esc(f.title)}</h3><p class="pb">Applying for <b>@${esc(rn(f.role))}</b></p>${f.qs.map((q,i)=>`<label class="fl">${esc(q)}<textarea data-q="${i}" maxlength="800" rows="3" style="width:100%;resize:vertical"></textarea></label>`).join('')}<button class="on" id="apS">Send application</button><button id="gx">Cancel</button>`,()=>{
@@ -4554,6 +4602,7 @@ RENDER.huroler={full(st,m){m.body.className='hzAB';const g=gNow(),rn=id=>((g.rol
     else if(d.new!==undefined||d.edit)formDlg(st,st.forms.find(x=>x.id==d.edit));
     else if(d.fdel){if(await hzAsk('Delete this application form?'))A('formdel',{id:d.fdel})}
     else if(d.wd)A('withdraw',{id:d.wd});
+    else if(d.dis)A('dismiss',{id:d.dis});
     else if(d.ok)A('review',{id:d.ok,ok:true});
     else if(d.deny){modal('<h3>Deny application</h3><input id="dnN" maxlength="200" placeholder="Reason (optional, the applicant sees it)"><button class="on bad" id="dnS">Deny</button><button id="gx">Cancel</button>',()=>{$('#gx').onclick=closeM;$('#dnN').focus();$('#dnS').onclick=()=>{A('review',{id:d.deny,ok:false,note:$('#dnN').value});closeM()}})}}}};
 function formDlg(st,f){const g=gNow(),roles=(g.roles||[]).filter(r=>st.roles.includes(r.id));if(!roles.length)return toast('Create a role below your own first (Server settings → Roles).');
@@ -4564,13 +4613,47 @@ function formDlg(st,f){const g=gNow(),roles=(g.roles||[]).filter(r=>st.roles.inc
     $('#fmS').onclick=()=>{const qs=$('#fmQ').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!qs.length)return toast('Add at least one question.');A('form',{id:f?f.id:'',title:$('#fmT').value,role:$('#fmR').value,qs});closeM()}})}
 
 /* ---------- Hullo: welcomes new members ---------- */
-RENDER.hullo={full(st,m){m.body.className='hzAB';const g=gNow(),fill=o=>esc(st.msg).replace(/\{user\}/g,`<b>${esc(nm(o))}</b>`).replace(/\{server\}/g,`<b>${esc(g.name||'')}</b>`);
+RENDER.hullo={full(st,m){m.body.className='hzAB';const g=gNow(),fill=o=>esc(st.msg).replace(/\{user\}/g,`<b>${esc(nm(o))}</b>`).replace(/\{server\}/g,`<b>${esc(g.name||'')}</b>`),wch=(g.channels||[]).find(c=>c.id==st.ch);
   m.body.innerHTML=`<div class="hzGrid" style="max-width:820px;margin:0 auto">
-    ${st.edit?`<div class="hzAc"><h4>Welcome message</h4><div style="display:flex;gap:8px"><input id="hlM" maxlength="200" value="${esc(st.msg)}" style="flex:1;margin:0"><button class="hzB on" data-save>Save</button></div><div class="hzMuted" style="margin-top:6px">Use {user} for the new member and {server} for the server name.</div></div>`:''}
-    <div class="hzAc"><h4>New members</h4>${st.feed.length?`<div class="hzList">${st.feed.slice().reverse().map(f=>`<div class="hzRow">${avs(f.o,nm(f.o),'s28')}<div class="grow"><div class="hzWel">${fill(f.o)}</div><small>${ago(f.ts)}</small></div>
-      <button class="hzWave${f.waves.includes(oid)?' on':''}" data-wave="${f.id}" title="${esc(f.waves.map(nm).join(', '))}">${HG('hand')} ${f.waves.length||'Wave'}</button></div>`).join('')}</div>`:'<div class="hzMuted">When someone joins, Hullo welcomes them here.</div>'}</div></div>`;
+    <div class="hzAc hzHlHero">${HG.img('hullo')}<div><h4>${wch?`New members are welcomed in <b>#${esc(wch.name)}</b>`:'Welcome messages are off'}</h4><div class="hzMuted">${wch?'Preview: '+fill(oid):st.edit?'Pick a channel below and Hullo will greet everyone who joins there.':'Someone who manages Hullo can pick a welcome channel.'}</div></div></div>
+    ${st.edit?`<div class="hzAc"><h4>Welcome settings</h4>
+      <label class="fl">Welcome channel<select id="hlC"><option value="">Don’t post welcomes</option>${st.chans.map(c=>`<option value="${esc(c.id)}"${c.id==st.ch?' selected':''}># ${esc(c.name)}</option>`).join('')}</select></label>
+      <label class="fl">Message<input id="hlM" maxlength="200" value="${esc(st.msg)}"></label><div class="hzMuted">Use {user} for the new member and {server} for the server name.</div>
+      ${st.owner?`<div class="hzCDl" style="margin:14px 0 8px">Roles that can change Hullo</div><div class="hzRolePick">${st.rolesAll.length?st.rolesAll.map(r=>`<label style="--rc:${esc(r.color||'#8e8d98')}"><input type="checkbox" value="${esc(r.id)}"${st.roles.includes(r.id)?' checked':''}><span>@${esc(r.name)}</span></label>`).join(''):'<span class="hzMuted">No roles yet. People with Manage server can always change Hullo.</span>'}</div>`:''}
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="hzB" data-test${st.ch?'':' disabled'}>${HG('chat')}Send a test welcome</button><button class="hzB on" data-save>Save</button></div></div>`:''}
+    <div class="hzAc"><h4>Recent joins</h4>${st.feed.length?`<div class="hzList">${st.feed.slice().reverse().map(f=>`<div class="hzRow">${avs(f.o,nm(f.o),'s28')}<div class="grow"><b>${esc(P[f.o]?nm(f.o):f.n||nm(f.o))}</b><br><small>joined ${ago(f.ts)}</small></div>${st.edit?`<button class="hzB" data-jdel="${esc(f.id)}" title="Remove from this list">${HG('trash')}</button>`:''}</div>`).join('')}</div>`:'<div class="hzMuted">Nobody has joined since Hullo was added.</div>'}</div></div>`;
   m.act.innerHTML='';
-  m.body.onclick=e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.save!==undefined){A('msg',{msg:$('#hlM').value});toast('Welcome message saved.',true)}else if(t.dataset.wave)A('wave',{id:t.dataset.wave})}}};
+  m.body.onclick=e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
+    if(d.save!==undefined){A('cfg',{msg:$('#hlM').value,wch:$('#hlC').value,roles:st.owner?[...m.body.querySelectorAll('.hzRolePick input:checked')].map(i=>i.value):undefined});toast('Hullo settings saved.',true)}
+    else if(d.test!==undefined){A('test');toast('Test welcome sent.',true)}
+    else if(d.jdel)A('joindel',{id:d.jdel})}}};
+
+/* ---------- Duo Splice: raids and second accounts ---------- */
+RENDER.duo={full(st,m){m.body.className='hzAB';const lock=st.lockUntil&&st.lockUntil>Date.now(),c=st.cfg||{};
+  const sel=(id,v,list,fmt)=>`<select id="${id}">${list.map(x=>`<option value="${x}"${x==v?' selected':''}>${fmt(x)}</option>`).join('')}</select>`;
+  const tg=(id,on,t,s2)=>`<label class="tg"><span><b>${t}</b><small>${s2}</small></span><input id="${id}" type="checkbox" role="switch"${on?' checked':''}></label>`;
+  const mins=x=>x<60?x+' minutes':x<1440?(x/60)+' hour'+(x>60?'s':''):(x/1440)+' day'+(x>1440?'s':'');
+  const K={raid:['shield','#f87171'],alt:['hammer','#fb923c'],block:['lock','#facc15'],skip:['users','#94a3b8'],ok:['check','#4ade80']};
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:920px;margin:0 auto">
+    <div class="hzDuoHero${lock?' lock':''}">${HG.img('duo')}<div class="grow"><h3>${lock?'Lockdown: new joins are paused':'This server is protected'}</h3><p>${lock?'Ends in '+left(st.lockUntil)+'.':'Duo Splice watches for raids and keeps banned people’s second accounts out.'}</p></div>
+      ${st.mod?(lock?'<button class="hzB on" data-unlock>Lift lockdown</button>':`<button class="hzB bad" data-lock>${HG('lock')}Lock joins now</button>`):''}</div>
+    <div class="hzTiles">${[['Raids stopped',st.n.raids||0],['Joins blocked',st.n.blocked||0],['Second accounts banned',st.n.banned||0]].map(([l,v])=>`<div class="hzTile"><small>${l}</small><b>${v}</b></div>`).join('')}</div>
+    ${st.mod?`<div class="hzAc"><h4>Protection</h4>
+      ${tg('dA',c.alts,'Ban second accounts','When someone is banned, every other account they signed in with on the same device is banned too, and new ones can’t get in.')}
+      ${tg('dI',c.ipLink,'Also match by internet connection','Treat accounts that signed in from the same network in the last 30 days as the same person. Stronger, but people sharing a home, school or work network get linked.')}
+      ${tg('dR',c.raid,'Raid protection','Pause new joins automatically when lots of people join at once.')}
+      <div class="hzDuoRow"><label>More than ${sel('dJ',c.joins,[3,5,8,12,20,40],x=>x+' joins')}</label><label>within ${sel('dS',c.secs,[10,30,60,120,300],x=>x<60?x+' seconds':(x/60)+' minute'+(x>60?'s':''))}</label><label>pauses joins for ${sel('dL',c.lockMins,[5,10,30,60,240],mins)}</label></div>
+      <div class="hzDuoRow"><label>Minimum account age to join ${sel('dM',c.minAge,[0,10,60,1440,10080],x=>x?mins(x):'none')}</label></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="hzB on" data-save>Save</button></div></div>
+    <div class="hzAc"><h4>Possible second accounts here (${st.groups.length})</h4>${st.groups.length?`<div class="hzList">${st.groups.map(gr=>`<div class="hzRow"><div class="hzDuoGrp">${gr.os.map((o,i)=>`${avs(o,P[o]?nm(o):gr.ns[i],'s28')}<span>${esc(P[o]?nm(o):gr.ns[i])}</span>`).join(`<i>${HG('link')}</i>`)}</div><span class="hzTag">same ${esc(gr.why.join(' / '))}</span></div>`).join('')}</div>`:`<div class="hzMuted">No members share a device${c.ipLink?' or network':''}.</div>`}</div>
+    <div class="hzAc"><h4>Activity</h4>${st.log.length?`<div class="hzList">${st.log.map(x=>{const k=K[x.kind]||['dot','var(--dim)'];return `<div class="hzRow"><span class="hzDuoK" style="--k:${k[1]}">${HG(k[0])}</span><div class="grow">${esc(x.text)}<br><small>${ago(x.ts)}</small></div><button class="hzB" data-ldel="${esc(x.id)}" title="Remove">${HG('trash')}</button></div>`}).join('')}</div>`:'<div class="hzMuted">Nothing has happened yet.</div>'}</div>`
+    :'<div class="hzAc hzMuted">Only moderators who can ban members see the details and settings.</div>'}</div>`;
+  m.act.innerHTML='';clearTimeout(m.duoT);if(lock)m.duoT=setTimeout(()=>{if(mounted===m)paint()},1000);
+  m.body.onclick=async e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
+    if(d.save!==undefined){A('cfg',{alts:$('#dA').checked,ipLink:$('#dI').checked,raid:$('#dR').checked,joins:+$('#dJ').value,secs:+$('#dS').value,lockMins:+$('#dL').value,minAge:+$('#dM').value});toast('Duo Splice settings saved.',true)}
+    else if(d.lock!==undefined){if(await hzAsk('Pause all new joins for 30 minutes?'))A('lock',{mins:30})}
+    else if(d.unlock!==undefined)A('unlock');
+    else if(d.ldel)A('logdel',{id:d.ldel})}}};
 
 /* ---------- Moderate Pro ---------- */
 let mpTab='tickets',mpQ='';
@@ -4580,7 +4663,7 @@ RENDER.modpro={full(st,m){m.body.className='hzAB';if(!st.mod&&mpTab!='tickets')m
   let body='';
   if(mpTab=='tickets')body=`<div class="hzAc"><h4>Open a ticket</h4><div class="hzMuted" style="margin-bottom:8px">Creates a private channel only you and the moderators can see.</div><div style="display:flex;gap:8px"><input id="tkT" maxlength="120" placeholder="What do you need help with?" style="flex:1;margin:0"><button class="hzB on" data-open>Open ticket</button></div></div>
     <div class="hzAc"><h4>${st.mod?'All tickets':'Your tickets'}</h4>${st.tickets.length?`<div class="hzList">${st.tickets.filter(t=>f(t.topic+' '+nm(t.o))).map(t=>`<div class="hzRow">${avs(t.o,nm(t.o),'s28')}<div class="grow"><b>${esc(t.topic)}</b><br><small>${esc(nm(t.o))} · opened ${ago(t.ts)}${t.closed?' · closed '+ago(t.closed)+' by '+esc(nm(t.by)):''}</small></div><span class="hzTag ${t.open?'open':'closed'}">${t.open?'open':'closed'}</span>
-      ${t.open?`<button class="hzB" data-go="${t.ch}">Open channel</button><button class="hzB bad" data-close="${t.id}">Close</button>`:''}</div>`).join('')}</div>`:'<div class="hzMuted">No tickets yet.</div>'}</div>`;
+      ${t.open?`<button class="hzB" data-go="${t.ch}">Open channel</button><button class="hzB bad" data-close="${t.id}">Close</button>`:`<button class="hzB" data-tdel="${t.id}" title="Remove this closed ticket">${HG('trash')}</button>`}</div>`).join('')}</div>`:'<div class="hzMuted">No tickets yet.</div>'}</div>`;
   else if(mpTab=='logs')body=`<div class="hzAc"><table class="hzTbl2"><tr><th>When</th><th>Who</th><th>Action</th><th>Details</th></tr>${st.log.filter(x=>f(x.op+' '+x.detail+' '+x.byName)).map(x=>`<tr><td title="${new Date(x.ts).toLocaleString()}">${ago(x.ts)}</td><td>${esc(x.byName)}</td><td><span class="hzTag">${HG((window.HZAUDIC||{})[x.op]||'dot')} ${esc(x.op)}</span></td><td>${esc(x.detail||'')}</td></tr>`).join('')||'<tr><td colspan="4" class="hzMuted">Nothing logged yet.</td></tr>'}</table></div>`;
   else body=`<div class="hzList">${st.dels.filter(x=>f(x.text+' '+x.from+' '+x.chName)).map(x=>`<div class="hzRow" style="align-items:flex-start">${x.o?avs(x.o,x.from,'s28'):''}<div class="grow"><b>${esc(x.from)}</b> <small>in #${esc(x.chName)} · sent ${new Date(x.ts).toLocaleString()}</small>
     <div style="margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere">${esc(x.text)||(x.img?'':'<i class="hzMuted">(no text)</i>')}${x.file&&!x.img?` <span class="hzTag">${HG('clip')} ${esc(x.file)}</span>`:''}</div>${x.img?`<button class="hzDelImg" data-img="${esc(x.img)}" data-nm="${esc(x.file||'image')}" title="Open image"><img src="${esc(/^\//.test(x.img)?base+x.img:x.img)}" alt="${esc(x.file||'Deleted image')}" loading="lazy"><span>${esc(x.file||'Image')}</span></button>`:''}<small>Deleted ${ago(x.del)} by ${esc(x.byName)}${x.by==x.o?' (themselves)':''}</small></div>${x.id?`<button class="hzB bad" data-purge="${esc(x.id)}" title="Remove this entry and its image for good">${HG('trash')}</button>`:''}</div>`).join('')||'<div class="hzEmpty">No deleted messages yet.</div>'}</div>`;
@@ -4590,6 +4673,7 @@ RENDER.modpro={full(st,m){m.body.className='hzAB';if(!st.mod&&mpTab!='tickets')m
     else if(d.open!==undefined){const v=$('#tkT').value.trim();if(!v)return $('#tkT').focus();A('ticket',{topic:v});toast('Ticket opened. Look for it in the Tickets category.',true)}
     else if(d.go){const g=gNow();if(g.channels.some(c=>c.id==d.go))openCh(d.go)}
     else if(d.close){if(await hzAsk('Close this ticket? Its channel and messages will be deleted.'))A('close',{id:d.close})}
+    else if(d.tdel)A('tdel',{id:d.tdel});
     else if(d.purge){if(await hzAsk('Remove this deleted message and its image from the log for good?'))A('purge',{id:d.purge})}
     else if(d.img){const x=st.dels.find(v=>v.img==d.img)||{};hzView.open([{u:/^\//.test(d.img)?base+d.img:d.img,type:/\.gif$|giphy/i.test(d.img)?'image/gif':'image/png',name:d.nm||'Image',o:x.o,from:x.from,ts:x.ts,noExt:true}],0)}}}};
 
@@ -4705,6 +4789,36 @@ function invRefresh(gid){if(gid!==invG)return;const g=G[gid],l=$('#ivL');if(!g)r
 function invMade(d){if(d.g!==invG)return;copyText(d.code);const n=$('#ivNew');if(n)n.innerHTML=`<div class="hzInvNew"><code>${esc(d.code)}</code><small class="hzMuted">${d.max?d.max+' use'+(d.max>1?'s':''):'No use limit'} · ${d.exp?'expires in '+left(d.exp):'never expires'}</small><button id="ivCp">Copy</button></div>`;
   const c=$('#ivCp');if(c)c.onclick=()=>{copyText(d.code);toast('Invite copied.',true)};toast('Invite created and copied.',true)}
 window.hzInvDialog=invDialog;
+/* ================= guest call links: join one voice call from a browser, no account ================= */
+let clG=null,clCh=null,ctxV=null;
+const callUrl=code=>base.replace(/^ws(s?):/,'http$1:').replace(/\/+$/,'')+'/call/'+code;
+const canCall=g=>!!g&&(hasP(g,'invites')||hasP(g,'server'));
+function callDialog(g,chId){const x=g&&g.channels.find(c=>c.id==chId);if(!x||x.type!='voice')return;if(!canCall(g))return toast('You need Manage invites to make call links.');clG=g.id;clCh=chId;
+  modal(`<div class="hzIvD hzCl"><div class="hzTdH">${HG.img('voice')}<div><h3>Invite someone to ${esc(x.name)}</h3><p class="sub">Anyone with the link can join this voice call from a web browser, no account needed. They only see this call, nothing else in ${esc(g.name)}.</p></div></div>
+    <div class="hzInvMk"><label>Link works for<select id="clE"><option value="60">1 hour</option><option value="360">6 hours</option><option value="1440" selected>1 day</option><option value="10080">7 days</option></select></label><label>Guests at once<select id="clM"><option value="1">1 guest</option><option value="2">2 guests</option><option value="5" selected>5 guests</option><option value="10">10 guests</option><option value="25">25 guests</option></select></label><button class="on" id="clC">Create link</button></div>
+    <div id="clNew"></div><div class="hzCDl">Active links for this call</div><div class="hzInvL" id="clL"></div>
+    <div class="hzCDact"><button id="clX">Revoke all</button><button id="gx">Done</button></div></div>`,()=>{
+    $('#gx').onclick=closeM;$('#clC').onclick=()=>send({t:'vinvcreate',g:g.id,ch:chId,mins:+$('#clE').value,max:+$('#clM').value});
+    $('#clX').onclick=async()=>{if(await hzAsk('Turn off every guest link for this call? Guests using them are disconnected.'))send({t:'vinvdel',g:g.id,code:'*',ch:chId})};
+    clRefresh();const tk=setInterval(()=>{if(!$('#clL'))return clearInterval(tk);clRefresh()},1000)})}
+function clRefresh(){const g=G[clG],l=$('#clL');if(!g||!l)return;const list=(g.vinv||[]).filter(v=>v.ch==clCh&&v.exp>Date.now());
+  const h=list.length?list.slice().reverse().map(v=>`<div class="hzInvR"><div><code>${esc(callUrl(v.code).replace(/^https?:\/\//,''))}</code><small>by ${esc(v.byName||nm(v.by))} · ${v.live||0}/${v.max} in the call now · ${v.uses||0} joined · ends in ${left(v.exp)}</small></div><button data-cp="${esc(v.code)}">Copy</button><button data-rv="${esc(v.code)}" class="bad">Revoke</button></div>`).join(''):'<div class="hzMuted">No guest links for this call yet.</div>';
+  if(l.innerHTML!==h)l.innerHTML=h;const x=$('#clX');if(x)x.disabled=!list.length;
+  l.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.cp){copyText(callUrl(b.dataset.cp));toast('Call link copied.',true)}else if(b.dataset.rv)send({t:'vinvdel',g:clG,code:b.dataset.rv})}}
+function clMade(d){if(d.g!==clG)return;copyText(callUrl(d.code));const n=$('#clNew');if(n)n.innerHTML=`<div class="hzInvNew"><code>${esc(callUrl(d.code))}</code><button id="clCp">Copy</button></div>`;
+  const c=$('#clCp');if(c)c.onclick=()=>{copyText(callUrl(d.code));toast('Call link copied.',true)};toast('Call link created and copied.',true)}
+window.hzCallDialog=callDialog;
+/* right-click a voice channel -> "Invite to call by link…" */
+addEventListener('contextmenu',e=>{const v=e.target.closest('#nav [data-v]'),g=G[sel];if(!v||!canCall(g))return;e.preventDefault();ctxV=v.dataset.v;
+  const html=`<span class="mi">${HG('link')}</span><span class="t">Invite to call by link…</span>`,M=cm.querySelector(':scope>.hzM');
+  if(cm.hidden||!cm.children.length){cm.innerHTML='<button data-a="hzcall">Invite to call by link…</button>';cm.hidden=false;cm.style.left=Math.min(e.clientX,innerWidth-cm.offsetWidth-8)+'px';cm.style.top=Math.min(e.clientY,innerHeight-cm.offsetHeight-8)+'px';return}
+  if(cm.querySelector('[data-a="hzcall"]'))return;const b=document.createElement('button');b.dataset.a='hzcall';
+  if(M){b.className='hzMi';b.innerHTML=html;const hd=M.querySelector('.hzMHd');hd?hd.after(b):M.prepend(b)}else{b.textContent='Invite to call by link…';cm.prepend(b)}});
+cm.addEventListener('click',e=>{const b=e.target.closest('[data-a="hzcall"]');if(!b)return;e.stopImmediatePropagation();e.preventDefault();cmClose();callDialog(G[sel],ctxV)},true);
+/* the voice panel gets a button too */
+function guestBtn(){let b=$('#bGuest');const leave=$('#bLeave');if(!b&&leave){b=document.createElement('button');b.id='bGuest';b.className='cb';b.type='button';b.title='Invite someone to this call by link';b.setAttribute('aria-label','Invite someone to this call by link');b.innerHTML=HG('link')+'<span>Invite</span>';leave.before(b);b.onclick=()=>callDialog(gOf(vch),vch)}
+  if(b)b.hidden=!(typeof vch=='string'&&vch&&!vch.startsWith('dm:')&&canCall(gOf(vch)))}
+guestBtn();
 /* ================= add a server: create, import a Discord template, or join ================= */
 let tplWait=0;
 const tplBusy=on=>{clearTimeout(tplWait);document.querySelectorAll('#tpP,#tpC').forEach(b=>{b.disabled=on;if(b.dataset.l)b.innerHTML=on?'Reading template…':b.dataset.l});if(on)tplWait=setTimeout(()=>tplBusy(false),10000)};
@@ -4744,6 +4858,21 @@ cm.addEventListener('click',e=>{const b=e.target.closest('[data-a="hzinv"]');if(
 const _hzSD=sDialog;sDialog=function(g){const r=_hzSD.apply(this,arguments);try{setTimeout(()=>{const s=$('#sg');if(s&&!$('#hzIvB')){s.insertAdjacentHTML('afterend','<button id="hzIvB" type="button">Manage invites</button>');$('#hzIvB').onclick=()=>{closeM();setTimeout(()=>invDialog(G[g.id]),60)}}},0)}catch{}return r};
 })();
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
