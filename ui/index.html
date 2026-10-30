@@ -1117,17 +1117,17 @@ html:not([data-contrast=high]) #nav .tab.sel .ci.d{opacity:1;color:var(--ac)}
         <div id="cth"><i></i><span>Voice connected</span></div>
         <button id="bMic" class="cb" type="button"></button><button id="bDeaf" class="cb" type="button"></button><button id="bCam" class="cb" type="button"></button><button id="bScr" class="cb" type="button"></button>
         <button id="bLeave" type="button" title="Hang up" aria-label="Hang up"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 8.5c-3.3 0-6.3 1.2-8.5 3.4a1.6 1.6 0 0 0 0 2.2l1.2 1.2c.5.5 1.2.6 1.8.2l2.2-1.4c.4-.3.7-.7.7-1.2v-1.3c1.4-.5 3-.5 4.4 0v1.3c0 .5.3.9.7 1.2l2.2 1.4c.6.4 1.3.3 1.8-.2l1.2-1.2a1.6 1.6 0 0 0 0-2.2C18.3 9.7 15.3 8.5 12 8.5z"/></svg><span>Hang up</span></button>
-      </div><button id="meBtn" title="Edit your profile" aria-label="Edit your profile"></button><button id="stBtn" aria-label="Set your status" aria-haspopup="menu"><i class="sd2"></i><span id="stLb">Online</span></button><button id="setBtn" title="Settings" aria-label="Settings"><b>⚙</b><span>Settings</span></button></div>
+      </div><button id="meBtn" title="Edit your profile" aria-label="Edit your profile"></button><button id="stBtn" aria-label="Set your status" aria-haspopup="menu"><i class="sd2"></i><span id="stLb">Online</span></button><button id="setBtn" title="Settings" aria-label="Settings"><b data-ic="gear"></b><span>Settings</span></button></div>
   </aside>
   <main>
-    <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>Call</button><button id="pinBtn" title="Pinned messages" aria-label="Pinned messages" hidden>📌<b></b></button><button id="srch" aria-label="Search messages" title="Search messages" hidden><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button id="bell" aria-label="Notifications" title="Notifications"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg><span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
+    <div id="tbar"><span id="chtitle"></span><button id="callBtn" hidden>Call</button><button id="pinBtn" title="Pinned messages" aria-label="Pinned messages" hidden><b></b></button><button id="srch" aria-label="Search messages" title="Search messages" hidden><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button id="bell" aria-label="Notifications" title="Notifications"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg><span id="bellN" class="badge" hidden></span></button><div id="np" hidden role="dialog" aria-label="Notifications"></div></div>
     <section id="stage" aria-label="Voice call"><div id="sinfo" class="sov"></div><div id="sbar" class="sov" role="toolbar" aria-label="Call controls"><button id="sMic" class="sb" type="button"></button><button id="sDeaf" class="sb" type="button"></button><button id="sCam" class="sb" type="button"></button><button id="sScr" class="sb" type="button"></button><button id="sLeave" class="sb" type="button" title="Hang up" aria-label="Hang up"></button></div></section>
     <div id="split" role="separator" aria-orientation="horizontal" aria-label="Resize call area" title="Drag to resize · double-click to reset"></div>
     <div id="msgs"></div>
     <div id="typing" role="status" aria-live="polite"></div>
     <div id="rbar" hidden><span id="rtxt"></span><button id="rx" title="Cancel reply">✕</button></div>
     <div id="bar"><div id="mp" hidden></div><button id="attach" title="Share a file" aria-label="Share a file">+</button><input type="file" id="fi" hidden multiple>
-      <textarea id="txt" rows="1" placeholder="Send a message" autocomplete="off" maxlength="1000" aria-label="Message"></textarea><span id="cc"></span><button id="emBtn" type="button" data-emb="1" title="Emoji" aria-label="Emoji">😊</button><button id="pollBtn" type="button" title="Create a poll" aria-label="Create a poll">📊</button><button id="go" class="on" title="Send" aria-label="Send">↑</button></div>
+      <textarea id="txt" rows="1" placeholder="Send a message" autocomplete="off" maxlength="1000" aria-label="Message"></textarea><span id="cc"></span><button id="emBtn" type="button" data-emb="1" title="Emoji" aria-label="Emoji"></button><button id="pollBtn" type="button" title="Create a poll" aria-label="Create a poll"></button><button id="go" class="on" title="Send" aria-label="Send">↑</button></div>
   </main>
     <div id="plist" aria-label="Members"><h2 class="sh" id="shOn">Online</h2><div id="online"></div><h2 class="sh" id="shOff">Offline</h2><div id="offline"></div></div>
 </div>
@@ -1137,6 +1137,116 @@ html:not([data-contrast=high]) #nav .tab.sel .ci.d{opacity:1;color:var(--ac)}
 <div id="prof"></div>
 <div id="drop">Drop files to share</div>
 
+<script id="hz-glyphs">
+/* Huddle glyphs: hand-drawn SVG icons used everywhere an emoji used to stand in for an icon.
+   HG(name) -> inline line icon (inherits the text color); HG.art(key) -> full-color illustration (data URI);
+   HG.medal(rank) / HG.crown() -> small full-color badges. */
+window.HG=(()=>{
+const cog=(n,ro,ri)=>{let d='';for(let i=0;i<n;i++){const a=i/n*Math.PI*2,w=Math.PI/n,p=[[a-w*.95,ri],[a-w*.5,ro],[a+w*.5,ro],[a+w*.95,ri]];
+  p.forEach(([t,r],k)=>{d+=(i||k?'L':'M')+(12+r*Math.sin(t)).toFixed(2)+' '+(12-r*Math.cos(t)).toFixed(2)})}return d+'Z'};
+const P={
+  gear:`<path d="${cog(8,9.3,6.9)}"/><circle cx="12" cy="12" r="2.8"/>`,
+  pin:'<path d="M15 3.5 20.5 9l-3 1.2-3.6 3.6.5 4.2-1.5 1.5-4.4-4.4L4 19.6M9.5 8.6l3.6-3.6z"/><path d="m8.5 9.6 6 6"/>',
+  unpin:'<path d="M15 3.5 20.5 9l-3 1.2-3.6 3.6.5 4.2-1.5 1.5-4.4-4.4L4 19.6M9.5 8.6l3.6-3.6z"/><path d="M3 3l18 18"/>',
+  smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.6"/>',
+  poll:'<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 16v-4M12 16V8M16 16v-6"/>',
+  pad:'<path d="M7.2 7h9.6a4.8 4.8 0 0 1 4.6 6.1l-1 3.6a2.5 2.5 0 0 1-4.2 1.1L14.4 16H9.6l-1.8 1.8a2.5 2.5 0 0 1-4.2-1.1l-1-3.6A4.8 4.8 0 0 1 7.2 7z"/><path d="M8 10v3.4M6.3 11.7h3.4"/><path d="M15.4 10.6h.01M17.6 12.8h.01" stroke-width="2.6"/>',
+  mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/>',
+  micOff:'<path d="M15 9.5V6a3 3 0 0 0-5.6-1.5M9 9v2a3 3 0 0 0 4.6 2.5"/><path d="M5.5 11a6.5 6.5 0 0 0 10.6 5M18.4 12.5c.1-.5.1-1 .1-1.5M12 17.5V21M9 21h6M3.5 3.5l17 17"/>',
+  head:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="2"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="2"/>',
+  headOff:'<path d="M4 15v-3a8 8 0 0 1 12.6-6.5M19.4 9.2c.4.9.6 1.8.6 2.8v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="2"/><path d="M16.5 16.5v2a2 2 0 0 0 2 2h.5a2 2 0 0 0 2-2V14h-2.5M3.5 3.5l17 17"/>',
+  cam:'<rect x="2.5" y="6.5" width="13" height="11" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/>',
+  spk:'<path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18.3 6.5a8 8 0 0 1 0 11"/>',
+  spkOff:'<path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
+  clip:'<path d="M21 11.5 12.6 20a5.5 5.5 0 0 1-7.8-7.8l8.5-8.5a3.7 3.7 0 0 1 5.2 5.2l-8.5 8.5a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/>',
+  lock:'<rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2.5"/>',
+  unlock:'<rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 7.7-1.6M12 14.5v2.5"/>',
+  callX:'<path d="M5.2 4h3.2l1.6 4-2.1 1.3a11 11 0 0 0 5.8 5.8l1.3-2.1 4 1.6v3.2a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 3.2 6.2 2 2 0 0 1 5.2 4z"/><path d="M15 4l5 5M20 4l-5 5"/>',
+  hourglass:'<path d="M6.5 3h11M6.5 21h11M8 3v2.5a4 4 0 0 0 1.6 3.2L12 10.5l2.4-1.8A4 4 0 0 0 16 5.5V3M8 21v-2.5a4 4 0 0 1 1.6-3.2l2.4-1.8 2.4 1.8a4 4 0 0 1 1.6 3.2V21"/><path d="M10 18.5h4" stroke-width="2.4"/>',
+  timer:'<circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V10M10 2.5h4M18.5 6.5l1.3-1.3"/>',
+  pencil:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  door:'<path d="M13 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H13"/><path d="M10 12h10.5M17 8.5l3.5 3.5-3.5 3.5"/>',
+  hammer:'<path d="M13.5 6.5l4 4M12 8l-8.5 8.5a1.5 1.5 0 0 0 2 2L14 10M15 3.5l5.5 5.5-2.5 2.5L12.5 6z"/>',
+  note:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+  shield:'<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.4"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  heart:'<path d="M12 20s-7.5-4.4-7.5-10A4.2 4.2 0 0 1 12 7.6 4.2 4.2 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z"/>',
+  image:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="M21 15.5l-5-5-9.5 9.5"/>',
+  receipt:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 11.5h6M9 15h4"/>',
+  crown:'<path d="M4 18.5h16M4.5 15.5 3 7l5 4 4-6 4 6 5-4-1.5 8.5z"/>',
+  tag:'<path d="M20 12 12 20 3 11V4h7z"/><circle cx="7.5" cy="8.5" r="1.4"/>',
+  sparkle:'<path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"/><path d="M18.5 15v5M16 17.5h5"/>',
+  palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-1-.8-1.4-.8-2.4 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="14.5" cy="7" r="1.2"/>',
+  updown:'<path d="M8 4v16M4.5 7.5 8 4l3.5 3.5M16 20V4M12.5 16.5 16 20l3.5-3.5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',minus:'<path d="M5 12h14"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  hand:'<path d="M8 13V5.8a1.5 1.5 0 0 1 3 0V11M11 10.5V4.3a1.5 1.5 0 0 1 3 0v6.7M14 10.8V5.8a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7h-.4a6 6 0 0 1-4.7-2.3L3.2 16.4a1.5 1.5 0 0 1 2.3-1.9L8 16.6"/>',
+  paw:'<circle cx="6.5" cy="10.5" r="1.8"/><circle cx="10" cy="6" r="1.8"/><circle cx="14" cy="6" r="1.8"/><circle cx="17.5" cy="10.5" r="1.8"/><path d="M12 11.5c-2.6 0-5 3.2-5 5.6 0 1.6 1.2 2.4 2.6 2.4.9 0 1.6-.5 2.4-.5s1.5.5 2.4.5c1.4 0 2.6-.8 2.6-2.4 0-2.4-2.4-5.6-5-5.6z"/>',
+  burger:'<path d="M4 11a8 6.5 0 0 1 16 0z"/><path d="M3.5 14.5h17M5 17.5h14a2 2 0 0 1-2 2.5H7a2 2 0 0 1-2-2.5z"/>',
+  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.5 4.5H9.7l-1.5-4.5zM12 3v4.5M20.4 9.5l-4.6.8M17.3 19.3l-3-4.5M6.7 19.3l3-4.5M3.6 9.5l4.6.8"/>',
+  car:'<path d="M5.5 16.5h-1a1 1 0 0 1-1-1v-3.2L6 7h12l2.5 5.3v3.2a1 1 0 0 1-1 1h-1M9.5 16.5h5M4 12h16"/><circle cx="7.5" cy="16.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/>',
+  bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/>',
+  music:'<path d="M9 18V5.5l11-2.5V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+  film:'<rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7.5 4v16M16.5 4v16M3 9h4.5M3 15h4.5M16.5 9H21M16.5 15H21"/>',
+  code:'<path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15"/>',
+  book:'<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v14.5H6.5A1.5 1.5 0 0 0 5 19zM5 19a1.5 1.5 0 0 0 1.5 1.5H19M9 7h6"/>',
+  pan:'<circle cx="10" cy="13" r="6.5"/><path d="M16.2 11.2l5.3-2.4M7.5 12a3 3 0 0 1 3-2"/>',
+  plane:'<path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="M21 3 10 13"/>',
+  photo:'<path d="M4 7.5h3l1.5-2.5h7L17 7.5h3a1 1 0 0 1 1 1V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8.5a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>',
+  moon:'<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>',
+  chat:'<path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 3.5V17H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>',
+  ticket:'<path d="M3.5 6h17v3.5a2.5 2.5 0 0 0 0 5V18h-17v-3.5a2.5 2.5 0 0 0 0-5z"/><path d="M14 7v1.5M14 11.2v1.6M14 15.5V17"/>',
+  cards:'<rect x="9" y="4" width="10" height="14" rx="2" transform="rotate(14 14 11)"/><rect x="4.5" y="5.5" width="10" height="14" rx="2"/>',
+  hash:'<path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"/>',
+  party:'<path d="M4 20.5l4.2-11.8 7.6 7.6z"/><path d="M8.5 13.5l2 2M13 5.5c.9-1.4.7-2.4-.1-3.2M16.5 9c1.3-.9 2.6-.9 3.6-.2M18 4.5h.01M20.5 13.5h.01M10 3.5h.01" />',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  dot:'<circle cx="12" cy="12" r="2.5" fill="currentColor"/>',
+  eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+  zin:'<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M11 8.5v5M8.5 11h5"/>',zout:'<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M8.5 11h5"/>',
+  fit:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+  upload:'<path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/>',down:'<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/>',
+  refresh:'<path d="M20 11a8 8 0 0 0-14.8-4M4 4v4h4M4 13a8 8 0 0 0 14.8 4M20 20v-4h-4"/>',
+  undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5A5.5 5.5 0 0 1 20 14.5 5.5 5.5 0 0 1 14.5 20H11"/>',
+  eraser:'<path d="M8.5 20H20M4.6 15.4l9.9-9.9a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L11 19H8.2a2 2 0 0 1-1.4-.6l-2.2-2.2a.6.6 0 0 1 0-.8zM9 11l5 5"/>',
+  skip:'<circle cx="12" cy="12" r="8"/><path d="M6.4 17.6 17.6 6.4"/>',rev:'<path d="M4 9h13l-3.5-3.5M20 15H7l3.5 3.5"/>',
+  wild:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',users:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18 14.8c1.9.7 3 2.4 3 5.2"/>'};
+const FILLED={heart:1,crown:1,wild:1};
+const IC=n=>`<svg class="gi gi-${n}" viewBox="0 0 24 24" fill="${FILLED[n]?'currentColor':'none'}" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||P.dot}</svg>`;
+IC.has=n=>!!P[n];
+/* ---- full-color illustrations (same look as the channel artwork: soft gradients + a drop shadow) ---- */
+const L=(id,...c)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${c.map((x,i)=>`<stop offset="${i/(c.length-1)}" stop-color="${x}"/>`).join('')}</linearGradient>`;
+const W=(b,d)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2.5" stdDeviation="1.5" flood-color="#000" flood-opacity=".35"/></filter>${d||''}</defs><g filter="url(#s)">${b}</g></svg>`);
+const STAR=(cx,cy,r,f)=>{let d='';for(let i=0;i<10;i++){const a=Math.PI/5*i-Math.PI/2,q=i%2?r*.45:r;d+=(i?'L':'M')+(cx+q*Math.cos(a)).toFixed(1)+' '+(cy+q*Math.sin(a)).toFixed(1)}return `<path d="${d}Z" fill="${f}" stroke="${f}" stroke-width="2" stroke-linejoin="round"/>`};
+const SP=(x,y,s,f)=>`<path transform="translate(${x} ${y}) scale(${s})" d="M0-6C.6-2 2-.6 6 0 2 .6.6 2 0 6-.6 2-2 .6-6 0-2-.6-.6-2 0-6z" fill="${f}"/>`;
+const disc=(x,y,g,side,ring)=>`<path d="M${x-25} ${y}v8a25 11 0 0 0 50 0v-8z" fill="${side}"/><ellipse cx="${x}" cy="${y}" rx="25" ry="11" fill="url(#${g})"/><ellipse cx="${x}" cy="${y}" rx="16" ry="6.8" fill="none" stroke="${ring}" stroke-width="2.2"/><ellipse cx="${x}" cy="${y}" rx="9" ry="3.8" fill="none" stroke="${ring}" stroke-width="1.6"/>`;
+const ART={
+  text:W(`<path d="M23 12H73A15 15 0 0 1 88 27V55A15 15 0 0 1 73 70H44L26 86V70H23A15 15 0 0 1 8 55V27A15 15 0 0 1 23 12Z" fill="url(#a)"/><path transform="translate(3.5 0)" d="M39 25l-4 32M57 25l-4 32M25 35h42M22 47h42" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>`,L('a','#cbd5e1','#94a3b8','#64748b')),
+  voice:W(`<path d="M14 36h14l20-17v58L28 60H14a5 5 0 0 1-5-5V41a5 5 0 0 1 5-5z" fill="url(#a)"/><path d="M60 36a16 16 0 0 1 0 24M70 26a30 30 0 0 1 0 44" fill="none" stroke="url(#a)" stroke-width="7" stroke-linecap="round"/>`,L('a','#86efac','#22c55e','#15803d')),
+  stickers:W(`<g transform="rotate(-8 48 48)"><path d="M22 14H70A12 12 0 0 1 82 26V58L58 82H22A12 12 0 0 1 10 70V26A12 12 0 0 1 22 14Z" fill="url(#a)"/><path d="M82 58 58 82V69A11 11 0 0 1 69 58Z" fill="#ffe4f1"/>${STAR(45,46,19,'#fff')}${SP(68,26,1,'#fff')}</g>`,L('a','#ffb0d6','#f472b6','#db2777')),
+  scribble:W(`<path d="M9 74c9-13 16 6 25-6s13-17 21-6 9 8 17-2" fill="none" stroke="url(#b)" stroke-width="7" stroke-linecap="round"/><g transform="rotate(45 60 36)"><rect x="52" y="4" width="16" height="44" rx="3.5" fill="url(#a)"/><rect x="52" y="13" width="16" height="5" fill="#fff" opacity=".75"/><path d="M52 48h16l-8 17z" fill="#fde7c4"/><path d="M56.3 57h7.4L60 65z" fill="#0c4a6e"/></g>`,L('a','#7dd3fc','#38bdf8','#0369a1')+L('b','#f472b6','#a78bfa','#38bdf8')),
+  checkers:W(`${disc(58,34,'k','#0b0b0d','#ffffff30')}${disc(40,58,'r','#8f1414','#ffffff55')}`,L('k','#5a5a63','#2a2a30','#0f0f12')+L('r','#ff8f8f','#ef4444','#b91c1c')),
+  one:W(`<g transform="rotate(-20 48 84)"><rect x="30" y="14" width="36" height="54" rx="7" fill="#3b82f6" stroke="#fff" stroke-width="3"/></g><g transform="rotate(16 48 84)"><rect x="30" y="14" width="36" height="54" rx="7" fill="#ef4444" stroke="#fff" stroke-width="3"/></g><rect x="30" y="16" width="36" height="56" rx="7" fill="url(#a)" stroke="#fff" stroke-width="3"/><ellipse cx="48" cy="44" rx="11" ry="19" transform="rotate(28 48 44)" fill="#fff"/><path d="M44 37l5.5-3.5V54" fill="none" stroke="#a16207" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`,L('a','#fde68a','#facc15','#ca8a04')),
+  puzzle:W(`<g transform="rotate(-10 44 52)"><path d="M18 30H32A10 10 0 1 1 50 30H64V45A10 10 0 1 1 64 63V78H50A10 10 0 1 0 32 78H18V63A10 10 0 1 0 18 45Z" fill="url(#a)"/><path d="M24 36h8" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/></g>${SP(80,20,1.3,'#ede9fe')}`,L('a','#d8ccff','#a78bfa','#6d28d9')),
+  huroler:W(`<rect x="16" y="14" width="52" height="70" rx="9" fill="url(#a)"/><rect x="31" y="8" width="22" height="13" rx="4.5" fill="#065f46"/><rect x="23" y="27" width="38" height="49" rx="4" fill="#ecfdf5"/><path d="M29 39l4 4 7-8M29 56l4 4 7-8" stroke="#059669" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 39h9M46 56h9" stroke="#a7f3d0" stroke-width="4" stroke-linecap="round"/><circle cx="71" cy="71" r="15" fill="url(#b)"/>${STAR(71,71.5,8,'#fff')}`,L('a','#6ee7b7','#34d399','#047857')+L('b','#fde68a','#f59e0b')),
+  hullo:W(`<path d="M22 14H74A14 14 0 0 1 88 28V54A14 14 0 0 1 74 68H46L28 82V68H22A14 14 0 0 1 8 54V28A14 14 0 0 1 22 14Z" fill="url(#a)"/><path d="M30 27v27M30 42c0-7.5 15-7.5 15 0v12" stroke="#fff" stroke-width="6.5" fill="none" stroke-linecap="round"/><path d="M59 38v16" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/><circle cx="59" cy="28" r="4.2" fill="#fff"/>${SP(74,32,1.15,'#fff7ed')}`,L('a','#fdba74','#fb923c','#ea580c')),
+  modpro:W(`<path d="M48 8l34 13v24c0 22-15 37-34 43C29 82 14 67 14 45V21z" fill="url(#a)"/><path d="M48 17l25 9.5v18.5c0 16-10.5 27.5-25 32.5z" fill="#fff" opacity=".16"/><path d="M33 48l10 10 20-21" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,L('a','#93c5fd','#60a5fa','#1d4ed8')),
+  stats:W(`<rect x="12" y="56" width="18" height="28" rx="4.5" fill="url(#a)"/><rect x="39" y="40" width="18" height="44" rx="4.5" fill="url(#a)"/><rect x="66" y="24" width="18" height="60" rx="4.5" fill="url(#a)"/><path d="M12 42 34 26l12 8 24-20" stroke="#fde68a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M59 12h13v13" stroke="#fde68a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,L('a','#5eead4','#2dd4bf','#0f766e')),
+  leaders:W(`<path d="M29 14H67" stroke="#b45309" stroke-width="2"/><path d="M29 18H17v6a13 13 0 0 0 13 13M67 18h12v6a13 13 0 0 1-13 13" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/><path d="M28 12h40v24a20 20 0 0 1-40 0z" fill="url(#a)"/>${STAR(48,32,10,'#fff7d6')}<path d="M42 55h12v11H42z" fill="#d97706"/><rect x="29" y="65" width="38" height="9" rx="3" fill="url(#a)"/><rect x="22" y="74" width="52" height="11" rx="4" fill="#92400e"/>`,L('a','#fde68a','#fbbf24','#d97706')),
+  image:W(`<rect x="8" y="14" width="80" height="68" rx="15" fill="url(#a)"/><circle cx="65" cy="37" r="8.5" fill="#fff"/><path d="M8 70 31 46l18 20 12-12 27 26v2a15 15 0 0 1-15 15H23A15 15 0 0 1 8 82z" fill="#fff" opacity=".92"/>`,L('a','#c4b8ff','#9a8bff','#6f5fe6')),
+  discord:W(`<rect x="10" y="40" width="76" height="44" rx="12" fill="url(#a)"/><path d="M10 58h20l6 9h24l6-9h20" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="4" stroke-linejoin="round"/><path d="M48 10v38" stroke="url(#b)" stroke-width="9" stroke-linecap="round"/><path d="M33 34l15 15 15-15" fill="none" stroke="url(#b)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>${SP(78,18,1.2,'#e0e7ff')}`,L('a','#a5b4fc','#6366f1','#4338ca')+L('b','#ffffff','#e0e7ff'))};
+IC.art=k=>ART[k]||ART.image;
+IC.img=(k,cls)=>`<img class="${cls||'gart'}" src="${ART[k]||ART.image}" alt="" draggable="false">`;
+/* medals for the top three, a crown for checkers kings (flat colors so many can sit on one page) */
+IC.medal=i=>{const c=[['#fff4c2','#fbbf24','#a16207'],['#f8fafc','#cbd5e1','#475569'],['#ffe1c2','#e08a45','#7c2d12']][i]||['#eee','#bbb','#555'];
+  return `<svg class="gmed" viewBox="0 0 32 32" aria-label="#${i+1}"><path d="M9 1.5h6l3.5 10h-6z" fill="#ef4444"/><path d="M23 1.5h-6l-3.5 10h6z" fill="#3b82f6"/><circle cx="16" cy="20.5" r="10" fill="${c[1]}" stroke="${c[2]}" stroke-width="1.8"/><circle cx="16" cy="20.5" r="6.6" fill="none" stroke="${c[0]}" stroke-width="1.4"/><text x="16" y="24.6" text-anchor="middle" font-size="11.5" font-weight="800" fill="${c[2]}" font-family="system-ui,Segoe UI,sans-serif">${i+1}</text></svg>`};
+IC.crown=()=>`<svg class="gcrown" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5l4.6 3.6L12 5l4.4 7.1L21 8.5 19.2 18H4.8z" fill="#fcd34d" stroke="#92400e" stroke-width="1.3" stroke-linejoin="round"/><path d="M4.8 18h14.4v2.4H4.8z" fill="#f59e0b" stroke="#92400e" stroke-width="1.2" stroke-linejoin="round"/><circle cx="12" cy="13.6" r="1.7" fill="#ef4444"/><circle cx="7.6" cy="14.6" r="1.1" fill="#3b82f6"/><circle cx="16.4" cy="14.6" r="1.1" fill="#22c55e"/></svg>`;
+return IC})();
+(()=>{const st=document.createElement('style');st.id='hz-glyph-css';st.textContent='.gi{width:1.15em;height:1.15em;flex:none;display:inline-block;vertical-align:-.2em}.gart{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}.gmed{width:26px;height:26px;display:block;margin:auto}.gcrown{width:58%;height:58%;display:block;filter:drop-shadow(0 1px 1px #0008)}';document.head.append(st);
+  const fill=()=>document.querySelectorAll('[data-ic]:empty').forEach(e=>e.innerHTML=HG(e.dataset.ic));fill();document.addEventListener('DOMContentLoaded',fill)})();
+
+</script>
 <script>/* Huddle illustrated icons: full-color SVG artwork for default text/voice channels and the Friends / Community / Public Showcase tabs */
 window.HZI=(()=>{
 const L=(id,...c)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${c.map((x,i)=>`<stop offset="${i/(c.length-1)}" stop-color="${x}"/>`).join('')}</linearGradient>`,
@@ -1349,7 +1459,7 @@ function rail(){$('#rail').innerHTML=`<button class="ri${sel=='home'?' sel':''}"
 const chObj=i=>{const g=gOf(i);return g&&g.channels.find(c=>c.id==i)||{}},
   chIcon=c=>c&&c.icon?`<img class="ci" src="${esc(c.icon)}" alt="">`:`<img class="ci def" src="${c&&c.type=='voice'?HZI.v:HZI.t}" alt="">`,
   chTitle=i=>i.startsWith('dm:')?esc(chLabel(i)):chIcon(chObj(i))+colorLabel(chLabel(i).replace(/^#\s*/,''))+(chObj(i).nsfw?' <span class="nsfwTag">18+</span>':'');
-const cg=i=>(hasP(G[sel],'channels')||hasP(G[sel],'roles'))?`<i class="cg" data-e="${i}" title="Edit channel">⚙</i>`:'';
+const cg=i=>(hasP(G[sel],'channels')||hasP(G[sel],'roles'))?`<i class="cg" data-e="${i}" title="Edit channel">${HG('gear')}</i>`:'';
 const colGet=g=>{try{return JSON.parse(localStorage.getItem('cc:'+g)||'[]')}catch{return[]}},colSet=(g,a)=>{try{localStorage.setItem('cc:'+g,JSON.stringify(a))}catch{}};
 const topOf=g=>{const cats=g.categories||[],loose=g.channels.filter(c=>!cats.some(k=>k.id==c.cat)),ok=new Set([...loose.map(c=>c.id),...cats.map(k=>k.id)]),seen=new Set(),out=[];(g.top||[]).forEach(i=>{if(ok.has(i)&&!seen.has(i)){seen.add(i);out.push(i)}});loose.forEach(c=>{if(!seen.has(c.id)){seen.add(c.id);out.push(c.id)}});cats.forEach(k=>{if(!seen.has(k.id)){seen.add(k.id);out.push(k.id)}});return out};
 function side(){if(window.hzDragging&&Date.now()-window.hzDragging<30000){window.hzSideLater=1;return} // a re-render in the middle of a drag would cancel it
@@ -1357,16 +1467,16 @@ function side(){if(window.hzDragging&&Date.now()-window.hzDragging<30000){window
   if(home)$('#gh').innerHTML='<b>Direct Messages</b><button id="newdm" title="New message">＋</button>';else{const voters=((REP.servers||{})[g.id]||{}).voters||[],count=voters.length,level=serverRepLevel(g.id),thresholds=[3,7,12,16,30,40,50,80,90,100],next=thresholds[level]||100,prev=level?thresholds[level-1]:0,prog=level>=10?100:Math.max(0,Math.min(100,(count-prev)/Math.max(1,next-prev)*100));$('#gh').innerHTML=`<div class="ghGuild"><b>${esc(g.name)}</b><div class="server-rep" title="Community reputation"><span class="repLevel">Level ${level}</span><div class="repTrack" aria-label="${count} reputation votes"><i style="--prog:${prog}%"></i></div><span class="rep-count">${count} rep</span><button type="button" class="repBtn${voters.includes(oid)?' on':''}" data-server-rep="${esc(g.id)}" title="Give or remove your server rep">${voters.includes(oid)?'✓ Repped':'＋ Rep'}</button></div><button id="gmenu" title="Server menu">⋯</button></div>`;}
   const cats=home?[]:(g.categories||[]),inCat=c=>cats.some(k=>k.id==c.cat),own=!home&&hasP(g,'channels');
   const mixH=c=>c.type=='voice'?vocH(c):tabH(c.id);
-  const dmRow=i=>dmRow0(i).replace(/<\/span>$/,(UP.pins.includes(dmO(i))?'<i class="pinI" title="Pinned">📌</i>':'')+'</span>'),
-  dmRow0=i=>{const o=dmO(i),n=(P[o]||{}).name||'?',pl=REL.f.includes(o)&&!(P[o]||{}).hiddenProfile?String((P[o]||{}).pl||'').trim():'';return pl?`<span class="dmr"><span class="dmav" title="Playing ${esc(pl)}">${av(o,n)}<i class="dact" aria-hidden="true">🎮</i><i class="dsd l" data-o="${esc(o)}" style="--stc:${STS[stOf(o)][1]}"></i></span><span class="dmt"><span class="nn">${esc(n)}</span><small class="dma">Playing ${esc(pl)}</small></span></span>`:`<span class="dmr"><span class="dmav">${av(o,n)}<i class="dsd" data-o="${esc(o)}" style="--stc:${STS[stOf(o)][1]}"></i></span><span class="nn">${esc(n)}</span></span>`},
+  const dmRow=i=>dmRow0(i).replace(/<\/span>$/,(UP.pins.includes(dmO(i))?'<i class="pinI" title="Pinned">'+HG('pin')+'</i>':'')+'</span>'),
+  dmRow0=i=>{const o=dmO(i),n=(P[o]||{}).name||'?',pl=REL.f.includes(o)&&!(P[o]||{}).hiddenProfile?String((P[o]||{}).pl||'').trim():'';return pl?`<span class="dmr"><span class="dmav" title="Playing ${esc(pl)}">${av(o,n)}<i class="dact" aria-hidden="true">${HG('pad')}</i><i class="dsd l" data-o="${esc(o)}" style="--stc:${STS[stOf(o)][1]}"></i></span><span class="dmt"><span class="nn">${esc(n)}</span><small class="dma">Playing ${esc(pl)}</small></span></span>`:`<span class="dmr"><span class="dmav">${av(o,n)}<i class="dsd" data-o="${esc(o)}" style="--stc:${STS[stOf(o)][1]}"></i></span><span class="nn">${esc(n)}</span></span>`},
   tabH=i=>`<button class="tab${i==cur?' sel':''}${ringK=='i'+i?' ringing':''}${i.startsWith('dm:')&&mDm(i)?' muted':''}${dg(i,'c')}" style="${dg(i,'s')}" data-c="${i}"><span class="cn">${i.startsWith('dm:')?dmRow(i):chIcon(chObj(i))+'<span class="cnm">'+colorLabel(chLabel(i).replace(/^#\s*/,''))+'</span>'+(chObj(i).nsfw?'<span class="nsfwTag">18+</span>':'')}</span>${cg(i)}<span class="badge" hidden></span></button>`;
-  const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}<span class="cnm">${colorLabel(c.name)}</span>${(n=>n?`<em class="vcn" title="${n} in voice">${n}</em>`:'')(users.filter(u=>u.voice==c.id).length)}${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?'🔇':''}${u.sd?'🙉':''}${u.video?'📷':''}</div>`).join('')}</div></div>`;
+  const vocH=c=>`<div class="vi${vch==c.id?' vin':''}"><button class="vr${vch==c.id?' in':''}" data-v="${c.id}">${chIcon(c)}<span class="cnm">${colorLabel(c.name)}</span>${(n=>n?`<em class="vcn" title="${n} in voice">${n}</em>`:'')(users.filter(u=>u.voice==c.id).length)}${cg(c.id)}</button>${vch==c.id?`<div class="ctm">${tmr()}</div>`:''}<div class="vmem">${users.filter(u=>u.voice==c.id).map(u=>`<div class="vm${gc(u.oid)}" data-o="${esc(u.oid||'')}" style="${gs(u.oid)}" title="View profile">${avs(u.oid||u.id,u.name,'s28')}<span>${esc(u.name)}</span>${u.muted?HG('micOff'):''}${u.sd?HG('headOff'):''}${u.video?HG('cam'):''}</div>`).join('')}</div></div>`;
   const ids=home?(()=>{const recent=dmKeys(),eligible=o=>o!==oid&&o[0]!=='u'&&!!P[o]&&(REL.f.includes(o)||recent.some(ch=>dmO(ch)===o));const contacts=Object.keys(P).filter(eligible);contacts.sort((a,b)=>{const ka=recent.find(ch=>dmO(ch)===a),kb=recent.find(ch=>dmO(ch)===b),ta=ka?lastTs(ka):0,tb=kb?lastTs(kb):0;return tb-ta||((P[a].name||'').localeCompare(P[b].name||''))});const keys=contacts.map(dmId);if(cur.startsWith('dm:')&&!keys.includes(cur))keys.unshift(cur);return keys})():[];
   $('#chs').innerHTML=(home?`<button class="tab" id="frBtn"><span class="cn"><img class="tabpic" src="${HZI.fr}" alt="">Friends</span><span class="badge"${REL.i.length?'':' hidden'}>${REL.i.length}</span></button><button class="tab${comOn?' sel':''}" id="comBtn"><span class="cn"><img class="tabpic" src="${HZI.com}" alt="">Community</span><small class="num" id="comN">${LFG.length||''}</small></button><button class="tab${scOn?' sel':''}" id="scBtn"><span class="cn"><img class="tabpic" src="${HZI.sc}" alt="">Public Showcase</span></button>`:'')+(home&&!ids.length?'<div class="empty">No people to show yet.</div>':(home?dmGroups(ids,tabH):ids.map(i=>mixH(chObj(i))).join('')));
   $('#vlist').innerHTML='';
   const shut=home?[]:colGet(g.id);
   $('#cats').innerHTML=(home?[]:topOf(g)).map(tid=>{const k=cats.find(x=>x.id==tid);if(!k){const lc=g.channels.find(x=>x.id==tid);return lc?mixH(lc):''}const mine=g.channels.filter(c=>c.cat==k.id),isC=shut.includes(k.id);
-    return `<div class="cat${isC?' col':''}" data-cat="${k.id}"><div class="cat-h" data-cat-h="${k.id}"${own?' draggable="true"':''}><button class="cat-t" data-ct="${k.id}" aria-expanded="${!isC}"><i>▾</i><span>${esc(k.name)}</span><em class="cat-n">${mine.length}</em><em class="cat-u badge" hidden></em></button>${own?`<span class="cat-act"><button data-cadd="${k.id}" title="Create channel here">＋</button><button data-cedit="${k.id}" title="Edit category">⚙</button></span>`:''}</div><div class="cat-b">${mine.map(mixH).join('')}${mine.length?'':'<div class="cat-e">No channels yet</div>'}</div></div>`}).join('');
+    return `<div class="cat${isC?' col':''}" data-cat="${k.id}"><div class="cat-h" data-cat-h="${k.id}"${own?' draggable="true"':''}><button class="cat-t" data-ct="${k.id}" aria-expanded="${!isC}"><i>▾</i><span>${esc(k.name)}</span><em class="cat-n">${mine.length}</em><em class="cat-u badge" hidden></em></button>${own?`<span class="cat-act"><button data-cadd="${k.id}" title="Create channel here">＋</button><button data-cedit="${k.id}" title="Edit category">${HG('gear')}</button></span>`:''}</div><div class="cat-b">${mine.map(mixH).join('')}${mine.length?'':'<div class="cat-e">No channels yet</div>'}</div></div>`}).join('');
   const cb=$('#callBtn'),dm=cur.startsWith('dm:');cb.hidden=!dm;if(dm){const inC=vch==cur;const ringIn=ringK=='i'+cur,ringOut=ringK=='o'+cur,other=users.some(u=>u.voice==cur&&u.id!=me);cb.disabled=inC;cb.dataset.st=ringOut?'out':inC?'in':ringIn?'ring':other?'join':'';cb.innerHTML=IC.call+(ringOut?'Calling…':inC?'In call':ringIn?'Answer':other?'Join call':'Call')}
   {const cc=g&&g.channels.find(x=>x.id==cur);$('#chtitle').innerHTML=cur?`<span class="tn">${chTitle(cur)}</span>`+(cc&&cc.topic?`<small class="td">${emo(esc(cc.topic))}</small>`:'')+(cur.startsWith('dm:')?dmStatHtml(cur):'')+(cur.startsWith('dm:')&&vch==cur?`<span class="ctm">${tmr()}</span>`:''):''}
   badges();dndMark(own);tmoPaint()}
@@ -1458,7 +1568,7 @@ function addMsg(m){const box=$('#msgs');box.querySelector('.empty:not(.up)')?.re
   last={k,ts:m.ts};el.className='m'+(mn?' mine':'')+(cont?' cont':'');el.dataset.id=m.id;if(!mn&&mentionsMe(m.text))el.classList.add('mentioned');
   let f='';if(m.file){const u=base+m.file.url,ty=m.file.type||'';
     f=ty.startsWith('image/')?`<a href="${u}" target="_blank"><img src="${u}" alt=""></a>`:ty.startsWith('video/')?`<video src="${u}" controls></video>`:ty.startsWith('audio/')?`<audio src="${u}" controls></audio>`:'';
-    f+=`<a class="file" href="${u}?dl" download>📎 ${esc(m.file.name)} <span style="color:var(--dim)">${fmt(m.file.size)}</span></a>`}
+    f+=`<a class="file" href="${u}?dl" download>${HG('clip')} ${esc(m.file.name)} <span style="color:var(--dim)">${fmt(m.file.size)}</span></a>`}
   const rp=m.r?`<div class="rep" data-j="${esc(m.r.id)}" title="Jump to message">↪ <b>${esc(m.r.from)}</b>${emo(esc(m.r.text))}</div>`:'';
   el.innerHTML=`<div class="bd"><div class="meta">${avs(m.o,nm,'s22')}<b class="mn" data-o="${esc(m.o||'')}" style="${nameSt(m.o,nm)}">${esc(nm)}</b>${callB(m.o)}${rbadge(m.o,m.ch)}<time>${tm}</time></div>${rp}<div class="bw"><div class="bub" title="${tm}"><div class="t${jumbo(m.text)?' big':''}">${render(m.text)}</div>${f}${m.poll&&window.pollHtml?pollHtml(m):''}${m.gif&&window.gifHtml?gifHtml(m):''}<span class="ed"${m.edited?'':' hidden'}>(edited)</span></div><div class="rxs">${rxHtml(m)}</div></div></div>`;
   box.append(el);if(near||mn)box.scrollTop=1e9;
@@ -1472,7 +1582,7 @@ $('#msgs').addEventListener('click',e=>{
 const cm=document.createElement('div');cm.id='cm';cm.hidden=true;document.body.append(cm);const cmClose=()=>{cm.hidden=true};
 $('#msgs').addEventListener('contextmenu',e=>{const el=e.target.closest('.m');if(!el||e.target.closest('input'))return;e.preventDefault();
   const id=el.dataset.id,m=(hist[cur]||[]).find(x=>x.id==id);if(!m)return;
-  const it=[['reply','Reply'],['copy','Copy text']];if(window.canPin&&canPin(cur))it.push(['pin',isPinned(cur,id)?'📌 Unpin message':'📌 Pin message']);if(mine(m))it.push(['edit','Edit'],['del','Delete']);else if(!cur.startsWith('dm:')&&hasP(G[sel],'msgs'))it.push(['del','Delete']);{const g=G[sel];if(g&&hasP(g,'timeout')&&m.o&&m.o!=oid&&m.o!=g.owner&&g.members.includes(m.o))it.push(['to',(((g.timeouts||{})[m.o]||0)>Date.now()?'End timeout for ':'Timeout ')+m.from])}
+  const it=[['reply','Reply'],['copy','Copy text']];if(window.canPin&&canPin(cur))it.push(['pin',isPinned(cur,id)?'Unpin message':'Pin message']);if(mine(m))it.push(['edit','Edit'],['del','Delete']);else if(!cur.startsWith('dm:')&&hasP(G[sel],'msgs'))it.push(['del','Delete']);{const g=G[sel];if(g&&hasP(g,'timeout')&&m.o&&m.o!=oid&&m.o!=g.owner&&g.members.includes(m.o))it.push(['to',(((g.timeouts||{})[m.o]||0)>Date.now()?'End timeout for ':'Timeout ')+m.from])}
   cm.innerHTML='<div style="display:flex;gap:2px">'+['👍','❤️','😂','😮','😢','🎉'].map(x=>`<button data-a="rx" data-e="${x}">${x}</button>`).join('')+'<button data-a="rxm" title="More emoji">＋</button></div>'+it.map(([a,t])=>`<button data-a="${a}"${a=='del'?' class="danger"':''}>${t}</button>`).join('');cm.hidden=false;
   cm.style.left=Math.max(4,Math.min(e.clientX,innerWidth-cm.offsetWidth-8))+'px';cm.style.top=Math.max(4,Math.min(e.clientY,innerHeight-cm.offsetHeight-8))+'px';
   cm.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const a=b.dataset.a;
@@ -1489,7 +1599,7 @@ async function copyText(t){
   try{await navigator.clipboard.writeText(t)}
   catch{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.append(a);a.select();try{document.execCommand('copy')}catch{}a.remove()}
   toast('Copied',true);$('#txt').focus()}
-function setReply(m){replyTo={id:m.id,from:m.from};$('#rtxt').innerHTML='Replying to <b>'+esc(m.from)+'</b>: '+esc((m.text||(m.file?'📎 '+m.file.name:'')).slice(0,80));$('#rbar').hidden=false;applyStage();$('#txt').focus()}
+function setReply(m){replyTo={id:m.id,from:m.from};$('#rtxt').innerHTML='Replying to <b>'+esc(m.from)+'</b>: '+esc((m.text||(m.file?m.file.name:'')).slice(0,80));$('#rbar').hidden=false;applyStage();$('#txt').focus()}
 function clearReply(){replyTo=null;$('#rbar').hidden=true;applyStage()}
 $('#rx').onclick=()=>{clearReply();$('#txt').focus()};
 function startEdit(el,id){const m=(hist[cur]||[]).find(x=>x.id==id);if(!m||el.querySelector('.ei'))return;
@@ -1505,7 +1615,7 @@ function roster(){
   try{paintMe()}catch(err){console.error('profile bar',err)} // always repaint the bottom-left profile, even in the DM layout where the member list is detached
   if(!$('#online')||!$('#offline'))return; // member list is detached in the home/DM layout
   const st=u=>u.status||'online',row=(o,n0,u)=>{const n=nickOf(o)||n0,you=u&&u.id==me?' (you)':'',t=esc(n)+you+(u&&u.voice?' · in voice':'')+(u&&u.muted?' · muted':'')+(u&&st(u)!='online'?' · '+STS[st(u)][0]:'');
-    return `<button class="pa${u&&u.voice?' v':''}${gc(o)}" style="${gs(o)}" data-o="${esc(o)}" title="${t}" aria-label="${t}">${avs(o,n)}<span class="nn"${roleSt(o)?` style="${esc(roleSt(o))}"`:''}>${esc(n)}${you}</span>${u&&u.voice?'<i class="mk">'+(u.muted?'🔇':u.video?'📷':'🔊')+'</i>':''}</button>`};
+    return `<button class="pa${u&&u.voice?' v':''}${gc(o)}" style="${gs(o)}" data-o="${esc(o)}" title="${t}" aria-label="${t}">${avs(o,n)}<span class="nn"${roleSt(o)?` style="${esc(roleSt(o))}"`:''}>${esc(n)}${you}</span>${u&&u.voice?'<i class="mk">'+HG(u.muted?'micOff':u.video?'cam':'spk')+'</i>':''}</button>`};
   const inG=u=>G[sel]&&G[sel].members.includes(u.oid),on=users.filter(u=>inG(u)&&st(u)!='offline'),off=users.filter(u=>inG(u)&&st(u)=='offline'),known=(G[sel]?G[sel].members:[]).filter(o=>P[o]&&!users.some(u=>u.oid==o));
   $('#online').innerHTML=on.map(u=>row(u.oid||u.id,u.name,u)).join('');
   $('#offline').innerHTML=off.map(u=>row(u.oid||u.id,u.name,u)).join('')+known.map(o=>row(o,P[o].name)).join('');
@@ -1863,9 +1973,9 @@ function cardRedo(){if(!popEl||!P[popO])return;const v=cardHTML(popO),k=v.html+g
 function dmGroups(ids,tabH){
   const pins=UP.pins,cats=UP.cats;if(!pins.length&&!cats.length)return ids.map(tabH).join('');
   const shut=colGet('dm-'+oid),pinned=ids.filter(i=>pins.includes(dmO(i))),rest=ids.filter(i=>!pins.includes(dmO(i))),has=k=>cats.some(c=>c.id==k);
-  const sec=(key,label,list,editable)=>{const c=shut.includes(key);return `<div class="dmc${c?' col':''}" data-dmc="${esc(key)}"><div class="dmc-h"><button class="dmc-t" data-dct="${esc(key)}" aria-expanded="${!c}"><i>▾</i><span>${label}</span><em>${list.length}</em></button>${editable?`<span class="dmc-act"><button data-dcedit="${esc(key)}" title="Edit category">⚙</button></span>`:''}</div><div class="dmc-b">${list.map(tabH).join('')||'<div class="dmc-e">No conversations yet</div>'}</div></div>`};
+  const sec=(key,label,list,editable)=>{const c=shut.includes(key);return `<div class="dmc${c?' col':''}" data-dmc="${esc(key)}"><div class="dmc-h"><button class="dmc-t" data-dct="${esc(key)}" aria-expanded="${!c}"><i>▾</i><span>${label}</span><em>${list.length}</em></button>${editable?`<span class="dmc-act"><button data-dcedit="${esc(key)}" title="Edit category">${HG('gear')}</button></span>`:''}</div><div class="dmc-b">${list.map(tabH).join('')||'<div class="dmc-e">No conversations yet</div>'}</div></div>`};
   const loose=rest.filter(i=>!has(UP.dmcat[dmO(i)]));
-  return (pinned.length?sec('pin','📌 Pinned',pinned):'')+cats.map(k=>sec(k.id,esc(k.name),rest.filter(i=>UP.dmcat[dmO(i)]==k.id),true)).join('')+(loose.length?sec('all','Direct messages',loose):'')}
+  return (pinned.length?sec('pin',HG('pin')+' Pinned',pinned):'')+cats.map(k=>sec(k.id,esc(k.name),rest.filter(i=>UP.dmcat[dmO(i)]==k.id),true)).join('')+(loose.length?sec('all','Direct messages',loose):'')}
 $('#chs').addEventListener('click',e=>{const t=e.target.closest('[data-dct]');if(t){const a=colGet('dm-'+oid),k=t.dataset.dct;colSet('dm-'+oid,a.includes(k)?a.filter(x=>x!=k):[...a,k]);return side()}
   const ed=e.target.closest('[data-dcedit]');if(ed)dmCatDialog(ed.dataset.dcedit)});
 function dmPin(o){if(oid[0]==='u')return toast('Create an account to pin conversations.');if(!send({t:'dmpin',o,pin:!UP.pins.includes(o)}))toast('Not connected. Try again in a moment.')}
@@ -1971,7 +2081,7 @@ function renderRepSettings(){repGraphInto($('#repGraph'),oid)}
 function repDialog(o){const draw=()=>{const e=(REP.users||{})[o]||{reviews:[],events:[]},reviews=(e.reviews||[]).slice().sort((a,b)=>b.ts-a.ts),mine=reviews.find(r=>r.by===oid),score=userRepScore(o),level=userRepLevel(o);$('#repSummary').style.display='none';$('#repList').innerHTML=reviews.map(r=>`<div class="rep-review ${r.delta<0?'negative':'positive'}"><b>${r.delta>0?'+1 Rep':'−1 Rep'}</b> · ${esc((P[r.by]||{}).name||'Former member')}<small>${new Date(r.ts).toLocaleDateString()}</small>${r.reason?`<p>${esc(r.reason)}</p>`:''}</div>`).join('')||'<p class="hint">No reviews yet.</p>';const negative=!!(mine&&mine.delta<0);$('#repPlus').classList.toggle('on',!!(mine&&mine.delta>0));$('#repMinus').classList.toggle('off',negative);$('#repSave').textContent=mine?'Update my review':'Submit review';repGraphInto($('#repChart'),o)};
   modal(`<h3>${o===oid?'Your reputation':'Reputation · '+esc((P[o]||{}).name||'User')}</h3><div id="repSummary" class="repSummary"></div><div id="repChart"></div><div id="repForm" style="display:${o===oid?'none':'grid'};gap:10px"><p class="hint">Give positive feedback for helpful behavior. Negative reviews require a specific reason. Each person can maintain one review per user.</p><div class="repActions"><button id="repPlus">＋ Positive rep</button><button id="repMinus">− Negative rep</button></div><textarea id="repReason" rows="2" maxlength="240" placeholder="Optional reason for positive rep; required for negative rep"></textarea></div><div class="pact"><button id="gx">Close</button><button id="repSave" class="on"${o===oid?' hidden':''}>Submit review</button></div><div id="repList" style="max-height:32vh;overflow:auto"></div>`,()=>{let delta=1;{const pk=$('#modal .pk');if(pk)pk.style.width='min(660px,94vw)'}window.repDlgDraw=draw;draw();$('#repPlus').onclick=()=>{delta=1;$('#repPlus').classList.add('on');$('#repMinus').classList.remove('off')};$('#repMinus').onclick=()=>{delta=-1;$('#repMinus').classList.add('off');$('#repPlus').classList.remove('on')};const mine=((REP.users||{})[o]?.reviews||[]).find(r=>r.by===oid);if(mine){delta=mine.delta;$('#repReason').value=mine.reason||'';if(delta<0)$('#repMinus').classList.add('off');else $('#repPlus').classList.add('on')}$('#repSave').onclick=()=>{const reason=$('#repReason').value.trim();if(delta<0&&reason.length<5)return toast('Add a reason of at least 5 characters for negative rep.');if(o===oid)return toast('You cannot review yourself.');if(send({t:'urep',o,delta,reason}))toast('Reputation review saved.',true);else toast('Not connected. Try again in a moment.')};$('#gx').onclick=()=>{window.repDlgDraw=null;closeM()}})}
 function chEdit(id){const g=G[sel],c=g&&g.channels.find(x=>x.id==id);if(!c)return;let ic=c.icon||'';
-  modal(`<h3>Edit ${c.type} channel</h3><label class="fl">Rename channel<input id="en" maxlength="24" value="${esc(c.name)}" aria-label="Channel name" placeholder="channel-name"></label>${c.type=='text'?`<label class="fl">Topic <span style="opacity:.6">(optional)</span><input id="et" maxlength="100" placeholder="What is this channel about?" value="${esc(c.topic||'')}"></label><label class="fl">Slowmode <span style="opacity:.6">(how often each member can post)</span><select id="esl">${slowOpts(c.slow)}</select></label>`:''}${(g.categories||[]).length?`<label class="fl">Category<select id="ec">${catOpts(g,c.cat)}</select></label>`:''}<label class="tg"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"${c.nsfw?' checked':''}></label>${hasP(g,'roles')?'<button id="ep">🔒 Channel permissions…</button>':''}<div class="fl">Channel icon<div class="icrow"><span class="prev" id="ip"></span><button id="iu">Upload image</button><button id="ir">Use default</button><small>PNG with a transparent background works best.</small></div></div><input type="file" id="if" accept="image/*" hidden><button class="on" id="es">Save</button><button class="off" id="ed">Delete channel</button><button id="gx">Cancel</button>`,()=>{
+  modal(`<h3>Edit ${c.type} channel</h3><label class="fl">Rename channel<input id="en" maxlength="24" value="${esc(c.name)}" aria-label="Channel name" placeholder="channel-name"></label>${c.type=='text'?`<label class="fl">Topic <span style="opacity:.6">(optional)</span><input id="et" maxlength="100" placeholder="What is this channel about?" value="${esc(c.topic||'')}"></label><label class="fl">Slowmode <span style="opacity:.6">(how often each member can post)</span><select id="esl">${slowOpts(c.slow)}</select></label>`:''}${(g.categories||[]).length?`<label class="fl">Category<select id="ec">${catOpts(g,c.cat)}</select></label>`:''}<label class="tg"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"${c.nsfw?' checked':''}></label>${hasP(g,'roles')?'<button id="ep">'+HG('lock')+' Channel permissions…</button>':''}<div class="fl">Channel icon<div class="icrow"><span class="prev" id="ip"></span><button id="iu">Upload image</button><button id="ir">Use default</button><small>PNG with a transparent background works best.</small></div></div><input type="file" id="if" accept="image/*" hidden><button class="on" id="es">Save</button><button class="off" id="ed">Delete channel</button><button id="gx">Cancel</button>`,()=>{
     const pv=()=>{$('#ip').innerHTML=chIcon({type:c.type,icon:ic})};pv();$('#iu').onclick=()=>$('#if').click();$('#ir').onclick=()=>{ic='';pv()};
     $('#if').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{ic=await toIcon(f);pv()}catch{toast('That image could not be read.')}};
     if($('#et'))emAttach($('#et'));if($('#ep'))$('#ep').onclick=()=>{hzLeave(()=>chPerms(id))};$('#en').focus();$('#en').select();$('#gx').onclick=closeM;$('#es').onclick=()=>{const n=$('#en').value.trim();if(n&&send({t:'chedit',g:g.id,id,name:n,icon:ic,cat:$('#ec')?$('#ec').value:(c.cat||''),topic:$('#et')?$('#et').value:'',slow:$('#esl')?+$('#esl').value:0,nsfw:$('#c18').checked}))closeM()};
@@ -2122,7 +2232,7 @@ function gMenu(btn,g0,pt){const g=g0||G[sel],r=pt||btn.getBoundingClientRect(),o
     if(a=='mute'){if(mG(g.id)){cmClose();return muteClear('g',g.id)}return mutePick('g',g.id,g.name,()=>gMenu(btn,g0,pt))}cmClose();if(a=='inv'){copyText(g.code);toast(LS.get('huddle.streaming')?'Invite code copied.':'Invite code copied: '+g.code+'\nShare it so friends can join.',true)}else if(a=='name'||a=='roles'||a=='mem')sDialog(g,{name:'o',roles:'r',mem:'m'}[a]);else if(a=='gen'){if(await hzAsk('Old invite code will stop working. Make a new one?')){send({t:'gcode',g:g.id});toast('New invite code made. Open this menu again to copy it.',true)}}else if(a=='audit')auditOpen(g);else if(a=='ch')chDialog(g);else if(a=='cat')catDialog(g);else if(a=='bans')banDialog(g);else if(a==='emojis')emojiDialog();else if(a==='pfr'||a==='pdm'){const kind=a==='pfr'?'friendRequests':'dms',enabled=!sp[kind];if(send({t:'serverprivacy',g:g.id,kind,enabled}))toast(enabled?(kind==='dms'?'DMs from this server’s members are blocked.':'Friend requests from this server’s members are blocked.'):'Server-specific block removed.',true);else toast('Not connected. Try again in a moment.')}else send({t:a=='del'?'gdel':'gleave',g:g.id})}}
 addEventListener('contextmenu',e=>{const kh=e.target.closest('#cats .cat-h'),gk=G[sel];if(kh&&hasP(gk,'channels')){e.preventDefault();return catDialog(gk,kh.parentNode.dataset.cat)}const b=e.target.closest('#nav [data-c],#nav [data-v]'),g=G[sel];if(!b||!g||!(hasP(g,'channels')||hasP(g,'roles')))return;e.preventDefault();
   const id=b.dataset.c||b.dataset.v;
-  cm.innerHTML=(hasP(g,'channels')?'<button data-a="edit">✎ Edit channel</button>':'')+(hasP(g,'roles')?'<button data-a="perm">🔒 Permissions</button>':'')+(hasP(g,'channels')&&g.channels.length>1?'<button class="danger" data-a="del">Delete channel</button>':'');cm.hidden=false;
+  cm.innerHTML=(hasP(g,'channels')?'<button data-a="edit">Edit channel</button>':'')+(hasP(g,'roles')?'<button data-a="perm">Permissions</button>':'')+(hasP(g,'channels')&&g.channels.length>1?'<button class="danger" data-a="del">Delete channel</button>':'');cm.hidden=false;
   cm.style.left=Math.min(e.clientX,innerWidth-cm.offsetWidth-8)+'px';cm.style.top=Math.min(e.clientY,innerHeight-cm.offsetHeight-8)+'px';
   cm.onclick=async ev=>{const k=ev.target.closest('button');if(!k)return;cmClose();if(k.dataset.a=='edit')chEdit(id);else if(k.dataset.a=='perm')chPerms(id);else if(await hzAsk('Delete this channel and all its messages?'))send({t:'chdel',g:g.id,id})}});
 /* ---------- status: online / do not disturb / sleep / offline ---------- */
@@ -2235,7 +2345,7 @@ function openProfile(o,edit,anchor){if(!o)return;if(!edit)return showCard(o,anch
     saving=true;$('#pferr').textContent='';if(!send({t:'profile',name:n,bio:pf.bio.trim(),color:pf.color,avatar:pf.avatar,banner:pf.banner,gl:pf.gl,gr:pf.gr,fx:pf.fx,rc:pf.rc,cg:pf.cg,cc:pf.cc,cc2:pf.cc2,ci:pf.ci,nfx:pf.nfx,nc:pf.nc,nc2:pf.nc2,bfx:pf.bfx,bc:pf.bc,pn:pf.pn,cs:pf.cs,ce:pf.ce,pl:pf.pl,dec:pf.dec,nf:pf.nf,th:pf.th,tags:pf.tags})){saving=false;$('#pferr').textContent='Not connected. Try again in a moment.'}};
   $('#pname').focus()}
 
-const EMC=[['recent','🕘'],['custom','🖼️'],['smileys','😀'],['people','👋'],['animals','🐶'],['food','🍔'],['activities','⚽'],['travel','🚗'],['objects','💡'],['symbols','❤️']];
+const EMC=[['recent','clock'],['custom','image'],['smileys','smile'],['people','hand'],['animals','paw'],['food','burger'],['activities','ball'],['travel','car'],['objects','bulb'],['symbols','heart']];
 const EMD={
 smileys:`😀 grin happy|😃 smile|😄 laugh|😁 beam|😆 laughing|😅 sweat|🤣 rofl lol|😂 joy tears lol|🙂 slight smile|🙃 upside down|😉 wink|😊 blush happy|😇 angel halo|🥰 love hearts|😍 heart eyes|🤩 star struck|😘 kiss|😗 kiss|😚 kiss|😙 kiss|😋 yum tasty|😛 tongue|😜 wink tongue|🤪 zany crazy|😝 tongue squint|🤑 money|🤗 hug|🤭 oops giggle|🤫 shh quiet|🤔 think hmm|🤐 zipper|🤨 raised brow|😐 neutral|😑 expressionless|😶 no mouth|😏 smirk|😒 unamused|🙄 eye roll|😬 grimace|🤥 lying|😌 relieved|😔 pensive sad|😪 sleepy|🤤 drool|😴 sleep zzz|😷 mask sick|🤒 thermometer sick|🤕 hurt bandage|🤢 nauseated|🤮 vomit|🤧 sneeze|🥵 hot|🥶 cold freezing|🥴 woozy|😵 dizzy|🤯 mind blown|🤠 cowboy|🥳 party|😎 cool sunglasses|🤓 nerd|🧐 monocle|😕 confused|😟 worried|🙁 frown|😮 wow surprised|😯 hushed|😲 astonished|😳 flushed blush|🥺 pleading puppy|😦 frown open|😧 anguished|😨 fearful scared|😰 anxious sweat|😥 sad relieved|😢 cry sad|😭 sob crying|😱 scream fear|😖 confounded|😣 persevere|😞 disappointed|😓 downcast sweat|😩 weary|😫 tired|🥱 yawn|😤 triumph huff|😡 angry mad|😠 angry|🤬 swearing cursing|😈 devil smile|👿 imp angry|💀 skull dead|☠️ skull crossbones|💩 poop|🤡 clown|👻 ghost|👽 alien|🤖 robot|🙈 see no evil monkey|🙉 hear no evil|🙊 speak no evil`,
 people:`👋 wave hi|🤚 raised hand|🖐️ hand|✋ stop hand high five|🖖 vulcan|👌 ok|🤌 pinched|✌️ peace victory|🤞 fingers crossed luck|🤟 love you|🤘 rock metal|🤙 call me|👈 left|👉 right|👆 up|👇 down|☝️ point up|👍 thumbs up like yes|👎 thumbs down dislike no|✊ fist|👊 punch|🤛 fist left|🤜 fist right|👏 clap|🙌 raised hands hooray|👐 open hands|🤲 palms|🤝 handshake deal|🙏 pray thanks please|✍️ writing|💅 nails|💪 muscle strong flex|🧠 brain|👀 eyes look|👁️ eye|👅 tongue|👄 mouth lips|👶 baby|🧒 child|👦 boy|👧 girl|🧑 person|👨 man|👩 woman|🧓 old|👴 grandpa|👵 grandma|🙋 raising hand|🤦 facepalm|🤷 shrug|💃 dance|🕺 dance|🏃 run|🚶 walk|🧙 mage wizard|🧛 vampire|🧟 zombie|🦸 hero|🦹 villain|🥷 ninja`,
@@ -2255,7 +2365,7 @@ function emIns(t){const el=emT;if(!el||el.disabled||el.readOnly)return;const [a,
   el.value=v.slice(0,a)+t+v.slice(b);const p=a+t.length;emSel=[p,p];el.focus();el.setSelectionRange(p,p);el.dispatchEvent(new Event('input',{bubbles:true}))}
 function emClose(){if(EMP)EMP.hidden=true;emA=null}
 function emDraw(){if(!emCat)emCat=emRec().length?'recent':'smileys';
-  $('#emtabs').innerHTML=EMC.map(([k,i])=>`<button type="button" data-k="${k}" aria-selected="${!emQ&&k==emCat}" title="${k}">${i}</button>`).join('');
+  $('#emtabs').innerHTML=EMC.map(([k,i])=>`<button type="button" data-k="${k}" aria-selected="${!emQ&&k==emCat}" title="${k}">${HG(i)}</button>`).join('');
   const cell=(e,t)=>e[0]==':'?(EM[e.slice(1,-1)]?`<button type="button" data-e="${e}" title="${e}">${emo(e)}</button>`:''):`<button type="button" data-e="${e}" title="${esc(t||e)}">${e}</button>`;
   const cust=()=>Object.keys(EM).sort().map(n=>cell(':'+n+':')).join('');let h='';
   if(emQ){const c=Object.keys(EM).filter(n=>n.includes(emQ)).sort().map(n=>cell(':'+n+':')).join(''),
@@ -2287,7 +2397,7 @@ function emOpen(o){emBuild();if(!EMP.hidden&&o.anchor&&emA===o.anchor)return emC
   EMP.style.left=Math.max(8,Math.min(r.right-W,innerWidth-W-8))+'px';EMP.style.top=Math.max(8,top)+'px';
   if(!matchMedia('(pointer:coarse)').matches)setTimeout(()=>$('#emq').focus(),0)}
 function emAttach(el){if(!el||el._emb)return;const p=el.parentElement;if(getComputedStyle(p).position=='static')p.style.position='relative';
-  const b=document.createElement('button');b.type='button';b.className='emb';b.dataset.emb='1';b.textContent='😊';b.title='Emoji';b.setAttribute('aria-label','Emoji');
+  const b=document.createElement('button');b.type='button';b.className='emb';b.dataset.emb='1';b.innerHTML=HG('smile');b.title='Emoji';b.setAttribute('aria-label','Emoji');
   b.onmousedown=e=>e.preventDefault();b.onclick=()=>emOpen({anchor:b,target:el});el._emb=b;p.append(b);el.style.paddingRight='34px';
   const place=()=>{b.style.top=(el.offsetTop+(el.tagName=='TEXTAREA'?4:Math.max(0,(el.offsetHeight-26)/2)))+'px';b.style.left=(el.offsetLeft+el.offsetWidth-30)+'px'};place();requestAnimationFrame(place)}
 $('#emBtn').onmousedown=e=>e.preventDefault();$('#emBtn').onclick=()=>emOpen({anchor:$('#emBtn'),target:$('#txt')});
@@ -2380,21 +2490,21 @@ function cardHTML(o){const g=G[sel],inG=!!g&&g.members.includes(o),p=P[o]||{},u=
   const privateProfile=!!(p.hiddenProfile&&o!==oid);
   const ids=inG?((g.mroles||{})[o]||[]):[],rs=inG?(g.roles||[]).filter(r=>ids.includes(r.id)):[],own=inG&&g.owner==o;
   const ban=p.banner?`background-image:url(&quot;${esc(base+p.banner)}&quot;)`:p.gl&&p.gr?`background-image:linear-gradient(90deg,${esc(p.gl)},${esc(p.gr)})`:'';
-  const pills=(own?['<span class="ppRole own" style="--rc:#ffc27a"><i>♛</i>Owner</span>']:[]).concat(rs.map(r=>`<span class="ppRole" data-gl="${esc(r.glow||'')}" style="--rc:${esc(r.color)}"><i></i>${esc(r.name)}</span>`));
+  const pills=(own?['<span class="ppRole own" style="--rc:#ffc27a"><i>'+HG('crown')+'</i>Owner</span>']:[]).concat(rs.map(r=>`<span class="ppRole" data-gl="${esc(r.glow||'')}" style="--rc:${esc(r.color)}"><i></i>${esc(r.name)}</span>`));
   const tgt=inG&&!own&&o!=oid,canKick=tgt&&hasP(g,'kick'),mod=a=>tgt&&hasP(g,a),isTo=inG&&((g.timeouts||{})[o]||0)>Date.now(),isMu=inG&&(g.smuted||{})[o],isDf=inG&&(g.sdeaf||{})[o],canNick=inG&&hasP(g,'nicks')&&(!own||g.owner==oid),st2=frSt(o);
   const inVc=!!(u&&u.voice&&inG&&g.channels.some(c=>c.id==u.voice)),sm=(a,ic,t,s,cls,off)=>`<button class="smi${cls||''}" data-a="${a}"${off?' disabled':''}><i>${ic}</i><span><b>${t}</b><small>${s}</small></span></button>`;
-  const subs=[mod('mute')&&(isMu?sm('unmute','🎙️','Unmute','Let them speak again.'):sm('mute','🔇','Server mute','They can’t unmute until you do.')),
-    mod('deafen')&&(isDf?sm('undeafen','🎧','Undeafen','Let them hear again.'):sm('deafen','🙉','Server deafen','They won’t hear anyone in voice.')),
-    mod('vkick')&&sm('vkick','📵','Kick from voice',inVc?'Disconnects them from the call.':'Not in one of this server’s voice channels.','',!inVc),
-    mod('timeout')&&(isTo?sm('untimeout','⏳','End timeout','Let them chat again.'):sm('timeout','⏳','Timeout…','Stop messages and files for a set time.')),
-    canNick&&sm('nick','✏️','Change nickname','Only changes it in this server.'),
-    (canKick||mod('ban'))&&'<hr>',canKick&&sm('kick','👢','Kick from server','They can rejoin with the invite code.',' dng'),mod('ban')&&sm('ban','🔨','Ban','They can’t rejoin until unbanned.',' dng')].filter(Boolean),hasMod=subs.some(x=>x!='<hr>');
+  const subs=[mod('mute')&&(isMu?sm('unmute',HG('mic'),'Unmute','Let them speak again.'):sm('mute',HG('micOff'),'Server mute','They can’t unmute until you do.')),
+    mod('deafen')&&(isDf?sm('undeafen',HG('head'),'Undeafen','Let them hear again.'):sm('deafen',HG('headOff'),'Server deafen','They won’t hear anyone in voice.')),
+    mod('vkick')&&sm('vkick',HG('callX'),'Kick from voice',inVc?'Disconnects them from the call.':'Not in one of this server’s voice channels.','',!inVc),
+    mod('timeout')&&(isTo?sm('untimeout',HG('timer'),'End timeout','Let them chat again.'):sm('timeout',HG('hourglass'),'Timeout…','Stop messages and files for a set time.')),
+    canNick&&sm('nick',HG('pencil'),'Change nickname','Only changes it in this server.'),
+    (canKick||mod('ban'))&&'<hr>',canKick&&sm('kick',HG('door'),'Kick from server','They can rejoin with the invite code.',' dng'),mod('ban')&&sm('ban',HG('hammer'),'Ban','They can’t rejoin until unbanned.',' dng')].filter(Boolean),hasMod=subs.some(x=>x!='<hr>');
   const sec2=(!g&&!privateProfile)?dmExtra(o,i):'';
-  if(privateProfile)return {col,p,html:`<div class="ppBan private"><button class="ppX" aria-label="Close">✕</button></div><div class="ppId"><h3 class="ppName">${esc(name)}</h3></div><div class="pcPages" data-sub="0"><div class="pcMain"><div class="ppAct">${noteOk(o)?`<button data-a="note">📝 ${UP.notes[o]?'Edit note':'Add note'}</button>`:''}${hasMod?'<button data-a="mod">🛡️ Moderate ›</button>':''}<button data-a="x">Close</button></div></div><div class="pcSub"><div class="smHd"><button class="smBack" data-a="back">‹ Back</button><span>Moderation</span></div>${subs.join('')}</div></div>`};
+  if(privateProfile)return {col,p,html:`<div class="ppBan private"><button class="ppX" aria-label="Close">✕</button></div><div class="ppId"><h3 class="ppName">${esc(name)}</h3></div><div class="pcPages" data-sub="0"><div class="pcMain"><div class="ppAct">${noteOk(o)?`<button data-a="note">${HG('note')} ${UP.notes[o]?'Edit note':'Add note'}</button>`:''}${hasMod?'<button data-a="mod">'+HG('shield')+' Moderate ›</button>':''}<button data-a="x">Close</button></div></div><div class="pcSub"><div class="smHd"><button class="smBack" data-a="back">‹ Back</button><span>Moderation</span></div>${subs.join('')}</div></div>`};
   return {col,p,html:`<div class="ppBan"${p.bfx?` data-bfx="${esc(p.bfx)}"`:''} ${i([ban,p.bfx?'--b1:'+esc(p.bc||'#ffffff'):''].filter(Boolean).join(';'))}><button class="ppX" aria-label="Close">✕</button></div>
   <div class="ppHead" ${i()}><span class="avw" data-o="${esc(o)}" data-s="${st}" data-fx="${esc(p.fx||'')}" style="${fxv(p)}">${avh(name,col,p.avatar)}<i class="sd"></i></span></div>
   <div class="ppId" ${i()}><h3 class="ppName"><span class="ppNm"${p.nfx?` data-nfx="${esc(p.nfx)}" style="--n1:${esc(p.nc||'#ff5c93')};--n2:${esc(p.nc2||'#ffc27a')}"`:''}>${esc(inG&&nickOf(o)||name)}</span>${inG&&nickOf(o)?` <small style="font:13px system-ui;color:var(--dim)">${esc(name)}</small>`:''}${p.pn?` <small class="ppPn">${esc(p.pn)}</small>`:''}${o==oid?' <small style="font:13px system-ui;color:var(--dim)">(you)</small>':''}</h3>
-    <div class="ppStat"><span class="sd2" style="--stc:${STS[st][1]}"></span>${STS[st][0]}${u&&u.voice?'<span class="ppVc">'+(u.muted?'🔇 In voice, muted':'🔊 In voice')+'</span>':''}${p.num&&!p.hiddenProfile?`<button class="ppTag" data-a="copytag" title="Copy username and number">${esc(tagOf(o))}</button>`:''}</div>${p.cs?`<div class="ppCs">${emo(esc(p.cs))}</div>`:''}${p.pl?`<div class="ppPl">🎮 Playing <b>${emo(esc(p.pl))}</b></div>`:''}</div>
+    <div class="ppStat"><span class="sd2" style="--stc:${STS[st][1]}"></span>${STS[st][0]}${u&&u.voice?'<span class="ppVc">'+(u.muted?HG('micOff')+' In voice, muted':HG('spk')+' In voice')+'</span>':''}${p.num&&!p.hiddenProfile?`<button class="ppTag" data-a="copytag" title="Copy username and number">${esc(tagOf(o))}</button>`:''}</div>${p.cs?`<div class="ppCs">${emo(esc(p.cs))}</div>`:''}${p.pl?`<div class="ppPl">${HG('pad')} Playing <b>${emo(esc(p.pl))}</b></div>`:''}</div>
   <div class="pcPages" data-sub="${popSub&&hasMod?1:0}"><div class="pcMain">
   <section class="ppSec" ${i()}><h4>About me</h4><div class="ppAbt${p.bio?'':' none'}">${p.bio?emo(esc(p.bio)):'Nothing here yet.'}</div></section>
   ${noteOk(o)?`<section class="ppSec" ${i()}><h4>Your note<small class="pvt">only you can see this</small></h4><div class="ppAbt ppNote${UP.notes[o]?'':' none'}">${UP.notes[o]?esc(UP.notes[o]):'No note yet.'}</div><button data-a="note" class="ppNoteBtn">${UP.notes[o]?'Edit note':'Add note'}</button></section>`:''}
@@ -2414,7 +2524,7 @@ const myTmo=()=>{const g=G[sel],t=g&&(g.timeouts||{})[oid];return t&&t>Date.now(
   canFile=ch=>chCan(ch,'send')&&chCan(ch,'files'),
   canVc=ch=>chCan(ch,'view')&&chCan(ch,'connect');
 function tmoPaint(){const t=myTmo(),x=$('#txt'),f=canFile(cur),sd=canSend(cur);if(!x)return;
-  x.disabled=!!t||!sd;x.placeholder=t?'⏱ You are timed out for '+tLeft(t-Date.now()):sd?(window.hzPh?hzPh():'Send a message'):chCan(cur,'view')?'You do not have permission to send messages in this channel':'You do not have permission to view this channel';$('#go').disabled=!!t||!sd;
+  x.disabled=!!t||!sd;x.placeholder=t?'You are timed out for '+tLeft(t-Date.now()):sd?(window.hzPh?hzPh():'Send a message'):chCan(cur,'view')?'You do not have permission to send messages in this channel':'You do not have permission to view this channel';$('#go').disabled=!!t||!sd;
   const a=$('#attach');a.disabled=!!t||!f;a.title=t?'You are timed out':f?'Share a file':'You do not have permission to send files in this channel'}
 function tmoNote(ng){const was=((G[ng.id]||{}).timeouts||{})[oid],now=(ng.timeouts||{})[oid];if(now&&now>Date.now()&&now!=was)toast('You were timed out. You can chat again in '+tLeft(now-Date.now())+'.')}
 setInterval(tmoPaint,1000);
@@ -2454,7 +2564,7 @@ try{IC.sc=ICO('<rect x="3" y="4" width="18" height="14" rx="3"/><path d="m3 15 5
 const scFresh=new Set();let scFile=null;
 function scIn(ps){const old=new Set(SC.map(x=>x.id));if(SC.length)ps.forEach(p=>old.has(p.id)||scFresh.add(p.id));SC=ps;scPaint()}
 function scHtml(p){const nm=(P[p.o]&&P[p.o].name)||p.from,u=base+(p.file?p.file.url:''),f=p.file?(p.file.type.startsWith('video/')?`<video src="${u}" controls preload="metadata"></video>`:`<img src="${u}" alt="" loading="lazy">`):'';
-  return `<div class="scH"><button class="lfgU" data-u="${esc(p.o)}">${avs(p.o,nm)}<span><b>${esc(nm)}</b><small class="scT" data-ts="${p.ts}">${ago(p.ts)}</small></span></button>${p.o==oid?`<button class="scDel" data-d="${p.id}" title="Delete post">🗑</button>`:''}</div>${p.text?`<p class="scX">${esc(p.text)}</p>`:''}${f}<div><button class="scLk" data-l="${p.id}">♥ <b></b></button></div>`}
+  return `<div class="scH"><button class="lfgU" data-u="${esc(p.o)}">${avs(p.o,nm)}<span><b>${esc(nm)}</b><small class="scT" data-ts="${p.ts}">${ago(p.ts)}</small></span></button>${p.o==oid?`<button class="scDel" data-d="${p.id}" title="Delete post">${HG('trash')}</button>`:''}</div>${p.text?`<p class="scX">${esc(p.text)}</p>`:''}${f}<div><button class="scLk" data-l="${p.id}">${HG('heart')} <b></b></button></div>`}
 function scUpd(e,p){const n=(p.likes||[]).length,b=e.querySelector('.scLk');b.classList.toggle('me',(p.likes||[]).includes(oid));const s=b.querySelector('b');if(s.textContent!=(n||''))s.textContent=n||''}
 function scPaint(){const l=$('#scL');if(!l)return;
   if(!SC.length){l.innerHTML='<div class="empty">Nothing here yet. Be the first to post.</div>';return}
@@ -2468,7 +2578,7 @@ function scSet(f){const p=$('#scPrev');if(p&&p.dataset.u)URL.revokeObjectURL(p.d
 function scOpen(){if(scOn&&$('#com'))return comClose();comClose();scOn=true;const b=$('#scBtn');if(b)b.classList.add('sel');
   const c=document.createElement('section');c.id='com';c.dataset.k='sc';c.setAttribute('aria-label','Public Showcase');
   c.innerHTML=`<div class="comHd"><span class="comIc"><img src="${HZI.sc}" alt=""></span><div><h2>Public Showcase</h2><p>A live feed for everyone, outside any server. Share a thought, a screenshot or a clip.</p></div><span class="live"><i></i>Live</span><button id="comX" class="comX" aria-label="Close" title="Close">✕</button></div>
-  <form id="scF" class="scC"><textarea id="scT" maxlength="500" rows="2" placeholder="Share something with everyone…" aria-label="Post"></textarea><div id="scPrev" hidden></div><div class="scAct"><button type="button" id="scAdd">🖼 Photo / video</button><input type="file" id="scFi" accept="image/*,video/*" hidden><span id="scCc">0/500</span><button class="on" id="scGo">Post</button></div></form><div id="scL"></div>`;
+  <form id="scF" class="scC"><textarea id="scT" maxlength="500" rows="2" placeholder="Share something with everyone…" aria-label="Post"></textarea><div id="scPrev" hidden></div><div class="scAct"><button type="button" id="scAdd">${HG('image')} Photo / video</button><input type="file" id="scFi" accept="image/*,video/*" hidden><span id="scCc">0/500</span><button class="on" id="scGo">Post</button></div></form><div id="scL"></div>`;
   $('main').append(c);const T=$('#scT');
   T.oninput=()=>{$('#scCc').textContent=T.value.length+'/500'};T.onkeydown=e=>{if(e.key=='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();$('#scF').requestSubmit()}};
   T.addEventListener('paste',e=>{const f=e.clipboardData&&e.clipboardData.files[0];if(f){e.preventDefault();scSet(f)}});
@@ -2544,7 +2654,7 @@ function dmStatPaint(){document.querySelectorAll('[data-dmst]').forEach(el=>{con
   document.querySelectorAll('.dsd[data-o]').forEach(el=>el.style.setProperty('--stc',STS[stOf(el.dataset.o)][1]));if(popEl&&!G[sel])cardRefresh()}
 function dmExtra(o,i){const shared=Object.values(G).filter(x=>(x.members||[]).includes(o)),pn=r=>PERMS.filter(x=>(r.perms||[]).includes(x[0])).map(x=>x[1]);
   const rows=shared.map(g=>{const own=g.owner==o,ids=(g.mroles||{})[o]||[],rs=(g.roles||[]).filter(r=>ids.includes(r.id)),keys=new Set(own?PERMS.map(x=>x[0]):rs.flatMap(r=>r.perms||[])),lab=PERMS.filter(x=>keys.has(x[0])).map(x=>x[1]);
-    const pills=(own?['<span class="ppRole own" style="--rc:#ffc27a" title="Owner: every permission"><i>♛</i>Owner</span>']:[]).concat(rs.map(r=>`<span class="ppRole" data-gl="${esc(r.glow||'')}" style="--rc:${esc(r.color)}" title="${esc(r.name+': '+(pn(r).join(', ')||'no special permissions'))}"><i></i>${esc(r.name)}</span>`));
+    const pills=(own?['<span class="ppRole own" style="--rc:#ffc27a" title="Owner: every permission"><i>'+HG('crown')+'</i>Owner</span>']:[]).concat(rs.map(r=>`<span class="ppRole" data-gl="${esc(r.glow||'')}" style="--rc:${esc(r.color)}" title="${esc(r.name+': '+(pn(r).join(', ')||'no special permissions'))}"><i></i>${esc(r.name)}</span>`));
     return `<div class="ppSrv"><div class="ppSrvH">${esc(g.name)}</div><div class="ppRoles">${pills.join('')||'<span class="ppNone">No roles assigned</span>'}</div>${own?'<div class="ppPerms"><span>All permissions</span></div>':lab.length?`<div class="ppPerms" title="${esc(lab.join(', '))}">${lab.slice(0,5).map(x=>`<span>${esc(x)}</span>`).join('')}${lab.length>5?`<span>+${lab.length-5} more</span>`:''}</div>`:''}</div>`}).join('');
   let h=`<section class="ppSec" ${i()}><h4>${o==oid?'Your servers':'Mutual servers'}<b>${shared.length}</b></h4>${rows||'<span class="ppNone">No servers in common</span>'}</section>`;
   if(noteOk(o)){const on=mDm(dmId(o)),pin=UP.pins.includes(o);
@@ -2633,9 +2743,9 @@ window.isPinned=(ch,id)=>(PINS[ch]||[]).some(p=>p.id==id);
 window.togglePin=(ch,id)=>{if(!send({t:'pin',ch,id,on:!isPinned(ch,id)}))toast('Not connected. Try again in a moment.')};
 let pinOpen='';
 const pinDraw=()=>{const l=$('#pinL');if(!l)return;const ps=(PINS[pinOpen]||[]).slice().reverse();
-  l.innerHTML=ps.length?ps.map(p=>`<div class="pinI" data-id="${esc(p.id)}"><header>${avs(p.o,(P[p.o]||{}).name||p.from,'s22')}<b>${esc((P[p.o]||{}).name||p.from)}</b><small>${new Date(p.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</small><span><button data-j="${esc(p.id)}">Jump</button>${canPin(pinOpen)?`<button data-u="${esc(p.id)}">Unpin</button>`:''}</span></header>${p.text?`<p>${render(p.text)}</p>`:''}${p.file?`<p>📎 ${esc(p.file.name)}</p>`:''}</div>`).join(''):'<div class="empty">No pinned messages yet.'+(canPin(pinOpen)?' Right-click a message, or hover it and press 📌, to pin it.':'')+'</div>'};
+  l.innerHTML=ps.length?ps.map(p=>`<div class="pinI" data-id="${esc(p.id)}"><header>${avs(p.o,(P[p.o]||{}).name||p.from,'s22')}<b>${esc((P[p.o]||{}).name||p.from)}</b><small>${new Date(p.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</small><span><button data-j="${esc(p.id)}">Jump</button>${canPin(pinOpen)?`<button data-u="${esc(p.id)}">Unpin</button>`:''}</span></header>${p.text?`<p>${render(p.text)}</p>`:''}${p.file?`<p>${HG('clip')} ${esc(p.file.name)}</p>`:''}</div>`).join(''):'<div class="empty">No pinned messages yet.'+(canPin(pinOpen)?' Right-click a message, or hover it and press the pin button, to pin it.':'')+'</div>'};
 window.pinsOpen=ch=>{if(!ch)return toast('Open a channel or conversation first.');pinOpen=ch;
-  modal(`<h3>📌 Pinned messages</h3><small style="color:var(--dim)">${colorLabel(chLabel(ch))}</small><div class="pinL" id="pinL"><div class="empty">Loading…</div></div><div class="pact"><button id="gx">Close</button></div>`,()=>{
+  modal(`<h3>Pinned messages</h3><small style="color:var(--dim)">${colorLabel(chLabel(ch))}</small><div class="pinL" id="pinL"><div class="empty">Loading…</div></div><div class="pact"><button id="gx">Close</button></div>`,()=>{
     $('#modal .pk').classList.add('wide');$('#gx').onclick=closeM;$('#pinL').onclick=e=>{const j=e.target.closest('[data-j]'),u=e.target.closest('[data-u]');
       if(u)return send({t:'pin',ch:pinOpen,id:u.dataset.u,on:false});
       if(j){closeM();const t=$('#msgs .m[data-id="'+j.dataset.j+'"]');if(t){t.scrollIntoView({block:'center',behavior:'smooth'});t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}else toast('That message is older than the loaded history.')}};
@@ -2645,23 +2755,23 @@ const pinBadge=()=>{const b=$('#pinBtn');if(!b)return;b.hidden=!cur;const n=(PIN
 /* polls */
 const pollLeft=p=>{const ms=p.end-Date.now();if(ms<=0)return 'Poll ended';const t=Math.ceil(ms/6e4),h=Math.floor(t/60),m=t%60;return (h?h+'h ':'')+(h<24?m+'m ':'')+'left'};
 window.pollHtml=m=>{const p=m.poll,tot=p.opts.reduce((a,o)=>a+o.v.length,0),voters=new Set(p.opts.flatMap(o=>o.v)).size,ended=p.end&&Date.now()>p.end;
-  return `<div class="poll${ended?' ended':''}" data-poll="${esc(m.id)}"><h4>📊 ${esc(p.q)}</h4>${p.opts.map((o,i)=>{const pc=tot?Math.round(o.v.length*100/tot):0;return `<button class="pollO${o.v.includes(oid)?' me':''}" data-pi="${i}"${ended?' disabled':''}><i style="width:${pc}%"></i><span>${o.v.includes(oid)?'✓ ':''}${esc(o.t)}</span><b>${o.v.length} · ${pc}%</b></button>`}).join('')}<small>${voters} voter${voters==1?'':'s'} · ${p.multi?'pick any':'pick one'} · ${pollLeft(p)}</small></div>`};
+  return `<div class="poll${ended?' ended':''}" data-poll="${esc(m.id)}"><h4>${HG('poll')} ${esc(p.q)}</h4>${p.opts.map((o,i)=>{const pc=tot?Math.round(o.v.length*100/tot):0;return `<button class="pollO${o.v.includes(oid)?' me':''}" data-pi="${i}"${ended?' disabled':''}><i style="width:${pc}%"></i><span>${o.v.includes(oid)?'✓ ':''}${esc(o.t)}</span><b>${o.v.length} · ${pc}%</b></button>`}).join('')}<small>${voters} voter${voters==1?'':'s'} · ${p.multi?'pick any':'pick one'} · ${pollLeft(p)}</small></div>`};
 window.hzPoll=d=>{const m=(hist[d.ch]||[]).find(x=>x.id==d.id);if(m)m.poll=d.poll;if(d.ch!=cur||!m)return;const el=$('#msgs .poll[data-poll="'+d.id+'"]');if(el)el.outerHTML=pollHtml(m)};
 $('#msgs').addEventListener('click',e=>{const b=e.target.closest('.pollO');if(!b||b.disabled)return;const pid=b.closest('.poll').dataset.poll;send({t:'pollvote',ch:cur,id:pid,i:+b.dataset.pi})});
 window.pollDialog=()=>{if(!cur)return toast('Open a channel or conversation first.');const ch=cur;
-  modal(`<h3>📊 Create a poll</h3><form class="pollF" id="pf"><label class="fl">Question<input id="pq" maxlength="200" placeholder="What should we play tonight?" required></label><div id="pos"></div><button type="button" id="pa">＋ Add option</button><label class="fl">Ends in<select id="ph"><option value="1">1 hour</option><option value="4">4 hours</option><option value="8">8 hours</option><option value="24" selected>24 hours</option><option value="72">3 days</option><option value="168">1 week</option></select></label><label class="tg"><span><b>Allow multiple answers</b><small>People can pick more than one option.</small></span><input type="checkbox" role="switch" id="pm"></label><div class="pact"><button type="button" id="gx">Cancel</button><button class="on" id="pgo">Post poll</button></div></form>`,()=>{
+  modal(`<h3>Create a poll</h3><form class="pollF" id="pf"><label class="fl">Question<input id="pq" maxlength="200" placeholder="What should we play tonight?" required></label><div id="pos"></div><button type="button" id="pa">＋ Add option</button><label class="fl">Ends in<select id="ph"><option value="1">1 hour</option><option value="4">4 hours</option><option value="8">8 hours</option><option value="24" selected>24 hours</option><option value="72">3 days</option><option value="168">1 week</option></select></label><label class="tg"><span><b>Allow multiple answers</b><small>People can pick more than one option.</small></span><input type="checkbox" role="switch" id="pm"></label><div class="pact"><button type="button" id="gx">Cancel</button><button class="on" id="pgo">Post poll</button></div></form>`,()=>{
     const pos=$('#pos'),add=v=>{if(pos.children.length>=10)return toast('Up to 10 options.');const d=document.createElement('div');d.className='opt';d.innerHTML=`<input maxlength="80" placeholder="Option ${pos.children.length+1}" value="${esc(v||'')}"><button type="button" title="Remove">✕</button>`;d.querySelector('button').onclick=()=>{if(pos.children.length>2)d.remove()};pos.append(d)};
     add();add();$('#pa').onclick=()=>{add();pos.lastChild.querySelector('input').focus()};$('#gx').onclick=closeM;$('#pq').focus();
     $('#pf').onsubmit=e=>{e.preventDefault();const q=$('#pq').value.trim(),opts=[...pos.querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);
       if(!q||opts.length<2)return toast('Add a question and at least two options.');
       if(send({t:'pollnew',ch,q,opts,hrs:+$('#ph').value,multi:$('#pm').checked}))closeM();else toast('Not connected. Try again in a moment.')}})};
 /* audit log */
-const AUD_IC={kick:'👢',ban:'🔨',unban:'🕊',timeout:'⏳',untimeout:'⌛',mute:'🔇',unmute:'🔊',deafen:'🙉',undeafen:'👂',vkick:'📤',roles:'🎭','role-create':'✨','role-edit':'🎨','role-delete':'🗑','role-order':'↕','channel-create':'➕','channel-edit':'✏','channel-delete':'🗑','channel-permissions':'🔒','server-edit':'⚙',invite:'🔗',pin:'📌',unpin:'📍'};
+const AUD_IC=window.HZAUDIC={kick:'door',ban:'hammer',unban:'unlock',timeout:'hourglass',untimeout:'timer',mute:'micOff',unmute:'mic',deafen:'headOff',undeafen:'head',vkick:'callX',roles:'tag','role-create':'sparkle','role-edit':'palette','role-delete':'trash','role-order':'updown','channel-create':'plus','channel-edit':'pencil','channel-delete':'trash','channel-permissions':'lock','server-edit':'gear',invite:'link',pin:'pin',unpin:'unpin',ticket:'ticket',import:'down'};
 let audG='',audLog=[];
 const audDraw=()=>{const l=$('#audL');if(!l)return;const f=($('#audF')||{}).value||'',q=f.toLowerCase();
   const rows=audLog.filter(x=>!q||(x.byName+' '+x.op+' '+x.detail).toLowerCase().includes(q));
-  l.innerHTML=rows.length?rows.map(x=>`<div class="audR"><span class="ic">${AUD_IC[x.op]||'•'}</span><div><b>${esc(x.byName)}</b> <span>${esc(x.op.replace(/-/g,' '))}</span><br><small>${esc(x.detail)}</small></div><small>${new Date(x.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</small></div>`).join(''):'<div class="empty">Nothing logged yet.</div>'};
-window.auditOpen=g=>{audG=g.id;audLog=[];modal(`<h3>🧾 Audit log</h3><small style="color:var(--dim)">Moderation and settings changes in ${esc(g.name)}. Only people with “View audit log” can see this.</small><input id="audF" placeholder="Filter by person or action" style="width:100%;margin-top:10px"><div class="audL" id="audL"><div class="empty">Loading…</div></div><div class="pact"><button id="gx">Close</button></div>`,()=>{$('#modal .pk').classList.add('wide');$('#gx').onclick=closeM;$('#audF').oninput=audDraw;send({t:'auditget',g:g.id})})};
+  l.innerHTML=rows.length?rows.map(x=>`<div class="audR"><span class="ic">${HG(AUD_IC[x.op]||'dot')}</span><div><b>${esc(x.byName)}</b> <span>${esc(x.op.replace(/-/g,' '))}</span><br><small>${esc(x.detail)}</small></div><small>${new Date(x.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</small></div>`).join(''):'<div class="empty">Nothing logged yet.</div>'};
+window.auditOpen=g=>{audG=g.id;audLog=[];modal(`<h3>Audit log</h3><small style="color:var(--dim)">Moderation and settings changes in ${esc(g.name)}. Only people with “View audit log” can see this.</small><input id="audF" placeholder="Filter by person or action" style="width:100%;margin-top:10px"><div class="audL" id="audL"><div class="empty">Loading…</div></div><div class="pact"><button id="gx">Close</button></div>`,()=>{$('#modal .pk').classList.add('wide');$('#gx').onclick=closeM;$('#audF').oninput=audDraw;send({t:'auditget',g:g.id})})};
 window.hzAudit=d=>{if(d.g!=audG)return;audLog=d.log||[];audDraw()};
 window.slowOpts=v=>[[0,'Off'],[5,'5 seconds'],[10,'10 seconds'],[15,'15 seconds'],[30,'30 seconds'],[60,'1 minute'],[120,'2 minutes'],[300,'5 minutes'],[600,'10 minutes'],[900,'15 minutes'],[3600,'1 hour'],[21600,'6 hours']].map(([s,t])=>`<option value="${s}"${(+v||0)==s?' selected':''}>${t}</option>`).join('');
 /* hover actions: quick react, reply, pin, more */
@@ -3352,7 +3462,7 @@ main{background:transparent}
 #com .lfgFoot{padding-bottom:12px;border-top:1px solid var(--line);padding-top:10px}
 #com .lfgP.mine{border-color:color-mix(in srgb,var(--ac) 45%,var(--line))}
 #com .empty{border-radius:20px;padding:44px 20px;background:radial-gradient(300px 140px at 50% 0%,color-mix(in srgb,var(--ac) 12%,transparent),transparent 70%)}
-#com .empty::before{content:"🎮";display:block;font-size:44px;margin-bottom:8px;animation:hzBobS 3.5s ease-in-out infinite}
+#com .empty::before{content:"";display:block;width:52px;height:52px;margin:0 auto 8px;background:var(--ac);-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7.2%207h9.6a4.8%204.8%200%200%201%204.6%206.1l-1%203.6a2.5%202.5%200%200%201-4.2%201.1L14.4%2016H9.6l-1.8%201.8a2.5%202.5%200%200%201-4.2-1.1l-1-3.6A4.8%204.8%200%200%201%207.2%207z%22/%3E%3Cpath%20d%3D%22M8%2010v3.4M6.3%2011.7h3.4%22/%3E%3Cpath%20d%3D%22M15.4%2010.6h.01M17.6%2012.8h.01%22%20stroke-width%3D%222.6%22/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7.2%207h9.6a4.8%204.8%200%200%201%204.6%206.1l-1%203.6a2.5%202.5%200%200%201-4.2%201.1L14.4%2016H9.6l-1.8%201.8a2.5%202.5%200%200%201-4.2-1.1l-1-3.6A4.8%204.8%200%200%201%207.2%207z%22/%3E%3Cpath%20d%3D%22M8%2010v3.4M6.3%2011.7h3.4%22/%3E%3Cpath%20d%3D%22M15.4%2010.6h.01M17.6%2012.8h.01%22%20stroke-width%3D%222.6%22/%3E%3C/svg%3E") center/contain no-repeat;animation:hzBobS 3.5s ease-in-out infinite}
 </style>
 <script id="huddle-v4-js">
 /* ---------- Huddle v4 ---------- */
@@ -3425,7 +3535,8 @@ new MutationObserver(()=>document.querySelectorAll('#msgs .bub>video:not([data-h
 /* ---- personality ---- */
 const DECS=Object.keys(HZDECO),decOf=d=>HZDECO_OLD[d]||d;
 /* NF + FONT are built from the font list below */
-const SUG=['🎮 Gaming','🎵 Music','🎨 Art','🎬 Movies','💻 Coding','📚 Books','⚽ Sports','🍳 Cooking','✈️ Travel','🐾 Pets','📸 Photos','🌙 Night owl'];
+const SUG=[['Gaming','pad'],['Music','music'],['Art','palette'],['Movies','film'],['Coding','code'],['Books','book'],['Sports','ball'],['Cooking','pan'],['Travel','plane'],['Pets','paw'],['Photos','photo'],['Night owl','moon']];
+const tagH=x=>{const t=String(x).replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u,'')||String(x),k=SUG.find(s=>s[0].toLowerCase()==t.toLowerCase());return (k?HG(k[1]):'')+esc(t)};
 {const st=document.createElement('style');st.id='hz-themes';st.textContent=HZTHEMES.map(([id,,bg,gl])=>`[data-th="${id}"]{--thb:${bg};--thg:${gl}}`).join('\n');document.head.append(st)}
 const css=document.createElement('style');css.id='hz-person';document.head.append(css);
 const FONTS=[['rounded','Rounded','"Segoe UI Variable Display","Nunito","Arial Rounded MT Bold",system-ui,sans-serif','font-weight:700'],['serif','Serif','var(--serif)','font-style:italic'],['mono','Mono','"Cascadia Code",Consolas,monospace',''],['display','DISPLAY','Bahnschrift,"Segoe UI Black",Impact,sans-serif','letter-spacing:.04em;text-transform:uppercase'],['hand','Handwritten','"Segoe Print","Ink Free","Comic Sans MS",cursive',''],['wide','W i d e','Bahnschrift,system-ui,sans-serif','letter-spacing:.14em'],
@@ -3452,7 +3563,7 @@ const decoCard=(popEl,popO)=>{if(!popEl||!popO)return;const p=P[popO]||{};
   if(p.th&&HZTHEMES.some(t=>t[0]==p.th))popEl.dataset.th=p.th;else delete popEl.dataset.th;hzFxSet(popEl.querySelector('.pcIn'),popEl.dataset.th||'');{const pn=popEl.querySelector('.ppName');if(pn){pn.classList.forEach(c=>c.startsWith('hzNf-')&&pn.classList.remove(c));if(FONT[p.nf])pn.classList.add('hzNf-'+p.nf)}const bn=popEl.querySelector('.ppBan');if(bn)hzFxSet(bn,bn.dataset.bfx?'b-'+bn.dataset.bfx:'')}
   const big=popEl.querySelector('.ppAv .avw,.avw');if(big&&!big.dataset.o)setDec(big,p.dec,colOfP(popO));
   const id=popEl.querySelector('.ppId');if(!id)return;let t=id.querySelector('.hzTags');const tags=Array.isArray(p.tags)?p.tags:[];
-  if(!tags.length){if(t)t.remove();return}const h=tags.map(x=>`<span>${esc(x)}</span>`).join('');if(!t){t=document.createElement('div');t.className='hzTags';id.append(t)}if(t.innerHTML!=h)t.innerHTML=h};
+  if(!tags.length){if(t)t.remove();return}const h=tags.map(x=>`<span>${tagH(x)}</span>`).join('');if(!t){t=document.createElement('div');t.className='hzTags';id.append(t)}if(t.innerHTML!=h)t.innerHTML=h};
 const cardDeco=()=>{if(typeof popEl!='undefined'&&popEl&&popO)decoCard(popEl,popO)};window.hzDecoCard=decoCard;
 const _on=on;on=function(d){_on(d);if(d.t=='init'||d.t=='profiles'||d.t=='rel')persCss()};
 /* profile editor: Personality section */
@@ -3461,11 +3572,11 @@ window.persHTML=()=>`<div class="efxh">Personality</div><div class="hzPers">
   <div class="hzSec"><div class="eft"><b>Profile card theme</b><small>The backdrop people see when they open your card</small></div><div class="hzThG" data-k="th"><button type="button" data-v="" style="background:var(--bg)"><span>None</span></button>${HZTHEMES.map(([id,n])=>`<button type="button" data-v="${id}" data-th="${id}" title="${n}"><span>${n}</span></button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Name font</b><small>How your name looks in chat and member lists</small></div><div class="hzChips hzFontG" data-k="nf">${NF.map(([v,t])=>`<button type="button" data-v="${v}" class="${v?'hzNf-'+v:''}">${t}</button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Interests</b><small>Up to 5 tags on your card</small></div><div class="hzTagEd"><span id="hzTagL"></span><input id="hzTagI" maxlength="18" placeholder="Add a tag, press Enter"></div>
-  <div class="hzSug">${SUG.map(t=>`<button type="button" data-t="${esc(t)}">${t}</button>`).join('')}</div></div></div>`;
+  <div class="hzSug">${SUG.map(([t,i])=>`<button type="button" data-t="${esc(t)}">${HG(i)} ${esc(t)}</button>`).join('')}</div></div></div>`;
 const persPaint=()=>{const r=$('#prof .hzPers');if(!r)return;pf.dec=pf.dec?decOf(pf.dec):'';
   r.querySelectorAll('[data-k]').forEach(c=>c.querySelectorAll(':scope>button').forEach(b=>b.setAttribute('aria-pressed',(pf[c.dataset.k]||'')==b.dataset.v)));
   {const k=[pf.name,pf.color,pf.avatar].join('|'),g=r.querySelector('.hzDecG');if(g&&g.dataset.k!==k){g.dataset.k=k;g.querySelectorAll('.dp').forEach(x=>{const a=x.querySelector('.av');if(a)a.outerHTML=avh(pf.name||'?',pf.color||'#ff5c93',pf.avatar)})}}
-  $('#hzTagL').innerHTML=(pf.tags||[]).map((t,i)=>`<span>${esc(t)}<button type="button" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('');
+  $('#hzTagL').innerHTML=(pf.tags||[]).map((t,i)=>`<span>${tagH(t)}<button type="button" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('');
   const pc=$('#prof .pc');if(pc){if(pf.th)pc.dataset.th=pf.th;else delete pc.dataset.th;hzFxSet(pc,'',true)}tileFx();hzFxSet($('#prof .ban'),pf.bfx?'b-'+pf.bfx:'');pickPaint();
   const np=$('#npv');if(np){np.classList.forEach(c=>c.startsWith('hzNf-')&&np.classList.remove(c));if(pf.nf)np.classList.add('hzNf-'+pf.nf)}
   const w=$('#pav .avw');if(w)setDec(w,pf.dec,pf.color)};
@@ -4013,7 +4124,18 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 <style id="huddle-v10">
 /* ---------- Huddle v10: app channels + invites with limits ---------- */
 /* create channel */
-#modal .pk:has(>.hzCD),#modal .pk:has(>.hzIvD){width:min(680px,94vw)!important;padding:22px!important}
+#modal .pk:has(>.hzCD),#modal .pk:has(>.hzIvD),#modal .pk:has(>.hzGD){width:min(680px,94vw)!important;padding:22px!important}
+.hzGD{display:grid;gap:12px;min-width:0}.hzGD h3{margin:0;font-size:20px}.hzGD .sub{margin:-6px 0 0;color:var(--dim);font-size:13px}
+.hzGDs{display:flex;gap:12px;align-items:center;margin-top:6px}.hzGDs b{display:block;font-size:14px}.hzGDs small{display:block;color:var(--dim);font-size:12px;line-height:1.4}
+.hzGDi{width:36px;height:36px;flex:none;display:block;border-radius:10px;padding:4px;box-sizing:border-box;background:color-mix(in srgb,var(--tx) 6%,transparent)}
+.hzGD .hzCDrow button{margin:0;width:auto;min-width:96px}.hzGD .hzCDrow input{margin:0}
+.hzGDp{display:grid;gap:10px;padding:12px;border-radius:14px;border:1px solid #5865f2aa;background:color-mix(in srgb,#5865f2 10%,transparent);animation:l-rise .3s var(--ease) both}
+.hzGDph{display:flex;gap:10px;align-items:center}.hzGDph b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hzGDph small{color:var(--dim);font-size:12px}
+.hzGDtree{display:grid;gap:6px;max-height:180px;overflow:auto;font-size:12.5px}.hzGDtree>div{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.hzGDtree i{flex-basis:100%;font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.hzGDch{display:inline-flex;gap:3px;align-items:center}.hzGDch .gi{width:13px;height:13px;opacity:.7}
+.hzGDroles{display:flex;flex-wrap:wrap;gap:5px}.hzGDroles span{display:inline-flex;gap:4px;align-items:center;font-size:11.5px;padding:2px 9px;border-radius:99px;color:var(--rc);background:color-mix(in srgb,var(--rc) 16%,transparent);border:1px solid color-mix(in srgb,var(--rc) 40%,transparent)}
+
 .hzCD{display:grid;gap:14px;min-width:0}
 .hzCD h3{margin:0;font-size:20px}.hzCD .sub{margin:-8px 0 0;color:var(--dim);font-size:13px}
 .hzCDl{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin:4px 0 -6px}
@@ -4022,20 +4144,20 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 .hzCDc{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--tx) 3%,transparent);transition:border-color .15s,background .15s,transform .15s}
 .hzCDc:hover{background:var(--hi);transform:translateY(-1px)}
 .hzCDc.sel{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,transparent);box-shadow:0 0 0 1px var(--ac) inset}
-.hzCDc .e{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:19px;background:color-mix(in srgb,var(--c,var(--ac)) 22%,transparent)}
+.hzCDc .e{width:38px;height:38px;flex:none;border-radius:11px;display:grid;place-items:center;padding:5px;box-sizing:border-box;background:color-mix(in srgb,var(--c,var(--ac)) 22%,transparent)}
 .hzCDc b{display:block;font-size:13.5px}.hzCDc small{display:block;font-size:11.5px;color:var(--dim);line-height:1.3}
 .hzCDrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.hzCDrow>input{flex:1 1 220px;margin:0}
 .hzCDact{display:flex;gap:8px;justify-content:flex-end}.hzCDact button{margin:0}
 /* sidebar icon */
-.hzAppIc{width:20px;height:20px;flex:none;display:inline-grid;place-items:center;font-size:14px;line-height:1;border-radius:6px;margin-right:6px;background:color-mix(in srgb,var(--c,var(--ac)) 20%,transparent)}
+.hzAppIc{width:22px;height:22px;flex:none;display:inline-grid;place-items:center;padding:2px;box-sizing:border-box;line-height:1;border-radius:7px;margin-right:6px;background:color-mix(in srgb,var(--c,var(--ac)) 20%,transparent)}
 /* app panel shell */
 #hzApp{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(900px 340px at 50% -120px,color-mix(in srgb,var(--c,var(--ac)) 12%,transparent),transparent 70%),var(--bg);animation:l-rise .3s var(--ease) both}
 .hzAH{display:flex;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);flex:none;flex-wrap:wrap}
-.hzAH .ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:22px;flex:none;background:color-mix(in srgb,var(--c,var(--ac)) 24%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c,var(--ac)) 35%,transparent) inset}
+.hzAH .ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;padding:6px;box-sizing:border-box;flex:none;background:color-mix(in srgb,var(--c,var(--ac)) 24%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c,var(--ac)) 35%,transparent) inset}
 .hzAH .tt{min-width:0;flex:1}.hzAH h2{margin:0;font-size:17px}.hzAH p{margin:2px 0 0;font-size:12.5px;color:var(--dim)}
 .hzAA{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 #hzApp button.hzB,#hzApp .hzB{min-width:0;flex:none;white-space:nowrap;margin:0;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:color-mix(in srgb,var(--tx) 5%,transparent);color:var(--tx);font-size:13px;cursor:pointer;width:auto}
-#hzApp .hzB:hover{background:var(--hi)}#hzApp .hzB.on{background:var(--ac);border-color:transparent;color:#fff}#hzApp .hzB.bad{color:var(--bad)}
+#hzApp .hzB{display:inline-flex;align-items:center}#hzApp .hzB:hover{background:var(--hi)}#hzApp .hzB.on{background:var(--ac);border-color:transparent;color:#fff}#hzApp .hzB.bad{color:var(--bad)}
 #hzApp .hzB:disabled{opacity:.45;cursor:default}
 .hzAB{flex:1;min-height:0;position:relative;overflow:auto;padding:16px 18px}
 .hzAB.full{padding:0;overflow:hidden}
@@ -4069,25 +4191,56 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 .hzSep{width:1px;height:24px;background:var(--line)}
 .hzCvW{flex:1;min-height:0;display:grid;place-items:center;padding:12px}
 .hzCvW canvas{background:#fbfaf7;border-radius:14px;box-shadow:0 12px 40px #0008;touch-action:none;cursor:crosshair;display:block}
-/* checkers */
-.hzCk{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:18px;align-items:start;max-width:880px;margin:0 auto}
+/* checkers: walnut board, layered pieces, stacked kings */
+.hzCk{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:22px;align-items:start;max-width:1000px;margin:0 auto}
 .hzCk>*{min-width:0}
 @media (max-width:1100px){.hzCk{grid-template-columns:minmax(0,1fr)}}
-.hzBoard{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));width:min(100%,calc(100vh - 200px));justify-self:center;aspect-ratio:1;border-radius:12px;overflow:hidden;box-shadow:0 18px 50px #0009,0 0 0 6px #3b2a1e}
-.hzSq{position:relative;display:grid;place-items:center}
-.hzSq.l{background:#eedcb3}.hzSq.d{background:#7a5434}
-.hzSq.mv::after{content:'';width:30%;height:30%;border-radius:50%;background:#ffffff66;box-shadow:0 0 0 3px #ffffff33}
-.hzSq.lst{box-shadow:inset 0 0 0 999px #ffd34d33}
-.hzPc{width:78%;height:78%;border-radius:50%;cursor:pointer;display:grid;place-items:center;font-size:clamp(12px,3vw,22px);transition:transform .15s;user-select:none}
-.hzPc.r{background:radial-gradient(circle at 35% 30%,#ff8a8a,#d42a2a 55%,#8f1414);box-shadow:0 4px 0 #6d0e0e,0 6px 10px #0008}
-.hzPc.b{background:radial-gradient(circle at 35% 30%,#666,#262626 55%,#0c0c0c);box-shadow:0 4px 0 #000,0 6px 10px #0008}
-.hzPc.pick{transform:translateY(-4px) scale(1.06);outline:3px solid #ffd34d;outline-offset:2px}
-.hzCkSd{display:grid;gap:10px}
-.hzSeat{display:flex;gap:8px;align-items:center;padding:10px;min-width:0;border-radius:12px;border:1px solid var(--line)}
-.hzSeat.turn{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac) inset,0 0 18px color-mix(in srgb,var(--ac) 30%,transparent)}
-.hzSeat .dot{width:22px;height:22px;border-radius:50%;flex:none}
-.hzSeat>*{flex:none}.hzSeat .nm{flex:1 1 0;min-width:0;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.hzBanner{padding:10px 12px;border-radius:12px;text-align:center;font-weight:700;background:color-mix(in srgb,var(--ac) 16%,transparent)}
+.hzCkB{justify-self:center;box-sizing:border-box;width:min(100%,calc(100vh - 190px));min-width:240px;padding:clamp(10px,3.4%,26px);border-radius:20px;position:relative;
+  background:linear-gradient(150deg,#7a4a28,#4a2a15 50%,#2c180b);box-shadow:0 28px 70px #000b,0 0 0 1px #00000080,inset 0 2px 0 #ffffff26,inset 0 -4px 0 #0007}
+.hzCkB::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(97deg,#ffffff07 0 2px,transparent 2px 11px),radial-gradient(120% 70% at 20% 0%,#ffffff14,transparent 60%)}
+.hzBoard{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));aspect-ratio:1;border-radius:6px;overflow:hidden;box-shadow:0 0 0 3px #1a0d05,0 0 0 5px #d4ae7255,0 6px 18px #0009}
+.hzSq{position:relative;display:grid;place-items:center;min-width:0;min-height:0}
+.hzSq.l{background:linear-gradient(135deg,#f6e3ba,#e9cf9b)}
+.hzSq.d{background:linear-gradient(135deg,#a0704a,#7a4f30);box-shadow:inset 0 0 18px #0000002a}
+.hzSq .co{position:absolute;font:700 clamp(8px,1vw,11px)/1 system-ui,sans-serif;opacity:.75;pointer-events:none}
+.hzSq .co.f{right:5%;bottom:4%}.hzSq .co.r{left:5%;top:5%}
+.hzSq.l .co{color:#7a4f30}.hzSq.d .co{color:#f6e3ba}
+.hzSq.lst{box-shadow:inset 0 0 0 999px #ffd95a3d}
+.hzSq.mv{cursor:pointer}
+.hzSq.mv::after{content:'';position:absolute;width:30%;height:30%;border-radius:50%;background:radial-gradient(circle,#fff8 0 35%,#fff3 36% 100%);box-shadow:0 0 0 2px #ffffff55;animation:hzCkDot 1.4s ease-in-out infinite}
+.hzSq.mv.jump::after{width:74%;height:74%;background:none;box-shadow:0 0 0 3px #ff8a65,0 0 16px #ff8a65aa;animation:hzCkDot 1s ease-in-out infinite}
+.hzSq.mv:hover::after{background:radial-gradient(circle,#fffc 0 40%,#fff5 41% 100%)}
+.hzSq.prey .hzPc{box-shadow:0 0 0 3px #ff8a65,0 0 18px #ff8a65}
+@keyframes hzCkDot{50%{transform:scale(.82);opacity:.75}}
+.hzPc{width:80%;height:auto;aspect-ratio:1;border-radius:50%;position:relative;display:grid;place-items:center;user-select:none;transition:transform .18s cubic-bezier(.2,1.4,.4,1),filter .2s;z-index:1}
+.hzPc::before{content:'';position:absolute;inset:13%;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 2.5px,#0000001c 2.5px 3.6px);box-shadow:inset 0 0 0 2px #00000040,0 0 0 1.5px #ffffff2e}
+.hzPc::after{content:'';position:absolute;left:17%;top:9%;width:42%;height:22%;border-radius:50%;background:linear-gradient(#ffffff70,#fff0);transform:rotate(-22deg);pointer-events:none}
+.hzPc.r{background:radial-gradient(circle at 38% 30%,#ffa08f,#e3352d 38%,#a8141b 72%,#6c0a10);box-shadow:0 3px 0 #5c070c,0 5px 0 #3b0407,0 10px 16px #000a}
+.hzPc.b{background:radial-gradient(circle at 38% 30%,#77777f,#303037 40%,#16161a 75%,#050506);box-shadow:0 3px 0 #000,0 5px 0 #000,0 10px 16px #000a}
+.hzPc.r.k{box-shadow:0 3px 0 #5c070c,0 6px 0 #c2252a,0 9px 0 #5c070c,0 11px 0 #3b0407,0 15px 18px #000b;transform:translateY(-5px)}
+.hzPc.b.k{box-shadow:0 3px 0 #000,0 6px 0 #3a3a42,0 9px 0 #000,0 11px 0 #000,0 15px 18px #000b;transform:translateY(-5px)}
+.hzPc .gcrown{position:relative;z-index:2;width:58%;height:auto;aspect-ratio:1}
+.hzPc.can{cursor:pointer}.hzPc.can:hover{transform:translateY(-4px) scale(1.03)}
+.hzPc.can::before{box-shadow:inset 0 0 0 2px #00000040,0 0 0 2px #ffe08a88}
+.hzPc.pick{transform:translateY(-7px) scale(1.07);filter:drop-shadow(0 0 10px #ffd34d)}
+.hzPc.pick::before{box-shadow:inset 0 0 0 2px #00000040,0 0 0 3px #ffd34d}
+.hzPc.must{animation:hzCkMust 1s ease-in-out infinite}
+@keyframes hzCkMust{50%{filter:drop-shadow(0 0 12px #ff8a65)}}
+.hzPcGhost{position:absolute;pointer-events:none;border-radius:50%;z-index:3;animation:hzCkGone .45s ease-in forwards}
+@keyframes hzCkGone{to{transform:scale(.3) translateY(-30px);opacity:0}}
+.hzCkSd{display:grid;gap:12px}
+.hzSeat{display:grid;gap:8px;padding:12px;min-width:0;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 70%,transparent);transition:border-color .2s,box-shadow .2s}
+.hzSeat.turn{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac) inset,0 0 22px color-mix(in srgb,var(--ac) 30%,transparent)}
+.hzSeatT{display:flex;gap:10px;align-items:center;min-width:0}.hzSeatT>*{flex:none}
+.hzSeat .nm{flex:1 1 0;min-width:0;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hzMini{width:24px;height:24px;border-radius:50%;flex:none;position:relative}
+.hzMini.r{background:radial-gradient(circle at 38% 30%,#ffa08f,#e3352d 40%,#8f1218);box-shadow:0 2px 0 #5c070c}
+.hzMini.b{background:radial-gradient(circle at 38% 30%,#77777f,#2a2a30 45%,#09090b);box-shadow:0 2px 0 #000}
+.hzCap{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--dim);min-height:16px}
+.hzCap span{display:flex;padding-left:6px}.hzCap .hzMini{width:14px;height:14px;margin-left:-6px;box-shadow:0 1px 0 #0008,0 0 0 1.5px var(--panel)}
+.hzBanner{padding:11px 12px;border-radius:12px;text-align:center;font-weight:700;background:color-mix(in srgb,var(--ac) 16%,transparent);display:flex;gap:8px;justify-content:center;align-items:center}
+.hzBanner.win{background:linear-gradient(135deg,#fbbf2433,#f472b633);box-shadow:0 0 0 1px #fbbf2466 inset}
+.hzRules{font-size:12px;color:var(--dim);line-height:1.5}.hzRules summary{cursor:pointer;color:var(--tx);font-weight:600;font-size:12.5px}
 /* one */
 .hzOne{display:grid;gap:16px;max-width:980px;margin:0 auto}
 .hzOP{display:flex;gap:8px;flex-wrap:wrap}
@@ -4119,6 +4272,10 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 .hzAns{margin:8px 0 0;display:grid;gap:6px;font-size:13px}.hzAns div{padding:8px 10px;border-radius:9px;background:color-mix(in srgb,var(--tx) 5%,transparent);white-space:pre-wrap;overflow-wrap:anywhere}
 .hzAns i{display:block;font-style:normal;color:var(--dim);font-size:11.5px;margin-bottom:2px}
 .hzWel{font-size:15px}
+.hzDelImg{all:unset;cursor:zoom-in;display:inline-grid;margin:4px 0 6px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0004;position:relative;max-width:min(360px,100%)}
+.hzDelImg img{display:block;max-width:100%;max-height:240px;object-fit:contain}
+.hzDelImg span{position:absolute;left:0;right:0;bottom:0;padding:14px 10px 6px;font-size:11.5px;color:#fff;background:linear-gradient(transparent,#000a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hzDelImg:hover{border-color:var(--ac)}
 .hzWave{all:unset;cursor:pointer;padding:5px 10px;border-radius:99px;font-size:13px;border:1px solid var(--line)}
 .hzWave.on{background:color-mix(in srgb,var(--ac) 20%,transparent);border-color:var(--ac)}
 .hzLb{display:grid;gap:6px}
@@ -4138,16 +4295,35 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 .hzTbl2{width:100%;border-collapse:collapse;font-size:13px}.hzTbl2 td,.hzTbl2 th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}.hzTbl2 th{color:var(--dim);font-weight:600;font-size:12px}
 .hzTbl2 td.n{text-align:right;font-variant-numeric:tabular-nums}
 /* puzzle */
-.hzPz{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--ac) 6%,#1a1a1f),#0f0f13)}
-.hzPzF{position:absolute;border-radius:4px;box-shadow:0 0 0 2px #ffffff22,0 0 0 9999px #00000020;background-size:100% 100%;background-repeat:no-repeat}
-.hzPzF.ghost{opacity:.18}
-.hzPzF.hide{background-image:none!important}
-.hzPzP{position:absolute;left:0;top:0;touch-action:none;cursor:grab;filter:drop-shadow(0 3px 4px #000c)}
-.hzPzP>div{width:100%;height:100%;background-repeat:no-repeat}
-.hzPzP.ok{cursor:default;filter:none;z-index:1!important}
-.hzPzP.drag{cursor:grabbing;filter:drop-shadow(0 10px 14px #000e)}
+.hzPz{position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--ac) 7%,#1b1b21),#0c0c10)}
+.hzPz.pan{cursor:grabbing}
+.hzPzV{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0;will-change:transform}
+.hzPzF{position:absolute;border-radius:4px;box-shadow:0 0 0 2px #ffffff30,0 0 0 9999px #00000024,0 0 40px #0008 inset;background-size:100% 100%;background-repeat:no-repeat;filter:saturate(1.3)}
+.hzPzF.ghost{opacity:.2}
+.hzPzF.hide{background-image:none!important;background:#ffffff08}
+.hzPzP{position:absolute;left:0;top:0;pointer-events:none;filter:drop-shadow(0 3px 4px #000c)}
+.hzPzP svg{width:100%;height:100%;display:block;overflow:visible}
+.hzPzP image{filter:saturate(1.38) contrast(1.1) brightness(1.04);pointer-events:auto;cursor:grab}
+.hzPzP .e1,.hzPzP .e2{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:stroke;cursor:grab}
+.hzPzP .e1{stroke:#000;stroke-opacity:.6;stroke-width:3.2}
+.hzPzP .e2{stroke:#fff;stroke-opacity:.92;stroke-width:1.3}
+.hzPzP:not(.ok):hover .e2{stroke:var(--ac);stroke-opacity:1;stroke-width:2}
+.hzPzP.ok{filter:none;z-index:1!important}
+.hzPzP.ok image,.hzPzP.ok path{pointer-events:none}
+.hzPzP.ok .e1,.hzPzP.ok .e2{stroke-opacity:.1}
+.hzPzP.drag{filter:drop-shadow(0 12px 16px #000e)}
+.hzPzP.drag image{cursor:grabbing}
 .hzPzP.remote{transition:left .08s linear,top .08s linear}
-.hzPzDone{position:absolute;left:50%;top:14px;transform:translateX(-50%);padding:10px 18px;border-radius:14px;font-weight:800;background:color-mix(in srgb,var(--ac) 85%,#000);color:#fff;box-shadow:0 10px 30px #0008;z-index:9999;animation:l-rise .4s var(--ease) both}
+.hzPzP.snap{animation:hzPzSnap .45s ease-out}
+@keyframes hzPzSnap{30%{filter:drop-shadow(0 0 10px var(--ac)) brightness(1.25)}}
+.hzPzZ{position:absolute;right:14px;bottom:14px;display:flex;gap:4px;align-items:center;padding:5px;border-radius:13px;background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--line);box-shadow:0 8px 24px #0008;z-index:9998;cursor:default}
+.hzPzZ button{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:9px;color:var(--tx)}
+.hzPzZ button:hover{background:var(--hi)}.hzPzZ button .gi{width:18px;height:18px}
+.hzPzZ output{min-width:46px;text-align:center;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--dim)}
+.hzPzTip{position:absolute;left:14px;bottom:14px;font-size:12px;color:var(--dim);background:color-mix(in srgb,var(--panel) 85%,transparent);padding:6px 10px;border-radius:9px;pointer-events:none;z-index:9998}
+.hzPzDone{position:absolute;left:50%;top:14px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;padding:10px 18px;border-radius:14px;font-weight:800;background:color-mix(in srgb,var(--ac) 85%,#000);color:#fff;box-shadow:0 10px 30px #0008;z-index:9999;animation:l-rise .4s var(--ease) both}
+.hzPzDone .gi{width:20px;height:20px}
+.hzPzArt{width:64px;height:64px;display:block}
 .hzPzSet{max-width:520px;margin:30px auto;display:grid;gap:14px}
 .hzPzDrop{display:grid;place-items:center;gap:6px;min-height:180px;border:2px dashed var(--line);border-radius:16px;cursor:pointer;text-align:center;color:var(--dim);background-size:cover;background-position:center;position:relative;overflow:hidden}
 .hzPzDrop:hover{border-color:var(--ac)}
@@ -4164,22 +4340,23 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 .hzInvR{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:9px 12px;border-radius:11px;border:1px solid var(--line)}
 .hzInvR code{font-size:13px}.hzInvR small{display:block;color:var(--dim);font-size:11.5px}
 .hzInvR button,.hzInvNew button{margin:0;padding:6px 10px;width:auto}
+#hzApp .hzB .gi,.hzSeg .gi{margin-right:5px}.hzTags span .gi,.hzSug .gi,#hzTagL .gi{width:1em;height:1em;margin-right:4px}
 @media (max-width:700px){.hzInvMk{grid-template-columns:1fr}.hzCkSd{width:100%}}
 </style>
 <script id="huddle-v10-js">
 (()=>{
 /* ================= app catalogue ================= */
 const APPS={
-  stickers:{e:'🪧',n:'Sticker Together',d:'A shared wall everyone can stick emojis on.',c:'#f472b6',slug:'sticker-wall'},
-  scribble:{e:'🖍️',n:'Scribble',d:'Draw together on one live canvas.',c:'#38bdf8',slug:'scribble'},
-  checkers:{e:'🏁',n:'Checkers',d:'Classic checkers for two players.',c:'#ef4444',slug:'checkers'},
-  one:{e:'🃏',n:'One',d:'Match colors and numbers, empty your hand first.',c:'#facc15',slug:'one'},
-  puzzle:{e:'🧩',n:'Puzzle',d:'Turn any image into a jigsaw and solve it together.',c:'#a78bfa',slug:'puzzle'},
-  huroler:{e:'📝',n:'Huroler',d:'Members apply for roles; staff approve them.',c:'#34d399',slug:'role-applications'},
-  hullo:{e:'👋',n:'Hullo',d:'Welcomes new members and helps you invite people.',c:'#fb923c',slug:'welcome'},
-  modpro:{e:'🛡️',n:'Moderate Pro',d:'Tickets, server logs and deleted messages.',c:'#60a5fa',slug:'moderation'},
-  stats:{e:'📈',n:'Community Stats',d:'Joins, leaves, chat and voice activity over time.',c:'#2dd4bf',slug:'stats'},
-  leaders:{e:'🏆',n:'Leaderboards',d:'Top members by messages and time in voice.',c:'#fbbf24',slug:'leaderboards'}
+  stickers:{n:'Sticker Together',d:'A shared wall everyone can stick emojis on.',c:'#f472b6',slug:'sticker-wall'},
+  scribble:{n:'Scribble',d:'Draw together on one live canvas.',c:'#38bdf8',slug:'scribble'},
+  checkers:{n:'Checkers',d:'Classic checkers for two players.',c:'#ef4444',slug:'checkers'},
+  one:{n:'One',d:'Match colors and numbers, empty your hand first.',c:'#facc15',slug:'one'},
+  puzzle:{n:'Puzzle',d:'Turn any image into a jigsaw and solve it together.',c:'#a78bfa',slug:'puzzle'},
+  huroler:{n:'Huroler',d:'Members apply for roles; staff approve them.',c:'#34d399',slug:'role-applications'},
+  hullo:{n:'Hullo',d:'Welcomes new members to the server.',c:'#fb923c',slug:'welcome'},
+  modpro:{n:'Moderate Pro',d:'Tickets, server logs and deleted messages.',c:'#60a5fa',slug:'moderation'},
+  stats:{n:'Community Stats',d:'Joins, leaves, chat and voice activity over time.',c:'#2dd4bf',slug:'stats'},
+  leaders:{n:'Leaderboards',d:'Top members by messages and time in voice.',c:'#fbbf24',slug:'leaderboards'}
 };
 window.HZAPPS=APPS;
 const AS={};window.HZAS=AS; // channel id -> latest state from the server
@@ -4195,11 +4372,11 @@ const thr=(fn,ms)=>{let t=0,pend=null,tm=0;return (...a)=>{const n=Date.now();if
 /* ================= create channel: text, voice or an app ================= */
 chDialog=function(g,pre){
   let kind='text',app='';
-  const card=(k,e,n,d,c)=>`<button type="button" class="hzCDc" data-k="${k}" style="--c:${c}"><span class="e">${e}</span><span><b>${n}</b><small>${d}</small></span></button>`;
+  const card=(k,e,n,d,c)=>`<button type="button" class="hzCDc" data-k="${k}" style="--c:${c}"><span class="e">${HG.img(e)}</span><span><b>${n}</b><small>${d}</small></span></button>`;
   modal(`<div class="hzCD"><h3>Create channel</h3><p class="sub">Pick a channel type. Apps run right inside the channel for everyone in the server.</p>
     <div class="hzCDrow"><input id="cn" placeholder="channel-name" maxlength="24" autocomplete="off"></div>
-    <div class="hzCDl">Channels</div><div class="hzCDg two">${card('text','#','Text','Messages, images, GIFs and polls.','#94a3b8')}${card('voice','🔊','Voice','Talk, share your screen and video.','#22c55e')}</div>
-    <div class="hzCDl">Apps</div><div class="hzCDg">${Object.entries(APPS).map(([k,a])=>card('app:'+k,a.e,a.n,a.d,a.c)).join('')}</div>
+    <div class="hzCDl">Channels</div><div class="hzCDg two">${card('text','text','Text','Messages, images, GIFs and polls.','#94a3b8')}${card('voice','voice','Voice','Talk, share your screen and video.','#22c55e')}</div>
+    <div class="hzCDl">Apps</div><div class="hzCDg">${Object.entries(APPS).map(([k,a])=>card('app:'+k,k,a.n,a.d,a.c)).join('')}</div>
     ${(g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':''}
     <label class="tg" id="c18w"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"></label>
     <div class="hzCDact"><button id="gx">Cancel</button><button class="on" id="chc">Create</button></div></div>`,()=>{
@@ -4214,7 +4391,7 @@ chDialog=function(g,pre){
 
 /* ================= sidebar: app icons ================= */
 const decoSide=()=>{document.querySelectorAll('#chs .tab[data-c],#cats .tab[data-c]').forEach(b=>{const x=chObj(b.dataset.c);if(!x||x.type!='app'||!APPS[x.app])return;
-  const a=APPS[x.app],ic=b.querySelector('.ci');if(ic&&!ic.classList.contains('hzAppIc')){const s=document.createElement('span');s.className='ci hzAppIc';s.style.setProperty('--c',a.c);s.textContent=a.e;s.title=a.n;ic.replaceWith(s)}})};
+  const a=APPS[x.app],ic=b.querySelector('.ci');if(ic&&!ic.classList.contains('hzAppIc')){const s=document.createElement('span');s.className='ci hzAppIc';s.style.setProperty('--c',a.c);s.innerHTML=HG.img(x.app);s.title=a.n;ic.replaceWith(s)}})};
 const _hzSide=side;side=function(){const r=_hzSide.apply(this,arguments);try{decoSide();if(mounted&&(mounted.ch!==cur||!isApp(cur)))unmount()}catch(e){}return r};
 const isApp=c=>{const x=c&&chObj(c);return !!(x&&x.type=='app'&&APPS[x.app])};
 
@@ -4222,7 +4399,7 @@ const isApp=c=>{const x=c&&chObj(c);return !!(x&&x.type=='app'&&APPS[x.app])};
 function unmount(){if(!mounted)return;try{mounted.cleanup&&mounted.cleanup()}catch{}mounted=null;$('#hzApp')?.remove();const b=$('#bar');if(b)b.style.visibility=cur?'':'hidden'}
 function mount(){const c=cur;if(!isApp(c)){unmount();return}if(mounted&&mounted.ch===c)return;unmount();
   const x=chObj(c),a=APPS[x.app],sec=document.createElement('section');sec.id='hzApp';sec.style.setProperty('--c',a.c);sec.dataset.app=x.app;
-  sec.innerHTML=`<div class="hzAH"><span class="ic">${a.e}</span><div class="tt"><h2>${esc(x.name)}</h2><p>${a.n} · ${a.d}</p></div><div class="hzAA"></div></div><div class="hzAB"><div class="hzEmpty">Loading…</div></div>`;
+  sec.innerHTML=`<div class="hzAH"><span class="ic">${HG.img(x.app)}</span><div class="tt"><h2>${esc(x.name)}</h2><p>${a.n} · ${a.d}</p></div><div class="hzAA"></div></div><div class="hzAB"><div class="hzEmpty">Loading…</div></div>`;
   $('main').append(sec);const bar=$('#bar');if(bar)bar.style.visibility='hidden';
   mounted={ch:c,app:x.app,cleanup:null,el:sec,body:sec.querySelector('.hzAB'),act:sec.querySelector('.hzAA')};
   send({t:'app',ch:c,a:'get'});if(AS[c])paint()}
@@ -4278,7 +4455,7 @@ RENDER.scribble={full(st,m){
     m.body.innerHTML=`<div class="hzScb"><div class="hzTools">${COLS.map(c=>`<button class="hzSw${c==scC&&!scEr?' on':''}" data-c="${c}" style="background:${c}" title="${c}"></button>`).join('')}
       <input type="color" id="scCol" value="${scC}" title="Any color" style="width:30px;height:28px;padding:0;border:0;background:none;margin:0"><span class="hzSep"></span>
       ${[3,6,12,24,44].map(w=>`<button class="hzSz${w==scW?' on':''}" data-w="${w}" title="Size ${w}"><i style="width:${Math.max(3,w/2)}px;height:${Math.max(3,w/2)}px"></i></button>`).join('')}<span class="hzSep"></span>
-      <button class="hzB${scEr?' on':''}" id="scEr">Eraser</button><button class="hzB" id="scUn">Undo</button>${isModG(g)?'<button class="hzB bad" id="scClr">Clear</button>':''}<button class="hzB" id="scSave">Save image</button></div>
+      <button class="hzB${scEr?' on':''}" id="scEr">${HG('eraser')}Eraser</button><button class="hzB" id="scUn">${HG('undo')}Undo</button>${isModG(g)?'<button class="hzB bad" id="scClr">'+HG('trash')+'Clear</button>':''}<button class="hzB" id="scSave">${HG('down')}Save image</button></div>
       <div class="hzCvW"><canvas></canvas></div></div>`;
     const cv=m.body.querySelector('canvas'),ctx=cv.getContext('2d'),wrap=m.body.querySelector('.hzCvW'),live={};
     const sync=()=>{m.body.querySelectorAll('.hzSw').forEach(b=>b.classList.toggle('on',!scEr&&b.dataset.c==scC));m.body.querySelectorAll('.hzSz').forEach(b=>b.classList.toggle('on',+b.dataset.w==scW));$('#scEr').classList.toggle('on',scEr)};
@@ -4309,34 +4486,47 @@ RENDER.scribble={full(st,m){
 /* ---------- Checkers ---------- */
 const ckMoves=(b,side,only)=>{const res=[],caps=[];for(let i=0;i<64;i++){if(only>=0&&i!==only)continue;const pc=b[i];if(pc=='.'||pc.toLowerCase()!==side)continue;const king=pc!==side,r=i>>3,c=i&7,dirs=king?[-1,1]:side=='r'?[-1]:[1];
   for(const dr of dirs)for(const dc of[-1,1]){const r1=r+dr,c1=c+dc;if(r1<0||r1>7||c1<0||c1>7)continue;const j=r1*8+c1;if(b[j]=='.'){res.push({f:i,t:j});continue}
-    if(b[j].toLowerCase()!==side){const r2=r1+dr,c2=c1+dc;if(r2<0||r2>7||c2<0||c2>7)continue;const k=r2*8+c2;if(b[k]=='.')caps.push({f:i,t:k})}}}return caps.length?caps:only>=0?[]:res};
-let ckSel=-1;
+    if(b[j].toLowerCase()!==side){const r2=r1+dr,c2=c1+dc;if(r2<0||r2>7||c2<0||c2>7)continue;const k=r2*8+c2;if(b[k]=='.')caps.push({f:i,t:k,cap:j})}}}return caps.length?caps:only>=0?[]:res};
+let ckSel=-1,ckSeen='';
 RENDER.checkers={full(st,m){m.body.className='hzAB';const seat=st.p.indexOf(oid),flip=seat==1,mySide=seat==0?'r':seat==1?'b':'',myTurn=!st.w&&st.p[0]&&st.p[1]&&st.t==mySide;
-  const mv=myTurn?ckMoves(st.b,mySide,st.must):[],from=new Set(mv.map(x=>x.f));if(!from.has(ckSel))ckSel=st.must>=0&&myTurn?st.must:-1;const to=new Set(mv.filter(x=>x.f==ckSel).map(x=>x.t));
-  let sq='';for(let k=0;k<64;k++){const i=flip?63-k:k,r=i>>3,c=i&7,dark=(r+c)%2==1,pc=st.b[i],lst=st.last&&(st.last.f==i||st.last.t==i);
-    sq+=`<div class="hzSq ${dark?'d':'l'}${to.has(i)?' mv':''}${lst?' lst':''}" data-i="${i}">${pc!='.'?`<div class="hzPc ${pc.toLowerCase()}${i==ckSel?' pick':''}">${pc==pc.toUpperCase()?'👑':''}</div>`:''}</div>`}
-  const seatH=(s,lab,col)=>{const o=st.p[s],turn=!st.w&&st.t==(s?'b':'r')&&st.p[0]&&st.p[1];return `<div class="hzSeat${turn?' turn':''}"><span class="dot" style="background:${col}"></span>${o?avs(o,nm(o),'s28'):''}<span class="nm">${o?esc(nm(o)):'<span class="hzMuted">Empty seat</span>'}<br><small class="hzMuted">${lab}${turn?' · to move':''}</small></span>${!o&&seat<0?`<button class="hzB on" data-sit="${s?'b':'r'}">Sit</button>`:o==oid?'<button class="hzB" data-stand>Leave</button>':''}</div>`};
-  const cnt=s=>[...st.b].filter(x=>x.toLowerCase()==s).length;
-  const msg=st.w?`${st.p[st.w=='r'?0:1]?esc(nm(st.p[st.w=='r'?0:1])):st.w=='r'?'Red':'Black'} wins! 🎉`:!st.p[0]||!st.p[1]?'Waiting for two players…':myTurn?(st.must>=0?'Keep jumping!':'Your move'):seat>=0?'Their move…':'Watching';
-  m.body.innerHTML=`<div class="hzCk"><div class="hzBoard">${sq}</div><div class="hzCkSd">${seatH(1,'Black · '+cnt('b')+' pieces','#222')}<div class="hzBanner">${msg}</div>${seatH(0,'Red · '+cnt('r')+' pieces','#d42a2a')}
-    <div class="hzMuted">Red moves first. Jumps are mandatory, and you keep jumping while you can. Reach the far row to crown a king 👑.</div>${seat>=0||isModG(gNow())?'<button class="hzB" data-reset>New game</button>':''}</div></div>`;
+  const mv=myTurn?ckMoves(st.b,mySide,st.must):[],from=new Set(mv.map(x=>x.f));if(!from.has(ckSel))ckSel=st.must>=0&&myTurn?st.must:from.size==1?[...from][0]:-1;
+  const sel=mv.filter(x=>x.f==ckSel),to=new Map(sel.map(x=>[x.t,x])),prey=new Set(sel.filter(x=>x.cap!==undefined).map(x=>x.cap));
+  let sq='';for(let k=0;k<64;k++){const i=flip?63-k:k,r=i>>3,c=i&7,dark=(r+c)%2==1,pc=st.b[i],lst=st.last&&(st.last.f==i||st.last.t==i),vr=k>>3,vc=k&7;
+    const co=(vr==7?`<span class="co f">${'abcdefgh'[c]}</span>`:'')+(vc==0?`<span class="co r">${8-r}</span>`:'');
+    const mvx=to.get(i),pcls=pc=='.'?'':'hzPc '+pc.toLowerCase()+(pc!=pc.toLowerCase()?' k':'')+(i==ckSel?' pick':'')+(from.has(i)?' can':'')+(myTurn&&st.must==i?' must':'');
+    sq+=`<div class="hzSq ${dark?'d':'l'}${mvx?' mv'+(mvx.cap!==undefined?' jump':''):''}${lst?' lst':''}${prey.has(i)?' prey':''}" data-i="${i}">${co}${pc!='.'?`<div class="${pcls}" data-p="${i}">${pc!=pc.toLowerCase()?HG.crown():''}</div>`:''}</div>`}
+  const cnt=s=>[...st.b].filter(x=>x.toLowerCase()==s).length,lost={r:12-cnt('r'),b:12-cnt('b')};
+  const seatH=(s,lab)=>{const o=st.p[s],side=s?'b':'r',foe=s?'r':'b',turn=!st.w&&st.t==side&&st.p[0]&&st.p[1];
+    return `<div class="hzSeat${turn?' turn':''}"><div class="hzSeatT"><span class="hzMini ${side}"></span>${o?avs(o,nm(o),'s28'):''}<span class="nm">${o?esc(nm(o)):'<span class="hzMuted">Empty seat</span>'}<br><small class="hzMuted">${lab} · ${cnt(side)} left${turn?' · to move':''}</small></span>${!o&&seat<0?`<button class="hzB on" data-sit="${side}">Sit</button>`:o==oid?'<button class="hzB" data-stand>Leave</button>':''}</div>
+      <div class="hzCap">Captured<span>${Array.from({length:lost[foe]},()=>`<i class="hzMini ${foe}"></i>`).join('')||'<em class="hzMuted" style="font-style:normal;margin-left:-6px">none yet</em>'}</span></div></div>`};
+  const wn=st.w&&(st.p[st.w=='r'?0:1]?esc(nm(st.p[st.w=='r'?0:1])):st.w=='r'?'Red':'Black');
+  const msg=st.w?`${HG('crown')} ${wn} wins!`:!st.p[0]||!st.p[1]?'Waiting for two players…':myTurn?(st.must>=0?'Keep jumping!':mv.some(x=>x.cap!==undefined)?'You must jump':'Your move'):seat>=0?'Their move…':'Watching';
+  m.body.innerHTML=`<div class="hzCk"><div class="hzCkB"><div class="hzBoard">${sq}</div></div><div class="hzCkSd">${seatH(flip?0:1,flip?'Red':'Black')}<div class="hzBanner${st.w?' win':''}">${msg}</div>${seatH(flip?1:0,flip?'Black':'Red')}
+    <details class="hzRules"><summary>How to play</summary>Red moves first. Pieces move diagonally forward on the dark squares. Jumps are mandatory, and you keep jumping while you can. Reach the far row to crown a king, which moves both ways.</details>${seat>=0||isModG(gNow())?'<button class="hzB" data-reset>New game</button>':''}</div></div>`;
   m.act.innerHTML='';
+  /* slide the piece that just moved, and pop the one it captured */
+  const key=st.last?st.b+'|'+st.last.f+'>'+st.last.t:'';if(key&&ckSeen&&key!==ckSeen&&ckSeen.split('|')[0]!==st.b){const bd=m.body.querySelector('.hzBoard'),fq=bd.querySelector(`[data-i="${st.last.f}"]`),tq=bd.querySelector(`[data-i="${st.last.t}"]`),pe=tq&&tq.querySelector('.hzPc');
+    if(fq&&pe){const a=fq.getBoundingClientRect(),b=tq.getBoundingClientRect();pe.style.transition='none';pe.style.transform=`translate(${a.left-b.left}px,${a.top-b.top}px)`;void pe.offsetWidth;pe.style.transition='transform .32s cubic-bezier(.3,1.2,.4,1)';pe.style.transform='';setTimeout(()=>{pe.style.transition='';},360)}
+    if(st.last.cap!==undefined){const cq=bd.querySelector(`[data-i="${st.last.cap}"]`),prev=ckSeen.split('|')[0][st.last.cap];if(cq&&prev&&prev!='.'){const g=document.createElement('div'),br=bd.getBoundingClientRect(),cr=cq.getBoundingClientRect();
+      g.className='hzPc hzPcGhost '+prev.toLowerCase();Object.assign(g.style,{left:(cr.left-br.left+cr.width*.1)+'px',top:(cr.top-br.top+cr.height*.1)+'px',width:cr.width*.8+'px',height:cr.height*.8+'px'});bd.append(g);setTimeout(()=>g.remove(),500)}}}
+  ckSeen=key||st.b+'|';
   m.body.onclick=async e=>{const t=e.target;if(t.closest('[data-sit]'))return A('sit',{side:t.closest('[data-sit]').dataset.sit});if(t.closest('[data-stand]')){if(!st.started||st.w||await hzAsk('Leave the game? You will forfeit.'))A('stand');return}
     if(t.closest('[data-reset]')){if(!st.started||st.w||await hzAsk('Start a new game? This one will end.'))A('reset');return}
     const q=t.closest('.hzSq');if(!q)return;const i=+q.dataset.i;if(from.has(i)&&st.must<0){ckSel=ckSel==i?-1:i;return paint()}if(to.has(i)){A('move',{f:ckSel,to:i});ckSel=-1}}}};
 
 /* ---------- One ---------- */
 const OC={R:'#e53935',G:'#2e9e4f',B:'#1e6fd9',Y:'#e7b416'},ON={R:'Red',G:'Green',B:'Blue',Y:'Yellow'};
-const oneFace=c=>c=='W'?'★':c=='W4'?'+4':{S:'⊘',V:'⇄',D:'+2'}[c.slice(1)]||c.slice(1);
+const oneFace=c=>{const k=c.slice(1);return c=='W'?HG('wild'):c=='W4'?'+4':k=='S'?HG('skip'):k=='V'?HG('rev'):k=='D'?'+2':k};
+const oneName=c=>c=='W'?'Wild':c=='W4'?'Wild draw four':ON[c[0]]+' '+({S:'skip',V:'reverse',D:'draw two'}[c.slice(1)]||c.slice(1));
 const oneCard=(c,cls='',extra='')=>`<div class="hzCd${c[0]=='W'?' W':''} ${cls}" style="--cc:${OC[c[0]]||'#333'}" ${extra}><span class="c">${oneFace(c)}</span><span>${oneFace(c)}</span></div>`;
 const oneFits=(c,top,col)=>c[0]=='W'||c[0]==col||(top&&top[0]!='W'&&c.slice(1)==top.slice(1));
 RENDER.one={full(st,m){m.body.className='hzAB';const me=st.pl.indexOf(oid),myTurn=st.on&&st.pl[st.turn]==oid;
-  const pl=st.pl.map((o,i)=>`<div class="hzOPl${st.on&&i==st.turn?' turn':''}">${avs(o,nm(o),'s28')}<span>${esc(nm(o))}${o==oid?' (you)':''}</span><em>${st.on?st.n[i]+' 🂠':'ready'}</em></div>`).join('')||'<span class="hzMuted">Nobody at the table yet.</span>';
-  const head=st.w&&!st.on?`<div class="hzBanner">${esc(nm(st.w))} wins! 🎉</div>`:st.on?`<div class="hzBanner">${myTurn?(st.drew?'Play the card you drew, or pass.':'Your turn! Play a card or draw one.'):esc(nm(st.pl[st.turn]))+'’s turn'} · ${st.dir>0?'↻':'↺'} · color: <span style="color:${OC[st.col]}">${ON[st.col]||''}</span></div>`:'';
+  const pl=st.pl.map((o,i)=>`<div class="hzOPl${st.on&&i==st.turn?' turn':''}">${avs(o,nm(o),'s28')}<span>${esc(nm(o))}${o==oid?' (you)':''}</span><em>${st.on?HG('cards')+' '+st.n[i]:'ready'}</em></div>`).join('')||'<span class="hzMuted">Nobody at the table yet.</span>';
+  const head=st.w&&!st.on?`<div class="hzBanner win">${HG('party')} ${esc(nm(st.w))} wins!</div>`:st.on?`<div class="hzBanner">${myTurn?(st.drew?'Play the card you drew, or pass.':'Your turn! Play a card or draw one.'):esc(nm(st.pl[st.turn]))+'’s turn'} · ${st.dir>0?'↻':'↺'} · color: <span style="color:${OC[st.col]}">${ON[st.col]||''}</span></div>`:'';
   m.body.innerHTML=`<div class="hzOne"><div class="hzOP">${pl}</div>${head}
     ${st.on?`<div class="hzTbl"><div class="hzCd back" id="oneDraw" title="Draw a card"><span>ONE</span></div>${st.top?`<div style="border-radius:12px;box-shadow:0 0 0 4px ${OC[st.col]},0 0 28px ${OC[st.col]}">${oneCard(st.top)}</div>`:''}<div class="hzMuted" style="color:#d6f5e1">${st.deck} cards left</div></div>
-      <div class="hzHand">${st.hand.map((c,i)=>oneCard(c,myTurn&&oneFits(c,st.top,st.col)?'ok':'',`data-i="${i}" title="${c[0]=='W'?'Wild':ON[c[0]]+' '+oneFace(c)}"`)).join('')}</div>`:
-      `<div class="hzAc hzMuted">Two to eight players. Match the top card by color or by number/symbol. ⊘ skips the next player, ⇄ reverses direction, +2 makes them draw two, ★ is a wild that picks the color, +4 is a wild that also makes them draw four. First to empty their hand wins.</div>`}
+      <div class="hzHand">${st.hand.map((c,i)=>oneCard(c,myTurn&&oneFits(c,st.top,st.col)?'ok':'',`data-i="${i}" title="${oneName(c)}"`)).join('')}</div>`:
+      `<div class="hzAc hzMuted">Two to eight players. Match the top card by color or by number/symbol. ${HG('skip')} skips the next player, ${HG('rev')} reverses direction, +2 makes them draw two, ${HG('wild')} is a wild that picks the color, +4 is a wild that also makes them draw four. First to empty their hand wins.</div>`}
     <div class="hzLog">${st.log.slice().reverse().map(l=>`<div>${esc(l)}</div>`).join('')}</div></div>`;
   m.act.innerHTML=(me<0?(st.on?'':'<button class="hzB on" data-a="join">Join table</button>'):(!st.on?'<button class="hzB on" data-a="start"'+(st.pl.length<2?' disabled':'')+'>Deal cards</button>':'')+(myTurn&&st.drew?'<button class="hzB" data-a="pass">Pass</button>':'')+'<button class="hzB" data-a="leave">Leave</button>')+((me>=0||isModG(gNow()))&&st.on?'<button class="hzB bad" data-a="reset">End game</button>':'');
   m.act.onclick=async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;if((a=='leave'&&st.on||a=='reset')&&!await hzAsk(a=='reset'?'End this game for everyone?':'Leave the game in progress?'))return;A(a)};
@@ -4361,7 +4551,7 @@ RENDER.huroler={full(st,m){m.body.className='hzAB';const g=gNow(),rn=id=>((g.rol
   m.body.onclick=async e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
     if(d.apply){const f=st.forms.find(x=>x.id==d.apply);if(!f)return;modal(`<h3>${esc(f.title)}</h3><p class="pb">Applying for <b>@${esc(rn(f.role))}</b></p>${f.qs.map((q,i)=>`<label class="fl">${esc(q)}<textarea data-q="${i}" maxlength="800" rows="3" style="width:100%;resize:vertical"></textarea></label>`).join('')}<button class="on" id="apS">Send application</button><button id="gx">Cancel</button>`,()=>{
       $('#gx').onclick=closeM;$('#apS').onclick=()=>{const ans=[...document.querySelectorAll('[data-q]')].map(x=>x.value.trim());if(ans.some(x=>!x))return toast('Answer every question.');A('apply',{f:f.id,ans});closeM();toast('Application sent!',true)}})}
-    else if(d.new||d.edit)formDlg(st,st.forms.find(x=>x.id==d.edit));
+    else if(d.new!==undefined||d.edit)formDlg(st,st.forms.find(x=>x.id==d.edit));
     else if(d.fdel){if(await hzAsk('Delete this application form?'))A('formdel',{id:d.fdel})}
     else if(d.wd)A('withdraw',{id:d.wd});
     else if(d.ok)A('review',{id:d.ok,ok:true});
@@ -4373,17 +4563,14 @@ function formDlg(st,f){const g=gNow(),roles=(g.roles||[]).filter(r=>st.roles.inc
     <button class="on" id="fmS">Save form</button><button id="gx">Cancel</button>`,()=>{$('#gx').onclick=closeM;$('#fmT').focus();
     $('#fmS').onclick=()=>{const qs=$('#fmQ').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!qs.length)return toast('Add at least one question.');A('form',{id:f?f.id:'',title:$('#fmT').value,role:$('#fmR').value,qs});closeM()}})}
 
-/* ---------- Hullo: welcomes + invites ---------- */
+/* ---------- Hullo: welcomes new members ---------- */
 RENDER.hullo={full(st,m){m.body.className='hzAB';const g=gNow(),fill=o=>esc(st.msg).replace(/\{user\}/g,`<b>${esc(nm(o))}</b>`).replace(/\{server\}/g,`<b>${esc(g.name||'')}</b>`);
   m.body.innerHTML=`<div class="hzGrid" style="max-width:820px;margin:0 auto">
-    <div class="hzAc"><h4>Invite people</h4><div class="hzMuted" style="margin-bottom:10px">Share an invite so friends can join this server.${st.inv?' You can make links that expire or only work a few times.':''}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">${st.inv?'<button class="hzB on" data-inv>Create invite link</button>':''}<button class="hzB" data-copy>Copy server invite code</button></div></div>
     ${st.edit?`<div class="hzAc"><h4>Welcome message</h4><div style="display:flex;gap:8px"><input id="hlM" maxlength="200" value="${esc(st.msg)}" style="flex:1;margin:0"><button class="hzB on" data-save>Save</button></div><div class="hzMuted" style="margin-top:6px">Use {user} for the new member and {server} for the server name.</div></div>`:''}
     <div class="hzAc"><h4>New members</h4>${st.feed.length?`<div class="hzList">${st.feed.slice().reverse().map(f=>`<div class="hzRow">${avs(f.o,nm(f.o),'s28')}<div class="grow"><div class="hzWel">${fill(f.o)}</div><small>${ago(f.ts)}</small></div>
-      <button class="hzWave${f.waves.includes(oid)?' on':''}" data-wave="${f.id}" title="${esc(f.waves.map(nm).join(', '))}">👋 ${f.waves.length||'Wave'}</button></div>`).join('')}</div>`:'<div class="hzMuted">When someone joins, Hullo welcomes them here.</div>'}</div></div>`;
+      <button class="hzWave${f.waves.includes(oid)?' on':''}" data-wave="${f.id}" title="${esc(f.waves.map(nm).join(', '))}">${HG('hand')} ${f.waves.length||'Wave'}</button></div>`).join('')}</div>`:'<div class="hzMuted">When someone joins, Hullo welcomes them here.</div>'}</div></div>`;
   m.act.innerHTML='';
-  m.body.onclick=e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.inv!==undefined)invDialog(g);else if(t.dataset.copy!==undefined){copyText(g.code);toast('Invite code copied.',true)}
-    else if(t.dataset.save!==undefined){A('msg',{msg:$('#hlM').value});toast('Welcome message saved.',true)}else if(t.dataset.wave)A('wave',{id:t.dataset.wave})}}};
+  m.body.onclick=e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.save!==undefined){A('msg',{msg:$('#hlM').value});toast('Welcome message saved.',true)}else if(t.dataset.wave)A('wave',{id:t.dataset.wave})}}};
 
 /* ---------- Moderate Pro ---------- */
 let mpTab='tickets',mpQ='';
@@ -4394,15 +4581,17 @@ RENDER.modpro={full(st,m){m.body.className='hzAB';if(!st.mod&&mpTab!='tickets')m
   if(mpTab=='tickets')body=`<div class="hzAc"><h4>Open a ticket</h4><div class="hzMuted" style="margin-bottom:8px">Creates a private channel only you and the moderators can see.</div><div style="display:flex;gap:8px"><input id="tkT" maxlength="120" placeholder="What do you need help with?" style="flex:1;margin:0"><button class="hzB on" data-open>Open ticket</button></div></div>
     <div class="hzAc"><h4>${st.mod?'All tickets':'Your tickets'}</h4>${st.tickets.length?`<div class="hzList">${st.tickets.filter(t=>f(t.topic+' '+nm(t.o))).map(t=>`<div class="hzRow">${avs(t.o,nm(t.o),'s28')}<div class="grow"><b>${esc(t.topic)}</b><br><small>${esc(nm(t.o))} · opened ${ago(t.ts)}${t.closed?' · closed '+ago(t.closed)+' by '+esc(nm(t.by)):''}</small></div><span class="hzTag ${t.open?'open':'closed'}">${t.open?'open':'closed'}</span>
       ${t.open?`<button class="hzB" data-go="${t.ch}">Open channel</button><button class="hzB bad" data-close="${t.id}">Close</button>`:''}</div>`).join('')}</div>`:'<div class="hzMuted">No tickets yet.</div>'}</div>`;
-  else if(mpTab=='logs')body=`<div class="hzAc"><table class="hzTbl2"><tr><th>When</th><th>Who</th><th>Action</th><th>Details</th></tr>${st.log.filter(x=>f(x.op+' '+x.detail+' '+x.byName)).map(x=>`<tr><td title="${new Date(x.ts).toLocaleString()}">${ago(x.ts)}</td><td>${esc(x.byName)}</td><td><span class="hzTag">${esc(x.op)}</span></td><td>${esc(x.detail||'')}</td></tr>`).join('')||'<tr><td colspan="4" class="hzMuted">Nothing logged yet.</td></tr>'}</table></div>`;
+  else if(mpTab=='logs')body=`<div class="hzAc"><table class="hzTbl2"><tr><th>When</th><th>Who</th><th>Action</th><th>Details</th></tr>${st.log.filter(x=>f(x.op+' '+x.detail+' '+x.byName)).map(x=>`<tr><td title="${new Date(x.ts).toLocaleString()}">${ago(x.ts)}</td><td>${esc(x.byName)}</td><td><span class="hzTag">${HG((window.HZAUDIC||{})[x.op]||'dot')} ${esc(x.op)}</span></td><td>${esc(x.detail||'')}</td></tr>`).join('')||'<tr><td colspan="4" class="hzMuted">Nothing logged yet.</td></tr>'}</table></div>`;
   else body=`<div class="hzList">${st.dels.filter(x=>f(x.text+' '+x.from+' '+x.chName)).map(x=>`<div class="hzRow" style="align-items:flex-start">${x.o?avs(x.o,x.from,'s28'):''}<div class="grow"><b>${esc(x.from)}</b> <small>in #${esc(x.chName)} · sent ${new Date(x.ts).toLocaleString()}</small>
-    <div style="margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere">${esc(x.text)||'<i class="hzMuted">(no text)</i>'}${x.file?` <span class="hzTag">📎 ${esc(x.file)}</span>`:''}</div><small>Deleted ${ago(x.del)} by ${esc(x.byName)}${x.by==x.o?' (themselves)':''}</small></div></div>`).join('')||'<div class="hzEmpty">No deleted messages yet.</div>'}</div>`;
+    <div style="margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere">${esc(x.text)||(x.img?'':'<i class="hzMuted">(no text)</i>')}${x.file&&!x.img?` <span class="hzTag">${HG('clip')} ${esc(x.file)}</span>`:''}</div>${x.img?`<button class="hzDelImg" data-img="${esc(x.img)}" data-nm="${esc(x.file||'image')}" title="Open image"><img src="${esc(/^\//.test(x.img)?base+x.img:x.img)}" alt="${esc(x.file||'Deleted image')}" loading="lazy"><span>${esc(x.file||'Image')}</span></button>`:''}<small>Deleted ${ago(x.del)} by ${esc(x.byName)}${x.by==x.o?' (themselves)':''}</small></div>${x.id?`<button class="hzB bad" data-purge="${esc(x.id)}" title="Remove this entry and its image for good">${HG('trash')}</button>`:''}</div>`).join('')||'<div class="hzEmpty">No deleted messages yet.</div>'}</div>`;
   m.body.innerHTML=`<div class="hzGrid" style="max-width:980px;margin:0 auto"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${tabs}<input id="mpQ" placeholder="Search…" value="${esc(mpQ)}" style="margin:0 0 0 auto;max-width:240px"></div>${body}</div>`;
   m.act.innerHTML='';const q=$('#mpQ');q.oninput=()=>{mpQ=q.value;const p=q.selectionStart;paint();const n=$('#mpQ');n.focus();n.setSelectionRange(p,p)};
   m.body.onclick=async e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;if(d.tab){mpTab=d.tab;paint()}
     else if(d.open!==undefined){const v=$('#tkT').value.trim();if(!v)return $('#tkT').focus();A('ticket',{topic:v});toast('Ticket opened. Look for it in the Tickets category.',true)}
     else if(d.go){const g=gNow();if(g.channels.some(c=>c.id==d.go))openCh(d.go)}
-    else if(d.close){if(await hzAsk('Close this ticket? Its channel and messages will be deleted.'))A('close',{id:d.close})}}}};
+    else if(d.close){if(await hzAsk('Close this ticket? Its channel and messages will be deleted.'))A('close',{id:d.close})}
+    else if(d.purge){if(await hzAsk('Remove this deleted message and its image from the log for good?'))A('purge',{id:d.purge})}
+    else if(d.img){const x=st.dels.find(v=>v.img==d.img)||{};hzView.open([{u:/^\//.test(d.img)?base+d.img:d.img,type:/\.gif$|giphy/i.test(d.img)?'image/gif':'image/png',name:d.nm||'Image',o:x.o,from:x.from,ts:x.ts,noExt:true}],0)}}}};
 
 /* ---------- Community Stats ---------- */
 const sum=(a,k,from,to)=>a.slice(from,to).reduce((s,x)=>s+(x[k]||0),0);
@@ -4417,7 +4606,7 @@ RENDER.stats={full(st,m){m.body.className='hzAB';const d=st.days,j7=sum(d,'j',23
     <div class="hzAc hzChart"><h4>Joins & leaves · last 30 days</h4>${bars(d,[['j','#4ade80'],['l','#f87171']])}<div class="lg"><span><i style="background:#4ade80"></i>Joins</span><span><i style="background:#f87171"></i>Leaves</span><span>Net ${sum(d,'j')-sum(d,'l')>=0?'+':''}${sum(d,'j')-sum(d,'l')}</span></div></div>
     <div class="hzAc hzChart"><h4>Chat activity · messages per day</h4>${bars(d,[['m','#60a5fa']])}</div>
     <div class="hzAc hzChart"><h4>Voice activity · minutes per day</h4>${bars(d,[['v','#c084fc']])}</div>
-    <div class="hzAc"><h4>Most active channels (all time)</h4><table class="hzTbl2"><tr><th>Channel</th><th class="n">Messages</th><th class="n">Voice time</th></tr>${chs.map(c=>`<tr><td>${c.type=='voice'?'🔊 ':'# '}${esc(c.name)}</td><td class="n">${c.m}</td><td class="n">${fmtMin(c.v)}</td></tr>`).join('')}</table></div>
+    <div class="hzAc"><h4>Most active channels (all time)</h4><table class="hzTbl2"><tr><th>Channel</th><th class="n">Messages</th><th class="n">Voice time</th></tr>${chs.map(c=>`<tr><td>${HG(c.type=='voice'?'spk':c.type=='app'?'sparkle':'hash')} ${esc(c.name)}</td><td class="n">${c.m}</td><td class="n">${fmtMin(c.v)}</td></tr>`).join('')}</table></div>
     <div class="hzMuted">Counted since this channel's server started tracking. Voice time is sampled every minute.</div></div>`;
   m.act.innerHTML='<button class="hzB" data-r>Refresh</button>';m.act.onclick=e=>e.target.closest('[data-r]')&&A('get')}};
 
@@ -4425,9 +4614,9 @@ RENDER.stats={full(st,m){m.body.className='hzAB';const d=st.days,j7=sum(d,'j',23
 let lbK='m',lbW=false;
 RENDER.leaders={full(st,m){m.body.className='hzAB';const k=lbW?'w'+lbK:lbK,rows=st.rows.filter(r=>r[k]>0).sort((a,b)=>b[k]-a[k]).slice(0,50),max=rows.length?rows[0][k]:1,mine=st.rows.slice().sort((a,b)=>b[k]-a[k]).findIndex(r=>r.o==oid);
   const val=v=>lbK=='m'?v.toLocaleString()+' msg'+(v==1?'':'s'):fmtMin(v);
-  m.body.innerHTML=`<div class="hzGrid" style="max-width:760px;margin:0 auto"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><div class="hzSeg"><button data-k="m" class="${lbK=='m'?'on':''}">💬 Messages</button><button data-k="v" class="${lbK=='v'?'on':''}">🎙️ Time in voice</button></div>
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:760px;margin:0 auto"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><div class="hzSeg"><button data-k="m" class="${lbK=='m'?'on':''}">${HG('chat')}Messages</button><button data-k="v" class="${lbK=='v'?'on':''}">${HG('mic')}Time in voice</button></div>
     <div class="hzSeg"><button data-w="0" class="${!lbW?'on':''}">All time</button><button data-w="1" class="${lbW?'on':''}">This week</button></div>${mine>=0&&st.rows.find(r=>r.o==oid)[k]>0?`<span class="hzMuted" style="margin-left:auto">You're #${mine+1}</span>`:''}</div>
-    <div class="hzLb">${rows.map((r,i)=>`<div class="hzLbR${i<3?' top'+(i+1):''}"><span class="bar" style="width:${r[k]/max*100}%"></span><span class="rk">${['🥇','🥈','🥉'][i]||i+1}</span>${avs(r.o,nm(r.o),'s28')}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(nm(r.o))}${r.o==oid?' <span class="hzMuted">(you)</span>':''}</span><span class="v">${val(r[k])}</span></div>`).join('')||'<div class="hzEmpty">No activity yet. Start chatting!</div>'}</div></div>`;
+    <div class="hzLb">${rows.map((r,i)=>`<div class="hzLbR${i<3?' top'+(i+1):''}"><span class="bar" style="width:${r[k]/max*100}%"></span><span class="rk">${i<3?HG.medal(i):i+1}</span>${avs(r.o,nm(r.o),'s28')}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(nm(r.o))}${r.o==oid?' <span class="hzMuted">(you)</span>':''}</span><span class="v">${val(r[k])}</span></div>`).join('')||'<div class="hzEmpty">No activity yet. Start chatting!</div>'}</div></div>`;
   m.act.innerHTML='<button class="hzB" data-r>Refresh</button>';m.act.onclick=e=>e.target.closest('[data-r]')&&A('get');
   m.body.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.k)lbK=b.dataset.k;if(b.dataset.w)lbW=b.dataset.w=='1';paint()}}};
 
@@ -4442,37 +4631,49 @@ function pzShapes(st){const R=rng(st.seed),h=[],v=[];for(let r=0;r<st.rows;r++){
     const top=r?-h[r-1][c]:0,right=c<st.cols-1?v[r][c]:0,bot=r<st.rows-1?h[r][c]:0,left=c?-v[r][c-1]:0;
     out.push('M'+f(a[0]/bw)+' '+f(a[1]/bh)+edge(a,b,top)+edge(b,cc,right)+edge(cc,d,bot)+edge(d,a,left)+'Z')}return out}
 let pzGhost=true;
+const pzDone=n=>`<div class="hzPzDone">${HG('party')} Puzzle complete! ${n} pieces</div>`;
 RENDER.puzzle={full(st,m){
   if(!st.img||m.pzSetup){m.cleanup&&m.cleanup();m.cleanup=null;m.pz=null;return pzSetup(st,m)}
   const key=st.img+'|'+st.seed;
-  if(!m.pz||m.pz.key!=key){m.cleanup&&m.cleanup();m.body.className='hzAB full';const ids='hzpz'+st.seed;
-    m.body.innerHTML=`<div class="hzPz"><svg width="0" height="0" style="position:absolute"><defs>${pzShapes(st).map((d,i)=>`<clipPath id="${ids}-${i}" clipPathUnits="objectBoundingBox"><path d="${d}"/></clipPath>`).join('')}</defs></svg><div class="hzPzF${pzGhost?' ghost':' hide'}" style="background-image:url('${base}${esc(st.img)}')"></div>
-      ${st.pcs.map((p,i)=>`<div class="hzPzP${p.ok?' ok':''}" data-i="${i}"><div style="clip-path:url(#${ids}-${i});background-image:url('${base}${esc(st.img)}')"></div></div>`).join('')}</div>`;
-    const box=m.body.querySelector('.hzPz'),fr=box.querySelector('.hzPzF'),els=[...box.querySelectorAll('.hzPzP')];let L={};let zTop=10;
+  if(!m.pz||m.pz.key!=key){m.cleanup&&m.cleanup();m.body.className='hzAB full';const ids='hzpz'+st.seed,url=esc(base+st.img),paths=pzShapes(st),f4=n=>Math.round(n*1e4)/1e4;
+    /* each piece is its own little SVG: the picture clipped to the jigsaw outline, then a dark + light outline on top */
+    const piece=(p,i)=>{const c=i%st.cols,r=i/st.cols|0;return `<div class="hzPzP${p.ok?' ok':''}" data-i="${i}"><svg viewBox="0 0 1 1" preserveAspectRatio="none"><defs><clipPath id="${ids}-${i}"><path d="${paths[i]}"/></clipPath></defs><image href="${url}" x="${f4(-(c-.25)/1.5)}" y="${f4(-(r-.25)/1.5)}" width="${f4(st.cols/1.5)}" height="${f4(st.rows/1.5)}" preserveAspectRatio="none" clip-path="url(#${ids}-${i})"/><path class="e1" d="${paths[i]}"/><path class="e2" d="${paths[i]}"/></svg></div>`};
+    m.body.innerHTML=`<div class="hzPz"><div class="hzPzV"><div class="hzPzF${pzGhost?' ghost':' hide'}" style="background-image:url('${url}')"></div>${st.pcs.map(piece).join('')}</div>
+      <div class="hzPzZ"><button data-z="out" title="Zoom out">${HG('zout')}</button><output>100%</output><button data-z="in" title="Zoom in">${HG('zin')}</button><button data-z="fit" title="Fit to screen">${HG('fit')}</button></div><div class="hzPzTip">Scroll to zoom · drag the table to move around</div></div>`;
+    const box=m.body.querySelector('.hzPz'),V=box.querySelector('.hzPzV'),fr=box.querySelector('.hzPzF'),els=[...box.querySelectorAll('.hzPzP')],zl=box.querySelector('.hzPzZ output');let L={},zTop=10;const v={z:1,x:0,y:0};
+    const view=()=>{V.style.transform=`translate(${v.x}px,${v.y}px) scale(${v.z})`;zl.value=Math.round(v.z*100)+'%'};
+    const zoomAt=(f,mx,my)=>{const nz=Math.max(.5,Math.min(5,v.z*f));v.x=mx-(mx-v.x)*nz/v.z;v.y=my-(my-v.y)*nz/v.z;v.z=nz;view()};
     const lay=()=>{const r=box.getBoundingClientRect(),FH=Math.max(60,Math.min(r.width/(1.75*st.ar),r.height/1.72)),FW=FH*st.ar,ox=(r.width-FW*1.75)/2+FW*.36,oy=(r.height-FH*1.72)/2+FH*.36,pw=FW/st.cols,ph=FH/st.rows;
       L={FW,FH,ox,oy,pw,ph,r};Object.assign(fr.style,{left:ox+'px',top:oy+'px',width:FW+'px',height:FH+'px'});
-      els.forEach((e,i)=>{const c=i%st.cols,rr=i/st.cols|0;e.style.width=pw*1.5+'px';e.style.height=ph*1.5+'px';const s=e.firstChild.style;s.backgroundSize=FW+'px '+FH+'px';s.backgroundPosition=(-(c*pw-pw*.25))+'px '+(-(rr*ph-ph*.25))+'px';pos(i)})};
+      els.forEach((e,i)=>{e.style.width=pw*1.5+'px';e.style.height=ph*1.5+'px';pos(i)})};
     const pos=(i,x,y)=>{const p=AS[m.ch].pcs[i],e=els[i];if(!p||!e)return;x=x??p.x;y=y??p.y;e.style.left=(L.ox+x*L.FW-L.pw*.25)+'px';e.style.top=(L.oy+y*L.FH-L.ph*.25)+'px';e.classList.toggle('ok',!!p.ok);if(p.ok)e.style.zIndex=1;else if(!e.style.zIndex||e.style.zIndex=='1')e.style.zIndex=2+i%5};
     const drag=thr((i,x,y)=>A('drag',{i,x,y}),60);
-    box.addEventListener('pointerdown',e=>{const el=e.target.closest('.hzPzP');if(!el||el.classList.contains('ok')||e.button!==0)return;e.preventDefault();const i=+el.dataset.i,p=AS[m.ch].pcs[i];
-      const sx=e.clientX,sy=e.clientY,px=p.x,py=p.y;el.setPointerCapture(e.pointerId);el.classList.add('drag');el.classList.remove('remote');el.style.zIndex=++zTop+1000;let nx=px,ny=py;
-      const mv=ev=>{nx=Math.max(-.5,Math.min(1.5,px+(ev.clientX-sx)/L.FW));ny=Math.max(-.5,Math.min(1.5,py+(ev.clientY-sy)/L.FH));pos(i,nx,ny);drag(i,nx,ny)};
-      const up=()=>{el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);el.classList.remove('drag');if(nx!==px||ny!==py){p.x=nx;p.y=ny;A('move',{i,x:nx,y:ny})}};
-      el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)});
-    const ro=new ResizeObserver(lay);ro.observe(box);m.cleanup=()=>ro.disconnect();m.pz={key,pos,els,lay,zTop:()=>++zTop};lay()}
+    box.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('.hzPzZ'))return;const el=e.target.closest('.hzPzP');e.preventDefault();
+      const sx=e.clientX,sy=e.clientY;let stop;
+      if(!el||el.classList.contains('ok')){/* pan the table */const x0=v.x,y0=v.y;box.classList.add('pan');
+        const mv=ev=>{v.x=x0+ev.clientX-sx;v.y=y0+ev.clientY-sy;view()};stop=()=>{box.classList.remove('pan');removeEventListener('pointermove',mv);removeEventListener('pointerup',stop);removeEventListener('pointercancel',stop)};
+        addEventListener('pointermove',mv);addEventListener('pointerup',stop);addEventListener('pointercancel',stop);return}
+      const i=+el.dataset.i,p=AS[m.ch].pcs[i],px=p.x,py=p.y;el.classList.add('drag');el.classList.remove('remote');el.style.zIndex=++zTop+1000;let nx=px,ny=py;
+      const mv=ev=>{nx=Math.max(-.5,Math.min(1.5,px+(ev.clientX-sx)/(L.FW*v.z)));ny=Math.max(-.5,Math.min(1.5,py+(ev.clientY-sy)/(L.FH*v.z)));pos(i,nx,ny);drag(i,nx,ny)};
+      stop=()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',stop);removeEventListener('pointercancel',stop);el.classList.remove('drag');if(nx!==px||ny!==py){p.x=nx;p.y=ny;A('move',{i,x:nx,y:ny})}};
+      addEventListener('pointermove',mv);addEventListener('pointerup',stop);addEventListener('pointercancel',stop)});
+    box.addEventListener('wheel',e=>{e.preventDefault();const r=box.getBoundingClientRect();zoomAt(Math.exp(-Math.max(-60,Math.min(60,e.deltaY))*.0035),e.clientX-r.left,e.clientY-r.top)},{passive:false});
+    box.querySelector('.hzPzZ').onclick=e=>{const b=e.target.closest('[data-z]');if(!b)return;const r=box.getBoundingClientRect();if(b.dataset.z=='fit'){v.z=1;v.x=v.y=0;view()}else zoomAt(b.dataset.z=='in'?1.25:.8,r.width/2,r.height/2)};
+    const ro=new ResizeObserver(lay);ro.observe(box);m.cleanup=()=>ro.disconnect();m.pz={key,pos,els,lay,zTop:()=>++zTop};lay();view()}
   else st.pcs.forEach((p,i)=>m.pz.pos(i));
   const okN=st.pcs.filter(p=>p.ok).length;
-  m.act.innerHTML=`<span class="hzMuted">${okN}/${st.pcs.length} placed</span><button class="hzB${pzGhost?' on':''}" data-ghost>Show picture</button><button class="hzB" data-new>New puzzle</button>`;
+  m.act.innerHTML=`<span class="hzMuted">${okN}/${st.pcs.length} placed</span><button class="hzB${pzGhost?' on':''}" data-ghost>${HG('eye')}Show picture</button><button class="hzB" data-new>${HG('image')}New puzzle</button>`;
   m.act.onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.ghost!==undefined){pzGhost=!pzGhost;b.classList.toggle('on',pzGhost);const f=m.body.querySelector('.hzPzF');f.classList.toggle('ghost',pzGhost);f.classList.toggle('hide',!pzGhost)}
     else if(b.dataset.new!==undefined){if(!st.done&&st.by!=oid&&!isModG(gNow()))return toast('Help finish this puzzle first. Its creator or a moderator can replace it.');if(st.done||await hzAsk('Start a new puzzle? This one will be replaced.')){m.pzSetup=true;paint()}}};
-  m.body.querySelector('.hzPzDone')?.remove();if(st.done)m.body.querySelector('.hzPz').insertAdjacentHTML('beforeend',`<div class="hzPzDone">🎉 Puzzle complete! ${st.pcs.length} pieces</div>`)},
+  m.body.querySelector('.hzPzDone')?.remove();if(st.done)m.body.querySelector('.hzPz').insertAdjacentHTML('beforeend',pzDone(st.pcs.length))},
   ev(st,ev,m){if(ev.k=='pzd'){if(m&&m.pz){const e=m.pz.els[ev.i];if(e&&!e.classList.contains('drag')){e.classList.add('remote');e.style.zIndex=m.pz.zTop()+1000;m.pz.pos(ev.i,ev.x,ev.y)}}return}
     if(ev.k=='pz'){const p=st.pcs[ev.i];if(!p)return;p.x=ev.x;p.y=ev.y;p.ok=ev.ok;st.done=ev.done;if(m&&m.pz){const e=m.pz.els[ev.i];if(e&&!e.classList.contains('drag'))e.classList.add('remote');m.pz.pos(ev.i);
+      if(e&&ev.ok){e.classList.remove('snap');void e.offsetWidth;e.classList.add('snap')}
       const okN=st.pcs.filter(p=>p.ok).length,s=m.act.querySelector('.hzMuted');if(s)s.textContent=okN+'/'+st.pcs.length+' placed';
-      if(ev.done&&!m.body.querySelector('.hzPzDone'))m.body.querySelector('.hzPz').insertAdjacentHTML('beforeend',`<div class="hzPzDone">🎉 Puzzle complete! ${st.pcs.length} pieces</div>`)}}}};
+      if(ev.done&&!m.body.querySelector('.hzPzDone'))m.body.querySelector('.hzPz').insertAdjacentHTML('beforeend',pzDone(st.pcs.length))}}}};
 function pzSetup(st,m){m.body.className='hzAB';let file=null,ar=1.5,n=48;
   m.body.innerHTML=`<div class="hzPzSet"><div class="hzAc"><h4>Make a puzzle</h4><div class="hzMuted" style="margin-bottom:10px">Upload any image, pick how many pieces, and everyone in this channel can build it together.</div>
-    <label class="hzPzDrop" id="pzDrop"><input type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden id="pzF"><span style="font-size:34px">🖼️</span><span id="pzL">Click to choose an image<br><small>PNG, JPG, GIF or WebP · up to 8 MB</small></span></label>
+    <label class="hzPzDrop" id="pzDrop"><input type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden id="pzF"><span class="hzPzArt">${HG.img('image')}</span><span id="pzL">Click to choose an image<br><small>PNG, JPG, GIF or WebP · up to 8 MB</small></span></label>
     <div class="hzCDl" style="margin:14px 0 8px">Pieces</div><div class="hzPzN">${[12,24,48,70,100,150,200].map(k=>`<button class="hzB${k==n?' on':''}" data-n="${k}">${k}</button>`).join('')}</div>
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">${st.img?'<button class="hzB" data-back>Back to puzzle</button>':''}<button class="hzB on" data-go disabled>Make puzzle</button></div></div></div>`;
   m.act.innerHTML='';
@@ -4504,6 +4705,38 @@ function invRefresh(gid){if(gid!==invG)return;const g=G[gid],l=$('#ivL');if(!g)r
 function invMade(d){if(d.g!==invG)return;copyText(d.code);const n=$('#ivNew');if(n)n.innerHTML=`<div class="hzInvNew"><code>${esc(d.code)}</code><small class="hzMuted">${d.max?d.max+' use'+(d.max>1?'s':''):'No use limit'} · ${d.exp?'expires in '+left(d.exp):'never expires'}</small><button id="ivCp">Copy</button></div>`;
   const c=$('#ivCp');if(c)c.onclick=()=>{copyText(d.code);toast('Invite copied.',true)};toast('Invite created and copied.',true)}
 window.hzInvDialog=invDialog;
+/* ================= add a server: create, import a Discord template, or join ================= */
+let tplWait=0;
+const tplBusy=on=>{clearTimeout(tplWait);document.querySelectorAll('#tpP,#tpC').forEach(b=>{b.disabled=on;if(b.dataset.l)b.innerHTML=on?'Reading template…':b.dataset.l});if(on)tplWait=setTimeout(()=>tplBusy(false),10000)};
+gDialog=function(){
+  modal(`<div class="hzGD"><h3>Add a server</h3><p class="sub">Start fresh, copy the layout of a Discord server template, or join with an invite.</p>
+    <div class="hzGDs"><span class="hzGDi">${HG.img('text')}</span><div><b>Create a server</b><small>Starts with #general and a Lounge voice channel.</small></div></div>
+    <div class="hzCDrow"><input id="gn" placeholder="New server name" maxlength="32" autocomplete="off"><button class="on" id="gc">Create</button></div>
+    <div class="hzGDs"><span class="hzGDi">${HG.img('discord')}</span><div><b>Import from a Discord template</b><small>Paste a template link (discord.new/… or discord.com/template/…). Huddle copies its categories, text and voice channels, roles and channel permissions. Messages, members and bots are never copied.</small></div></div>
+    <div class="hzCDrow"><input id="tpL" placeholder="https://discord.new/AbCdEf123456" maxlength="120" autocomplete="off" spellcheck="false"><button id="tpP" data-l="Preview">Preview</button></div>
+    <div id="tpV"></div>
+    <div class="hzGDs"><span class="hzGDi">${HG.img('hullo')}</span><div><b>Join a server</b><small>Paste an invite code someone gave you.</small></div></div>
+    <div class="hzCDrow"><input id="gj" placeholder="Invite code" maxlength="16" autocomplete="off"><button id="gjb">Join</button></div>
+    <div class="hzCDact"><button id="gx">Cancel</button></div></div>`,()=>{
+    $('#gn').focus();$('#gx').onclick=closeM;
+    $('#gc').onclick=()=>{const n=$('#gn').value.trim();if(!n){$('#gn').focus();return toast('Name your server.')}if(send({t:'gcreate',name:n}))closeM()};
+    $('#gjb').onclick=()=>{const c=$('#gj').value.trim();if(!c){$('#gj').focus();return toast('Paste an invite code.')}if(send({t:'gjoin',code:c}))closeM()};
+    $('#tpP').onclick=()=>{const l=$('#tpL').value.trim();if(!l){$('#tpL').focus();return toast('Paste a Discord template link.')}$('#tpV').innerHTML='';if(send({t:'tplpeek',link:l}))tplBusy(true);else toast('Not connected. Try again in a moment.')};
+    $('#gn').onkeydown=e=>{if(e.key=='Enter')$('#gc').click()};$('#gj').onkeydown=e=>{if(e.key=='Enter')$('#gjb').click()};$('#tpL').onkeydown=e=>{if(e.key=='Enter')$('#tpP').click()}})};
+function tplShow(d){const v=$('#tpV');tplBusy(false);if(!v)return;const t=d.tpl,cats=[{id:'',name:''},...t.cats];
+  const chH=x=>`<span class="hzGDch">${HG(x.type=='voice'?'spk':'hash')}${esc(x.name)}${x.priv?HG('lock'):''}</span>`;
+  v.innerHTML=`<div class="hzGDp"><div class="hzGDph"><span class="hzGDi">${HG.img('discord')}</span><div style="min-width:0"><b>${esc(t.name)}</b><small>${t.chans.length} channels · ${t.cats.length} categories · ${t.roles.length} roles${t.cut?' · trimmed to Huddle\'s 30 channel limit':''}</small></div></div>
+    ${t.desc?`<p class="hzMuted" style="margin:0">${esc(t.desc)}</p>`:''}
+    <div class="hzGDtree">${cats.map(k=>{const xs=t.chans.filter(x=>x.cat==k.id);return xs.length||k.id?`<div>${k.id?`<i>${esc(k.name)}</i>`:''}${xs.map(chH).join('')}</div>`:''}).join('')}</div>
+    ${t.roles.length?`<div class="hzGDroles">${t.roles.map(r=>`<span style="--rc:${esc(r.color)}">${r.admin?HG('crown'):''}${esc(r.name)}</span>`).join('')}</div>`:''}
+    <div class="hzCDrow"><input id="tpN" maxlength="32" value="${esc(t.name)}" placeholder="Server name" autocomplete="off"><button class="on" id="tpC" data-l="Create from template">Create from template</button></div></div>`;
+  $('#tpC').onclick=()=>{const n=$('#tpN').value.trim();if(send({t:'gimport',link:$('#tpL').value.trim(),name:n}))tplBusy(true)}}
+const _hzOn2=on;on=function(d){
+  if(d&&d.t=='tplpeek')return tplShow(d);
+  if(d&&d.t=='tplmade'){tplBusy(false);if($('.hzGD'))closeM();toast('Server created from the template.',true);return}
+  if(d&&(d.t=='err'||d.t=='perr')&&$('.hzGD'))tplBusy(false);
+  return _hzOn2.apply(this,arguments)};
+
 /* the server menu gets an "Invite people" entry; server settings gets a button next to the code */
 let invMenuG=null;
 const _hzGM=gMenu;gMenu=function(btn,g0){const r=_hzGM.apply(this,arguments);try{const g=g0||G[sel];invMenuG=g&&g.id;const a=cm.querySelector('[data-a="inv"]');if(g&&a&&!cm.querySelector('[data-a="hzinv"]'))a.insertAdjacentHTML('beforebegin','<button data-a="hzinv">Invite people…</button>')}catch{}return r};
@@ -4511,6 +4744,16 @@ cm.addEventListener('click',e=>{const b=e.target.closest('[data-a="hzinv"]');if(
 const _hzSD=sDialog;sDialog=function(g){const r=_hzSD.apply(this,arguments);try{setTimeout(()=>{const s=$('#sg');if(s&&!$('#hzIvB')){s.insertAdjacentHTML('afterend','<button id="hzIvB" type="button">Manage invites</button>');$('#hzIvB').onclick=()=>{closeM();setTimeout(()=>invDialog(G[g.id]),60)}}},0)}catch{}return r};
 })();
 </script>
+
+
+
+
+
+
+
+
+
+
 
 
 
