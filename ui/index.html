@@ -6138,32 +6138,38 @@ html[data-theme=abyss]{--bg:#01040a;--panel:#040a15;--raise:#08111f;--hi:#0d192c
 html[data-theme=lavender]{--bg:#f4f1fb;--panel:#fff;--raise:#efe9fa;--hi:#e4dcf5;--line:#d6cbed;--tx:#211a33;--dim:#6e6585;--ac:#7c5cff;--ac2:#e0448c;--rail:#ebe5f7;color-scheme:light}
 html[data-theme=paper]{--bg:#f7f2e8;--panel:#fffdf8;--raise:#f2ebdd;--hi:#e9e0cd;--line:#ddd2bb;--tx:#2a241a;--dim:#776c58;--ac:#c2410c;--ac2:#0f766e;--rail:#eee6d6;color-scheme:light}
 html[data-theme=lavender] #login,html[data-theme=paper] #login{color:var(--tx)}
-/* sign-in screen */
-html #login{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);align-items:stretch;place-items:stretch;padding:0;background:var(--bg)}
-html #login>form{align-self:center;justify-self:center;margin:24px}
-.lgArt{position:relative;overflow:hidden;display:flex;align-items:center;padding:56px;background:linear-gradient(160deg,color-mix(in srgb,var(--ac) 22%,var(--bg)),var(--bg) 70%)}
-.lgArt::after{content:'';position:absolute;inset:0;background-image:radial-gradient(color-mix(in srgb,var(--tx) 14%,transparent) 1px,transparent 1.5px);background-size:26px 26px;mask-image:linear-gradient(120deg,#000,transparent 75%);pointer-events:none}
-.lgB{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;animation:lgDrift 16s ease-in-out infinite alternate}
-.lgB.a{width:420px;height:420px;left:-120px;top:-80px;background:var(--ac)}.lgB.b{width:360px;height:360px;right:-100px;bottom:-60px;background:var(--ac2,#3fe0c5);animation-delay:-6s}.lgB.c{width:260px;height:260px;left:40%;top:45%;background:#7c3aed;opacity:.35;animation-delay:-11s}
-@keyframes lgDrift{to{transform:translate(60px,40px) scale(1.15)}}
-.lgIn{position:relative;z-index:1;max-width:520px;display:grid;gap:22px}
-.lgLogo{display:flex;align-items:center;gap:14px;font:900 30px/1 system-ui;letter-spacing:-.02em;color:var(--tx)}.lgLogo img{width:56px;height:56px;filter:drop-shadow(0 6px 14px #0007)}
-.lgIn h2{margin:0;font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:-.03em;color:var(--tx)}
-.lgIn h2 em{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2,#ffc27a));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lgIn p{margin:0;color:var(--dim);font-size:16px;line-height:1.5}
-.lgF{display:grid;gap:12px;margin:0;padding:0;list-style:none}.lgF li{display:flex;gap:14px;align-items:center;padding:12px 14px;border-radius:16px;background:color-mix(in srgb,var(--panel) 55%,transparent);border:1px solid color-mix(in srgb,var(--tx) 10%,transparent);backdrop-filter:blur(8px);color:var(--tx);font-weight:600;font-size:14.5px}
-.lgF li img{width:38px;height:38px;flex:none}.lgF li small{display:block;color:var(--dim);font-weight:500;font-size:12.5px;margin-top:2px}
-.lgFl{position:absolute;right:42px;top:60px;display:grid;gap:14px;z-index:1}.lgFl img{width:64px;height:64px;filter:drop-shadow(0 10px 20px #0008);animation:lgBob 6s ease-in-out infinite}.lgFl img:nth-child(2){animation-delay:-2s;margin-left:40px}.lgFl img:nth-child(3){animation-delay:-4s}
-@keyframes lgBob{50%{transform:translateY(-12px) rotate(4deg)}}
-html #login form{background:color-mix(in srgb,var(--panel) 88%,transparent);box-shadow:0 30px 80px #0009,0 0 0 1px color-mix(in srgb,var(--tx) 8%,transparent)}
-html #login h1{font-size:30px;letter-spacing:-.02em}
-html #login input{height:48px;border-radius:14px;font-size:15px;padding:0 16px}
-html #login input:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 35%,transparent)}
-html #login #jb{height:50px;border-radius:14px;font-size:15.5px;font-weight:800;background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 60%,var(--ac2,#ffc27a)));box-shadow:0 10px 24px color-mix(in srgb,var(--ac) 40%,transparent);position:relative;overflow:hidden}
-html #login #jb::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,#fff5 50%,transparent 65%);transform:translateX(-100%);animation:lgShine 3.5s ease-in-out infinite}
+/* sign-in: just the box, dressed in the app's glow and gradient style */
+html #login{position:relative;overflow:hidden;display:grid;place-items:center;background:var(--bg)}
+html #login::before,html #login::after{content:'';position:absolute;width:620px;height:620px;border-radius:50%;filter:blur(120px);opacity:.26;pointer-events:none;animation:lgDrift 18s ease-in-out infinite alternate}
+html #login::before{background:var(--ac);left:calc(50% - 600px);top:-260px}
+html #login::after{background:var(--ac2,#7c3aed);right:calc(50% - 600px);bottom:-280px;animation-delay:-9s}
+@keyframes lgDrift{to{transform:translate(70px,50px) scale(1.12)}}
+@property --lgA{syntax:'<angle>';inherits:false;initial-value:0deg}
+html #login form{position:relative;z-index:1;width:min(400px,92vw);padding:36px 30px 28px;border-radius:26px;gap:14px;border:0;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 90%,var(--ac)),var(--panel) 45%);box-shadow:0 40px 90px #000a,0 0 60px color-mix(in srgb,var(--ac) 12%,transparent)}
+html #login form::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--lgA),var(--ac),var(--ac2,#ffc27a),color-mix(in srgb,var(--ac) 15%,transparent) 55%,var(--ac));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:lgSpin 9s linear infinite}
+@keyframes lgSpin{to{--lgA:360deg}}
+html #login form::after{content:'';position:absolute;left:14%;right:14%;top:0;height:1px;background:linear-gradient(90deg,transparent,#ffffff90,transparent);pointer-events:none}
+html #login h1{margin:0;text-align:center;font:900 38px/1.05 system-ui;letter-spacing:-.035em;background:linear-gradient(100deg,var(--tx) 20%,color-mix(in srgb,var(--ac) 80%,var(--tx)) 60%,var(--ac2,#ffc27a));-webkit-background-clip:text;background-clip:text;color:transparent}
+html #login .tag{margin:2px 0 10px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+html #login .seg{background:color-mix(in srgb,var(--bg) 80%,transparent);border:1px solid var(--line);border-radius:14px;padding:4px}
+html #login input:not([type=checkbox]){height:48px;border-radius:13px;font-size:15px;padding:0 14px 0 44px;background:color-mix(in srgb,var(--bg) 82%,transparent) no-repeat 14px 50%/19px;border:1px solid var(--line);transition:border-color .15s,box-shadow .2s,background-color .15s}
+html #login input:not([type=checkbox]):hover{border-color:color-mix(in srgb,var(--ac) 35%,var(--line))}
+html #login input:not([type=checkbox]):focus{border-color:var(--ac);background-color:var(--bg);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 22%,transparent);outline:none}
+html #login #email{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b99' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='3'/%3E%3Cpath d='M4 7l8 6 8-6'/%3E%3C/svg%3E")}html #login #pw{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b99' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4.5' y='10.5' width='15' height='10' rx='2.5'/%3E%3Cpath d='M8 10.5V7.5a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E")}html #login #name{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b99' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8.5' r='4'/%3E%3Cpath d='M4.5 20.5c1.2-4 4-6 7.5-6s6.3 2 7.5 6'/%3E%3C/svg%3E")}html #login #inv{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b8b99' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='15' r='4'/%3E%3Cpath d='M11 12l9-9M16 7l3 3M14 9l2 2'/%3E%3C/svg%3E")}
+html #login #jb{height:50px;margin-top:4px;border-radius:14px;font-size:15.5px;font-weight:800;letter-spacing:.01em;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 55%,var(--ac2,#ffc27a)));box-shadow:0 12px 28px color-mix(in srgb,var(--ac) 38%,transparent);transition:transform .15s,box-shadow .2s}
+html #login #jb:hover{transform:translateY(-1px);box-shadow:0 16px 34px color-mix(in srgb,var(--ac) 48%,transparent)}
+html #login #jb::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,#fff5 50%,transparent 65%);transform:translateX(-100%);animation:lgShine 3.8s ease-in-out infinite}
 @keyframes lgShine{60%,100%{transform:translateX(100%)}}
-@media (max-width:900px){html #login{grid-template-columns:1fr}.lgArt{display:none}}
-@media (prefers-reduced-motion:reduce){.lgB,.lgFl img,html #login #jb::after{animation:none}}
+html #login .seg i{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 60%,var(--ac2,#ffc27a)));box-shadow:0 4px 14px color-mix(in srgb,var(--ac) 35%,transparent)}
+html #login .seg button{color:var(--dim)}html #login .seg button[aria-selected=true]{color:#fff;font-weight:700}
+html #login #jb{color:#fff;text-shadow:0 1px 2px #0004}
+html[data-theme=light] #login form,html[data-theme=lavender] #login form,html[data-theme=paper] #login form{box-shadow:0 30px 70px #0000001f,0 0 50px color-mix(in srgb,var(--ac) 10%,transparent)}
+html[data-theme=light] #login::before,html[data-theme=lavender] #login::before,html[data-theme=paper] #login::before,html[data-theme=light] #login::after,html[data-theme=lavender] #login::after,html[data-theme=paper] #login::after{opacity:.16}
+@media (prefers-reduced-motion:reduce){html #login::before,html #login::after,html #login form::before,html #login #jb::after{animation:none}}
 /* screen share preview in the voice list */
 .hzLv{margin-left:auto;display:inline-flex;align-items:center;gap:6px;flex:none}
 .hzLv video{width:58px;height:33px;border-radius:5px;object-fit:cover;background:#000;box-shadow:0 0 0 1.5px #ef4444;cursor:pointer}
@@ -6261,11 +6267,6 @@ APPS.stages={n:'Stages',d:'Voice stages: speakers talk, everyone else listens an
 [['sakura','Sakura','#140a10','#2a1622','#ff8fc8'],['mocha','Mocha','#120d0a','#251b16','#e0a872'],['nord','Nord','#1c2028','#2c3240','#88c0d0'],['twilight','Twilight','#0f0c1a','#201a35','#bd93f9'],
  ['cyber','Cyber','#05060a','#11141f','#fde047'],['lagoon','Lagoon','#03110f','#0b2622','#2dd4bf'],['ember','Ember','#120804','#27140b','#ff7a29'],['royal','Royal','#070a18','#131834','#f5c542'],
  ['slate','Slate','#0e1116','#1c232c','#7aa2f7'],['abyss','Abyss','#01040a','#08111f','#4f7cff'],['lavender','Lavender','#f4f1fb','#efe9fa','#7c5cff'],['paper','Paper','#f7f2e8','#f2ebdd','#c2410c']].forEach(t=>{if(!THEMES.some(x=>x[0]==t[0]))THEMES.push(t)});
-/* ---------- sign-in screen ---------- */
-{const l=$('#login');if(l&&!l.querySelector('.lgArt'))l.insertAdjacentHTML('afterbegin',`<div class="lgArt" aria-hidden="true"><i class="lgB a"></i><i class="lgB b"></i><i class="lgB c"></i>
-  <div class="lgFl"><img src="${HG.art('hufi')}" alt=""><img src="${HG.art('cards')}" alt=""><img src="${HG.art('friends')}" alt=""></div>
-  <div class="lgIn"><div class="lgLogo"><img src="${HG.art('community')}" alt="">Huddle</div><h2>Your people, <em>all in one place.</em></h2><p>Talk, play and hang out in servers made by you and your friends.</p>
-  <ul class="lgF"><li><img src="${HG.art('voice')}" alt=""><span>Voice and screen share<small>Clear calls, live streams and a soundboard</small></span></li><li><img src="${HG.art('text')}" alt=""><span>Chat that feels alive<small>GIFs, files, replies and reactions</small></span></li><li><img src="${HG.art('builder')}" alt=""><span>Games and apps<small>Cards, casino, music and apps you build</small></span></li></ul></div></div>`)}
 /* ---------- screen sharing: a small live preview next to the person in the voice list ---------- */
 const LV={};
 const livePaint=()=>{document.querySelectorAll('.vm[data-o]').forEach(row=>{const o=row.dataset.o,u=users.find(x=>(x.oid||x.id)==o&&x.voice);let el=row.querySelector('.hzLv');
@@ -6333,6 +6334,28 @@ R.afk={full(st,m){m.body.className='hzAB';const c=st.cfg,vn=id=>(st.vcs.find(v=>
     if(d.afs!==undefined){A('cfg',{on:$('#afOn').value=='1',to:$('#afTo').value,mins:+$('#afM').value,muted:$('#afMu').value=='1',watch:[...$('#afW').querySelectorAll('input:checked')].map(i=>i.value),exempt:[...$('#afX').querySelectorAll('input:checked')].map(i=>i.value)});toast('Away Mover saved.',true)}}}};
 })();
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
