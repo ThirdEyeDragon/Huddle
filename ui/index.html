@@ -4010,6 +4010,542 @@ new MutationObserver(()=>shell()).observe($('#modal'),{childList:true,subtree:tr
 })();
 </script>
 
+<style id="huddle-v10">
+/* ---------- Huddle v10: app channels + invites with limits ---------- */
+/* create channel */
+#modal .pk:has(>.hzCD),#modal .pk:has(>.hzIvD){width:min(680px,94vw)!important;padding:22px!important}
+.hzCD{display:grid;gap:14px;min-width:0}
+.hzCD h3{margin:0;font-size:20px}.hzCD .sub{margin:-8px 0 0;color:var(--dim);font-size:13px}
+.hzCDl{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin:4px 0 -6px}
+.hzCDg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.hzCDg.two{grid-template-columns:1fr 1fr}
+.hzCDc{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--tx) 3%,transparent);transition:border-color .15s,background .15s,transform .15s}
+.hzCDc:hover{background:var(--hi);transform:translateY(-1px)}
+.hzCDc.sel{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,transparent);box-shadow:0 0 0 1px var(--ac) inset}
+.hzCDc .e{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:19px;background:color-mix(in srgb,var(--c,var(--ac)) 22%,transparent)}
+.hzCDc b{display:block;font-size:13.5px}.hzCDc small{display:block;font-size:11.5px;color:var(--dim);line-height:1.3}
+.hzCDrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.hzCDrow>input{flex:1 1 220px;margin:0}
+.hzCDact{display:flex;gap:8px;justify-content:flex-end}.hzCDact button{margin:0}
+/* sidebar icon */
+.hzAppIc{width:20px;height:20px;flex:none;display:inline-grid;place-items:center;font-size:14px;line-height:1;border-radius:6px;margin-right:6px;background:color-mix(in srgb,var(--c,var(--ac)) 20%,transparent)}
+/* app panel shell */
+#hzApp{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(900px 340px at 50% -120px,color-mix(in srgb,var(--c,var(--ac)) 12%,transparent),transparent 70%),var(--bg);animation:l-rise .3s var(--ease) both}
+.hzAH{display:flex;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);flex:none;flex-wrap:wrap}
+.hzAH .ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:22px;flex:none;background:color-mix(in srgb,var(--c,var(--ac)) 24%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c,var(--ac)) 35%,transparent) inset}
+.hzAH .tt{min-width:0;flex:1}.hzAH h2{margin:0;font-size:17px}.hzAH p{margin:2px 0 0;font-size:12.5px;color:var(--dim)}
+.hzAA{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+#hzApp button.hzB,#hzApp .hzB{min-width:0;flex:none;white-space:nowrap;margin:0;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:color-mix(in srgb,var(--tx) 5%,transparent);color:var(--tx);font-size:13px;cursor:pointer;width:auto}
+#hzApp .hzB:hover{background:var(--hi)}#hzApp .hzB.on{background:var(--ac);border-color:transparent;color:#fff}#hzApp .hzB.bad{color:var(--bad)}
+#hzApp .hzB:disabled{opacity:.45;cursor:default}
+.hzAB{flex:1;min-height:0;position:relative;overflow:auto;padding:16px 18px}
+.hzAB.full{padding:0;overflow:hidden}
+.hzEmpty{display:grid;place-items:center;text-align:center;color:var(--dim);padding:40px 10px;font-size:14px}
+.hzAc{border:1px solid var(--line);border-radius:14px;padding:14px;background:color-mix(in srgb,var(--panel) 70%,transparent)}
+.hzAc h4{margin:0 0 8px;font-size:14px}
+.hzGrid{display:grid;gap:12px}
+.hzMuted{color:var(--dim);font-size:12.5px}
+.hzSeg{display:inline-flex;padding:3px;border-radius:11px;background:color-mix(in srgb,var(--tx) 6%,transparent);gap:2px}
+.hzSeg button{all:unset;cursor:pointer;padding:6px 12px;border-radius:8px;font-size:13px;color:var(--dim)}
+.hzSeg button.on{background:var(--panel);color:var(--tx);box-shadow:0 1px 4px #0005}
+/* stickers */
+.hzStk{position:absolute;inset:0;display:flex;flex-direction:column}
+.hzPal{display:flex;gap:4px;padding:8px 12px;overflow-x:auto;border-bottom:1px solid var(--line);flex:none;scrollbar-width:thin}
+.hzPal button{all:unset;cursor:pointer;width:36px;height:36px;flex:none;display:grid;place-items:center;font-size:22px;border-radius:10px}
+.hzPal button img{width:26px;height:26px;object-fit:contain}
+.hzPal button:hover{background:var(--hi)}.hzPal button.on{background:color-mix(in srgb,var(--ac) 25%,transparent);box-shadow:0 0 0 1px var(--ac) inset}
+.hzWall{position:relative;flex:1;overflow:hidden;cursor:copy;background:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--tx) 14%,transparent) 1px,transparent 1.5px) 0 0/22px 22px,linear-gradient(160deg,color-mix(in srgb,var(--ac) 7%,var(--bg)),var(--bg))}
+.hzSt{position:absolute;left:0;top:0;font-size:46px;line-height:1;user-select:none;cursor:grab;touch-action:none;filter:drop-shadow(0 4px 6px #0007);transition:filter .15s}
+.hzSt img{width:52px;height:52px;object-fit:contain;pointer-events:none;display:block}
+.hzSt:hover{filter:drop-shadow(0 6px 12px #000a) brightness(1.08)}.hzSt.drag{cursor:grabbing;transition:none}
+.hzSt.remote{transition:left .08s linear,top .08s linear}
+.hzHint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--dim);background:color-mix(in srgb,var(--panel) 85%,transparent);padding:5px 10px;border-radius:9px;pointer-events:none}
+/* scribble */
+.hzScb{position:absolute;inset:0;display:flex;flex-direction:column}
+.hzTools{display:flex;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap;flex:none}
+.hzSw{all:unset;width:24px;height:24px;border-radius:50%;cursor:pointer;box-shadow:0 0 0 2px #0006 inset;flex:none}
+.hzSw.on{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--tx)}
+.hzSz{all:unset;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;cursor:pointer}
+.hzSz i{display:block;border-radius:50%;background:var(--tx)}.hzSz.on,.hzSz:hover{background:var(--hi)}
+.hzSep{width:1px;height:24px;background:var(--line)}
+.hzCvW{flex:1;min-height:0;display:grid;place-items:center;padding:12px}
+.hzCvW canvas{background:#fbfaf7;border-radius:14px;box-shadow:0 12px 40px #0008;touch-action:none;cursor:crosshair;display:block}
+/* checkers */
+.hzCk{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:18px;align-items:start;max-width:880px;margin:0 auto}
+.hzCk>*{min-width:0}
+@media (max-width:1100px){.hzCk{grid-template-columns:minmax(0,1fr)}}
+.hzBoard{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));width:min(100%,calc(100vh - 200px));justify-self:center;aspect-ratio:1;border-radius:12px;overflow:hidden;box-shadow:0 18px 50px #0009,0 0 0 6px #3b2a1e}
+.hzSq{position:relative;display:grid;place-items:center}
+.hzSq.l{background:#eedcb3}.hzSq.d{background:#7a5434}
+.hzSq.mv::after{content:'';width:30%;height:30%;border-radius:50%;background:#ffffff66;box-shadow:0 0 0 3px #ffffff33}
+.hzSq.lst{box-shadow:inset 0 0 0 999px #ffd34d33}
+.hzPc{width:78%;height:78%;border-radius:50%;cursor:pointer;display:grid;place-items:center;font-size:clamp(12px,3vw,22px);transition:transform .15s;user-select:none}
+.hzPc.r{background:radial-gradient(circle at 35% 30%,#ff8a8a,#d42a2a 55%,#8f1414);box-shadow:0 4px 0 #6d0e0e,0 6px 10px #0008}
+.hzPc.b{background:radial-gradient(circle at 35% 30%,#666,#262626 55%,#0c0c0c);box-shadow:0 4px 0 #000,0 6px 10px #0008}
+.hzPc.pick{transform:translateY(-4px) scale(1.06);outline:3px solid #ffd34d;outline-offset:2px}
+.hzCkSd{display:grid;gap:10px}
+.hzSeat{display:flex;gap:8px;align-items:center;padding:10px;min-width:0;border-radius:12px;border:1px solid var(--line)}
+.hzSeat.turn{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac) inset,0 0 18px color-mix(in srgb,var(--ac) 30%,transparent)}
+.hzSeat .dot{width:22px;height:22px;border-radius:50%;flex:none}
+.hzSeat>*{flex:none}.hzSeat .nm{flex:1 1 0;min-width:0;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hzBanner{padding:10px 12px;border-radius:12px;text-align:center;font-weight:700;background:color-mix(in srgb,var(--ac) 16%,transparent)}
+/* one */
+.hzOne{display:grid;gap:16px;max-width:980px;margin:0 auto}
+.hzOP{display:flex;gap:8px;flex-wrap:wrap}
+.hzOPl{display:flex;gap:8px;align-items:center;padding:6px 10px 6px 6px;border-radius:12px;border:1px solid var(--line);font-size:13px}
+.hzOPl.turn{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,transparent)}
+.hzOPl em{font-style:normal;font-weight:800;padding:1px 7px;border-radius:7px;background:color-mix(in srgb,var(--tx) 10%,transparent)}
+.hzTbl{display:flex;gap:28px;justify-content:center;align-items:center;padding:20px;border-radius:20px;background:radial-gradient(circle,#1d5d3a,#123d26);box-shadow:inset 0 0 40px #0008}
+.hzCd{--w:74px;width:var(--w);height:calc(var(--w)*1.45);border-radius:10px;flex:none;position:relative;display:grid;place-items:center;color:#fff;font-weight:900;font-size:calc(var(--w)*.38);
+  background:var(--cc);box-shadow:0 0 0 3px #fff inset,0 6px 14px #0007;text-shadow:0 2px 0 #0006;user-select:none}
+.hzCd::before{content:'';position:absolute;inset:12% 10%;border-radius:50%;background:#ffffff26;transform:rotate(-28deg)}
+.hzCd span{position:relative}
+.hzCd .c{position:absolute;top:6px;left:8px;font-size:calc(var(--w)*.17)}
+.hzCd.W{background:conic-gradient(#ef4444 0 25%,#3b82f6 0 50%,#eab308 0 75%,#22c55e 0)}
+.hzCd.back{background:repeating-linear-gradient(45deg,#2b2b2b 0 8px,#1b1b1b 8px 16px);cursor:pointer}
+.hzCd.back span{font-size:calc(var(--w)*.22);color:#ff5c5c;transform:rotate(-20deg)}
+.hzHand{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;padding:10px 0}
+.hzHand .hzCd{--w:64px;cursor:pointer;transition:transform .15s}
+.hzHand .hzCd.ok:hover{transform:translateY(-12px)}
+.hzHand .hzCd:not(.ok){filter:brightness(.5) saturate(.6);cursor:not-allowed}
+.hzLog{font-size:12.5px;color:var(--dim);display:grid;gap:2px;max-height:110px;overflow:auto}
+.hzColPick{display:flex;gap:10px;justify-content:center}
+.hzColPick button{all:unset;cursor:pointer;width:60px;height:60px;border-radius:14px;box-shadow:0 4px 10px #0006}
+/* lists (huroler, modpro, hullo, leaders) */
+.hzList{display:grid;gap:8px}
+.hzRow{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 60%,transparent)}
+.hzRow .grow{flex:1;min-width:0}.hzRow b{font-size:13.5px}.hzRow small{color:var(--dim);font-size:12px}
+.hzTag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--tx) 10%,transparent)}
+.hzTag.pending{background:#eab30833;color:#facc15}.hzTag.approved,.hzTag.open{background:#22c55e2e;color:#4ade80}.hzTag.denied,.hzTag.closed{background:#ef44442e;color:#f87171}
+.hzAns{margin:8px 0 0;display:grid;gap:6px;font-size:13px}.hzAns div{padding:8px 10px;border-radius:9px;background:color-mix(in srgb,var(--tx) 5%,transparent);white-space:pre-wrap;overflow-wrap:anywhere}
+.hzAns i{display:block;font-style:normal;color:var(--dim);font-size:11.5px;margin-bottom:2px}
+.hzWel{font-size:15px}
+.hzWave{all:unset;cursor:pointer;padding:5px 10px;border-radius:99px;font-size:13px;border:1px solid var(--line)}
+.hzWave.on{background:color-mix(in srgb,var(--ac) 20%,transparent);border-color:var(--ac)}
+.hzLb{display:grid;gap:6px}
+.hzLbR{display:grid;grid-template-columns:34px 32px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-radius:12px;position:relative;overflow:hidden;border:1px solid var(--line)}
+.hzLbR .bar{position:absolute;inset:0 auto 0 0;background:color-mix(in srgb,var(--ac) 13%,transparent);z-index:0}
+.hzLbR>*:not(.bar){position:relative;z-index:1}
+.hzLbR .rk{font-weight:800;font-size:15px;text-align:center;color:var(--dim)}
+.hzLbR.top1{border-color:#facc15}.hzLbR.top2{border-color:#cbd5e1}.hzLbR.top3{border-color:#d97706}
+.hzLbR .v{font-weight:700;font-variant-numeric:tabular-nums}
+/* stats */
+.hzTiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.hzTile{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 65%,transparent)}
+.hzTile small{color:var(--dim);font-size:12px;display:block}.hzTile b{font-size:24px;display:block;margin:2px 0;font-variant-numeric:tabular-nums}
+.hzUp{color:#4ade80;font-size:12px;font-weight:700}.hzDn{color:#f87171;font-size:12px;font-weight:700}.hzEq{color:var(--dim);font-size:12px}
+.hzChart svg{width:100%;height:120px;display:block}
+.hzChart .lg{display:flex;gap:12px;font-size:12px;color:var(--dim);margin-top:6px}.hzChart .lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.hzTbl2{width:100%;border-collapse:collapse;font-size:13px}.hzTbl2 td,.hzTbl2 th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}.hzTbl2 th{color:var(--dim);font-weight:600;font-size:12px}
+.hzTbl2 td.n{text-align:right;font-variant-numeric:tabular-nums}
+/* puzzle */
+.hzPz{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--ac) 6%,#1a1a1f),#0f0f13)}
+.hzPzF{position:absolute;border-radius:4px;box-shadow:0 0 0 2px #ffffff22,0 0 0 9999px #00000020;background-size:100% 100%;background-repeat:no-repeat}
+.hzPzF.ghost{opacity:.18}
+.hzPzF.hide{background-image:none!important}
+.hzPzP{position:absolute;left:0;top:0;touch-action:none;cursor:grab;filter:drop-shadow(0 3px 4px #000c)}
+.hzPzP>div{width:100%;height:100%;background-repeat:no-repeat}
+.hzPzP.ok{cursor:default;filter:none;z-index:1!important}
+.hzPzP.drag{cursor:grabbing;filter:drop-shadow(0 10px 14px #000e)}
+.hzPzP.remote{transition:left .08s linear,top .08s linear}
+.hzPzDone{position:absolute;left:50%;top:14px;transform:translateX(-50%);padding:10px 18px;border-radius:14px;font-weight:800;background:color-mix(in srgb,var(--ac) 85%,#000);color:#fff;box-shadow:0 10px 30px #0008;z-index:9999;animation:l-rise .4s var(--ease) both}
+.hzPzSet{max-width:520px;margin:30px auto;display:grid;gap:14px}
+.hzPzDrop{display:grid;place-items:center;gap:6px;min-height:180px;border:2px dashed var(--line);border-radius:16px;cursor:pointer;text-align:center;color:var(--dim);background-size:cover;background-position:center;position:relative;overflow:hidden}
+.hzPzDrop:hover{border-color:var(--ac)}
+.hzPzDrop.has{border-style:solid;color:#fff;text-shadow:0 2px 6px #000}
+.hzPzN{display:flex;flex-wrap:wrap;gap:6px}
+/* invites */
+.hzIvD{display:grid;gap:14px;min-width:0}
+.hzIvD h3{margin:0}.hzIvD .sub{margin:-8px 0 0;color:var(--dim);font-size:13px}
+.hzInvMk{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
+.hzInvMk label{display:grid;gap:5px;font-size:12px;color:var(--dim);margin:0}.hzInvMk select{margin:0}.hzInvMk button{margin:0}
+.hzInvNew{display:flex;gap:10px;align-items:center;padding:12px;border-radius:12px;background:color-mix(in srgb,var(--ac) 14%,transparent);border:1px solid var(--ac)}
+.hzInvNew code{flex:1;font-size:15px;font-weight:700;letter-spacing:.04em;overflow-wrap:anywhere}
+.hzInvL{display:grid;gap:6px;max-height:300px;overflow:auto}
+.hzInvR{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:9px 12px;border-radius:11px;border:1px solid var(--line)}
+.hzInvR code{font-size:13px}.hzInvR small{display:block;color:var(--dim);font-size:11.5px}
+.hzInvR button,.hzInvNew button{margin:0;padding:6px 10px;width:auto}
+@media (max-width:700px){.hzInvMk{grid-template-columns:1fr}.hzCkSd{width:100%}}
+</style>
+<script id="huddle-v10-js">
+(()=>{
+/* ================= app catalogue ================= */
+const APPS={
+  stickers:{e:'🪧',n:'Sticker Together',d:'A shared wall everyone can stick emojis on.',c:'#f472b6',slug:'sticker-wall'},
+  scribble:{e:'🖍️',n:'Scribble',d:'Draw together on one live canvas.',c:'#38bdf8',slug:'scribble'},
+  checkers:{e:'🏁',n:'Checkers',d:'Classic checkers for two players.',c:'#ef4444',slug:'checkers'},
+  one:{e:'🃏',n:'One',d:'Match colors and numbers, empty your hand first.',c:'#facc15',slug:'one'},
+  puzzle:{e:'🧩',n:'Puzzle',d:'Turn any image into a jigsaw and solve it together.',c:'#a78bfa',slug:'puzzle'},
+  huroler:{e:'📝',n:'Huroler',d:'Members apply for roles; staff approve them.',c:'#34d399',slug:'role-applications'},
+  hullo:{e:'👋',n:'Hullo',d:'Welcomes new members and helps you invite people.',c:'#fb923c',slug:'welcome'},
+  modpro:{e:'🛡️',n:'Moderate Pro',d:'Tickets, server logs and deleted messages.',c:'#60a5fa',slug:'moderation'},
+  stats:{e:'📈',n:'Community Stats',d:'Joins, leaves, chat and voice activity over time.',c:'#2dd4bf',slug:'stats'},
+  leaders:{e:'🏆',n:'Leaderboards',d:'Top members by messages and time in voice.',c:'#fbbf24',slug:'leaderboards'}
+};
+window.HZAPPS=APPS;
+const AS={};window.HZAS=AS; // channel id -> latest state from the server
+let mounted=null;          // {ch, app, cleanup}
+const gNow=()=>G[sel]||{};
+const nm=o=>(P[o]||{}).name||'Someone';
+const ago=t=>{const s=Math.max(1,(Date.now()-t)/1000|0);return s<60?s+'s ago':s<3600?(s/60|0)+'m ago':s<86400?(s/3600|0)+'h ago':(s/86400|0)+'d ago'};
+const fmtMin=m=>m<60?m+'m':m<1440?(m/60|0)+'h '+(m%60)+'m':(m/1440|0)+'d '+((m%1440)/60|0)+'h';
+const isModG=g=>hasP(g,'msgs')||hasP(g,'channels');
+const A=(a,extra)=>mounted&&send(Object.assign({t:'app',ch:mounted.ch,a},extra||{}));
+const thr=(fn,ms)=>{let t=0,pend=null,tm=0;return (...a)=>{const n=Date.now();if(n-t>=ms){t=n;fn(...a)}else{pend=a;clearTimeout(tm);tm=setTimeout(()=>{t=Date.now();fn(...pend)},ms-(n-t))}}};
+
+/* ================= create channel: text, voice or an app ================= */
+chDialog=function(g,pre){
+  let kind='text',app='';
+  const card=(k,e,n,d,c)=>`<button type="button" class="hzCDc" data-k="${k}" style="--c:${c}"><span class="e">${e}</span><span><b>${n}</b><small>${d}</small></span></button>`;
+  modal(`<div class="hzCD"><h3>Create channel</h3><p class="sub">Pick a channel type. Apps run right inside the channel for everyone in the server.</p>
+    <div class="hzCDrow"><input id="cn" placeholder="channel-name" maxlength="24" autocomplete="off"></div>
+    <div class="hzCDl">Channels</div><div class="hzCDg two">${card('text','#','Text','Messages, images, GIFs and polls.','#94a3b8')}${card('voice','🔊','Voice','Talk, share your screen and video.','#22c55e')}</div>
+    <div class="hzCDl">Apps</div><div class="hzCDg">${Object.entries(APPS).map(([k,a])=>card('app:'+k,a.e,a.n,a.d,a.c)).join('')}</div>
+    ${(g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':''}
+    <label class="tg" id="c18w"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"></label>
+    <div class="hzCDact"><button id="gx">Cancel</button><button class="on" id="chc">Create</button></div></div>`,()=>{
+    const cn=$('#cn'),pick=k=>{document.querySelectorAll('.hzCD .hzCDc').forEach(b=>b.classList.toggle('sel',b.dataset.k==k));
+      const prevSlug=app&&APPS[app]?APPS[app].slug:'';kind=k.startsWith('app:')?'app':k;app=kind=='app'?k.slice(4):'';
+      if(kind=='app'&&(!cn.value.trim()||cn.value==prevSlug))cn.value=APPS[app].slug;else if(kind!='app'&&cn.value==prevSlug)cn.value='';
+      $('#c18w').style.display=kind=='text'?'':'none';cn.placeholder=kind=='voice'?'Voice channel name':'channel-name'};
+    document.querySelectorAll('.hzCD .hzCDc').forEach(b=>b.onclick=()=>pick(b.dataset.k));pick('text');cn.focus();
+    $('#chc').onclick=()=>{const n=cn.value.trim();if(!n){cn.focus();return toast('Name the channel.')}
+      if(send({t:'chadd',g:g.id,name:n,type:kind,app,cat:$('#cc')?$('#cc').value:'',nsfw:kind=='text'&&$('#c18').checked}))closeM()};
+    cn.onkeydown=e=>{if(e.key=='Enter')$('#chc').click()};$('#gx').onclick=closeM})};
+
+/* ================= sidebar: app icons ================= */
+const decoSide=()=>{document.querySelectorAll('#chs .tab[data-c],#cats .tab[data-c]').forEach(b=>{const x=chObj(b.dataset.c);if(!x||x.type!='app'||!APPS[x.app])return;
+  const a=APPS[x.app],ic=b.querySelector('.ci');if(ic&&!ic.classList.contains('hzAppIc')){const s=document.createElement('span');s.className='ci hzAppIc';s.style.setProperty('--c',a.c);s.textContent=a.e;s.title=a.n;ic.replaceWith(s)}})};
+const _hzSide=side;side=function(){const r=_hzSide.apply(this,arguments);try{decoSide();if(mounted&&(mounted.ch!==cur||!isApp(cur)))unmount()}catch(e){}return r};
+const isApp=c=>{const x=c&&chObj(c);return !!(x&&x.type=='app'&&APPS[x.app])};
+
+/* ================= mounting the app panel over the chat ================= */
+function unmount(){if(!mounted)return;try{mounted.cleanup&&mounted.cleanup()}catch{}mounted=null;$('#hzApp')?.remove();const b=$('#bar');if(b)b.style.visibility=cur?'':'hidden'}
+function mount(){const c=cur;if(!isApp(c)){unmount();return}if(mounted&&mounted.ch===c)return;unmount();
+  const x=chObj(c),a=APPS[x.app],sec=document.createElement('section');sec.id='hzApp';sec.style.setProperty('--c',a.c);sec.dataset.app=x.app;
+  sec.innerHTML=`<div class="hzAH"><span class="ic">${a.e}</span><div class="tt"><h2>${esc(x.name)}</h2><p>${a.n} · ${a.d}</p></div><div class="hzAA"></div></div><div class="hzAB"><div class="hzEmpty">Loading…</div></div>`;
+  $('main').append(sec);const bar=$('#bar');if(bar)bar.style.visibility='hidden';
+  mounted={ch:c,app:x.app,cleanup:null,el:sec,body:sec.querySelector('.hzAB'),act:sec.querySelector('.hzAA')};
+  send({t:'app',ch:c,a:'get'});if(AS[c])paint()}
+const _hzOpen=openCh;openCh=function(){const r=_hzOpen.apply(this,arguments);try{mount()}catch(e){console.error(e)}return r};
+function paint(){if(!mounted)return;const st=AS[mounted.ch];if(!st)return;const R=RENDER[mounted.app];if(R)try{R.full(st,mounted)}catch(e){console.error(e)}}
+const _hzOn=on;on=function(d){
+  if(d&&d.t=='app'){if(d.s){AS[d.ch]=d.s;if(mounted&&mounted.ch==d.ch)paint()}else if(d.ev&&AS[d.ch]){const ch=d.ch,R=RENDER[(chObj(ch)||{}).app];if(R&&R.ev)try{R.ev(AS[ch],d.ev,mounted&&mounted.ch==ch?mounted:null)}catch(e){console.error(e)}}return}
+  if(d&&d.t=='invmade')return invMade(d);
+  const r=_hzOn.apply(this,arguments);
+  if(d&&d.t=='guild'&&d.g){invRefresh(d.g.id);if(mounted&&mounted.app=='hullo'&&d.g.id==sel)paint()}
+  return r};
+
+/* ================= the apps ================= */
+const RENDER={};
+
+/* ---------- Sticker Together ---------- */
+const STK=['😀','😂','🥹','😍','🥳','😎','🤯','😭','😤','🤡','👍','👏','🙌','🔥','💯','❤️','💜','💙','⭐','✨','🎉','🎮','🍕','🍩','🐱','🐶','🦊','🐸','👻','💀','🌈','⚡','🚀','🏆','💎','🌸','🍀','🎵','👀','🫶'];
+const stkHtml=e=>/^:[a-z0-9_]+:$/.test(e)&&EM[e.slice(1,-1)]?`<img src="${base}${esc(EM[e.slice(1,-1)].url)}" alt="${esc(e)}">`:esc(e);
+let stkPick=STK[0];
+RENDER.stickers={full(st,m){
+  if(!m.body.querySelector('.hzStk')){m.body.className='hzAB full';const g=gNow();
+    m.body.innerHTML=`<div class="hzStk"><div class="hzPal">${[...STK,...Object.keys(EM||{}).slice(0,60).map(n=>':'+n+':')].map(e=>`<button data-e="${esc(e)}" class="${e==stkPick?'on':''}" title="${esc(e)}">${stkHtml(e)}</button>`).join('')}</div><div class="hzWall"></div><div class="hzHint">Click to stick · drag to move · scroll to resize · right-click to remove</div></div>`;
+    m.act.innerHTML=isModG(g)?'<button class="hzB bad" id="stkClr">Clear wall</button>':'';
+    const clr=$('#stkClr');if(clr)clr.onclick=async()=>{if(await hzAsk('Remove every sticker from this wall?'))A('clear')};
+    m.body.querySelector('.hzPal').onclick=e=>{const b=e.target.closest('[data-e]');if(!b)return;stkPick=b.dataset.e;m.body.querySelectorAll('.hzPal button').forEach(x=>x.classList.toggle('on',x===b))};
+    const wall=m.body.querySelector('.hzWall');
+    wall.addEventListener('click',e=>{if(e.target!==wall)return;const r=wall.getBoundingClientRect();A('add',{e:stkPick,x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height,r:Math.round(Math.random()*30-15),s:1})});
+    wall.addEventListener('contextmenu',e=>{const s=e.target.closest('.hzSt');if(!s)return;e.preventDefault();e.stopPropagation();A('del',{id:s.dataset.id})});
+    wall.addEventListener('wheel',e=>{const s=e.target.closest('.hzSt');if(!s)return;e.preventDefault();const it=AS[m.ch].items.find(i=>i.id==s.dataset.id);if(!it)return;
+      it.s=Math.max(.5,Math.min(3,it.s*(e.deltaY<0?1.1:.9)));place(s,it);sendScale(it)},{passive:false});
+    const sendScale=thr(it=>A('move',{id:it.id,x:it.x,y:it.y,r:it.r,s:it.s}),250);
+    const drag=thr((id,x,y)=>A('drag',{id,x,y}),50);
+    wall.addEventListener('pointerdown',e=>{const s=e.target.closest('.hzSt');if(!s||e.button!==0)return;e.preventDefault();const it=AS[m.ch].items.find(i=>i.id==s.dataset.id);if(!it)return;
+      const r=wall.getBoundingClientRect();s.setPointerCapture(e.pointerId);s.classList.add('drag');s.classList.remove('remote');s.style.zIndex=99999;let moved=false;
+      const mv=ev=>{moved=true;it.x=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));it.y=Math.max(0,Math.min(1,(ev.clientY-r.top)/r.height));place(s,it);drag(it.id,it.x,it.y)};
+      const up=()=>{s.removeEventListener('pointermove',mv);s.removeEventListener('pointerup',up);s.removeEventListener('pointercancel',up);s.classList.remove('drag');if(moved)A('move',{id:it.id,x:it.x,y:it.y,r:it.r,s:it.s})};
+      s.addEventListener('pointermove',mv);s.addEventListener('pointerup',up);s.addEventListener('pointercancel',up)});
+    const ro=new ResizeObserver(()=>wall.querySelectorAll('.hzSt').forEach(s=>{const it=AS[m.ch].items.find(i=>i.id==s.dataset.id);if(it)place(s,it)}));ro.observe(wall);m.cleanup=()=>ro.disconnect()}
+  const wall=m.body.querySelector('.hzWall');wall.innerHTML='';st.items.forEach(it=>wall.append(mkStk(it,wall)))},
+  ev(st,ev,m){const wall=m&&m.body.querySelector('.hzWall');
+    if(ev.op=='up'){const i=st.items.findIndex(x=>x.id==ev.it.id);if(i>=0)st.items[i]=ev.it;else st.items.push(ev.it);if(!wall)return;let s=wall.querySelector(`[data-id="${ev.it.id}"]`);
+      if(!s)wall.append(mkStk(ev.it,wall));else if(!s.classList.contains('drag'))place(s,ev.it)}
+    else if(ev.op=='del'){st.items=st.items.filter(x=>x.id!=ev.id);wall&&wall.querySelector(`[data-id="${ev.id}"]`)?.remove()}
+    else if(ev.op=='drag'&&wall){const s=wall.querySelector(`[data-id="${CSS.escape(ev.id)}"]`),it=st.items.find(x=>x.id==ev.id);if(s&&it&&!s.classList.contains('drag')){s.classList.add('remote');place(s,{...it,x:ev.x,y:ev.y,z:99998})}}}};
+function mkStk(it,wall){const s=document.createElement('div');s.className='hzSt';s.dataset.id=it.id;s.title=(P[it.o]||{}).name?'Stuck by '+P[it.o].name:'';s.innerHTML=stkHtml(it.e);place(s,it,wall);return s}
+function place(s,it){s.style.left=(it.x*100)+'%';s.style.top=(it.y*100)+'%';s.style.transform=`translate(-50%,-50%) rotate(${it.r}deg) scale(${it.s})`;s.style.zIndex=it.z||1}
+
+/* ---------- Scribble ---------- */
+const COLS=['#111111','#ffffff','#ef4444','#f97316','#facc15','#22c55e','#06b6d4','#3b82f6','#8b5cf6','#ec4899','#8b5a2b','#94a3b8'];
+let scC='#111111',scW=6,scEr=false;
+RENDER.scribble={full(st,m){
+  if(!m.body.querySelector('.hzScb')){m.body.className='hzAB full';const g=gNow();
+    m.body.innerHTML=`<div class="hzScb"><div class="hzTools">${COLS.map(c=>`<button class="hzSw${c==scC&&!scEr?' on':''}" data-c="${c}" style="background:${c}" title="${c}"></button>`).join('')}
+      <input type="color" id="scCol" value="${scC}" title="Any color" style="width:30px;height:28px;padding:0;border:0;background:none;margin:0"><span class="hzSep"></span>
+      ${[3,6,12,24,44].map(w=>`<button class="hzSz${w==scW?' on':''}" data-w="${w}" title="Size ${w}"><i style="width:${Math.max(3,w/2)}px;height:${Math.max(3,w/2)}px"></i></button>`).join('')}<span class="hzSep"></span>
+      <button class="hzB${scEr?' on':''}" id="scEr">Eraser</button><button class="hzB" id="scUn">Undo</button>${isModG(g)?'<button class="hzB bad" id="scClr">Clear</button>':''}<button class="hzB" id="scSave">Save image</button></div>
+      <div class="hzCvW"><canvas></canvas></div></div>`;
+    const cv=m.body.querySelector('canvas'),ctx=cv.getContext('2d'),wrap=m.body.querySelector('.hzCvW'),live={};
+    const sync=()=>{m.body.querySelectorAll('.hzSw').forEach(b=>b.classList.toggle('on',!scEr&&b.dataset.c==scC));m.body.querySelectorAll('.hzSz').forEach(b=>b.classList.toggle('on',+b.dataset.w==scW));$('#scEr').classList.toggle('on',scEr)};
+    m.body.querySelector('.hzTools').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.c){scC=b.dataset.c;scEr=false;$('#scCol').value=scC}else if(b.dataset.w)scW=+b.dataset.w;else if(b.id=='scEr')scEr=!scEr;
+      else if(b.id=='scUn')A('undo');else if(b.id=='scClr'){hzAsk('Clear the whole canvas for everyone?').then(ok=>ok&&A('clear'))}
+      else if(b.id=='scSave'){const o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const x=o.getContext('2d');x.fillStyle='#fbfaf7';x.fillRect(0,0,o.width,o.height);x.drawImage(cv,0,0);const a=document.createElement('a');a.download='scribble.png';a.href=o.toDataURL('image/png');a.click()}sync()};
+    $('#scCol').oninput=e=>{scC=e.target.value;scEr=false;sync()};
+    const seg=(s,from)=>{const W=cv.width,H=cv.height,p=s.pts;ctx.save();ctx.globalCompositeOperation=s.er?'destination-out':'source-over';ctx.strokeStyle=s.c;ctx.fillStyle=s.c;ctx.lineWidth=s.w*W/1000;ctx.lineCap=ctx.lineJoin='round';
+      if(p.length==1||from>=p.length-1&&p.length-from==1&&from==0){ctx.beginPath();ctx.arc(p[0][0]*W,p[0][1]*H,ctx.lineWidth/2,0,7);ctx.fill()}
+      else{ctx.beginPath();const a=Math.max(0,from-1);ctx.moveTo(p[a][0]*W,p[a][1]*H);for(let i=a+1;i<p.length;i++)ctx.lineTo(p[i][0]*W,p[i][1]*H);ctx.stroke()}ctx.restore()};
+    const redraw=()=>{ctx.clearRect(0,0,cv.width,cv.height);(AS[m.ch].strokes||[]).forEach(s=>seg(s,0));Object.values(live).forEach(s=>seg(s,0))};
+    const fit=()=>{const r=wrap.getBoundingClientRect(),w=Math.max(100,Math.min(r.width-24,(r.height-24)*16/9)),dpr=Math.min(2,devicePixelRatio||1);cv.style.width=w+'px';cv.style.height=w*9/16+'px';cv.width=Math.round(w*dpr);cv.height=Math.round(w*9/16*dpr);redraw()};
+    const ro=new ResizeObserver(fit);ro.observe(wrap);
+    let me=null,sent=0;const sid=()=>Math.random().toString(36).slice(2,10);
+    const flush=thr(()=>{if(!me||me.pts.length<=sent)return;A('ink',{sid:me.sid,c:me.c,w:me.w,er:me.er,pts:me.pts.slice(Math.max(0,sent-1))});sent=me.pts.length},60);
+    const pt=e=>{const r=cv.getBoundingClientRect();return[Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))]};
+    cv.onpointerdown=e=>{if(e.button!==0)return;cv.setPointerCapture(e.pointerId);me={sid:sid(),c:scC,w:scEr?scW*2:scW,er:scEr,pts:[pt(e)]};sent=0;seg(me,0);flush()};
+    cv.onpointermove=e=>{if(!me)return;const n=pt(e),l=me.pts[me.pts.length-1];if(Math.hypot(n[0]-l[0],n[1]-l[1])<.0015)return;me.pts.push(n);if(me.pts.length>790){end();return}seg(me,me.pts.length-1);flush()};
+    const end=()=>{if(!me)return;const s=me;me=null;A('stroke',{sid:s.sid,c:s.c,w:s.w,er:s.er,pts:s.pts});live['me:'+s.sid]=s};
+    cv.onpointerup=cv.onpointercancel=end;
+    m.sc={redraw,seg,live};m.cleanup=()=>ro.disconnect()}
+  m.sc.redraw()},
+  ev(st,ev,m){
+    if(ev.k=='stroke'){st.strokes.push(ev.s);if(!m||!m.sc)return;const mine=m.sc.live['me:'+ev.sid];delete m.sc.live['me:'+ev.sid];const k=Object.keys(m.sc.live).find(x=>x.endsWith(':'+ev.sid));if(k)delete m.sc.live[k];if(!mine)m.sc.redraw()}
+    else if(ev.k=='unstroke'){st.strokes=st.strokes.filter(s=>s.id!=ev.id);m&&m.sc&&m.sc.redraw()}
+    else if(ev.k=='ink'&&m&&m.sc){const k=ev.o+':'+ev.sid,l=m.sc.live[k]||(m.sc.live[k]={c:ev.c,w:ev.w,er:ev.er,pts:[]}),from=l.pts.length;l.pts.push(...ev.pts.slice(from?1:0));m.sc.seg(l,from?from:0)}}};
+
+/* ---------- Checkers ---------- */
+const ckMoves=(b,side,only)=>{const res=[],caps=[];for(let i=0;i<64;i++){if(only>=0&&i!==only)continue;const pc=b[i];if(pc=='.'||pc.toLowerCase()!==side)continue;const king=pc!==side,r=i>>3,c=i&7,dirs=king?[-1,1]:side=='r'?[-1]:[1];
+  for(const dr of dirs)for(const dc of[-1,1]){const r1=r+dr,c1=c+dc;if(r1<0||r1>7||c1<0||c1>7)continue;const j=r1*8+c1;if(b[j]=='.'){res.push({f:i,t:j});continue}
+    if(b[j].toLowerCase()!==side){const r2=r1+dr,c2=c1+dc;if(r2<0||r2>7||c2<0||c2>7)continue;const k=r2*8+c2;if(b[k]=='.')caps.push({f:i,t:k})}}}return caps.length?caps:only>=0?[]:res};
+let ckSel=-1;
+RENDER.checkers={full(st,m){m.body.className='hzAB';const seat=st.p.indexOf(oid),flip=seat==1,mySide=seat==0?'r':seat==1?'b':'',myTurn=!st.w&&st.p[0]&&st.p[1]&&st.t==mySide;
+  const mv=myTurn?ckMoves(st.b,mySide,st.must):[],from=new Set(mv.map(x=>x.f));if(!from.has(ckSel))ckSel=st.must>=0&&myTurn?st.must:-1;const to=new Set(mv.filter(x=>x.f==ckSel).map(x=>x.t));
+  let sq='';for(let k=0;k<64;k++){const i=flip?63-k:k,r=i>>3,c=i&7,dark=(r+c)%2==1,pc=st.b[i],lst=st.last&&(st.last.f==i||st.last.t==i);
+    sq+=`<div class="hzSq ${dark?'d':'l'}${to.has(i)?' mv':''}${lst?' lst':''}" data-i="${i}">${pc!='.'?`<div class="hzPc ${pc.toLowerCase()}${i==ckSel?' pick':''}">${pc==pc.toUpperCase()?'👑':''}</div>`:''}</div>`}
+  const seatH=(s,lab,col)=>{const o=st.p[s],turn=!st.w&&st.t==(s?'b':'r')&&st.p[0]&&st.p[1];return `<div class="hzSeat${turn?' turn':''}"><span class="dot" style="background:${col}"></span>${o?avs(o,nm(o),'s28'):''}<span class="nm">${o?esc(nm(o)):'<span class="hzMuted">Empty seat</span>'}<br><small class="hzMuted">${lab}${turn?' · to move':''}</small></span>${!o&&seat<0?`<button class="hzB on" data-sit="${s?'b':'r'}">Sit</button>`:o==oid?'<button class="hzB" data-stand>Leave</button>':''}</div>`};
+  const cnt=s=>[...st.b].filter(x=>x.toLowerCase()==s).length;
+  const msg=st.w?`${st.p[st.w=='r'?0:1]?esc(nm(st.p[st.w=='r'?0:1])):st.w=='r'?'Red':'Black'} wins! 🎉`:!st.p[0]||!st.p[1]?'Waiting for two players…':myTurn?(st.must>=0?'Keep jumping!':'Your move'):seat>=0?'Their move…':'Watching';
+  m.body.innerHTML=`<div class="hzCk"><div class="hzBoard">${sq}</div><div class="hzCkSd">${seatH(1,'Black · '+cnt('b')+' pieces','#222')}<div class="hzBanner">${msg}</div>${seatH(0,'Red · '+cnt('r')+' pieces','#d42a2a')}
+    <div class="hzMuted">Red moves first. Jumps are mandatory, and you keep jumping while you can. Reach the far row to crown a king 👑.</div>${seat>=0||isModG(gNow())?'<button class="hzB" data-reset>New game</button>':''}</div></div>`;
+  m.act.innerHTML='';
+  m.body.onclick=async e=>{const t=e.target;if(t.closest('[data-sit]'))return A('sit',{side:t.closest('[data-sit]').dataset.sit});if(t.closest('[data-stand]')){if(!st.started||st.w||await hzAsk('Leave the game? You will forfeit.'))A('stand');return}
+    if(t.closest('[data-reset]')){if(!st.started||st.w||await hzAsk('Start a new game? This one will end.'))A('reset');return}
+    const q=t.closest('.hzSq');if(!q)return;const i=+q.dataset.i;if(from.has(i)&&st.must<0){ckSel=ckSel==i?-1:i;return paint()}if(to.has(i)){A('move',{f:ckSel,to:i});ckSel=-1}}}};
+
+/* ---------- One ---------- */
+const OC={R:'#e53935',G:'#2e9e4f',B:'#1e6fd9',Y:'#e7b416'},ON={R:'Red',G:'Green',B:'Blue',Y:'Yellow'};
+const oneFace=c=>c=='W'?'★':c=='W4'?'+4':{S:'⊘',V:'⇄',D:'+2'}[c.slice(1)]||c.slice(1);
+const oneCard=(c,cls='',extra='')=>`<div class="hzCd${c[0]=='W'?' W':''} ${cls}" style="--cc:${OC[c[0]]||'#333'}" ${extra}><span class="c">${oneFace(c)}</span><span>${oneFace(c)}</span></div>`;
+const oneFits=(c,top,col)=>c[0]=='W'||c[0]==col||(top&&top[0]!='W'&&c.slice(1)==top.slice(1));
+RENDER.one={full(st,m){m.body.className='hzAB';const me=st.pl.indexOf(oid),myTurn=st.on&&st.pl[st.turn]==oid;
+  const pl=st.pl.map((o,i)=>`<div class="hzOPl${st.on&&i==st.turn?' turn':''}">${avs(o,nm(o),'s28')}<span>${esc(nm(o))}${o==oid?' (you)':''}</span><em>${st.on?st.n[i]+' 🂠':'ready'}</em></div>`).join('')||'<span class="hzMuted">Nobody at the table yet.</span>';
+  const head=st.w&&!st.on?`<div class="hzBanner">${esc(nm(st.w))} wins! 🎉</div>`:st.on?`<div class="hzBanner">${myTurn?(st.drew?'Play the card you drew, or pass.':'Your turn! Play a card or draw one.'):esc(nm(st.pl[st.turn]))+'’s turn'} · ${st.dir>0?'↻':'↺'} · color: <span style="color:${OC[st.col]}">${ON[st.col]||''}</span></div>`:'';
+  m.body.innerHTML=`<div class="hzOne"><div class="hzOP">${pl}</div>${head}
+    ${st.on?`<div class="hzTbl"><div class="hzCd back" id="oneDraw" title="Draw a card"><span>ONE</span></div>${st.top?`<div style="border-radius:12px;box-shadow:0 0 0 4px ${OC[st.col]},0 0 28px ${OC[st.col]}">${oneCard(st.top)}</div>`:''}<div class="hzMuted" style="color:#d6f5e1">${st.deck} cards left</div></div>
+      <div class="hzHand">${st.hand.map((c,i)=>oneCard(c,myTurn&&oneFits(c,st.top,st.col)?'ok':'',`data-i="${i}" title="${c[0]=='W'?'Wild':ON[c[0]]+' '+oneFace(c)}"`)).join('')}</div>`:
+      `<div class="hzAc hzMuted">Two to eight players. Match the top card by color or by number/symbol. ⊘ skips the next player, ⇄ reverses direction, +2 makes them draw two, ★ is a wild that picks the color, +4 is a wild that also makes them draw four. First to empty their hand wins.</div>`}
+    <div class="hzLog">${st.log.slice().reverse().map(l=>`<div>${esc(l)}</div>`).join('')}</div></div>`;
+  m.act.innerHTML=(me<0?(st.on?'':'<button class="hzB on" data-a="join">Join table</button>'):(!st.on?'<button class="hzB on" data-a="start"'+(st.pl.length<2?' disabled':'')+'>Deal cards</button>':'')+(myTurn&&st.drew?'<button class="hzB" data-a="pass">Pass</button>':'')+'<button class="hzB" data-a="leave">Leave</button>')+((me>=0||isModG(gNow()))&&st.on?'<button class="hzB bad" data-a="reset">End game</button>':'');
+  m.act.onclick=async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;if((a=='leave'&&st.on||a=='reset')&&!await hzAsk(a=='reset'?'End this game for everyone?':'Leave the game in progress?'))return;A(a)};
+  m.body.onclick=e=>{if(e.target.closest('#oneDraw')){if(myTurn)A('draw');return}const c=e.target.closest('.hzHand .hzCd.ok');if(!c)return;const i=+c.dataset.i,card=st.hand[i];
+    if(card[0]!='W')return A('play',{i});modal(`<h3>Pick a color</h3><div class="hzColPick">${'RGBY'.split('').map(k=>`<button data-k="${k}" style="background:${OC[k]}" title="${ON[k]}"></button>`).join('')}</div><button id="gx">Cancel</button>`,()=>{
+      document.querySelectorAll('.hzColPick button').forEach(b=>b.onclick=()=>{closeM();A('play',{i,c:b.dataset.k})});$('#gx').onclick=closeM})}}};
+
+/* ---------- Huroler: role applications ---------- */
+RENDER.huroler={full(st,m){m.body.className='hzAB';const g=gNow(),rn=id=>((g.roles||[]).find(r=>r.id==id)||{}).name||'(deleted role)',rc=id=>((g.roles||[]).find(r=>r.id==id)||{}).color||'var(--ac)';
+  const mine=st.apps.filter(a=>a.o==oid),pend=st.rev?st.apps.filter(a=>a.st=='pending'):[],done=st.rev?st.apps.filter(a=>a.st!='pending').slice(-30).reverse():[];
+  const fname=id=>(st.forms.find(f=>f.id==id)||{}).title||'Application';
+  const ansH=a=>{const f=st.forms.find(x=>x.id==a.f);return `<div class="hzAns">${a.ans.map((x,i)=>`<div><i>${esc(f?f.qs[i]||'':'Answer '+(i+1))}</i>${esc(x)}</div>`).join('')}</div>`};
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:860px;margin:0 auto">
+    <div class="hzAc"><h4>Apply for a role</h4>${st.forms.length?`<div class="hzList">${st.forms.map(f=>`<div class="hzRow"><span class="hzTag" style="background:color-mix(in srgb,${rc(f.role)} 25%,transparent);color:${rc(f.role)}">@${esc(rn(f.role))}</span><div class="grow"><b>${esc(f.title)}</b><br><small>${f.qs.length} question${f.qs.length>1?'s':''}</small></div>
+      ${st.rev?`<button class="hzB" data-edit="${f.id}">Edit</button><button class="hzB bad" data-fdel="${f.id}">Delete</button>`:''}<button class="hzB on" data-apply="${f.id}">Apply</button></div>`).join('')}</div>`:`<div class="hzMuted">No application forms yet.${st.rev?' Create one so members can apply.':''}</div>`}
+      ${st.rev?'<div style="margin-top:10px"><button class="hzB on" data-new>New application form</button></div>':''}</div>
+    ${mine.length?`<div class="hzAc"><h4>Your applications</h4><div class="hzList">${mine.slice().reverse().map(a=>`<div class="hzRow"><div class="grow"><b>${esc(fname(a.f))}</b><br><small>Sent ${ago(a.ts)}${a.note?' · Note: '+esc(a.note):''}</small></div><span class="hzTag ${a.st}">${a.st}</span>${a.st=='pending'?`<button class="hzB" data-wd="${a.id}">Withdraw</button>`:''}</div>`).join('')}</div></div>`:''}
+    ${st.rev?`<div class="hzAc"><h4>Waiting for review (${pend.length})</h4>${pend.length?`<div class="hzList">${pend.map(a=>`<div class="hzRow" style="display:block"><div style="display:flex;gap:10px;align-items:center">${avs(a.o,nm(a.o),'s28')}<div class="grow"><b>${esc(nm(a.o))}</b> → <span style="color:${rc((st.forms.find(f=>f.id==a.f)||{}).role)}">@${esc(rn((st.forms.find(f=>f.id==a.f)||{}).role))}</span><br><small>${esc(fname(a.f))} · ${ago(a.ts)}</small></div>
+      <button class="hzB bad" data-deny="${a.id}">Deny</button><button class="hzB on" data-ok="${a.id}">Approve</button></div>${ansH(a)}</div>`).join('')}</div>`:'<div class="hzMuted">Nothing to review.</div>'}</div>
+    ${done.length?`<div class="hzAc"><h4>Recently reviewed</h4><div class="hzList">${done.map(a=>`<div class="hzRow"><div class="grow"><b>${esc(nm(a.o))}</b> · ${esc(fname(a.f))}<br><small>${a.st} by ${esc(nm(a.by))} ${a.at?ago(a.at):''}${a.note?' · '+esc(a.note):''}</small></div><span class="hzTag ${a.st}">${a.st}</span></div>`).join('')}</div></div>`:''}`:''}</div>`;
+  m.act.innerHTML='';
+  m.body.onclick=async e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
+    if(d.apply){const f=st.forms.find(x=>x.id==d.apply);if(!f)return;modal(`<h3>${esc(f.title)}</h3><p class="pb">Applying for <b>@${esc(rn(f.role))}</b></p>${f.qs.map((q,i)=>`<label class="fl">${esc(q)}<textarea data-q="${i}" maxlength="800" rows="3" style="width:100%;resize:vertical"></textarea></label>`).join('')}<button class="on" id="apS">Send application</button><button id="gx">Cancel</button>`,()=>{
+      $('#gx').onclick=closeM;$('#apS').onclick=()=>{const ans=[...document.querySelectorAll('[data-q]')].map(x=>x.value.trim());if(ans.some(x=>!x))return toast('Answer every question.');A('apply',{f:f.id,ans});closeM();toast('Application sent!',true)}})}
+    else if(d.new||d.edit)formDlg(st,st.forms.find(x=>x.id==d.edit));
+    else if(d.fdel){if(await hzAsk('Delete this application form?'))A('formdel',{id:d.fdel})}
+    else if(d.wd)A('withdraw',{id:d.wd});
+    else if(d.ok)A('review',{id:d.ok,ok:true});
+    else if(d.deny){modal('<h3>Deny application</h3><input id="dnN" maxlength="200" placeholder="Reason (optional, the applicant sees it)"><button class="on bad" id="dnS">Deny</button><button id="gx">Cancel</button>',()=>{$('#gx').onclick=closeM;$('#dnN').focus();$('#dnS').onclick=()=>{A('review',{id:d.deny,ok:false,note:$('#dnN').value});closeM()}})}}}};
+function formDlg(st,f){const g=gNow(),roles=(g.roles||[]).filter(r=>st.roles.includes(r.id));if(!roles.length)return toast('Create a role below your own first (Server settings → Roles).');
+  modal(`<h3>${f?'Edit':'New'} application form</h3><label class="fl">Title<input id="fmT" maxlength="60" value="${esc(f?f.title:'')}" placeholder="e.g. Become a moderator"></label>
+    <label class="fl">Role given when approved<select id="fmR">${roles.map(r=>`<option value="${r.id}"${f&&f.role==r.id?' selected':''}>@${esc(r.name)}</option>`).join('')}</select></label>
+    <label class="fl">Questions (one per line, up to 10)<textarea id="fmQ" rows="5" style="width:100%;resize:vertical" placeholder="Why do you want this role?&#10;How active are you?">${esc(f?f.qs.join('\n'):'')}</textarea></label>
+    <button class="on" id="fmS">Save form</button><button id="gx">Cancel</button>`,()=>{$('#gx').onclick=closeM;$('#fmT').focus();
+    $('#fmS').onclick=()=>{const qs=$('#fmQ').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!qs.length)return toast('Add at least one question.');A('form',{id:f?f.id:'',title:$('#fmT').value,role:$('#fmR').value,qs});closeM()}})}
+
+/* ---------- Hullo: welcomes + invites ---------- */
+RENDER.hullo={full(st,m){m.body.className='hzAB';const g=gNow(),fill=o=>esc(st.msg).replace(/\{user\}/g,`<b>${esc(nm(o))}</b>`).replace(/\{server\}/g,`<b>${esc(g.name||'')}</b>`);
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:820px;margin:0 auto">
+    <div class="hzAc"><h4>Invite people</h4><div class="hzMuted" style="margin-bottom:10px">Share an invite so friends can join this server.${st.inv?' You can make links that expire or only work a few times.':''}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">${st.inv?'<button class="hzB on" data-inv>Create invite link</button>':''}<button class="hzB" data-copy>Copy server invite code</button></div></div>
+    ${st.edit?`<div class="hzAc"><h4>Welcome message</h4><div style="display:flex;gap:8px"><input id="hlM" maxlength="200" value="${esc(st.msg)}" style="flex:1;margin:0"><button class="hzB on" data-save>Save</button></div><div class="hzMuted" style="margin-top:6px">Use {user} for the new member and {server} for the server name.</div></div>`:''}
+    <div class="hzAc"><h4>New members</h4>${st.feed.length?`<div class="hzList">${st.feed.slice().reverse().map(f=>`<div class="hzRow">${avs(f.o,nm(f.o),'s28')}<div class="grow"><div class="hzWel">${fill(f.o)}</div><small>${ago(f.ts)}</small></div>
+      <button class="hzWave${f.waves.includes(oid)?' on':''}" data-wave="${f.id}" title="${esc(f.waves.map(nm).join(', '))}">👋 ${f.waves.length||'Wave'}</button></div>`).join('')}</div>`:'<div class="hzMuted">When someone joins, Hullo welcomes them here.</div>'}</div></div>`;
+  m.act.innerHTML='';
+  m.body.onclick=e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.inv!==undefined)invDialog(g);else if(t.dataset.copy!==undefined){copyText(g.code);toast('Invite code copied.',true)}
+    else if(t.dataset.save!==undefined){A('msg',{msg:$('#hlM').value});toast('Welcome message saved.',true)}else if(t.dataset.wave)A('wave',{id:t.dataset.wave})}}};
+
+/* ---------- Moderate Pro ---------- */
+let mpTab='tickets',mpQ='';
+RENDER.modpro={full(st,m){m.body.className='hzAB';if(!st.mod&&mpTab!='tickets')mpTab='tickets';
+  const ql=mpQ.toLowerCase(),f=s=>!ql||String(s).toLowerCase().includes(ql);
+  const tabs=`<div class="hzSeg">${[['tickets','Tickets'],...(st.mod?[['logs','Server logs'],['dels','Deleted messages']]:[])].map(([k,n])=>`<button data-tab="${k}" class="${mpTab==k?'on':''}">${n}</button>`).join('')}</div>`;
+  let body='';
+  if(mpTab=='tickets')body=`<div class="hzAc"><h4>Open a ticket</h4><div class="hzMuted" style="margin-bottom:8px">Creates a private channel only you and the moderators can see.</div><div style="display:flex;gap:8px"><input id="tkT" maxlength="120" placeholder="What do you need help with?" style="flex:1;margin:0"><button class="hzB on" data-open>Open ticket</button></div></div>
+    <div class="hzAc"><h4>${st.mod?'All tickets':'Your tickets'}</h4>${st.tickets.length?`<div class="hzList">${st.tickets.filter(t=>f(t.topic+' '+nm(t.o))).map(t=>`<div class="hzRow">${avs(t.o,nm(t.o),'s28')}<div class="grow"><b>${esc(t.topic)}</b><br><small>${esc(nm(t.o))} · opened ${ago(t.ts)}${t.closed?' · closed '+ago(t.closed)+' by '+esc(nm(t.by)):''}</small></div><span class="hzTag ${t.open?'open':'closed'}">${t.open?'open':'closed'}</span>
+      ${t.open?`<button class="hzB" data-go="${t.ch}">Open channel</button><button class="hzB bad" data-close="${t.id}">Close</button>`:''}</div>`).join('')}</div>`:'<div class="hzMuted">No tickets yet.</div>'}</div>`;
+  else if(mpTab=='logs')body=`<div class="hzAc"><table class="hzTbl2"><tr><th>When</th><th>Who</th><th>Action</th><th>Details</th></tr>${st.log.filter(x=>f(x.op+' '+x.detail+' '+x.byName)).map(x=>`<tr><td title="${new Date(x.ts).toLocaleString()}">${ago(x.ts)}</td><td>${esc(x.byName)}</td><td><span class="hzTag">${esc(x.op)}</span></td><td>${esc(x.detail||'')}</td></tr>`).join('')||'<tr><td colspan="4" class="hzMuted">Nothing logged yet.</td></tr>'}</table></div>`;
+  else body=`<div class="hzList">${st.dels.filter(x=>f(x.text+' '+x.from+' '+x.chName)).map(x=>`<div class="hzRow" style="align-items:flex-start">${x.o?avs(x.o,x.from,'s28'):''}<div class="grow"><b>${esc(x.from)}</b> <small>in #${esc(x.chName)} · sent ${new Date(x.ts).toLocaleString()}</small>
+    <div style="margin:4px 0;white-space:pre-wrap;overflow-wrap:anywhere">${esc(x.text)||'<i class="hzMuted">(no text)</i>'}${x.file?` <span class="hzTag">📎 ${esc(x.file)}</span>`:''}</div><small>Deleted ${ago(x.del)} by ${esc(x.byName)}${x.by==x.o?' (themselves)':''}</small></div></div>`).join('')||'<div class="hzEmpty">No deleted messages yet.</div>'}</div>`;
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:980px;margin:0 auto"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${tabs}<input id="mpQ" placeholder="Search…" value="${esc(mpQ)}" style="margin:0 0 0 auto;max-width:240px"></div>${body}</div>`;
+  m.act.innerHTML='';const q=$('#mpQ');q.oninput=()=>{mpQ=q.value;const p=q.selectionStart;paint();const n=$('#mpQ');n.focus();n.setSelectionRange(p,p)};
+  m.body.onclick=async e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;if(d.tab){mpTab=d.tab;paint()}
+    else if(d.open!==undefined){const v=$('#tkT').value.trim();if(!v)return $('#tkT').focus();A('ticket',{topic:v});toast('Ticket opened. Look for it in the Tickets category.',true)}
+    else if(d.go){const g=gNow();if(g.channels.some(c=>c.id==d.go))openCh(d.go)}
+    else if(d.close){if(await hzAsk('Close this ticket? Its channel and messages will be deleted.'))A('close',{id:d.close})}}}};
+
+/* ---------- Community Stats ---------- */
+const sum=(a,k,from,to)=>a.slice(from,to).reduce((s,x)=>s+(x[k]||0),0);
+const delta=(now,prev)=>{if(!prev&&!now)return '<span class="hzEq">no change</span>';if(!prev)return '<span class="hzUp">▲ new</span>';const p=Math.round((now-prev)/prev*100);return p>0?`<span class="hzUp">▲ ${p}%</span>`:p<0?`<span class="hzDn">▼ ${-p}%</span>`:'<span class="hzEq">no change</span>'};
+function bars(days,series){const W=600,H=110,n=days.length,max=Math.max(1,...days.map(d=>series.reduce((s,[k])=>Math.max(s,d[k]||0),0))),bw=W/n,sw=(bw-2)/series.length;
+  return `<svg viewBox="0 0 ${W} ${H+14}" preserveAspectRatio="none">${[.5,1].map(f=>`<line x1="0" x2="${W}" y1="${H-H*f}" y2="${H-H*f}" stroke="currentColor" stroke-opacity=".08"/>`).join('')}${days.map((d,i)=>series.map(([k,c],j)=>{const h=(d[k]||0)/max*H;return `<rect x="${i*bw+1+j*sw}" y="${H-h}" width="${Math.max(1,sw-1)}" height="${h}" rx="2" fill="${c}"><title>${d.k}: ${d[k]||0}</title></rect>`}).join('')).join('')}
+    <text x="0" y="${H+12}" font-size="10" fill="currentColor" fill-opacity=".5">${days[0].k.slice(5)}</text><text x="${W}" y="${H+12}" font-size="10" text-anchor="end" fill="currentColor" fill-opacity=".5">today</text><text x="${W}" y="10" font-size="10" text-anchor="end" fill="currentColor" fill-opacity=".5">max ${max}</text></svg>`}
+RENDER.stats={full(st,m){m.body.className='hzAB';const d=st.days,j7=sum(d,'j',23),j0=sum(d,'j',16,23),l7=sum(d,'l',23),l0=sum(d,'l',16,23),m7=sum(d,'m',23),m0=sum(d,'m',16,23),v7=sum(d,'v',23),v0=sum(d,'v',16,23);
+  const tile=(l,v,dl,sub)=>`<div class="hzTile"><small>${l}</small><b>${v}</b>${dl||''}${sub?`<small>${sub}</small>`:''}</div>`;
+  const chs=st.chs.slice().sort((a,b)=>(b.m+b.v)-(a.m+a.v)).slice(0,10);
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:1000px;margin:0 auto"><div class="hzTiles">${tile('Members',st.members,'',st.online+' online now')}${tile('In voice now',st.voice)}${tile('Joins · 7 days',j7,delta(j7,j0),'vs previous 7 days')}${tile('Leaves · 7 days',l7,delta(l7,l0).replace('hzUp','hzX').replace('hzDn','hzUp').replace('hzX','hzDn'),'vs previous 7 days')}${tile('Messages · 7 days',m7,delta(m7,m0),'vs previous 7 days')}${tile('Voice time · 7 days',fmtMin(v7),delta(v7,v0),'vs previous 7 days')}</div>
+    <div class="hzAc hzChart"><h4>Joins & leaves · last 30 days</h4>${bars(d,[['j','#4ade80'],['l','#f87171']])}<div class="lg"><span><i style="background:#4ade80"></i>Joins</span><span><i style="background:#f87171"></i>Leaves</span><span>Net ${sum(d,'j')-sum(d,'l')>=0?'+':''}${sum(d,'j')-sum(d,'l')}</span></div></div>
+    <div class="hzAc hzChart"><h4>Chat activity · messages per day</h4>${bars(d,[['m','#60a5fa']])}</div>
+    <div class="hzAc hzChart"><h4>Voice activity · minutes per day</h4>${bars(d,[['v','#c084fc']])}</div>
+    <div class="hzAc"><h4>Most active channels (all time)</h4><table class="hzTbl2"><tr><th>Channel</th><th class="n">Messages</th><th class="n">Voice time</th></tr>${chs.map(c=>`<tr><td>${c.type=='voice'?'🔊 ':'# '}${esc(c.name)}</td><td class="n">${c.m}</td><td class="n">${fmtMin(c.v)}</td></tr>`).join('')}</table></div>
+    <div class="hzMuted">Counted since this channel's server started tracking. Voice time is sampled every minute.</div></div>`;
+  m.act.innerHTML='<button class="hzB" data-r>Refresh</button>';m.act.onclick=e=>e.target.closest('[data-r]')&&A('get')}};
+
+/* ---------- Leaderboards ---------- */
+let lbK='m',lbW=false;
+RENDER.leaders={full(st,m){m.body.className='hzAB';const k=lbW?'w'+lbK:lbK,rows=st.rows.filter(r=>r[k]>0).sort((a,b)=>b[k]-a[k]).slice(0,50),max=rows.length?rows[0][k]:1,mine=st.rows.slice().sort((a,b)=>b[k]-a[k]).findIndex(r=>r.o==oid);
+  const val=v=>lbK=='m'?v.toLocaleString()+' msg'+(v==1?'':'s'):fmtMin(v);
+  m.body.innerHTML=`<div class="hzGrid" style="max-width:760px;margin:0 auto"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><div class="hzSeg"><button data-k="m" class="${lbK=='m'?'on':''}">💬 Messages</button><button data-k="v" class="${lbK=='v'?'on':''}">🎙️ Time in voice</button></div>
+    <div class="hzSeg"><button data-w="0" class="${!lbW?'on':''}">All time</button><button data-w="1" class="${lbW?'on':''}">This week</button></div>${mine>=0&&st.rows.find(r=>r.o==oid)[k]>0?`<span class="hzMuted" style="margin-left:auto">You're #${mine+1}</span>`:''}</div>
+    <div class="hzLb">${rows.map((r,i)=>`<div class="hzLbR${i<3?' top'+(i+1):''}"><span class="bar" style="width:${r[k]/max*100}%"></span><span class="rk">${['🥇','🥈','🥉'][i]||i+1}</span>${avs(r.o,nm(r.o),'s28')}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(nm(r.o))}${r.o==oid?' <span class="hzMuted">(you)</span>':''}</span><span class="v">${val(r[k])}</span></div>`).join('')||'<div class="hzEmpty">No activity yet. Start chatting!</div>'}</div></div>`;
+  m.act.innerHTML='<button class="hzB" data-r>Refresh</button>';m.act.onclick=e=>e.target.closest('[data-r]')&&A('get');
+  m.body.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.k)lbK=b.dataset.k;if(b.dataset.w)lbW=b.dataset.w=='1';paint()}}};
+
+/* ---------- Puzzle ---------- */
+const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const TAB=[[0,0],[.34,0],[.40,0],[.42,.08],[.38,.14],[.32,.24],[.40,.32],[.50,.32],[.60,.32],[.68,.24],[.62,.14],[.58,.08],[.60,0],[.66,0],[1,0]];
+function pzShapes(st){const R=rng(st.seed),h=[],v=[];for(let r=0;r<st.rows;r++){h[r]=[];v[r]=[];for(let c=0;c<st.cols;c++){h[r][c]=R()<.5?1:-1;v[r][c]=R()<.5?1:-1}}
+  const pw=st.ar/st.cols,ph=1/st.rows,bw=pw*1.5,bh=ph*1.5,mx=pw*.25,my=ph*.25,amp=Math.min(pw,ph)*.7,f=n=>(Math.round(n*1e4)/1e4);
+  const edge=(A,B,s)=>{const dx=B[0]-A[0],dy=B[1]-A[1],L=Math.hypot(dx,dy),nx=dy/L,ny=-dx/L,P=([t,n])=>[A[0]+dx*t+nx*n*amp*s,A[1]+dy*t+ny*n*amp*s],q=([x,y])=>f(x/bw)+' '+f(y/bh);
+    if(!s)return 'L'+q(B);const p=TAB.map(P);let o='L'+q(p[1]);for(let i=2;i<14;i+=3)o+='C'+q(p[i])+' '+q(p[i+1])+' '+q(p[i+2]);return o+'L'+q(p[14])};
+  const out=[];for(let r=0;r<st.rows;r++)for(let c=0;c<st.cols;c++){const a=[mx,my],b=[mx+pw,my],cc=[mx+pw,my+ph],d=[mx,my+ph];
+    const top=r?-h[r-1][c]:0,right=c<st.cols-1?v[r][c]:0,bot=r<st.rows-1?h[r][c]:0,left=c?-v[r][c-1]:0;
+    out.push('M'+f(a[0]/bw)+' '+f(a[1]/bh)+edge(a,b,top)+edge(b,cc,right)+edge(cc,d,bot)+edge(d,a,left)+'Z')}return out}
+let pzGhost=true;
+RENDER.puzzle={full(st,m){
+  if(!st.img||m.pzSetup){m.cleanup&&m.cleanup();m.cleanup=null;m.pz=null;return pzSetup(st,m)}
+  const key=st.img+'|'+st.seed;
+  if(!m.pz||m.pz.key!=key){m.cleanup&&m.cleanup();m.body.className='hzAB full';const ids='hzpz'+st.seed;
+    m.body.innerHTML=`<div class="hzPz"><svg width="0" height="0" style="position:absolute"><defs>${pzShapes(st).map((d,i)=>`<clipPath id="${ids}-${i}" clipPathUnits="objectBoundingBox"><path d="${d}"/></clipPath>`).join('')}</defs></svg><div class="hzPzF${pzGhost?' ghost':' hide'}" style="background-image:url('${base}${esc(st.img)}')"></div>
+      ${st.pcs.map((p,i)=>`<div class="hzPzP${p.ok?' ok':''}" data-i="${i}"><div style="clip-path:url(#${ids}-${i});background-image:url('${base}${esc(st.img)}')"></div></div>`).join('')}</div>`;
+    const box=m.body.querySelector('.hzPz'),fr=box.querySelector('.hzPzF'),els=[...box.querySelectorAll('.hzPzP')];let L={};let zTop=10;
+    const lay=()=>{const r=box.getBoundingClientRect(),FH=Math.max(60,Math.min(r.width/(1.75*st.ar),r.height/1.72)),FW=FH*st.ar,ox=(r.width-FW*1.75)/2+FW*.36,oy=(r.height-FH*1.72)/2+FH*.36,pw=FW/st.cols,ph=FH/st.rows;
+      L={FW,FH,ox,oy,pw,ph,r};Object.assign(fr.style,{left:ox+'px',top:oy+'px',width:FW+'px',height:FH+'px'});
+      els.forEach((e,i)=>{const c=i%st.cols,rr=i/st.cols|0;e.style.width=pw*1.5+'px';e.style.height=ph*1.5+'px';const s=e.firstChild.style;s.backgroundSize=FW+'px '+FH+'px';s.backgroundPosition=(-(c*pw-pw*.25))+'px '+(-(rr*ph-ph*.25))+'px';pos(i)})};
+    const pos=(i,x,y)=>{const p=AS[m.ch].pcs[i],e=els[i];if(!p||!e)return;x=x??p.x;y=y??p.y;e.style.left=(L.ox+x*L.FW-L.pw*.25)+'px';e.style.top=(L.oy+y*L.FH-L.ph*.25)+'px';e.classList.toggle('ok',!!p.ok);if(p.ok)e.style.zIndex=1;else if(!e.style.zIndex||e.style.zIndex=='1')e.style.zIndex=2+i%5};
+    const drag=thr((i,x,y)=>A('drag',{i,x,y}),60);
+    box.addEventListener('pointerdown',e=>{const el=e.target.closest('.hzPzP');if(!el||el.classList.contains('ok')||e.button!==0)return;e.preventDefault();const i=+el.dataset.i,p=AS[m.ch].pcs[i];
+      const sx=e.clientX,sy=e.clientY,px=p.x,py=p.y;el.setPointerCapture(e.pointerId);el.classList.add('drag');el.classList.remove('remote');el.style.zIndex=++zTop+1000;let nx=px,ny=py;
+      const mv=ev=>{nx=Math.max(-.5,Math.min(1.5,px+(ev.clientX-sx)/L.FW));ny=Math.max(-.5,Math.min(1.5,py+(ev.clientY-sy)/L.FH));pos(i,nx,ny);drag(i,nx,ny)};
+      const up=()=>{el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);el.classList.remove('drag');if(nx!==px||ny!==py){p.x=nx;p.y=ny;A('move',{i,x:nx,y:ny})}};
+      el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)});
+    const ro=new ResizeObserver(lay);ro.observe(box);m.cleanup=()=>ro.disconnect();m.pz={key,pos,els,lay,zTop:()=>++zTop};lay()}
+  else st.pcs.forEach((p,i)=>m.pz.pos(i));
+  const okN=st.pcs.filter(p=>p.ok).length;
+  m.act.innerHTML=`<span class="hzMuted">${okN}/${st.pcs.length} placed</span><button class="hzB${pzGhost?' on':''}" data-ghost>Show picture</button><button class="hzB" data-new>New puzzle</button>`;
+  m.act.onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.ghost!==undefined){pzGhost=!pzGhost;b.classList.toggle('on',pzGhost);const f=m.body.querySelector('.hzPzF');f.classList.toggle('ghost',pzGhost);f.classList.toggle('hide',!pzGhost)}
+    else if(b.dataset.new!==undefined){if(!st.done&&st.by!=oid&&!isModG(gNow()))return toast('Help finish this puzzle first. Its creator or a moderator can replace it.');if(st.done||await hzAsk('Start a new puzzle? This one will be replaced.')){m.pzSetup=true;paint()}}};
+  m.body.querySelector('.hzPzDone')?.remove();if(st.done)m.body.querySelector('.hzPz').insertAdjacentHTML('beforeend',`<div class="hzPzDone">🎉 Puzzle complete! ${st.pcs.length} pieces</div>`)},
+  ev(st,ev,m){if(ev.k=='pzd'){if(m&&m.pz){const e=m.pz.els[ev.i];if(e&&!e.classList.contains('drag')){e.classList.add('remote');e.style.zIndex=m.pz.zTop()+1000;m.pz.pos(ev.i,ev.x,ev.y)}}return}
+    if(ev.k=='pz'){const p=st.pcs[ev.i];if(!p)return;p.x=ev.x;p.y=ev.y;p.ok=ev.ok;st.done=ev.done;if(m&&m.pz){const e=m.pz.els[ev.i];if(e&&!e.classList.contains('drag'))e.classList.add('remote');m.pz.pos(ev.i);
+      const okN=st.pcs.filter(p=>p.ok).length,s=m.act.querySelector('.hzMuted');if(s)s.textContent=okN+'/'+st.pcs.length+' placed';
+      if(ev.done&&!m.body.querySelector('.hzPzDone'))m.body.querySelector('.hzPz').insertAdjacentHTML('beforeend',`<div class="hzPzDone">🎉 Puzzle complete! ${st.pcs.length} pieces</div>`)}}}};
+function pzSetup(st,m){m.body.className='hzAB';let file=null,ar=1.5,n=48;
+  m.body.innerHTML=`<div class="hzPzSet"><div class="hzAc"><h4>Make a puzzle</h4><div class="hzMuted" style="margin-bottom:10px">Upload any image, pick how many pieces, and everyone in this channel can build it together.</div>
+    <label class="hzPzDrop" id="pzDrop"><input type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden id="pzF"><span style="font-size:34px">🖼️</span><span id="pzL">Click to choose an image<br><small>PNG, JPG, GIF or WebP · up to 8 MB</small></span></label>
+    <div class="hzCDl" style="margin:14px 0 8px">Pieces</div><div class="hzPzN">${[12,24,48,70,100,150,200].map(k=>`<button class="hzB${k==n?' on':''}" data-n="${k}">${k}</button>`).join('')}</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">${st.img?'<button class="hzB" data-back>Back to puzzle</button>':''}<button class="hzB on" data-go disabled>Make puzzle</button></div></div></div>`;
+  m.act.innerHTML='';
+  const go=m.body.querySelector('[data-go]');
+  $('#pzF').onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>8*1024*1024)return toast('That image is over 8 MB.');const u=URL.createObjectURL(f),i=new Image();
+    i.onload=()=>{ar=i.naturalWidth/i.naturalHeight;file=f;const d=$('#pzDrop');d.classList.add('has');d.style.backgroundImage=`url(${u})`;$('#pzL').innerHTML='Click to choose a different image';go.disabled=false};i.onerror=()=>toast('That file is not an image Huddle can read.');i.src=u};
+  m.body.onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.n){n=+b.dataset.n;m.body.querySelectorAll('[data-n]').forEach(x=>x.classList.toggle('on',x===b))}
+    else if(b.dataset.back!==undefined){m.pzSetup=false;paint()}
+    else if(b.dataset.go!==undefined&&file){go.disabled=true;go.textContent='Uploading…';try{const url=await upImageAsset(file,'puzzle');m.pzSetup=false;A('new',{img:url,n,ar});if(!st.img)setTimeout(()=>{if(!AS[m.ch].img){go.disabled=false;go.textContent='Make puzzle'}},1500);else paint()}catch(err){toast(String(err.message||err));go.disabled=false;go.textContent='Make puzzle'}}}}
+
+/* ================= invites: expiry + use limits ================= */
+let invG=null,invLast=null;
+const EXP=[[30,'30 minutes'],[60,'1 hour'],[360,'6 hours'],[720,'12 hours'],[1440,'1 day'],[10080,'7 days'],[0,'Never']],USES=[[0,'No limit'],[1,'1 use'],[5,'5 uses'],[10,'10 uses'],[25,'25 uses'],[50,'50 uses'],[100,'100 uses']];
+const left=t=>{const s=Math.max(0,(t-Date.now())/1000|0);return s>=86400?(s/86400|0)+'d '+((s%86400)/3600|0)+'h':s>=3600?(s/3600|0)+'h '+((s%3600)/60|0)+'m':(s/60|0)+'m '+(s%60)+'s'};
+function invDialog(g){if(!g)return;invG=g.id;invLast=null;const can=hasP(g,'invites')||hasP(g,'server');
+  modal(`<div class="hzIvD"><h3>Invite people to ${esc(g.name)}</h3><p class="sub">Invite codes are pasted into "Join a server". Links can expire and stop after a number of uses.</p>
+    ${can?`<div class="hzInvMk"><label>Expire after<select id="ivE">${EXP.map(([v,l])=>`<option value="${v}"${v==1440?' selected':''}>${l}</option>`).join('')}</select></label><label>Max number of uses<select id="ivU">${USES.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label><button class="on" id="ivC">Create invite</button></div>`:''}
+    <div id="ivNew"></div>
+    <div class="hzCDl">Permanent server code</div><div class="hzInvR"><div><code>${esc(g.code)}</code><small>Never expires. Make a new one to stop the old code working.</small></div><button id="ivPc">Copy</button>${can?'<button id="ivPn">New code</button>':'<span></span>'}</div>
+    ${can?'<div class="hzCDl">Active invites</div><div class="hzInvL" id="ivL"></div>':''}<div class="hzCDact"><button id="gx">Done</button></div></div>`,()=>{
+    $('#gx').onclick=closeM;$('#ivPc').onclick=()=>{copyText(g.code);toast('Invite code copied.',true)};
+    if($('#ivPn'))$('#ivPn').onclick=async()=>{if(await hzAsk('The old permanent code will stop working. Make a new one?')){send({t:'gcode',g:g.id});toast('New code made.',true)}};
+    if($('#ivC'))$('#ivC').onclick=()=>send({t:'invcreate',g:g.id,mins:+$('#ivE').value,max:+$('#ivU').value});
+    invRefresh(g.id);const tk=setInterval(()=>{if(!$('#ivL')&&!$('#ivNew'))return clearInterval(tk);invRefresh(invG)},1000)})}
+function invRefresh(gid){if(gid!==invG)return;const g=G[gid],l=$('#ivL');if(!g)return;const pc=document.querySelector('.hzIvD .hzInvR code');if(pc&&pc.textContent!==g.code)pc.textContent=g.code;if(!l)return;
+  const list=(g.invites||[]).filter(v=>(!v.exp||v.exp>Date.now())&&(!v.max||v.uses<v.max));
+  const h=list.length?list.slice().reverse().map(v=>`<div class="hzInvR"><div><code>${esc(v.code)}</code><small>by ${esc(v.byName||nm(v.by))} · ${v.max?v.uses+'/'+v.max+' uses':v.uses+' use'+(v.uses==1?'':'s')} · ${v.exp?'expires in '+left(v.exp):'never expires'}</small></div><button data-cp="${esc(v.code)}">Copy</button><button data-rv="${esc(v.code)}" class="bad">Revoke</button></div>`).join(''):'<div class="hzMuted">No limited invites yet.</div>';
+  if(l.innerHTML!==h)l.innerHTML=h;l.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.cp){copyText(b.dataset.cp);toast('Invite copied.',true)}else if(b.dataset.rv)send({t:'invdel',g:gid,code:b.dataset.rv})}}
+function invMade(d){if(d.g!==invG)return;copyText(d.code);const n=$('#ivNew');if(n)n.innerHTML=`<div class="hzInvNew"><code>${esc(d.code)}</code><small class="hzMuted">${d.max?d.max+' use'+(d.max>1?'s':''):'No use limit'} · ${d.exp?'expires in '+left(d.exp):'never expires'}</small><button id="ivCp">Copy</button></div>`;
+  const c=$('#ivCp');if(c)c.onclick=()=>{copyText(d.code);toast('Invite copied.',true)};toast('Invite created and copied.',true)}
+window.hzInvDialog=invDialog;
+/* the server menu gets an "Invite people" entry; server settings gets a button next to the code */
+let invMenuG=null;
+const _hzGM=gMenu;gMenu=function(btn,g0){const r=_hzGM.apply(this,arguments);try{const g=g0||G[sel];invMenuG=g&&g.id;const a=cm.querySelector('[data-a="inv"]');if(g&&a&&!cm.querySelector('[data-a="hzinv"]'))a.insertAdjacentHTML('beforebegin','<button data-a="hzinv">Invite people…</button>')}catch{}return r};
+cm.addEventListener('click',e=>{const b=e.target.closest('[data-a="hzinv"]');if(!b)return;e.stopImmediatePropagation();e.preventDefault();cmClose();invDialog(G[invMenuG])},true);
+const _hzSD=sDialog;sDialog=function(g){const r=_hzSD.apply(this,arguments);try{setTimeout(()=>{const s=$('#sg');if(s&&!$('#hzIvB')){s.insertAdjacentHTML('afterend','<button id="hzIvB" type="button">Manage invites</button>');$('#hzIvB').onclick=()=>{closeM();setTimeout(()=>invDialog(G[g.id]),60)}}},0)}catch{}return r};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
