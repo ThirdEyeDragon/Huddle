@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8"><script id="hz-early-theme">try{var d=document.documentElement,L=localStorage,a=L.getItem("huddle.accent");d.dataset.theme=L.getItem("huddle.theme")||"midnight";d.dataset.motion=L.getItem("huddle.motion")||"";d.dataset.contrast=L.getItem("huddle.contrast")||"";if(a)d.style.setProperty("--ac",a)}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Huddle</title>
 <style>
@@ -5504,7 +5504,7 @@ const tcArt=spec=>{if(ARTC[spec])return ARTC[spec];const[,sd,col]=spec.split(':'
     `<rect width="${W}" height="${H}" fill="url(#s)"/><circle cx="${sunX}" cy="${sunY}" r="${sunR*3}" fill="url(#g)" opacity=".55"/><circle cx="${sunX}" cy="${sunY}" r="${sunR}" fill="${P[3]}" opacity=".9"/>`+
     `<path d="${ridge(R(90,120),18,7)}" fill="${P[1]}" opacity=".55"/><path d="${ridge(R(125,150),14,9)}" fill="${P[0]}" opacity=".75"/>${fg}</svg>`;
   return ARTC[spec]='data:image/svg+xml,'+encodeURIComponent(svg)};
-const tcArtCss=a=>!a?'':/^b2?:/.test(a)?`style="background-image:url('${(window.hzCardArt&&hzCardArt(a))||tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
+const tcArtCss=a=>!a?'':/^r:a\d{3}$/.test(a)?`style="background-image:url('${esc(base+'/cardart/'+a.slice(2)+'.jpg')}')"`:/^b2?:/.test(a)?`style="background-image:url('${(window.hzCardArt&&hzCardArt(a))||tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
 const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${c.holo?' holo':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN" style="--n:${Math.max(6,(c.name||'Card name').length)};--c:${(String(c.cost||'').match(/\d+|[RUGWBC]/g)||[]).length}"><span class="tcNm">${esc(c.name||'Card name')}</span><small class="tcCost">${tcCost(c.cost)}</small></div>
   <div class="tcA" ${tcArtCss(c.art)}>${c.art?'':'Card art'}${c.holo?'<b class="tcHolo">HOLO</b>':''}</div><div class="tcT"><span>${esc(c.type||'Type')}</span><i class="tcG ${esc(c.rarity||'common')}" title="${esc(c.rarity||'common')}"></i></div>
   <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1${c.value?' · worth '+Number(c.value).toLocaleString():''}${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
@@ -6344,22 +6344,6 @@ R.afk={full(st,m){m.body.className='hzAB';const c=st.cfg,vn=id=>(st.vcs.find(v=>
 .ppName:not([class*="hzNf-"]),.npv:not([class*="hzNf-"]),#pname:not([class*="hzNf-"]),.pn:not([class*="hzNf-"]),.hzPick.pknf>button b:not([class*="hzNf-"]){font-family:var(--title)!important;font-style:normal!important;font-weight:800!important;letter-spacing:-.025em}
 #gh>b,#gh .ghGuild>b{font-size:19px!important}
 .ri{font-weight:900!important}
-/* sign-in: a livelier loading animation */
-#login .orbit{width:136px;height:136px;margin:22px auto 6px}
-#login .orbit::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 18%,color-mix(in srgb,var(--ac) 40%,transparent) 40%,var(--ac) 72%,var(--ac2,#ffc27a) 92%,transparent);
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));animation:lwSpin 1.05s linear infinite;filter:drop-shadow(0 0 8px var(--ac))}
-#login .orbit::after{display:block!important;content:'';position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ac) 32%,transparent),transparent 62%);animation:lwHalo 2.2s ease-in-out infinite;pointer-events:none}
-#login .orbit img{inset:30px!important;width:76px!important;height:76px!important;animation:lwLogo 2.4s cubic-bezier(.45,0,.2,1) infinite!important}
-#login .orbit b{display:block!important;position:absolute;inset:-12px;animation:lwOrbit 3s linear infinite}#login .orbit b::before{content:'';position:absolute;left:50%;top:0;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--ac);box-shadow:0 0 14px var(--ac)}
-#login .orbit b:nth-of-type(2){inset:-20px;animation-duration:4.4s;animation-direction:reverse}#login .orbit b:nth-of-type(2)::before{background:var(--ac2,#ffc27a);box-shadow:0 0 14px var(--ac2,#ffc27a);width:7px;height:7px}
-#login .orbit b:nth-of-type(3){inset:-4px;animation-duration:2.2s;animation-delay:-1s}#login .orbit b:nth-of-type(3)::before{background:#fff;box-shadow:0 0 12px #fff;width:5px;height:5px}
-@keyframes lwSpin{to{transform:rotate(360deg)}}@keyframes lwOrbit{to{transform:rotate(360deg)}}
-@keyframes lwHalo{50%{transform:scale(1.12);opacity:.6}}
-@keyframes lwLogo{0%,100%{transform:scale(.94) rotate(-6deg)}50%{transform:scale(1.07) rotate(6deg)}}
-.lgWait{display:none;text-align:center;font:700 14px var(--title);letter-spacing:.02em;color:var(--dim);margin-bottom:6px}#login.wait .lgWait{display:block}
-.lgWait i{font-style:normal;animation:lwDot 1.2s ease-in-out infinite}.lgWait i:nth-child(2){animation-delay:.2s}.lgWait i:nth-child(3){animation-delay:.4s}@keyframes lwDot{0%,60%,100%{opacity:.2}30%{opacity:1}}
-.lgWait::after{content:'';display:block;width:150px;height:3px;margin:12px auto 0;border-radius:99px;background:linear-gradient(90deg,transparent,var(--ac),var(--ac2,#ffc27a),transparent) 0 0/200% 100%;animation:lwBar 1.3s linear infinite}@keyframes lwBar{to{background-position:-200% 0}}
-@media (prefers-reduced-motion:reduce){#login .orbit::before,#login .orbit b,#login .orbit img,#login .orbit::after,.lgWait::after{animation:none!important}}
 /* GIF picker tabs + favorite stars */
 .gTabs{display:flex;gap:4px;margin:8px 0 2px}.gTabs button{all:unset;cursor:pointer;flex:1;text-align:center;padding:6px 8px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--dim);background:var(--raise)}
 .gTabs button[aria-pressed=true]{background:var(--ac);color:#fff}
@@ -6376,9 +6360,6 @@ R.afk={full(st,m){m.body.className='hzAB';const c=st.cfg,vn=id=>(st.vcs.find(v=>
 /* ---------- device names without the USB id tags, e.g. "Microphone (HyperX QuadCast S) (03f0:0294)" -> "Microphone (HyperX QuadCast S)" ---------- */
 const tidy=l=>String(l||'').replace(/\s*\((?:[0-9a-f]{4}:[0-9a-f]{4})\)/gi,'').trim();
 for(const C of [window.MediaDeviceInfo,window.MediaStreamTrack]){try{const d=Object.getOwnPropertyDescriptor(C.prototype,'label');if(d&&d.get&&d.configurable)Object.defineProperty(C.prototype,'label',{configurable:true,enumerable:d.enumerable,get(){return tidy(d.get.call(this))}})}catch{}}
-/* ---------- sign-in loader: orbiting dots + caption ---------- */
-{const o=document.querySelector('#login .orbit');if(o&&!o.querySelector('b'))o.insertAdjacentHTML('afterbegin','<b></b><b></b><b></b>');
- if(o&&!document.querySelector('.lgWait'))o.insertAdjacentHTML('afterend','<div class="lgWait">Signing you in<i>.</i><i>.</i><i>.</i></div>')}
 /* ---------- mic test: hear yourself (loopback) ---------- */
 let mon=null;
 const monSync=()=>{const want=LS.get('huddle.hearSelf')==='1'&&micTestStream&&micTestContext&&micTestContext.state!=='closed';
@@ -6415,6 +6396,67 @@ addEventListener('click',e=>{const s=e.target.closest&&e.target.closest('.gStar'
 const iv=setInterval(()=>{if($('#gifP')){gSetup();if($('#gifP .gTabs'))clearInterval(iv)}},500);
 })();
 </script>
+
+<style id="huddle-v20">
+/* ---------- Huddle v20 ---------- */
+/* sign-in loader: just the Huddle logo, spinning */
+#login .orbit{width:96px;height:96px;margin:26px auto 10px}
+#login .orbit::before,#login .orbit::after,#login .orbit b,.lgWait{display:none!important;animation:none!important}
+#login .orbit img{inset:10px!important;width:76px!important;height:76px!important;filter:none!important;animation:hzLogoSpin 1.5s cubic-bezier(.62,0,.38,1) infinite!important}
+@keyframes hzLogoSpin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.86)}100%{transform:rotate(360deg) scale(1)}}
+@media (prefers-reduced-motion:reduce){#login .orbit img{animation-duration:3s!important}}
+/* "developed by quantum" under the sign-in box */
+#login{grid-auto-flow:row;align-content:center;justify-items:center}
+.lgBy{margin:14px 0 0;font-size:11px;letter-spacing:.06em;color:var(--dim);opacity:.7;text-align:center;user-select:none}
+#login.wait .lgBy{visibility:hidden}
+/* host announcements */
+#hzAnn{position:fixed;top:14px;left:50%;transform:translate(-50%,-140%);z-index:2147483000;display:flex;align-items:center;gap:12px;max-width:min(640px,calc(100vw - 32px));padding:12px 14px 12px 16px;border-radius:14px;
+  background:color-mix(in srgb,var(--ac) 22%,var(--panel));border:1px solid color-mix(in srgb,var(--ac) 60%,transparent);box-shadow:0 14px 40px #0008;color:var(--tx);transition:transform .35s cubic-bezier(.2,.9,.3,1.2)}
+#hzAnn.on{transform:translate(-50%,0)}
+#hzAnn svg{flex:none;width:22px;height:22px;color:var(--ac)}
+#hzAnn div{min-width:0}#hzAnn b{display:block;font:800 11px var(--title,system-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--ac)}
+#hzAnn p{margin:2px 0 0;font-size:14.5px;line-height:1.4;overflow-wrap:anywhere;white-space:pre-wrap}
+#hzAnn button{all:unset;cursor:pointer;flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:var(--dim)}#hzAnn button:hover{background:#ffffff14;color:var(--tx)}
+</style>
+<script id="huddle-v20-js">
+(()=>{
+/* ---------- credit line under the sign-in box ---------- */
+{const f=document.getElementById('lf');if(f&&!document.querySelector('#login .lgBy'))f.insertAdjacentHTML('afterend','<p class="lgBy">developed by quantum</p>')}
+/* ---------- announcements from the host console (/announce) ---------- */
+const chime=()=>{try{const c=new AudioContext(),t=c.currentTime;[[784,0],[1046,.13]].forEach(([f,d])=>{const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.16,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.45);o.connect(g).connect(c.destination);o.start(t+d);o.stop(t+d+.5)});setTimeout(()=>c.close(),1200)}catch{}};
+let seen=0,hideT=0;
+const showAnn=d=>{if(!d||!d.text||d.ts===seen)return;seen=d.ts;let b=document.getElementById('hzAnn');
+  if(!b){b=document.createElement('div');b.id='hzAnn';b.setAttribute('role','alert');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><div><b>Announcement</b><p></p></div><button aria-label="Dismiss">✕</button>';
+    b.querySelector('button').onclick=()=>b.classList.remove('on');document.body.appendChild(b)}
+  b.querySelector('p').textContent=d.text;requestAnimationFrame(()=>b.classList.add('on'));chime();clearTimeout(hideT);hideT=setTimeout(()=>b.classList.remove('on'),30000)};
+const _on20=on;on=function(d){if(d&&d.t==='announce'){showAnn(d);return}return _on20.apply(this,arguments)};
+window.hzShowAnn=showAnn;
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
