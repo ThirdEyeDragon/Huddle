@@ -821,25 +821,25 @@ html[data-contrast=high] #nav .tab.sel .cg{color:#000}
 #layoutCenter>main #txt{height:38px;min-height:38px;max-height:160px;line-height:22px;align-self:stretch}
 
 /* Own speaking ring styles are intentionally scoped to #t-me; other participants stay unchanged. */
-#t-me[data-speakfx="steady"].talk .ring{animation:none;background:conic-gradient(var(--live),var(--live));filter:drop-shadow(0 0 1.4cqmin #3fe0c5aa)}
-#t-me[data-speakfx="pulse"].talk .ring{animation:ownSpeakPulse 1.2s ease-in-out infinite}
-#t-me[data-speakfx="glow"].talk .ring{filter:drop-shadow(0 0 2cqmin var(--live)) drop-shadow(0 0 3cqmin #3fe0c577);animation:spin 1.5s linear infinite}
-#t-me[data-speakfx="fast"].talk .ring{animation:spin .72s linear infinite}
+#stage .tile[data-speakfx="steady"].talk .ring{animation:none;background:conic-gradient(var(--live),var(--live));filter:drop-shadow(0 0 1.4cqmin #3fe0c5aa)}
+#stage .tile[data-speakfx="pulse"].talk .ring{animation:ownSpeakPulse 1.2s ease-in-out infinite}
+#stage .tile[data-speakfx="glow"].talk .ring{filter:drop-shadow(0 0 2cqmin var(--live)) drop-shadow(0 0 3cqmin #3fe0c577);animation:spin 1.5s linear infinite}
+#stage .tile[data-speakfx="fast"].talk .ring{animation:spin .72s linear infinite}
 @keyframes ownSpeakPulse{0%,100%{opacity:.55;transform:scale(.985);filter:drop-shadow(0 0 .7cqmin var(--live))}50%{opacity:1;transform:scale(1.035);filter:drop-shadow(0 0 2.2cqmin var(--live))}}
-@media(prefers-reduced-motion:reduce){#t-me[data-speakfx="pulse"].talk .ring,#t-me[data-speakfx="fast"].talk .ring{animation:none!important}}
+@media(prefers-reduced-motion:reduce){#stage .tile[data-speakfx="pulse"].talk .ring,#stage .tile[data-speakfx="fast"].talk .ring{animation:none!important}}
 /* Additional local-only speaking ring styles. These never affect other participants. */
-#t-me[data-speakfx="rainbow"].talk .ring{background:conic-gradient(#ff5c5c,#ffd75c,#5cff8a,#5cc8ff,#c45cff,#ff5c5c);filter:drop-shadow(0 0 1.8cqmin #7cf7e0aa);animation:spin 2.2s linear infinite}
-#t-me[data-speakfx="comet"].talk .ring{background:conic-gradient(from 0deg,transparent 0 54%,var(--live) 72%,#eaffff 81%,transparent 88%),conic-gradient(#3fe0c522,#3fe0c522);filter:drop-shadow(0 0 1.8cqmin var(--live));animation:spin 1.15s linear infinite}
-#t-me[data-speakfx="ripple"].talk .ring{animation:ownSpeakRipple 1.45s ease-out infinite;filter:drop-shadow(0 0 1.5cqmin var(--live))}
-#t-me[data-speakfx="heartbeat"].talk .ring{animation:ownSpeakBeat 1.15s ease-in-out infinite;filter:drop-shadow(0 0 1.5cqmin var(--live))}
-#t-me[data-speakfx="dash"].talk .ring{background:repeating-conic-gradient(var(--live) 0 9deg,transparent 9deg 18deg);filter:drop-shadow(0 0 1.2cqmin var(--live));animation:spin 1.9s linear infinite}
-#t-me[data-speakfx="double"].talk .ring{box-shadow:0 0 0 3px var(--live),0 0 0 7px #3fe0c577,0 0 0 10px #3fe0c522;filter:drop-shadow(0 0 1.1cqmin var(--live));animation:ownSpeakPulse 1.35s ease-in-out infinite}
-#t-me[data-speakfx="wave"].talk .ring{background:conic-gradient(from var(--speak-angle,0deg),var(--live),#d9fff8,var(--live));filter:drop-shadow(0 0 2cqmin var(--live));animation:spin 3.1s linear infinite}
-#t-me[data-speakfx="neon"].talk .ring{filter:drop-shadow(0 0 1cqmin var(--live)) drop-shadow(0 0 3cqmin var(--live)) drop-shadow(0 0 5cqmin #3fe0c566);animation:ownSpeakNeon 1.6s steps(1,end) infinite}
+#stage .tile[data-speakfx="rainbow"].talk .ring{background:conic-gradient(#ff5c5c,#ffd75c,#5cff8a,#5cc8ff,#c45cff,#ff5c5c);filter:drop-shadow(0 0 1.8cqmin #7cf7e0aa);animation:spin 2.2s linear infinite}
+#stage .tile[data-speakfx="comet"].talk .ring{background:conic-gradient(from 0deg,transparent 0 54%,var(--live) 72%,#eaffff 81%,transparent 88%),conic-gradient(#3fe0c522,#3fe0c522);filter:drop-shadow(0 0 1.8cqmin var(--live));animation:spin 1.15s linear infinite}
+#stage .tile[data-speakfx="ripple"].talk .ring{animation:ownSpeakRipple 1.45s ease-out infinite;filter:drop-shadow(0 0 1.5cqmin var(--live))}
+#stage .tile[data-speakfx="heartbeat"].talk .ring{animation:ownSpeakBeat 1.15s ease-in-out infinite;filter:drop-shadow(0 0 1.5cqmin var(--live))}
+#stage .tile[data-speakfx="dash"].talk .ring{background:repeating-conic-gradient(var(--live) 0 9deg,transparent 9deg 18deg);filter:drop-shadow(0 0 1.2cqmin var(--live));animation:spin 1.9s linear infinite}
+#stage .tile[data-speakfx="double"].talk .ring{box-shadow:0 0 0 3px var(--live),0 0 0 7px #3fe0c577,0 0 0 10px #3fe0c522;filter:drop-shadow(0 0 1.1cqmin var(--live));animation:ownSpeakPulse 1.35s ease-in-out infinite}
+#stage .tile[data-speakfx="wave"].talk .ring{background:conic-gradient(from var(--speak-angle,0deg),var(--live),#d9fff8,var(--live));filter:drop-shadow(0 0 2cqmin var(--live));animation:spin 3.1s linear infinite}
+#stage .tile[data-speakfx="neon"].talk .ring{filter:drop-shadow(0 0 1cqmin var(--live)) drop-shadow(0 0 3cqmin var(--live)) drop-shadow(0 0 5cqmin #3fe0c566);animation:ownSpeakNeon 1.6s steps(1,end) infinite}
 @keyframes ownSpeakRipple{0%{transform:scale(.94);opacity:.45}55%{transform:scale(1.055);opacity:1}100%{transform:scale(1.12);opacity:.55}}
 @keyframes ownSpeakBeat{0%,100%{transform:scale(1);opacity:.65}15%{transform:scale(1.055);opacity:1}28%{transform:scale(1)}42%{transform:scale(1.035);opacity:1}58%{transform:scale(1)}}
 @keyframes ownSpeakNeon{0%,100%{opacity:1}18%,54%{opacity:.72}20%,56%{opacity:.98}}
-@media(prefers-reduced-motion:reduce){#t-me[data-speakfx].talk .ring{animation:none!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){#stage .tile[data-speakfx].talk .ring{animation:none!important;transform:none!important}}
 
 /* Final layout guardrails: DMs get a stable friends-left/chat-right workspace. */
 @media(min-width:701px){#app.layout-shell{grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:max-content minmax(0,1fr) max-content;grid-template-areas:"top top top" "left center right" "bottom bottom bottom"}}
@@ -2148,7 +2148,7 @@ function setDialog(){sRefresh=null;const TABS=[['ap','Appearance'],['nt','Notifi
       const opts=(kind,cur,lb)=>'<option value="">System default</option>'+d.filter(x=>x.kind==kind&&x.deviceId!='default'&&x.deviceId!='communications').map((x,i)=>`<option value="${esc(x.deviceId)}"${x.deviceId==cur?' selected':''}>${esc(x.label||lb+' '+(i+1))}</option>`).join('');
       avp.innerHTML=`<label class="fl">Microphone <span style="opacity:.6">(voice input)</span><select id="dmic">${opts('audioinput',micId,'Microphone')}</select></label>
       <label class="fl">Speakers <span style="opacity:.6">(voice &amp; video output)</span><select id="dspk"${canSink?'':' disabled'}>${opts('audiooutput',spkId,'Speakers')}</select>${canSink?'':'<small style="color:var(--dim)">This browser cannot pick an output device. Use your system sound settings.</small>'}</label>
-      <label class="fl">Camera <span style="opacity:.6">(video input)</span><select id="dcam">${opts('videoinput',camId,'Camera')}</select></label><label class="fl">My speaking indicator <small class="hint">Effect for the green ring around your own avatar while you speak. Other people’s indicators are unchanged.</small><select id="spkfx">${[['orbit','Orbiting trail'],['steady','Solid ring'],['pulse','Pulsing ring'],['glow','Soft glow'],['fast','Fast sweep'],['rainbow','Rainbow ring'],['comet','Comet trail'],['ripple','Expanding ripple'],['heartbeat','Heartbeat'],['dash','Dashed ring'],['double','Double halo'],['wave','Wave sweep'],['neon','Neon flicker']].map(([v,n])=>`<option value="${v}"${((LS.get('huddle.speakfx')||'orbit')===v)?' selected':''}>${n}</option>`).join('')}</select></label><div class="mtest"><div class="mtestHead"><div><b>Microphone test</b><small>Live input level</small></div><button type="button" id="mtestBtn">Start test</button></div><div class="mtestTrack"><div id="mtestFill"></div></div><small class="hint">During the test, your outgoing microphone is temporarily muted for everyone else in the call.</small></div>`;const mb=$('#mtestBtn');mb.textContent=micTestStream?'Stop test':'Start test';mb.onclick=()=>micTestStream?stopMicTest():startMicTest()};
+      <label class="fl">Camera <span style="opacity:.6">(video input)</span><select id="dcam">${opts('videoinput',camId,'Camera')}</select></label><label class="fl">My speaking ring <small class="hint">The ring around your avatar while you talk. Everyone in the call sees the style you pick (the green ring is the default).</small><select id="spkfx">${[['orbit','Orbiting trail'],['steady','Solid ring'],['pulse','Pulsing ring'],['glow','Soft glow'],['fast','Fast sweep'],['rainbow','Rainbow ring'],['comet','Comet trail'],['ripple','Expanding ripple'],['heartbeat','Heartbeat'],['dash','Dashed ring'],['double','Double halo'],['wave','Wave sweep'],['neon','Neon flicker']].map(([v,n])=>`<option value="${v}"${((LS.get('huddle.speakfx')||'orbit')===v)?' selected':''}>${n}</option>`).join('')}</select></label><div class="mtest"><div class="mtestHead"><div><b>Microphone test</b><small>Live input level</small></div><button type="button" id="mtestBtn">Start test</button></div><div class="mtestTrack"><div id="mtestFill"></div></div><small class="hint">During the test, your outgoing microphone is temporarily muted for everyone else in the call.</small></div>`;const mb=$('#mtestBtn');mb.textContent=micTestStream?'Stop test':'Start test';mb.onclick=()=>micTestStream?stopMicTest():startMicTest()};
     avp.onchange=e=>{const v=e.target.value,i=e.target.id;
       if(i=='spkfx'){LS.set('huddle.speakfx',v);applySpeakFx();return}
       else if(i=='dmic'){if(micTestStream)stopMicTest();micId=v;LS.set('huddle.mic',v);switchMic()}
@@ -5036,7 +5036,7 @@ repDialog=function(o){let delta=1,filt='all',reasonTouched=false;const self=o===
 renderRepSettings=function(){const g=$('#repGraph');if(!g)return;let h=$('#rpSetHero');if(!h){h=document.createElement('div');h.id='rpSetHero';h.className='rpWrap';h.style.marginBottom='12px';g.before(h);g.classList.add('rpCard','rpGraph')}h.innerHTML=repHero(oid);repGraphInto(g,oid)};
 
 /* ================= in-game overlay (desktop app): who is in your call and who is talking ================= */
-const OVK={on:'huddle.ovl',foc:'huddle.ovlFoc',pos:'huddle.ovlPos',op:'huddle.ovlOp'},ovGet=(k,d)=>{const v=LS.get(OVK[k]);return v==null||v===''?d:v};
+const OVK={fs:'huddle.ovlFs',on:'huddle.ovl',foc:'huddle.ovlFoc',pos:'huddle.ovlPos',op:'huddle.ovlOp'},ovGet=(k,d)=>{const v=LS.get(OVK[k]);return v==null||v===''?d:v};
 let ovLast='';
 const ovSend=s=>{const j=JSON.stringify(s);if(j===ovLast)return;ovLast=j;try{window.api.overlay(s)}catch{}};
 const ovTick=()=>{if(!window.api||typeof window.api.overlay!='function')return;
@@ -5044,18 +5044,18 @@ const ovTick=()=>{if(!window.api||typeof window.api.overlay!='function')return;
   const now=Date.now(),g=gOf(vch),x=g&&g.channels.find(c=>c.id==vch),ch=vch.startsWith('dm:')?'Call with '+((P[dmO(vch)]||{}).name||'friend'):x?x.name:'Voice';
   const av=p=>{const a=(p||{}).avatar||'';return /^\/files\//.test(a)?base.replace(/\/+$/,'')+a:/^data:image\//.test(a)&&a.length<200000?a:''};
   const list=users.filter(u=>u.voice==vch).map(u=>{const o=u.oid||u.id,p=P[o]||{},mine=u.id==me,t=WT[mine?'me':u.id];
-    return {n:(g&&nickOf(o))||p.name||u.name||'?',c:p.color||'',av:av(p),sp:!!t&&now-t<400&&!u.muted,m:!!u.muted,d:!!(u.deaf||u.deafened),me:mine}}).sort((a,b)=>b.me-a.me);
-  ovSend({pos:ovGet('pos','tl'),op:(+ovGet('op','92'))/100,ch,users:list})};
+    return {n:(g&&nickOf(o))||p.name||u.name||'?',c:p.color||'',av:av(p),sp:!!t&&now-t<400&&!u.muted,m:!!u.muted,d:!!(u.deaf||u.deafened),s:!!u.scr,me:mine}}).sort((a,b)=>b.me-a.me);
+  ovSend({pos:ovGet('pos','tl'),op:(+ovGet('op','92'))/100,fs:ovGet('fs','1')==='1',ch,users:list})};
 setInterval(ovTick,200);try{window.api&&window.api.onOverlayAsk&&window.api.onOverlayAsk(()=>{ovLast='';ovTick()})}catch{}
 /* settings: Voice & video tab */
 const ovSec=()=>{const av=document.querySelector('#modal [data-p=av]');if(!av||av.querySelector('#hzOvSec'))return;const ok=window.api&&typeof window.api.overlay=='function';
-  av.insertAdjacentHTML('beforeend',`<div class="efx" id="hzOvSec"><div class="eft"><b>In-game overlay</b><small>A small card in a corner of your screen that shows who is in your call and who is talking. It works over games running in windowed or borderless fullscreen mode and never takes your mouse or keyboard. Press <span class="hzOvKey">Ctrl+Shift+O</span> to hide or show it.</small></div>
+  av.insertAdjacentHTML('beforeend',`<div class="efx" id="hzOvSec"><div class="eft"><b>In-game overlay</b><small>A small card in a corner of your screen that shows who is in your call, who is talking, who is muted and who is sharing their screen. It never takes your mouse or keyboard. Games must run in borderless or windowed full-screen (exclusive full-screen draws over everything). Press <span class="hzOvKey">Ctrl+Shift+O</span> to hide or show it.</small></div>
     ${ok?`<label class="tg"><span><b>Show the overlay during calls</b></span><input type="checkbox" id="ovOn" role="switch"></label>
-    <label class="tg"><span><b>Hide it while Huddle is the window you’re using</b></span><input type="checkbox" id="ovFoc" role="switch"></label>
+    <label class="tg"><span><b>Only show it when a game or app is full-screen</b><small>Turn off to show it whenever Huddle isn’t the window you’re using.</small></span><input type="checkbox" id="ovFs" role="switch"></label><label class="tg"><span><b>Hide it while Huddle is the window you’re using</b></span><input type="checkbox" id="ovFoc" role="switch"></label>
     <div class="hzOvRow"><label>Corner<span class="hzOvPos">${['tl','tr','bl','br'].map(p=>`<button type="button" data-p="${p}" aria-label="${{tl:'Top left',tr:'Top right',bl:'Bottom left',br:'Bottom right'}[p]}"></button>`).join('')}</span></label><label>Opacity<input type="range" id="ovOp" min="30" max="100" step="5"></label></div>`
     :'<p class="hint">Update the Huddle desktop app to use the overlay.</p>'}</div>`);
-  if(!ok)return;const paint=()=>{$('#ovOn').checked=ovGet('on','1')==='1';$('#ovFoc').checked=ovGet('foc','1')==='1';$('#ovOp').value=ovGet('op','92');av.querySelectorAll('.hzOvPos button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===ovGet('pos','tl')))};paint();
-  $('#ovOn').onchange=e=>{LS.set(OVK.on,e.target.checked?'1':'0');ovTick()};$('#ovFoc').onchange=e=>{LS.set(OVK.foc,e.target.checked?'1':'0');ovTick()};$('#ovOp').oninput=e=>{LS.set(OVK.op,e.target.value);ovTick()};
+  if(!ok)return;const paint=()=>{$('#ovOn').checked=ovGet('on','1')==='1';$('#ovFoc').checked=ovGet('foc','1')==='1';$('#ovFs').checked=ovGet('fs','1')==='1';$('#ovOp').value=ovGet('op','92');av.querySelectorAll('.hzOvPos button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===ovGet('pos','tl')))};paint();
+  $('#ovOn').onchange=e=>{LS.set(OVK.on,e.target.checked?'1':'0');ovTick()};$('#ovFoc').onchange=e=>{LS.set(OVK.foc,e.target.checked?'1':'0');ovTick()};$('#ovFs').onchange=e=>{LS.set(OVK.fs,e.target.checked?'1':'0');ovTick()};$('#ovOp').oninput=e=>{LS.set(OVK.op,e.target.value);ovTick()};
   av.querySelector('.hzOvPos').onclick=e=>{const b=e.target.closest('[data-p]');if(!b)return;LS.set(OVK.pos,b.dataset.p);paint();ovTick()}};
 new MutationObserver(()=>{if(document.querySelector('#modal [data-p=av]'))ovSec()}).observe($('#modal'),{childList:true,subtree:true});
 
@@ -5510,13 +5510,12 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
         <div class="v4Mut" style="margin:12px 0 6px">You give (click to pick)</div><div class="tcGrid">${mine.map(c=>`<div class="tcPick${tcOffer.give.includes(c.id)?' on':''}" data-tg="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">You have no cards.</span>'}</div>
         ${tcOffer.to?`<div class="v4Mut" style="margin:26px 0 6px">You get</div><div class="tcGrid">${theirs.map(c=>`<div class="tcPick${tcOffer.get.includes(c.id)?' on':''}" data-tw="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">They have no cards.</span>'}</div>`:''}
         <div class="v4Row" style="justify-content:flex-end;margin-top:26px"><button class="hzB on" data-toffer${tcOffer.to?'':' disabled'}>Send offer</button></div></div>`,
-    make:st.edit?`<div class="v4Two"><div class="v4Card"><h4>${dr.id?'Edit card':'Create a card'}</h4><div class="v4Form" id="tcF"><label>Name<input data-k="name" maxlength="40" value="${esc(dr.name||'')}"></label><label>HP<input data-k="hp" type="number" min="1" max="9999" value="${esc(dr.hp??'')}" placeholder="120"></label><label>Type<select data-k="el">${['astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.el||'astral')?' selected':''}>${t[0].toUpperCase()+t.slice(1)}</option>`).join('')}</select></label><label>Stage<input data-k="stage" maxlength="20" value="${esc(dr.stage||'')}" placeholder="Basic"></label>
-        <label>Rarity<select data-k="rarity">${['common','uncommon','rare','mythic'].map(r=>`<option${r==dr.rarity?' selected':''}>${r}</option>`).join('')}</select></label><label>Holographic<select data-k="holo"><option value="false">No</option><option value="true"${dr.holo===true||dr.holo==='true'?' selected':''}>Yes, foil</option></select></label><label>Value (what it is worth)<input data-k="value" type="number" min="0" value="${esc(dr.value??'')}"></label><label>Set<input data-k="set" maxlength="20" value="${esc(dr.set||'')}"></label>
-        <label style="grid-column:1/-1">Ability (optional)<input data-k="a1n" maxlength="30" value="${esc(dr.a1n||'')}" placeholder="Ability name"></label><label style="grid-column:1/-1">Ability text<textarea data-k="a1t" maxlength="300">${esc(dr.a1t||'')}</textarea></label>
-        ${[1,2].map(i=>`<label>Attack ${i} cost<input data-k="k${i}c" maxlength="8" value="${esc(dr['k'+i+'c']||'')}" placeholder="SS*"></label><label>Attack ${i} name<input data-k="k${i}n" maxlength="30" value="${esc(dr['k'+i+'n']||'')}"></label><label>Damage<input data-k="k${i}d" maxlength="6" value="${esc(dr['k'+i+'d']||'')}" placeholder="60"></label><label style="grid-column:1/-1">Attack ${i} text<input data-k="k${i}t" maxlength="300" value="${esc(dr['k'+i+'t']||'')}"></label>`).join('')}
-        <label>Weakness<select data-k="we">${['','astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.we||'')?' selected':''}>${t?t[0].toUpperCase()+t.slice(1):'None'}</option>`).join('')}</select></label><label>Weakness amount<input data-k="wv" maxlength="5" value="${esc(dr.wv||'')}" placeholder="×2"></label><label>Resistance<select data-k="re">${['','astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.re||'')?' selected':''}>${t?t[0].toUpperCase()+t.slice(1):'None'}</option>`).join('')}</select></label><label>Resistance amount<input data-k="rv" maxlength="5" value="${esc(dr.rv||'')}" placeholder="-30"></label><label>Retreat cost<input data-k="ret" type="number" min="0" max="5" value="${esc(dr.ret??'')}" placeholder="1"></label><label>Artist<input data-k="artist" maxlength="30" value="${esc(dr.artist||'')}"></label>
-        <label style="grid-column:1/-1">Description (optional)<textarea data-k="text" maxlength="400">${esc(dr.text||'')}</textarea></label><label style="grid-column:1/-1">Flavor text<input data-k="flavor" maxlength="200" value="${esc(dr.flavor||'')}"></label><p class="v4Mut" style="grid-column:1/-1;margin:0">Attack cost letters: S solar, L lunar, A astral, V void, * any type. A number means that many of the card’s own type.</p></div>
-        <div class="v4Row" style="margin-top:10px"><button class="hzB" data-tart>${HG('image')}${dr.art?'Change art':'Upload art'}</button><span class="v4Grow"></span>${dr.id?`<button class="hzB bad" data-tdel="${esc(dr.id)}">Delete</button><button class="hzB" data-tx>Cancel</button>`:''}<button class="hzB on" data-tsave>${dr.id?'Save card':'Create card'}</button></div></div>
+    make:st.edit?`<div class="v4Two"><div class="v4Card"><h4>${dr.id?'Edit card':'Create a card'}</h4><div class="v4Form" id="tcF"><div class="tcStep"><i>1</i><b>The basics</b></div><label>Name<input data-k="name" maxlength="40" value="${esc(dr.name??'')}" placeholder="Ember Drake"></label><label>Type<select data-k="el">${['astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.el||'astral')?' selected':''}>${t[0].toUpperCase()+t.slice(1)}</option>`).join('')}</select></label><label>HP<input data-k="hp" type="number" min="1" max="9999" value="${esc(dr.hp??'')}" placeholder="120"></label><label>Rarity<select data-k="rarity">${['common','uncommon','rare','mythic'].map(r=>`<option${r==dr.rarity?' selected':''}>${r}</option>`).join('')}</select></label>
+        <div class="tcStep"><i>2</i><b>The picture</b></div><div class="tcArtRow"><button type="button" class="hzB on" data-tart>${HG('image')}${dr.art?'Change picture':'Upload picture'}</button><span class="v4Mut">Covers the whole card. 1200 × 1720 (portrait) looks best.</span></div>
+        <div class="tcStep"><i>3</i><b>What it does</b><small>Fill in what you need, leave the rest empty.</small></div><label class="tcW">Ability name<input data-k="a1n" maxlength="30" value="${esc(dr.a1n??'')}" placeholder="Optional, like Sunflare"></label><label class="tcW">Ability text<input data-k="a1t" maxlength="300" value="${esc(dr.a1t??'')}" placeholder="What the ability does"></label>
+        ${[1,2].map(i=>`<div class="tcAtk"><b>Attack ${i}</b><label>Name<input data-k="k${i}n" maxlength="30" value="${esc(dr['k'+i+'n']||'')}" placeholder="${i==1?'Scorch':'Optional'}"></label><label>Damage<input data-k="k${i}d" maxlength="6" value="${esc(dr['k'+i+'d']||'')}" placeholder="60"></label><label class="tcCostL">Cost <small>tap the symbols</small><span class="tcCostRow"><input data-k="k${i}c" maxlength="8" value="${esc(dr['k'+i+'c']||'')}" readonly tabindex="-1"><span class="tcPips"><button type="button" class="tcPip" data-pip="S" data-for="k${i}c" title="solar">${window.hzEmblem?hzEmblem('solar'):''}</button><button type="button" class="tcPip" data-pip="L" data-for="k${i}c" title="lunar">${window.hzEmblem?hzEmblem('lunar'):''}</button><button type="button" class="tcPip" data-pip="A" data-for="k${i}c" title="astral">${window.hzEmblem?hzEmblem('astral'):''}</button><button type="button" class="tcPip" data-pip="V" data-for="k${i}c" title="void">${window.hzEmblem?hzEmblem('void'):''}</button><button type="button" class="tcPip" data-pip="*" data-for="k${i}c" title="any">${window.hzEmblem?hzEmblem('any'):''}</button><button type="button" class="tcPip clr" data-pip="" data-for="k${i}c" title="Clear">✕</button></span></span></label><label class="tcW">What it does<input data-k="k${i}t" maxlength="300" value="${esc(dr['k'+i+'t']||'')}" placeholder="Optional"></label></div>`).join('')}
+        <details class="tcMore"><summary>More options <small>stage, weakness, holo, value, flavor…</small></summary><div class="v4Form"><label>Stage<input data-k="stage" maxlength="20" value="${esc(dr.stage??'')}" placeholder="Basic"></label><label>Holographic<select data-k="holo"><option value="false">No</option><option value="true"${dr.holo===true||dr.holo==='true'?' selected':''}>Yes, foil</option></select></label><label>Weakness<select data-k="we">${['','astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.we||'')?' selected':''}>${t?t[0].toUpperCase()+t.slice(1):'None'}</option>`).join('')}</select></label><label>Weakness amount<input data-k="wv" maxlength="5" value="${esc(dr.wv??'')}" placeholder="×2"></label><label>Resistance<select data-k="re">${['','astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.re||'')?' selected':''}>${t?t[0].toUpperCase()+t.slice(1):'None'}</option>`).join('')}</select></label><label>Resistance amount<input data-k="rv" maxlength="5" value="${esc(dr.rv??'')}" placeholder="-30"></label><label>Retreat cost<input data-k="ret" type="number" min="0" max="5" value="${esc(dr.ret??'')}" placeholder="1"></label><label>Value (what it is worth)<input data-k="value" type="number" min="0" value="${esc(dr.value??'')}"></label><label>Set<input data-k="set" maxlength="20" value="${esc(dr.set??'')}"></label><label>Artist<input data-k="artist" maxlength="30" value="${esc(dr.artist??'')}"></label><label class="tcW">Description<textarea data-k="text" maxlength="400">${esc(dr.text||'')}</textarea></label><label class="tcW">Flavor text<input data-k="flavor" maxlength="200" value="${esc(dr.flavor??'')}"></label></div></details></div>
+        <div class="v4Row" style="margin-top:10px"><span class="v4Grow"></span>${dr.id?`<button class="hzB bad" data-tdel="${esc(dr.id)}">Delete</button><button class="hzB" data-tx>Cancel</button>`:''}<button class="hzB on" data-tsave>${dr.id?'Save card':'Create card'}</button></div></div>
       <div class="v4Card" style="display:grid;justify-items:center;align-content:start;gap:12px"><h4 style="justify-self:stretch">Preview</h4><div id="tcPrev">${tcCard(dr)}</div><p class="v4Mut" style="margin:0;text-align:center">Every card is one of one: only one person can own it.</p></div></div>
       <div class="v4Card"><h4>Packs</h4><div class="v4Form"><label>Cards per pack<input id="tcPk" type="number" min="1" max="10" value="${st.pack}"></label><label>Hours between packs<input id="tcCd" type="number" min="0" value="${st.cd}"></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-tpk>Save</button></div></div>${mgrBox(st,'Trading Cards')}`:'',
     log:`<div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li"><span class="v4Grow">${esc(l.s)}</span><small class="v4Mut">${ago(l.ts)}</small></div>`).join('')||'<div class="v4Empty">Nothing yet.</div>'}</div>`};
@@ -6961,6 +6960,99 @@ let ckKey='';const _ck=R.checkers&&R.checkers.full;
 if(_ck)R.checkers.full=function(st,m){_ck.call(this,st,m);const k=st.last?st.b+'|'+st.last.f+'>'+st.last.t:'';if(k&&ckKey&&k!==ckKey){const cap=st.last.cap!==undefined||Math.abs((st.last.t>>3)-(st.last.f>>3))===2;clack(.12,.9);if(cap)clack(.26,.7)}ckKey=k};
 })();
 </script>
+
+<style id="huddle-v25">
+/* ---------- Huddle v25 ---------- */
+/* taller windows: less scrolling in Edit Profile, Create channel, Settings and every other pop-up */
+.pk{max-height:min(95vh,calc(100dvh - 16px))!important}
+#modal .pk.hzShell{height:min(940px,95vh)!important;max-height:95vh!important}
+.pc{max-height:96vh!important}
+#emlist,.rpList{max-height:52vh!important}.cvl,#dcl{max-height:58vh!important}.qsl{max-height:66vh!important}.pinL,.audL{max-height:75vh!important}#np{max-height:78vh!important}
+/* Hufi Music mini player: minimize really shrinks it to a small pill */
+#hufiDock.min{width:auto!important;padding:6px!important;gap:0!important}
+#hufiDock.min #hfVolL,#hufiDock.min .hd div{display:none!important}
+#hufiDock.min .hd img{width:34px;height:34px}
+/* in-game overlay button in the call controls */
+#bOvl svg{width:20px;height:20px}#bOvl[aria-pressed=false]{opacity:.55}
+/* card creation: three short steps */
+/* "1 The basics": the step number sits in a small accent circle */
+#tcF .tcStep{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin-top:8px;font:900 12px/22px system-ui;color:var(--dim)}
+#tcF .tcStep:first-child{margin-top:0}
+#tcF .tcStep>i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:var(--ac);color:#fff}#tcF .tcStep>b{font-size:14px;color:var(--tx)}#tcF .tcStep>small{font-weight:500;font-size:12px}
+#tcF .tcW,#tcF .tcArtRow,#tcF .tcAtk,#tcF .tcMore{grid-column:1/-1}
+#tcF .tcArtRow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+#tcF .tcAtk{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:12px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+#tcF .tcAtk>b{grid-column:1/-1;font-size:13px}
+#tcF .tcCostL{grid-column:1/-1}
+#tcF .tcCostRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#tcF .tcCostRow input{width:86px;flex:none;text-align:center;font-weight:800;letter-spacing:.1em;cursor:default}
+#tcF .tcPips{display:flex;gap:6px;flex-wrap:wrap}
+#tcF .tcPip{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:24px;transition:transform .12s}
+#tcF .tcPip:hover{transform:scale(1.12)}#tcF .tcPip:active{transform:scale(.92)}
+#tcF .tcPip.clr{font-size:13px;background:var(--raise);color:var(--dim);border:1px solid var(--line);width:28px;height:28px}
+#tcF .tcMore{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+#tcF .tcMore summary{cursor:pointer;font-weight:800;font-size:13.5px}#tcF .tcMore summary small{font-weight:500;color:var(--dim);margin-left:6px}
+#tcF .tcMore>.v4Form{margin-top:10px}
+</style>
+<script id="huddle-v25-js">
+(()=>{
+/* ---------- speaking ring: the style you pick is what everyone in the call sees (the green ring is the default) ---------- */
+const FX=['orbit','steady','pulse','glow','fast','rainbow','comet','ripple','heartbeat','dash','double','wave','neon'];
+const fxOf=id=>{if(id==='me')return speakFx();const u=(window.users||users).find(x=>x.id==id),p=u?(P[u.oid||u.id]||{}):{};return FX.includes(p.sfx)?p.sfx:'orbit'};
+const paintFx=()=>document.querySelectorAll('#stage .tile[id^="t-"]').forEach(t=>{const v=fxOf(t.id.slice(2));if(t.dataset.speakfx!==v)t.dataset.speakfx=v});
+const pushFx=()=>{if(typeof oid=='undefined'||!oid||!P[oid])return;const v=speakFx(),mine=FX.includes(P[oid].sfx)?P[oid].sfx:'orbit';if(v!==mine)send({t:'sfx',sfx:v==='orbit'?'':v})};
+const _tile=window.tile;if(typeof _tile=='function')window.tile=function(){const r=_tile.apply(this,arguments);try{paintFx()}catch{}return r};
+document.addEventListener('change',e=>{if(e.target&&e.target.id==='spkfx')setTimeout(()=>{pushFx();paintFx()},0)});
+const _on25=on;on=function(d){try{return _on25.apply(this,arguments)}finally{try{if(d&&d.t==='init')setTimeout(pushFx,500);if(d&&(d.t==='profiles'||d.t==='users'||d.t==='init'))setTimeout(paintFx,0)}catch{}}};
+/* ---------- in-game overlay: one-click toggle in the call controls ---------- */
+const OVL='huddle.ovl',ovOn=()=>LS.get(OVL)!=='0';
+const ovIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8 21h8M12 17v4"/><rect x="5.5" y="7" width="6.5" height="4.5" rx="1.2" fill="currentColor" stroke="none"/></svg>';
+const ovBtn=()=>{if(!window.api||typeof window.api.overlay!='function')return;const s=document.getElementById('bScr');if(!s||document.getElementById('bOvl'))return;
+  s.insertAdjacentHTML('afterend',`<button id="bOvl" class="cb" type="button" aria-pressed="${ovOn()}" title="">${ovIcon}</button>`);paintOv();
+  document.getElementById('bOvl').onclick=()=>{LS.set(OVL,ovOn()?'0':'1');paintOv();toast(ovOn()?'In-game overlay on: it shows over full-screen games and apps.':'In-game overlay off.',true)}};
+const paintOv=()=>{const b=document.getElementById('bOvl');if(!b)return;b.setAttribute('aria-pressed',ovOn());b.title=b.ariaLabel=ovOn()?'In-game overlay: on (click to turn off)':'In-game overlay: off (click to turn on)'};
+ovBtn();setInterval(()=>{ovBtn();paintOv()},1500);
+/* ---------- Hufi Music mini player: remember minimized ---------- */
+document.addEventListener('click',e=>{const b=e.target.closest('#hufiDock [data-d=min]');if(b)setTimeout(()=>LS.set('huddle.hfmin',document.getElementById('hufiDock').classList.contains('min')?'1':''),0)},true);
+setInterval(()=>{const d=document.getElementById('hufiDock');if(!d||d.dataset.v25)return;d.dataset.v25=1;if(LS.get('huddle.hfmin')==='1'){const b=d.querySelector('[data-d=min]');d.classList.add('min');if(b&&window.HG)b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 15l6-6 6 6"/></svg>'}},700);
+/* ---------- card creation: tap the type symbols to build an attack cost ---------- */
+document.addEventListener('click',e=>{const b=e.target.closest('#tcF [data-pip]');if(!b)return;e.preventDefault();e.stopPropagation();const i=document.querySelector(`#tcF [data-k="${b.dataset.for}"]`);if(!i)return;
+  i.value=b.dataset.pip?(i.value+b.dataset.pip).slice(0,5):'';i.dispatchEvent(new Event('input',{bubbles:true}))},true);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
