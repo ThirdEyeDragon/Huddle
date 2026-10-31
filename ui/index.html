@@ -2338,7 +2338,7 @@ function openProfile(o,edit,anchor){if(!o)return;if(!edit)return showCard(o,anch
     <label class="pfl"><input id="pcs" maxlength="60" placeholder="Custom status" aria-label="Custom status" autocomplete="off"><small class="hint">A short note under your online status, like “Back at 8”.</small></label>
     <div class="sws" role="group" aria-label="Color">${SW.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}<label class="sw cu" title="Custom color"><input type="color" id="pcu" value="#ff5c93" aria-label="Custom color"></label></div>
     <small class="hint">Your accent color. Tints your name, photo fallback and card.</small>
-    ${window.persHTML?persHTML():''}<div class="efxh">Effects</div><div class="efx"><div class="eft"><b>Profile gradient</b><small>Tints your card, and fills your banner when it has no image</small></div><div class="pfx"><label>Left <input type="color" id="pgl" value="#ff5c93"></label><label>Right <input type="color" id="pgr" value="#ffc27a"></label><button id="pgc">Clear</button></div></div><div class="efx"><div class="eft"><b>Photo effect</b><small>Animated light around your profile picture</small></div><div class="pfx"><label>Style <select id="pfx"><option value="">None</option><option value="ring">Ring</option><option value="glow">Soft glow</option><option value="neon">Neon</option><option value="pulse">Pulse</option><option value="breathe">Breathe</option><option value="flicker">Flicker</option><option value="heartbeat">Heartbeat</option><option value="dash">Dashed ring (spinning)</option><option value="comet">Comet</option><option value="sparkle">Sparkles</option><option value="orbit">Orbit (uses your gradient)</option><option value="rainbow">Rainbow</option><option value="aurora">Aurora</option><option value="ripple">Ripple</option><option value="fire">Fire</option><option value="electric">Electric</option><option value="halo">Halo</option><option value="glitch">Glitch</option></select></label><label>Color <input type="color" id="prc" value="#ff5c93"></label></div></div><div class="efx"><div class="eft"><b>Card glow</b><small>Light around your whole profile card</small></div><div class="pfx"><label>Style <select id="pgs"><option value="">Off</option><option value="steady">Steady</option><option value="breathe">Breathe</option><option value="flicker">Neon flicker</option><option value="heartbeat">Heartbeat</option><option value="aurora">Aurora (2 colors)</option><option value="sweep">Comet (2 colors)</option><option value="rainbow">Rainbow</option></select></label></div><div class="pfx" id="pgrow" style="display:none"><label>Color <input type="color" id="pgc1"></label><label>Second <input type="color" id="pgc2"></label><label>Intensity <select id="pgi"><option value="1">Soft</option><option value="2">Medium</option><option value="3">Strong</option></select></label></div></div><div class="efx"><div class="eft"><b>Name style</b><small>How your name looks on your profile card</small></div><div class="pfx"><label>Style <select id="pnf"><option value="">Plain (your color)</option><option value="gradient">Gradient</option><option value="flow">Flowing gradient</option><option value="shimmer">Shimmer</option><option value="neon">Neon</option><option value="rainbow">Rainbow</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="pulse">Pulse</option></select></label></div><div class="pfx" id="pnrow" style="display:none"><label>Color <input type="color" id="pnc1"></label><label>Second <input type="color" id="pnc2"></label><span id="npv" class="npv">Preview</span></div></div><div class="efx"><div class="eft"><b>Banner effect</b><small>Animated overlay on top of your banner</small></div><div class="pfx"><label>Style <select id="pbf"><option value="">None</option><option value="shine">Shine sweep</option><option value="aurora">Aurora wash</option><option value="scan">Scanlines</option><option value="sparkle">Sparkles</option></select></label><label id="pbl" style="display:none">Color <input type="color" id="pbc"></label></div></div>
+    ${window.persHTML?persHTML():''}<div class="efxh">Effects</div><div class="efx"><div class="eft"><b>Profile gradient</b><small>Tints your card, and fills your banner when it has no image</small></div><div class="pfx"><label>Left <input type="color" id="pgl" value="#ff5c93"></label><label>Right <input type="color" id="pgr" value="#ffc27a"></label><button id="pgc">Clear</button></div></div><div class="efx"><div class="eft"><b>Photo effect</b><small>Animated light around your profile picture</small></div><div class="pfx"><label>Style <select id="pfx"><option value="">None</option><option value="ring">Ring</option><option value="glow">Soft glow</option><option value="neon">Neon</option><option value="pulse">Pulse</option><option value="breathe">Breathe</option><option value="flicker">Flicker</option><option value="heartbeat">Heartbeat</option><option value="comet">Comet</option><option value="sparkle">Sparkles</option><option value="orbit">Orbit (uses your gradient)</option><option value="rainbow">Rainbow</option><option value="aurora">Aurora</option><option value="ripple">Ripple</option><option value="fire">Fire</option><option value="electric">Electric</option><option value="halo">Halo</option><option value="glitch">Glitch</option></select></label><label>Color <input type="color" id="prc" value="#ff5c93"></label></div></div><div class="efx"><div class="eft"><b>Card glow</b><small>Light around your whole profile card</small></div><div class="pfx"><label>Style <select id="pgs"><option value="">Off</option><option value="steady">Steady</option><option value="breathe">Breathe</option><option value="flicker">Neon flicker</option><option value="heartbeat">Heartbeat</option><option value="aurora">Aurora (2 colors)</option><option value="sweep">Comet (2 colors)</option><option value="rainbow">Rainbow</option></select></label></div><div class="pfx" id="pgrow" style="display:none"><label>Color <input type="color" id="pgc1"></label><label>Second <input type="color" id="pgc2"></label><label>Intensity <select id="pgi"><option value="1">Soft</option><option value="2">Medium</option><option value="3">Strong</option></select></label></div></div><div class="efx"><div class="eft"><b>Name style</b><small>How your name looks on your profile card</small></div><div class="pfx"><label>Style <select id="pnf"><option value="">Plain (your color)</option><option value="gradient">Gradient</option><option value="flow">Flowing gradient</option><option value="shimmer">Shimmer</option><option value="neon">Neon</option><option value="rainbow">Rainbow</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="pulse">Pulse</option></select></label></div><div class="pfx" id="pnrow" style="display:none"><label>Color <input type="color" id="pnc1"></label><label>Second <input type="color" id="pnc2"></label><span id="npv" class="npv">Preview</span></div></div><div class="efx"><div class="eft"><b>Banner effect</b><small>Animated overlay on top of your banner</small></div><div class="pfx"><label>Style <select id="pbf"><option value="">None</option><option value="shine">Shine sweep</option><option value="aurora">Aurora wash</option><option value="scan">Scanlines</option><option value="sparkle">Sparkles</option></select></label><label id="pbl" style="display:none">Color <input type="color" id="pbc"></label></div></div>
     <p id="pferr" class="perr" role="alert"></p><div class="pact"><button id="pcx">Cancel</button><button id="psv" class="on">Save profile</button></div>
     <input type="file" id="pfile" accept="image/png,image/jpeg,image/gif,image/webp" hidden><input type="file" id="bfile" accept="image/*" hidden>`:''}</div></div>`;
   m.style.display='grid';pcPaint();$('#pcx').onclick=closeProfile;
@@ -3590,8 +3590,8 @@ const cardDeco=()=>{if(typeof popEl!='undefined'&&popEl&&popO)decoCard(popEl,pop
 const _on=on;on=function(d){_on(d);if(d.t=='init'||d.t=='profiles'||d.t=='rel')persCss()};
 /* profile editor: Personality section */
 window.persHTML=()=>`<div class="efxh">Personality</div><div class="hzPers">
-  <div class="hzSec"><div class="eft"><b>Avatar decoration</b><small>Hand-drawn flair on your photo, everywhere it shows up</small></div><div class="hzDecG" data-k="dec"><button type="button" data-v=""><span class="none">∅</span>None</button>${DECS.map(d=>`<button type="button" data-v="${d}"><span class="dp">${avh(pf.name||'?',pf.color||'#ff5c93',pf.avatar)}<span class="hzDec">${hzDecoSvg(d)}</span></span>${HZDECO[d].n}</button>`).join('')}</div></div>
-  <div class="hzSec"><div class="eft"><b>Profile card theme</b><small>The backdrop people see when they open your card</small></div><div class="hzThG" data-k="th"><button type="button" data-v="" style="background:var(--bg)"><span>None</span></button>${HZTHEMES.map(([id,n])=>`<button type="button" data-v="${id}" data-th="${id}" title="${n}"><span>${n}</span></button>`).join('')}</div></div>
+  <div class="hzSec"><div class="eft"><b>Avatar decoration</b><small>Flair on your photo, everywhere it shows up${Object.keys(HZDECO).length?'':'. None yet: the host adds them in My Art.'}</small></div><div class="hzDecG" data-k="dec"><button type="button" data-v=""><span class="none">∅</span>None</button>${Object.keys(HZDECO).map(d=>`<button type="button" data-v="${d}"><span class="dp">${avh(pf.name||'?',pf.color||'#ff5c93',pf.avatar)}<span class="hzDec">${hzDecoSvg(d)}</span></span>${HZDECO[d].n}</button>`).join('')}</div></div>
+  <div class="hzSec"><div class="eft"><b>Profile card theme</b><small>The backdrop people see when they open your card${HZTHEMES.length?'':'. None yet: the host adds them in My Art.'}</small></div><div class="hzThG" data-k="th"><button type="button" data-v="" style="background:var(--bg)"><span>None</span></button>${HZTHEMES.map(([id,n])=>`<button type="button" data-v="${id}" data-th="${id}" title="${n}"><span>${n}</span></button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Name font</b><small>How your name looks in chat and member lists</small></div><div class="hzChips hzFontG" data-k="nf">${NF.map(([v,t])=>`<button type="button" data-v="${v}" class="${v?'hzNf-'+v:''}">${t}</button>`).join('')}</div></div>
   <div class="hzSec"><div class="eft"><b>Interests</b><small>Up to 5 tags on your card</small></div><div class="hzTagEd"><span id="hzTagL"></span><input id="hzTagI" maxlength="18" placeholder="Add a tag, press Enter"></div>
   <div class="hzSug">${SUG.map(([t,i])=>`<button type="button" data-t="${esc(t)}">${HG(i)} ${esc(t)}</button>`).join('')}</div></div></div>`;
@@ -3607,7 +3607,7 @@ let thHover=null;const tileFx=()=>window.hzRunPaint&&hzRunPaint();
 /* visual pickers for photo effect, profile gradient, card glow, name style and banner effect. They drive the original
    controls, so saving is unchanged. Only the hovered or chosen tile animates; tile scenes exist only while on screen. */
 const CGS=[['','Off'],['steady','Steady'],['breathe','Breathe'],['flicker','Neon flicker'],['heartbeat','Heartbeat'],['aurora','Aurora'],['sweep','Comet'],['rainbow','Rainbow'],['orbit','Orbit'],['prism','Prism'],['holo','Holo'],['galaxy','Galaxy'],['ocean','Ocean'],['electric','Electric'],['ice','Ice'],['fire','Fire'],['sunset','Sunset'],['toxic','Toxic'],['halo','Halo'],['void','Void'],['glitch','Glitch'],['ripple','Ripple']];
-const NFX=[['','Plain'],['gradient','Gradient'],['flow','Flowing'],['shimmer','Shimmer'],['neon','Neon'],['rainbow','Rainbow'],['fire','Fire'],['ice','Ice'],['pulse','Pulse'],['chrome','Chrome'],['gold','Gold'],['holo','Holo'],['glitch','Glitch'],['outline','Outline'],['retro','Retro 3D'],['aurora','Aurora'],['lava','Lava'],['galaxy','Galaxy'],['toxic','Toxic'],['glitter','Glitter'],['electric','Electric'],['blood','Blood'],['sunset','Sunset'],['ocean','Ocean'],['shadow','Long shadow']];
+const NFX=[['','Plain'],['gradient','Gradient'],['flow','Flowing'],['shimmer','Shimmer'],['neon','Neon'],['rainbow','Rainbow'],['fire','Fire'],['ice','Ice'],['pulse','Pulse'],['chrome','Chrome'],['gold','Gold'],['holo','Holo'],['glitch','Glitch'],['outline','Outline'],['retro','Retro 3D'],['aurora','Aurora'],['lava','Lava'],['galaxy','Galaxy'],['toxic','Toxic'],['glitter','Glitter'],['blood','Blood'],['sunset','Sunset'],['ocean','Ocean'],['shadow','Long shadow']];
 const GRADS=[['Sunset','#ff5c93','#ffc27a'],['Ocean','#00c6ff','#0072ff'],['Aurora','#4ff3c8','#7a8cff'],['Candy','#ff8fd8','#b79cff'],['Fire','#ff3d00','#ffd34d'],['Ice','#9be7ff','#ffffff'],['Forest','#56ab2f','#a8e063'],['Galaxy','#6c3cff','#ff5ca8'],['Peach','#ffb08a','#ffe0c4'],['Mint','#3fe0c5','#c9fff0'],['Lavender','#a98bff','#f0e8ff'],['Gold','#f7971e','#ffd200'],['Midnight','#141e30','#5c6bc0'],['Neon','#ff2bd6','#00e5ff'],['Rose','#e8a0bf','#fff0f6'],['Toxic','#7cff00','#00c853'],['Blood','#8b0000','#ff4d4d']];
 let pkHover=null,pkIO=null;
 const pickBuild=(selId,cls,list,tile)=>{const sel=$('#'+selId);if(!sel||sel.dataset.hz)return;sel.dataset.hz=1;
@@ -5117,8 +5117,8 @@ const _o=on;on=function(d){_o(d);if(d&&(d.t=='init'||d.t=='profiles')){devPaint(
 .bjHand h5 em{font-style:normal;background:#0006;padding:2px 9px;border-radius:99px;font-size:13px;letter-spacing:0}
 .bjCards{display:flex;gap:10px;flex-wrap:wrap;min-height:104px}
 .bjRes{text-align:center;font-size:22px;font-weight:900;text-shadow:0 2px 10px #000a}.bjRes.win{color:#86efac}.bjRes.lose{color:#fca5a5}
-.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{all:unset;cursor:pointer;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:12.5px;color:#fff;background:var(--k);
-  box-shadow:inset 0 0 0 4px #fff7,inset 0 0 0 7px var(--k),inset 0 0 0 8px #fff5,0 3px 8px #0008}.chip[aria-pressed=true]{outline:3px solid #fde047;outline-offset:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips .chip{all:unset;cursor:pointer;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:12.5px;color:#fff;background:var(--k);
+  box-shadow:inset 0 0 0 4px #fff7,inset 0 0 0 7px var(--k),inset 0 0 0 8px #fff5,0 3px 8px #0008}.chips .chip[aria-pressed=true]{outline:3px solid #fde047;outline-offset:2px}
 /* roulette */
 .rlWheelW{position:relative;width:min(340px,80vw);aspect-ratio:1;margin:0 auto}
 .rlWheel{width:100%;height:100%;transition:transform 4.2s cubic-bezier(.12,.75,.12,1)}
@@ -5246,7 +5246,7 @@ const IC={play:SV('<path d="M7 4.5v15l12-7.5z" fill="currentColor"/>'),pause:SV(
   x:SV('<path d="M6 6l12 12M18 6 6 18"/>'),min:SV('<path d="M5 12h14"/>'),up:SV('<path d="M6 15l6-6 6 6"/>')};
 const SUIT={S:'<svg viewBox="0 0 24 24"><path d="M12 2C9 7 4 9 4 14a4 4 0 0 0 7 2.6L10 21h4l-1-4.4A4 4 0 0 0 20 14c0-5-5-7-8-12z"/></svg>',H:'<svg viewBox="0 0 24 24"><path d="M12 21C6 16 2 12.6 2 8.5A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 10 2.5C22 12.6 18 16 12 21z"/></svg>',
   D:'<svg viewBox="0 0 24 24"><path d="M12 2l8 10-8 10-8-10z"/></svg>',C:'<svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4.2"/><circle cx="7" cy="13.5" r="4.2"/><circle cx="17" cy="13.5" r="4.2"/><path d="M11 13h2l1 8h-4z"/></svg>'};
-const card=c=>{if(c=='??')return '<span class="pcd back"></span>';const r=c[0]=='T'?'10':c[0],s=c[1];return `<span class="pcd${s=='H'||s=='D'?' red':''}"><b>${r}</b><i>${SUIT[s]}</i><span class="big">${SUIT[s]}</span></span>`};
+const card=c=>{if(c=='??')return '<span class="pcd back"></span>';const r=c[0]=='T'?'10':c[0],s=c[1];return `<span class="pcd${s=='H'||s=='D'?' red':''}"><b>${r}</b><i>${(window.hzSuit&&hzSuit(s))||SUIT[s]}</i><span class="big">${(window.hzSuit&&hzSuit(s))||SUIT[s]}</span></span>`};
 const money=n=>'$'+Math.round(n).toLocaleString('en-US');
 const upApp=async(file,kind)=>{const ext=(file.name.split('.').pop()||'').toLowerCase();const r=await fetch(base+'/appup?kind='+kind+'&ext='+encodeURIComponent(ext),{method:'POST',headers:{'x-token':HT||''},body:file});if(!r.ok)throw new Error(await r.text()||'Upload failed');return (await r.json()).url};
 const pickFile=accept=>new Promise(res=>{const i=document.createElement('input');i.type='file';i.accept=accept;i.onchange=()=>res(i.files[0]||null);i.click()});
@@ -5504,7 +5504,7 @@ const tcArt=spec=>{if(ARTC[spec])return ARTC[spec];const[,sd,col]=spec.split(':'
     `<rect width="${W}" height="${H}" fill="url(#s)"/><circle cx="${sunX}" cy="${sunY}" r="${sunR*3}" fill="url(#g)" opacity=".55"/><circle cx="${sunX}" cy="${sunY}" r="${sunR}" fill="${P[3]}" opacity=".9"/>`+
     `<path d="${ridge(R(90,120),18,7)}" fill="${P[1]}" opacity=".55"/><path d="${ridge(R(125,150),14,9)}" fill="${P[0]}" opacity=".75"/>${fg}</svg>`;
   return ARTC[spec]='data:image/svg+xml,'+encodeURIComponent(svg)};
-const tcArtCss=a=>!a?'':/^r:a\d{3}$/.test(a)?`style="background-image:url('${esc(base+'/cardart/'+a.slice(2)+'.jpg')}')"`:/^b2?:/.test(a)?`style="background-image:url('${(window.hzCardArt&&hzCardArt(a))||tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
+const tcArtCss=a=>!a?'':/^u:/.test(a)?`style="background-image:url('${esc(window.hzMyCardArt?hzMyCardArt(a.slice(2)):base+'/myart/cards/'+encodeURIComponent(a.slice(2)))}')"`:/^r:a\d{3}$/.test(a)?`style="background-image:url('${esc(base+'/cardart/'+a.slice(2)+'.jpg')}')"`:/^b2?:/.test(a)?`style="background-image:url('${(window.hzCardArt&&hzCardArt(a))||tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
 const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${c.holo?' holo':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN" style="--n:${Math.max(6,(c.name||'Card name').length)};--c:${(String(c.cost||'').match(/\d+|[RUGWBC]/g)||[]).length}"><span class="tcNm">${esc(c.name||'Card name')}</span><small class="tcCost">${tcCost(c.cost)}</small></div>
   <div class="tcA" ${tcArtCss(c.art)}>${c.art?'':'Card art'}${c.holo?'<b class="tcHolo">HOLO</b>':''}</div><div class="tcT"><span>${esc(c.type||'Type')}</span><i class="tcG ${esc(c.rarity||'common')}" title="${esc(c.rarity||'common')}"></i></div>
   <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1${c.value?' · worth '+Number(c.value).toLocaleString():''}${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
@@ -5518,7 +5518,7 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
     open:`<div class="v4Card" style="text-align:center;display:grid;gap:14px;justify-items:center"><img class="gart" src="${HG.art('cards')}" style="width:96px;height:96px"><div>${st.first&&st.free?'<b style="font-size:20px;display:block;margin-bottom:4px">Welcome! Your first pack is free and ready.</b>':''}<b style="font-size:18px">Packs have ${st.pack} card${st.pack==1?'':'s'}</b><div class="v4Mut">${st.free} unclaimed card${st.free==1?'':'s'} left · one pack every ${st.cd}h · cards can only be traded, never sold</div></div>
       <button class="hzB on" data-open${st.next||!st.free?' disabled':''} style="font-size:15px;padding:10px 22px">${st.next?'Next pack in '+left(st.next):!st.free?'All cards claimed':'Open a pack'}</button>
       ${tcGot?`<div class="tcReveal">${tcGot.map((id,i)=>{const c=st.cards.find(x=>x.id==id);return c?`<div class="tcFlip" style="animation-delay:${i*.25}s">${tcCard(c)}</div>`:''}).join('')}</div>`:''}</div>`,
-    all:`<div class="v4Row" style="margin-bottom:12px">${st.edit?'<button class="hzB" data-tdef>Add the default sets</button>':`<span class="v4Mut">${st.sealed||0} cards are still sealed in packs.</span>`}<span class="v4Mut">Show</span><select class="v4In" id="tcOw" style="max-width:260px"><option value="">Every card</option><option value="-"${tcOwner=='-'?' selected':''}>Still in packs</option>${st.people.concat([{o:oid,n:nm(oid)+' (you)'}]).map(p=>`<option value="${esc(p.o)}"${p.o==tcOwner?' selected':''}>${esc(p.n)}’s cards</option>`).join('')}</select></div><div class="tcGrid">${st.cards.filter(c=>!tcOwner||(tcOwner=='-'?!c.owner:c.owner==tcOwner)).map(c=>`<div style="display:grid;gap:22px;width:150px;align-content:start">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button>${c.owner?`<button class="hzB v4Grow" data-ret="${esc(c.id)}">Back to packs (${esc(c.on||'')})</button>`:'<span class="v4Mut v4Grow">Sealed in a pack</span>'}</div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
+    all:`<div class="v4Row" style="margin-bottom:12px">${st.edit?'<span class="v4Mut">Cards come from <b>My Art › Cards › cards.txt</b> on the host computer and update by themselves.</span>':`<span class="v4Mut">${st.sealed||0} cards are still sealed in packs.</span>`}<span class="v4Mut">Show</span><select class="v4In" id="tcOw" style="max-width:260px"><option value="">Every card</option><option value="-"${tcOwner=='-'?' selected':''}>Still in packs</option>${st.people.concat([{o:oid,n:nm(oid)+' (you)'}]).map(p=>`<option value="${esc(p.o)}"${p.o==tcOwner?' selected':''}>${esc(p.n)}’s cards</option>`).join('')}</select></div><div class="tcGrid">${st.cards.filter(c=>!tcOwner||(tcOwner=='-'?!c.owner:c.owner==tcOwner)).map(c=>`<div style="display:grid;gap:22px;width:150px;align-content:start">${tcCard(c,true)}${st.edit?`<div class="v4Row"><button class="hzB" data-ced="${esc(c.id)}">${HG('pencil')}</button>${c.owner?`<button class="hzB v4Grow" data-ret="${esc(c.id)}">Back to packs (${esc(c.on||'')})</button>`:'<span class="v4Mut v4Grow">Sealed in a pack</span>'}</div>`:''}</div>`).join('')||'<div class="v4Empty">No cards exist yet.'+(st.edit?' Make some in Create.':'')+'</div>'}</div>`,
     trade:`<div class="v4Card"><h4>Open offers</h4><div class="v4List">${st.trades.map(t=>{const nmz=ids=>ids.map(id=>esc((st.cards.find(c=>c.id==id)||{}).name||'?')).join(', ')||'nothing';return `<div class="v4Li"><div class="v4Grow">${t.from==oid?`You offer <b>${nmz(t.give)}</b> to ${esc(t.tn)} for <b>${nmz(t.get)}</b>`:`${esc(t.fn)} offers <b>${nmz(t.give)}</b> for your <b>${nmz(t.get)}</b>`}</div>${t.to==oid?`<button class="hzB on" data-tok="${esc(t.id)}">Accept</button><button class="hzB" data-tno="${esc(t.id)}">Decline</button>`:`<button class="hzB" data-tcan="${esc(t.id)}">Cancel</button>`}</div>`}).join('')||'<div class="v4Mut">No open offers.</div>'}</div></div>
       <div class="v4Card"><h4>Make an offer</h4><select class="v4In" id="tcTo"><option value="">Trade with…</option>${st.people.map(p=>`<option value="${esc(p.o)}"${p.o==tcOffer.to?' selected':''}>${esc(p.n)}</option>`).join('')}</select>
         <div class="v4Mut" style="margin:12px 0 6px">You give (click to pick)</div><div class="tcGrid">${mine.map(c=>`<div class="tcPick${tcOffer.give.includes(c.id)?' on':''}" data-tg="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">You have no cards.</span>'}</div>
@@ -5799,7 +5799,7 @@ const modeBar=(app,st)=>{const t=app=='blackjack'?(st.tt||{}):(st.tb||{}),n=app=
 const hookMode=(app,m,st)=>{const w=m.body.querySelector('.v4Wrap');if(w&&!w.querySelector('.csMode'))w.insertAdjacentHTML('afterbegin',modeBar(app,st));
   if(!m.body.dataset.cm){m.body.dataset.cm=1;m.body.addEventListener('click',e=>{const b=e.target.closest('[data-cmode]');if(!b)return;e.stopPropagation();mode[app]=b.dataset.cmode;const s=window.HZAS[cur];if(s)R[app].full(s,m)},true)}};
 const SUITP={S:'<svg viewBox="0 0 24 24"><path d="M12 2C9 7 4 9 4 14a4 4 0 0 0 7 2.6L10 21h4l-1-4.4A4 4 0 0 0 20 14c0-5-5-7-8-12z"/></svg>',H:'<svg viewBox="0 0 24 24"><path d="M12 21C6 16 2 12.6 2 8.5A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 10 2.5C22 12.6 18 16 12 21z"/></svg>',D:'<svg viewBox="0 0 24 24"><path d="M12 2l8 10-8 10-8-10z"/></svg>',C:'<svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4.2"/><circle cx="7" cy="13.5" r="4.2"/><circle cx="17" cy="13.5" r="4.2"/><path d="M11 13h2l1 8h-4z"/></svg>'};
-const pc=c=>{if(c=='??')return '<span class="pcd back"></span>';const r=c[0]=='T'?'10':c[0],s=c[1];return `<span class="pcd${s=='H'||s=='D'?' red':''}"><b>${r}</b><i>${SUITP[s]}</i><span class="big">${SUITP[s]}</span></span>`};
+const pc=c=>{if(c=='??')return '<span class="pcd back"></span>';const r=c[0]=='T'?'10':c[0],s=c[1];return `<span class="pcd${s=='H'||s=='D'?' red':''}"><b>${r}</b><i>${(window.hzSuit&&hzSuit(s))||SUITP[s]}</i><span class="big">${(window.hzSuit&&hzSuit(s))||SUITP[s]}</span></span>`};
 const money=n=>'$'+Math.round(n).toLocaleString('en-US');let tBet=5;
 const _bj=R.blackjack.full;
 R.blackjack.full=function(st,m){skew=(st.srv||Date.now())-Date.now();if(mode.blackjack!=='table'){_bj.call(this,st,m);hookMode('blackjack',m,st);return}
@@ -6426,13 +6426,114 @@ const iv=setInterval(()=>{if($('#gifP')){gSetup();if($('#gifP .gTabs'))clearInte
 const chime=()=>{try{const c=new AudioContext(),t=c.currentTime;[[784,0],[1046,.13]].forEach(([f,d])=>{const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.16,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.45);o.connect(g).connect(c.destination);o.start(t+d);o.stop(t+d+.5)});setTimeout(()=>c.close(),1200)}catch{}};
 let seen=0,hideT=0;
 const showAnn=d=>{if(!d||!d.text||d.ts===seen)return;seen=d.ts;let b=document.getElementById('hzAnn');
-  if(!b){b=document.createElement('div');b.id='hzAnn';b.setAttribute('role','alert');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><div><b>Announcement</b><p></p></div><button aria-label="Dismiss">✕</button>';
+  if(!b){b=document.createElement('div');b.id='hzAnn';b.setAttribute('role','alert');b.innerHTML=((window.hzMyIcon&&hzMyIcon('announce'))||'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>')+'<div><b>Announcement</b><p></p></div><button aria-label="Dismiss">✕</button>';
     b.querySelector('button').onclick=()=>b.classList.remove('on');document.body.appendChild(b)}
   b.querySelector('p').textContent=d.text;requestAnimationFrame(()=>b.classList.add('on'));chime();clearTimeout(hideT);hideT=setTimeout(()=>b.classList.remove('on'),30000)};
 const _on20=on;on=function(d){if(d&&d.t==='announce'){showAnn(d);return}return _on20.apply(this,arguments)};
 window.hzShowAnn=showAnn;
 })();
 </script>
+
+<style id="huddle-v22">
+/* ---------- Huddle v22: the host's own art (Huddle-Host\My Art) ---------- */
+/* line icons drawn by the host: one color, tinted like text (".color" files keep their own colors) */
+.myIc{display:inline-block;flex:none;width:1.15em;height:1.15em;vertical-align:-.2em}
+i.myIc{background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+img.myIc{object-fit:contain}
+.ic.myIc{width:18px;height:18px}
+#hzAnn .myIc{width:22px;height:22px;color:var(--ac)}
+/* card back */
+.hzMyBack .pkC .bk{background:var(--hzMyBack) center/cover no-repeat!important;box-shadow:0 10px 26px #0009!important}
+.hzMyBack .pkC .bk::before,.hzMyBack .pkC .bk img{display:none!important}
+/* profile card themes are pictures: fill the card */
+.pcard[data-th^="my:"] .pcIn{background-size:cover!important;background-position:center!important}
+#prof .pc[data-th^="my:"]{background-size:100% 420px,100% 420px,100% auto!important}
+.hzThG button[data-th^="my:"]{background-size:cover;background-position:center}
+</style>
+<script id="huddle-v22-js">
+(()=>{
+let MA={};
+const U=u=>base+u,nice=k=>k.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim().replace(/\b\w/g,c=>c.toUpperCase());
+const IC0=window.HG,LOGO0=window.LOGO;
+const ARTK=['text','voice','friends','community','showcase','duo','hufi','blackjack','roulette','gifbot','levels','eco','cards','antispam','builder','afk','stages','stickers','scribble','checkers','one','puzzle','huroler','hullo','modpro','stats','leaders','image','discord'];
+/* ---------- icons ---------- */
+const lineOf=n=>{const L=MA.line||{},k=String(n).toLowerCase();return L[k+'.color']?{u:L[k+'.color'],c:1}:L[k]?{u:L[k]}:null};
+const icon=(n,cls='gi gi-'+n)=>{const x=lineOf(n);if(!x)return '';const u=esc(U(x.u));
+  return x.c?`<img class="${cls} myIc" data-u="${u}" src="${u}" alt="" aria-hidden="true" draggable="false">`:`<i class="${cls} myIc" data-u="${u}" style="--m:url(&quot;${u}&quot;)" aria-hidden="true"></i>`};
+const HGN=window.HG=n=>icon(n)||IC0(n);Object.assign(HGN,IC0);
+HGN.art=k=>{const u=(MA.art||{})[String(k).toLowerCase()];return u?U(u):IC0.art(k)};
+HGN.img=(k,cls)=>{const u=(MA.art||{})[String(k).toLowerCase()];return u?`<img class="${cls||'gart'}" src="${esc(U(u))}" alt="" draggable="false">`:IC0.img(k,cls)};
+HGN.medal=i=>{const u=(MA.medal||{})['medal-'+(i+1)];return u?`<img class="gmed" src="${esc(U(u))}" alt="#${i+1}">`:IC0.medal(i)};
+HGN.crown=()=>{const u=(MA.medal||{}).crown;return u?`<img class="gcrown" src="${esc(U(u))}" alt="">`:IC0.crown()};
+window.hzMyIcon=n=>icon(n,'myTop');
+window.hzSuit=s=>{const u=(MA.suit||{})[{S:'spades',H:'hearts',D:'diamonds',C:'clubs'}[s]];return u?`<img src="${esc(U(u))}" alt="" style="width:100%;height:100%;object-fit:contain">`:''};
+window.hzMyCardArt=f=>U((MA.cards||{})[f]||'/myart/cards/'+encodeURIComponent(f));
+/* ---------- avatar decorations and profile card themes: only the host's art (Profile folder) ---------- */
+const pers=()=>{for(const k of Object.keys(HZDECO))delete HZDECO[k];for(const k of Object.keys(HZDECO_OLD))delete HZDECO_OLD[k];
+  Object.entries(MA.dec||{}).forEach(([k,u])=>HZDECO['my:'+k]={n:nice(k),s:`<image href="${esc(U(u))}" x="-20" y="-30" width="140" height="150" preserveAspectRatio="xMidYMid meet"/>`});
+  HZTHEMES.length=0;Object.entries(MA.th||{}).forEach(([k,u])=>HZTHEMES.push(['my:'+k,nice(k),`url("${U(u)}")`,'var(--ac)']));
+  const st=document.getElementById('hz-themes');if(st)st.textContent=HZTHEMES.map(([id,,bg,gl])=>`[data-th="${id}"]{--thb:${bg};--thg:${gl}}`).join('\n')};
+pers();
+/* ---------- swap what is already on screen ---------- */
+const TOP={srch:'search',bell:'bell'},topOrig={};
+const refresh=()=>{
+  document.querySelectorAll('.gi').forEach(e=>{const m=/(?:^|\s)gi-([A-Za-z0-9]+)/.exec(e.getAttribute('class')||'');if(!m)return;const x=lineOf(m[1]),mine=e.classList.contains('myIc');
+    if(x?(!mine||e.dataset.u!==U(x.u)):mine)e.outerHTML=HG(m[1])});
+  const art=new Map();ARTK.forEach(k=>{art.set(IC0.art(k),k);if(MA.old&&MA.old[k])art.set(MA.old[k],k)});
+  document.querySelectorAll('img').forEach(i=>{const k=art.get(i.getAttribute('src'));if(k){const s=HG.art(k);if(i.getAttribute('src')!==s)i.setAttribute('src',s)}});
+  for(const [id,n] of Object.entries(TOP)){const b=document.getElementById(id);if(!b)continue;const e=b.querySelector('.ic');if(!e)continue;if(!topOrig[id]&&!e.classList.contains('myIc'))topOrig[id]=e.outerHTML;
+    const h=icon(n,'ic');if(h)e.outerHTML=h;else if(e.classList.contains('myIc')&&topOrig[id])e.outerHTML=topOrig[id]}
+  window.LOGO=(MA.logo||{}).logo?U(MA.logo.logo):LOGO0;document.querySelectorAll('#lgo,img.hl').forEach(i=>{if(i.getAttribute('src')!==LOGO)i.setAttribute('src',LOGO)});
+  const bk=Object.values(MA.back||{})[0],r=document.documentElement;r.classList.toggle('hzMyBack',!!bk);if(bk)r.style.setProperty('--hzMyBack',`url("${U(bk)}")`);else r.style.removeProperty('--hzMyBack');
+  document.querySelectorAll('.hzDec').forEach(e=>{if(!e.closest('.hzDecG'))e.remove()});if(window.persCss)persCss()};
+const load=a=>{if(!a||typeof a!='object')return;const old={};ARTK.forEach(k=>{const u=(MA.art||{})[k.toLowerCase()];if(u)old[k]=U(u)});MA={old};
+  for(const k of ['cards','back'])MA[k]={...(a[k]||{})};
+  for(const k of ['line','art','medal','suit','logo','dec','th']){MA[k]={};Object.entries(a[k]||{}).forEach(([f,u])=>{let s=f.replace(/\.[^.]+$/,'');if(k!='dec'&&k!='th')s=s.toLowerCase();if(!(s in MA[k]))MA[k][s]=u})}
+  window.HZMA=MA;pers();refresh()};
+const _on22=on;on=function(d){if(d&&d.t==='myart'){load(d.a);return}if(d&&d.t==='init'&&d.myart)load(d.myart);return _on22.apply(this,arguments)};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
