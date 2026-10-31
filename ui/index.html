@@ -5505,14 +5505,14 @@ const tcArt=spec=>{if(ARTC[spec])return ARTC[spec];const[,sd,col]=spec.split(':'
     `<path d="${ridge(R(90,120),18,7)}" fill="${P[1]}" opacity=".55"/><path d="${ridge(R(125,150),14,9)}" fill="${P[0]}" opacity=".75"/>${fg}</svg>`;
   return ARTC[spec]='data:image/svg+xml,'+encodeURIComponent(svg)};
 const tcArtCss=a=>!a?'':/^u:/.test(a)?`style="background-image:url('${esc(window.hzMyCardArt?hzMyCardArt(a.slice(2)):base+'/myart/cards/'+encodeURIComponent(a.slice(2)))}')"`:/^r:a\d{3}$/.test(a)?`style="background-image:url('${esc(base+'/cardart/'+a.slice(2)+'.jpg')}')"`:/^b2?:/.test(a)?`style="background-image:url('${(window.hzCardArt&&hzCardArt(a))||tcArt(a)}')"`:`style="background-image:url('${esc(base+a)}')"`;
-const tcCard=(c,sm,extra='')=>`<div class="tcc${sm?' sm':''}${c.holo?' holo':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN" style="--n:${Math.max(6,(c.name||'Card name').length)};--c:${(String(c.cost||'').match(/\d+|[RUGWBC]/g)||[]).length}"><span class="tcNm">${esc(c.name||'Card name')}</span><small class="tcCost">${tcCost(c.cost)}</small></div>
+const tcCard=(c,sm,extra='')=>window.hzCard?hzCard(c,sm,extra):`<div class="tcc${sm?' sm':''}${c.holo?' holo':''}${extra}" style="--f:${esc(c.frame||'#8b6bff')}" data-card="${esc(c.id||'')}"><div class="tcN" style="--n:${Math.max(6,(c.name||'Card name').length)};--c:${(String(c.cost||'').match(/\d+|[RUGWBC]/g)||[]).length}"><span class="tcNm">${esc(c.name||'Card name')}</span><small class="tcCost">${tcCost(c.cost)}</small></div>
   <div class="tcA" ${tcArtCss(c.art)}>${c.art?'':'Card art'}${c.holo?'<b class="tcHolo">HOLO</b>':''}</div><div class="tcT"><span>${esc(c.type||'Type')}</span><i class="tcG ${esc(c.rarity||'common')}" title="${esc(c.rarity||'common')}"></i></div>
   <div class="tcX">${esc(c.text||'')}${c.flavor?`<span class="tcF">${esc(c.flavor)}</span>`:''}</div>${c.pow||c.tou?`<span class="tcPT">${esc(c.pow||0)}/${esc(c.tou||0)}</span>`:''}${c.serial?`<span class="tcS">#${c.serial} · 1 of 1${c.value?' · worth '+Number(c.value).toLocaleString():''}${c.on?' · '+esc(c.on):''}</span>`:''}</div>`;
 window.hzTcCard=c=>tcCard(c);
 let tcDraft=null,tcGot=null,tcOffer={to:'',give:[],get:[]};
 let tcOwner='';
 R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st.free?'open':'mine';const tab=sel.cards,mine=st.cards.filter(c=>c.owner==oid),theirs=st.cards.filter(c=>c.owner==tcOffer.to&&tcOffer.to);
-  const dr=tcDraft||{rarity:'common',frame:'#8b6bff'};
+  const dr=tcDraft||{rarity:'common',el:'astral'};
   const body={
     mine:mine.length?`<div class="tcGrid">${mine.map(c=>tcCard(c)).join('')}</div>`:'<div class="v4Empty">You don’t own any cards yet. Open a pack!</div>',
     open:`<div class="v4Card" style="text-align:center;display:grid;gap:14px;justify-items:center"><img class="gart" src="${HG.art('cards')}" style="width:96px;height:96px"><div>${st.first&&st.free?'<b style="font-size:20px;display:block;margin-bottom:4px">Welcome! Your first pack is free and ready.</b>':''}<b style="font-size:18px">Packs have ${st.pack} card${st.pack==1?'':'s'}</b><div class="v4Mut">${st.free} unclaimed card${st.free==1?'':'s'} left · one pack every ${st.cd}h · cards can only be traded, never sold</div></div>
@@ -5524,10 +5524,12 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
         <div class="v4Mut" style="margin:12px 0 6px">You give (click to pick)</div><div class="tcGrid">${mine.map(c=>`<div class="tcPick${tcOffer.give.includes(c.id)?' on':''}" data-tg="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">You have no cards.</span>'}</div>
         ${tcOffer.to?`<div class="v4Mut" style="margin:26px 0 6px">You get</div><div class="tcGrid">${theirs.map(c=>`<div class="tcPick${tcOffer.get.includes(c.id)?' on':''}" data-tw="${esc(c.id)}">${tcCard(c,true)}</div>`).join('')||'<span class="v4Mut">They have no cards.</span>'}</div>`:''}
         <div class="v4Row" style="justify-content:flex-end;margin-top:26px"><button class="hzB on" data-toffer${tcOffer.to?'':' disabled'}>Send offer</button></div></div>`,
-    make:st.edit?`<div class="v4Two"><div class="v4Card"><h4>${dr.id?'Edit card':'Create a card'}</h4><div class="v4Form" id="tcF"><label>Name<input data-k="name" maxlength="40" value="${esc(dr.name||'')}"></label><label>Cost<input data-k="cost" maxlength="12" value="${esc(dr.cost||'')}" placeholder="3 + 2"></label>
-        <label>Type line<input data-k="type" maxlength="50" value="${esc(dr.type||'')}" placeholder="Creature: Dragon"></label><label>Rarity<select data-k="rarity">${['common','uncommon','rare','mythic'].map(r=>`<option${r==dr.rarity?' selected':''}>${r}</option>`).join('')}</select></label>
-        <label>Frame color<input data-k="frame" type="color" value="${esc(dr.frame||'#8b6bff')}"></label><label>Set<input data-k="set" maxlength="20" value="${esc(dr.set||'')}"></label><label>Value (what it is worth)<input data-k="value" type="number" min="0" value="${esc(dr.value??'')}"></label><label>Holographic<select data-k="holo"><option value="false">No</option><option value="true"${dr.holo===true||dr.holo==='true'?' selected':''}>Yes, foil</option></select></label><label>Power<input data-k="pow" maxlength="4" value="${esc(dr.pow||'')}"></label><label>Toughness<input data-k="tou" maxlength="4" value="${esc(dr.tou||'')}"></label>
-        <label style="grid-column:1/-1">Rules text<textarea data-k="text" maxlength="400">${esc(dr.text||'')}</textarea></label><label style="grid-column:1/-1">Flavor text<input data-k="flavor" maxlength="200" value="${esc(dr.flavor||'')}"></label></div>
+    make:st.edit?`<div class="v4Two"><div class="v4Card"><h4>${dr.id?'Edit card':'Create a card'}</h4><div class="v4Form" id="tcF"><label>Name<input data-k="name" maxlength="40" value="${esc(dr.name||'')}"></label><label>HP<input data-k="hp" type="number" min="1" max="9999" value="${esc(dr.hp??'')}" placeholder="120"></label><label>Type<select data-k="el">${['astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.el||'astral')?' selected':''}>${t[0].toUpperCase()+t.slice(1)}</option>`).join('')}</select></label><label>Stage<input data-k="stage" maxlength="20" value="${esc(dr.stage||'')}" placeholder="Basic"></label>
+        <label>Rarity<select data-k="rarity">${['common','uncommon','rare','mythic'].map(r=>`<option${r==dr.rarity?' selected':''}>${r}</option>`).join('')}</select></label><label>Holographic<select data-k="holo"><option value="false">No</option><option value="true"${dr.holo===true||dr.holo==='true'?' selected':''}>Yes, foil</option></select></label><label>Value (what it is worth)<input data-k="value" type="number" min="0" value="${esc(dr.value??'')}"></label><label>Set<input data-k="set" maxlength="20" value="${esc(dr.set||'')}"></label>
+        <label style="grid-column:1/-1">Ability (optional)<input data-k="a1n" maxlength="30" value="${esc(dr.a1n||'')}" placeholder="Ability name"></label><label style="grid-column:1/-1">Ability text<textarea data-k="a1t" maxlength="300">${esc(dr.a1t||'')}</textarea></label>
+        ${[1,2].map(i=>`<label>Attack ${i} cost<input data-k="k${i}c" maxlength="8" value="${esc(dr['k'+i+'c']||'')}" placeholder="SS*"></label><label>Attack ${i} name<input data-k="k${i}n" maxlength="30" value="${esc(dr['k'+i+'n']||'')}"></label><label>Damage<input data-k="k${i}d" maxlength="6" value="${esc(dr['k'+i+'d']||'')}" placeholder="60"></label><label style="grid-column:1/-1">Attack ${i} text<input data-k="k${i}t" maxlength="300" value="${esc(dr['k'+i+'t']||'')}"></label>`).join('')}
+        <label>Weakness<select data-k="we">${['','astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.we||'')?' selected':''}>${t?t[0].toUpperCase()+t.slice(1):'None'}</option>`).join('')}</select></label><label>Weakness amount<input data-k="wv" maxlength="5" value="${esc(dr.wv||'')}" placeholder="×2"></label><label>Resistance<select data-k="re">${['','astral','void','lunar','solar'].map(t=>`<option value="${t}"${t==(dr.re||'')?' selected':''}>${t?t[0].toUpperCase()+t.slice(1):'None'}</option>`).join('')}</select></label><label>Resistance amount<input data-k="rv" maxlength="5" value="${esc(dr.rv||'')}" placeholder="-30"></label><label>Retreat cost<input data-k="ret" type="number" min="0" max="5" value="${esc(dr.ret??'')}" placeholder="1"></label><label>Artist<input data-k="artist" maxlength="30" value="${esc(dr.artist||'')}"></label>
+        <label style="grid-column:1/-1">Description (optional)<textarea data-k="text" maxlength="400">${esc(dr.text||'')}</textarea></label><label style="grid-column:1/-1">Flavor text<input data-k="flavor" maxlength="200" value="${esc(dr.flavor||'')}"></label><p class="v4Mut" style="grid-column:1/-1;margin:0">Attack cost letters: S solar, L lunar, A astral, V void, * any type. A number means that many of the card’s own type.</p></div>
         <div class="v4Row" style="margin-top:10px"><button class="hzB" data-tart>${HG('image')}${dr.art?'Change art':'Upload art'}</button><span class="v4Grow"></span>${dr.id?`<button class="hzB bad" data-tdel="${esc(dr.id)}">Delete</button><button class="hzB" data-tx>Cancel</button>`:''}<button class="hzB on" data-tsave>${dr.id?'Save card':'Create card'}</button></div></div>
       <div class="v4Card" style="display:grid;justify-items:center;align-content:start;gap:12px"><h4 style="justify-self:stretch">Preview</h4><div id="tcPrev">${tcCard(dr)}</div><p class="v4Mut" style="margin:0;text-align:center">Every card is one of one: only one person can own it.</p></div></div>
       <div class="v4Card"><h4>Packs</h4><div class="v4Form"><label>Cards per pack<input id="tcPk" type="number" min="1" max="10" value="${st.pack}"></label><label>Hours between packs<input id="tcCd" type="number" min="0" value="${st.cd}"></label></div><div class="v4Row" style="justify-content:flex-end;margin-top:8px"><button class="hzB on" data-tpk>Save</button></div></div>${mgrBox(st,'Trading Cards')}`:'',
@@ -5543,11 +5545,11 @@ R.cards={full(st,m){m.body.className='hzAB';if(!sel.cards)sel.cards=st.first&&st
     if(d.tw){const a=tcOffer.get,i=a.indexOf(d.tw);i>=0?a.splice(i,1):a.push(d.tw);return R.cards.full(st,m)}
     if(d.toffer!==undefined){A('offer',tcOffer);tcOffer={to:'',give:[],get:[]};return toast('Offer sent.',true)}
     if(d.ret){hzAsk('Put this card back into the packs? Its owner loses it.').then(y=>y&&A('grant',{id:d.ret,o:''}));return}if(d.tok)return A('trade',{id:d.tok,ok:true});if(d.tno)return A('trade',{id:d.tno,ok:false});if(d.tcan)return A('trade',{id:d.tcan,ok:'cancel'});
-    if(d.ced){tcDraft={...st.cards.find(c=>c.id==d.ced)};sel.cards='make';return R.cards.full(st,m)}
+    if(d.ced){const c0=st.cards.find(c=>c.id==d.ced);tcDraft=window.hzCardFlat?hzCardFlat(c0):{...c0};sel.cards='make';return R.cards.full(st,m)}
     if(d.tx!==undefined){tcDraft=null;return R.cards.full(st,m)}
     if(d.tdel){if(await hzAsk('Delete this card? Whoever owns it loses it.')){A('cdel',{id:d.tdel});tcDraft=null}return}
     if(d.tart!==undefined){const fl=await pickFile('image/*');if(!fl)return;try{tcDraft={...dr,...(tcDraft||{}),art:await upApp(fl,'img')};R.cards.full(st,m)}catch(er){toast(er.message)}return}
-    if(d.tsave!==undefined){const x={...dr,...(tcDraft||{})};A('card',{...x,value:x.value===''||x.value==null?undefined:+x.value,holo:x.holo===true||x.holo==='true'});tcDraft=null;return toast('Card saved.',true)}
+    if(d.tsave!==undefined){const x={...dr,...(tcDraft||{})};A('card',window.hzCardOut?hzCardOut(x):{...x,value:x.value===''||x.value==null?undefined:+x.value,holo:x.holo===true||x.holo==='true'});tcDraft=null;return toast('Card saved.',true)}
     if(d.tpk!==undefined){A('packcfg',{pack:+$('#tcPk').value,cd:+$('#tcCd').value});return toast('Saved.',true)}}},
   ev(st,ev,m){if(ev.k=='pack'&&ev.o==oid){tcGot=ev.got;sel.cards='open';if(m)send({t:'app',ch:m.ch,a:'get'})}}};
 /* ================= Anti-Spam ================= */
@@ -6488,11 +6490,300 @@ const refresh=()=>{
   document.querySelectorAll('.hzDec').forEach(e=>{if(!e.closest('.hzDecG'))e.remove()});if(window.persCss)persCss()};
 const load=a=>{if(!a||typeof a!='object')return;const old={};ARTK.forEach(k=>{const u=(MA.art||{})[k.toLowerCase()];if(u)old[k]=U(u)});MA={old};
   for(const k of ['cards','back'])MA[k]={...(a[k]||{})};
-  for(const k of ['line','art','medal','suit','logo','dec','th']){MA[k]={};Object.entries(a[k]||{}).forEach(([f,u])=>{let s=f.replace(/\.[^.]+$/,'');if(k!='dec'&&k!='th')s=s.toLowerCase();if(!(s in MA[k]))MA[k][s]=u})}
+  for(const k of ['line','art','medal','suit','logo','type','dec','th']){MA[k]={};Object.entries(a[k]||{}).forEach(([f,u])=>{let s=f.replace(/\.[^.]+$/,'');if(k!='dec'&&k!='th')s=s.toLowerCase();if(!(s in MA[k]))MA[k][s]=u})}
   window.HZMA=MA;pers();refresh()};
 const _on22=on;on=function(d){if(d&&d.t==='myart'){load(d.a);return}if(d&&d.t==='init'&&d.myart)load(d.myart);return _on22.apply(this,arguments)};
 })();
 </script>
+
+<style id="huddle-v23">
+/* ---------- Huddle v23: full-art cards (HP, four types, abilities and attacks), a shiny grey border, a realistic pack ---------- */
+.hcd{--w:220px;width:var(--w);aspect-ratio:63/88;position:relative;flex:none;container-type:inline-size;border-radius:4.6%/3.3%;cursor:pointer;user-select:none;-webkit-user-select:none;
+  transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .45s cubic-bezier(.2,.8,.2,1);
+  background:linear-gradient(calc(112deg + var(--ry,0deg) * 2),#fff0 calc(26% + var(--sx,0%)),#ffffffb8 calc(40% + var(--sx,0%)),#fff0 calc(54% + var(--sx,0%))),
+    repeating-linear-gradient(91deg,#ffffff14 0 .6px,#0000000f .6px 1.3px,#ffffff0a 1.3px 2.2px),
+    linear-gradient(158deg,#fafbfc 0%,#c4c9d0 13%,#eef0f3 26%,#8c939c 44%,#d6dade 59%,#99a0a9 75%,#e9ecef 90%,#b2b8c0 100%);
+  box-shadow:inset 0 0 0 1px #ffffffd9,inset 0 0 0 1.6px #5b626c80,inset 1px 1px 1px 1.6px #ffffff73,0 1px 1px #0007,0 6px 14px #0006,0 18px 34px #0004}
+.hcd.sm{--w:150px}
+.hcd.tilt{transition:transform .08s linear}
+.hcd::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;opacity:0;transition:opacity .3s;mix-blend-mode:soft-light;
+  background:radial-gradient(farthest-corner circle at var(--mx,50%) var(--my,30%),#ffffffa6,#fff0 48%)}
+.hcd.tilt::after{opacity:1}
+.hcd.holo::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:color-dodge;opacity:.32;
+  background:linear-gradient(125deg,#ff8ad8,#ffe48a,#8affc9,#8ad8ff,#c78aff,#ff8ad8);background-size:300% 300%;background-position:var(--mx,30%) var(--my,30%)}
+.hcW{position:absolute;inset:4.3cqw;border-radius:2.3cqw;overflow:hidden;background:radial-gradient(120% 90% at 50% 30%,#2b2540,#0d0b16);z-index:1;
+  box-shadow:0 0 0 .35cqw #000000a6,0 0 0 .75cqw #ffffff5e,0 0 1.4cqw .3cqw #0006}
+.hcArt{position:absolute;inset:0;background:center/cover no-repeat;display:grid;place-items:center}
+.hcArt .hcE.wm{font-size:34cqw;opacity:.18;filter:grayscale(.2)}
+.hcSh{position:absolute;inset:0;pointer-events:none;background:linear-gradient(#000000b3 0%,#0000 21%),linear-gradient(#0000 40%,#000000b8 66%,#000000eb 100%)}
+.hcHolo{position:absolute;inset:0;pointer-events:none;mix-blend-mode:color-dodge;opacity:.55;filter:brightness(.75) contrast(1.35);
+  background:repeating-linear-gradient(112deg,#ff5f9e 0%,#ffe066 6%,#6bffb8 12%,#5ec8ff 18%,#c27bff 24%,#ff5f9e 30%),radial-gradient(circle at 30% 20%,#ffffff26 0 1px,#0000 1.5px);
+  background-size:400% 400%,7px 7px;background-position:var(--mx,40%) var(--my,40%),0 0}
+.hcTop{position:absolute;left:3cqw;right:2.6cqw;top:2.4cqw;display:flex;align-items:center;gap:1.6cqw;color:#fff;text-shadow:0 .25cqw .6cqw #000,0 0 .3cqw #000}
+.hcSt{flex:none;font:800 2.5cqw/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:.9cqw 1.6cqw;border-radius:1cqw;color:#1f2937;text-shadow:none;
+  background:linear-gradient(#f4f5f7,#aab1ba);box-shadow:inset 0 0 0 .25cqw #ffffffb0,0 .3cqw .8cqw #0008}
+.hcNm{flex:1;min-width:0;font:800 7.4cqw/1.05 "Segoe UI",system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
+.hcHp{flex:none;font:900 7cqw/1 "Segoe UI",system-ui,sans-serif;display:flex;align-items:baseline;gap:.6cqw}.hcHp small{font-size:3.3cqw;font-weight:800}
+.hcTop>.hcE{font-size:7.6cqw}
+.hcE{display:inline-grid;place-items:center;width:1em;height:1em;border-radius:50%;flex:none;vertical-align:middle;
+  box-shadow:inset 0 -.12em .16em #0006,inset 0 .1em .12em #ffffffa6,0 0 0 .05em #0009,0 .05em .12em #0008}
+.hcE svg{width:68%;height:68%;fill:#fff;filter:drop-shadow(0 .03em .02em #0008)}
+.hcE.e-solar{background:radial-gradient(circle at 35% 30%,#fff3b0,#fbbf24 45%,#d9480f)}
+.hcE.e-lunar{background:radial-gradient(circle at 35% 30%,#f0f7ff,#9cc3ee 45%,#36507e)}
+.hcE.e-astral{background:radial-gradient(circle at 35% 30%,#ffe4fb,#d38cff 45%,#5b2bb5)}
+.hcE.e-void{background:radial-gradient(circle at 35% 30%,#7b5cc4,#2a1650 52%,#07040f)}.hcE.e-void svg{fill:#dccbff}
+.hcE.e-any{background:radial-gradient(circle at 35% 30%,#fafafa,#b4b4bc 50%,#6b6b74)}
+.hcE.my{box-shadow:none;background:none}.hcE.my img{width:100%;height:100%;object-fit:contain}
+.hcBody{position:absolute;left:3.6cqw;right:3.6cqw;bottom:2.4cqw;display:flex;flex-direction:column;gap:1.5cqw;color:#fff;font:500 3.3cqw/1.28 "Segoe UI",system-ui,sans-serif;
+  text-shadow:0 .2cqw .5cqw #000,0 0 .25cqw #000}
+.hcBody p{margin:.6cqw 0 0}
+.hcAb,.hcAt{padding-bottom:1.3cqw;border-bottom:.25cqw solid #ffffff2e}
+.hcRow{display:flex;align-items:center;gap:1.5cqw}.hcRow b{flex:1;min-width:0;font:800 5cqw/1.1 "Segoe UI",system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hcAbT{flex:none;font:900 2.6cqw/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:.8cqw 1.5cqw;border-radius:99px;text-shadow:none;color:#fff;
+  background:linear-gradient(#ef4444,#991b1b);box-shadow:inset 0 0 0 .25cqw #fecaca88,0 .2cqw .6cqw #0008}
+.hcAb b{color:#fecaca}
+.hcCost{display:flex;gap:.6cqw;flex:none;min-width:5cqw}.hcCost .hcE{font-size:4.6cqw}
+.hcDmg{flex:none;font:900 6.2cqw/1 "Segoe UI",system-ui,sans-serif}
+.hcTx{margin:0}
+.hcWr{display:flex;justify-content:space-between;gap:1.5cqw;font:700 3.6cqw/1 system-ui,sans-serif}
+.hcWr span{display:flex;align-items:center;gap:.8cqw}.hcWr small{font:700 2.3cqw/1 system-ui,sans-serif;text-transform:lowercase;opacity:.75;margin-right:.4cqw}.hcWr .hcE{font-size:4cqw}
+.hcFl{margin:0;font:italic 500 2.9cqw/1.3 Georgia,serif;opacity:.85}
+.hcFt{display:flex;justify-content:space-between;align-items:center;font:600 2.3cqw/1 system-ui,sans-serif;opacity:.8}
+.hcR{display:inline-block;width:2.6cqw;height:2.6cqw;margin-left:1.2cqw;vertical-align:-.4cqw;background:#fff;box-shadow:0 0 .4cqw #000}
+.hcR.common{border-radius:50%}.hcR.uncommon{transform:rotate(45deg) scale(.82)}
+.hcR.rare,.hcR.mythic{box-shadow:none;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.hcR.mythic{background:linear-gradient(#fde68a,#f59e0b);width:3.2cqw;height:3.2cqw}
+.hcd.sm .hcBody p,.hcd.sm .hcFl,.hcd.sm .hcFt span:first-child{display:none}.hcd.sm .hcBody{gap:1.2cqw}
+.hcMeta{position:absolute;left:2px;top:calc(100% + 5px);white-space:nowrap;font:600 10.5px system-ui;color:var(--dim)}
+/* card back: silver border, guilloche pattern, the four type symbols around the Huddle mark */
+.hcBk .hcW{background:radial-gradient(circle at 50% 50%,#3a2c7c 0,#1a1342 46%,#0a0820 100%)}
+.hcBkIn{position:absolute;inset:0;display:grid;place-items:center;
+  background:repeating-radial-gradient(circle at 50% 50%,#ffffff12 0 .35cqw,#0000 .35cqw 3.2cqw),repeating-conic-gradient(from 0deg at 50% 50%,#ffffff0d 0 2.5deg,#0000 2.5deg 7.5deg),
+    radial-gradient(circle at 50% 50%,#0000 50%,#00000080 100%)}
+.hcBkRing{position:absolute;width:62cqw;height:62cqw}.hcBkRing .hcE{position:absolute;font-size:12cqw;left:50%;top:50%;margin:-.5em}
+.hcBkRing .hcE:nth-child(1){transform:translateY(-27cqw)}.hcBkRing .hcE:nth-child(2){transform:translateX(27cqw)}.hcBkRing .hcE:nth-child(3){transform:translateY(27cqw)}.hcBkRing .hcE:nth-child(4){transform:translateX(-27cqw)}
+.hcBkMark{position:relative;width:38cqw;height:38cqw;border-radius:50%;display:grid;place-content:center;text-align:center;color:#e5e7eb;
+  background:radial-gradient(circle at 40% 35%,#2d2266,#0d0a24 70%);box-shadow:0 0 0 1.2cqw #b9bec6,0 0 0 1.6cqw #6b7280,0 0 0 2.4cqw #e5e7eb66,0 0 4cqw 2cqw #0009}
+.hcBkMark b{font:900 7cqw/1 "Segoe UI Black","Segoe UI",system-ui,sans-serif;letter-spacing:.08em;background:linear-gradient(#fff,#a8b0bb);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hcBkMark small{font:800 2.2cqw/1.2 system-ui,sans-serif;letter-spacing:.18em;margin-top:1.2cqw;opacity:.8}
+.hzMyBack .hcBk .hcBkIn{background:var(--hzMyBack) center/cover no-repeat}.hzMyBack .hcBk .hcBkRing,.hzMyBack .hcBk .hcBkMark{display:none}
+/* card list / trade grids */
+.tcGrid .hcd{margin-bottom:6px}.tcPick{border-radius:12px}
+/* zoom */
+#hcZoom{position:fixed;inset:0;z-index:2147482000;display:grid;place-items:center;background:#000c;backdrop-filter:blur(6px);animation:hcZin .25s ease-out}
+#hcZoom .hcd{--w:min(440px,calc(86vh * 63 / 88),92vw);cursor:default}
+@keyframes hcZin{from{opacity:0}}
+/* ---------- the pack ---------- */
+.hpSt{display:grid;justify-items:center;gap:12px;padding:12px 10px 26px;user-select:none;-webkit-user-select:none;position:relative}
+.hpInfo{text-align:center}.hpInfo b{display:block;font-size:20px}.hpInfo small{color:var(--dim);font-size:13px}
+.hpScene{position:relative;width:min(560px,100%);height:470px;display:grid;place-items:center;perspective:1100px;
+  background:radial-gradient(closest-side at 50% 55%,#ffffff12,#0000 70%)}
+.hpFloat{animation:hpFloat 4.5s ease-in-out infinite}
+@keyframes hpFloat{50%{transform:translateY(-8px)}}
+.hpPack{--prx:0deg;--pry:0deg;--px:50%;position:relative;width:250px;height:400px;transform-style:preserve-3d;transform:rotateX(var(--prx)) rotateY(var(--pry));transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  filter:drop-shadow(0 26px 30px #000b) drop-shadow(0 4px 6px #0008)}
+.hpPack.tilt{transition:transform .1s linear}
+.hpPack.locked{filter:grayscale(.75) brightness(.5) drop-shadow(0 26px 30px #000b)}
+.hpBody,.hpCap{position:absolute;left:0;right:0;overflow:hidden;
+  background:radial-gradient(120% 70% at 28% 18%,#5b49a8 0%,#251c5c 38%,#0f0c27 78%,#07060f 100%)}
+.hpBody{top:0;bottom:0;border-radius:3px;clip-path:var(--bodyClip,inset(34px 0 0 0));
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/12px 7px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 6px) no-repeat;
+  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/12px 7px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 6px) no-repeat}
+.hpCap{top:0;height:46px;background-size:100% 400px;background-position:top;clip-path:var(--capClip,inset(0 0 12px 0));transform-origin:100% 34px;z-index:2;
+  -webkit-mask:conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/12px 7px repeat-x,linear-gradient(#000 0 0) bottom/100% calc(100% - 6px) no-repeat;
+  mask:conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/12px 7px repeat-x,linear-gradient(#000 0 0) bottom/100% calc(100% - 6px) no-repeat}
+.hpCrimp{position:absolute;left:0;right:0;height:24px;pointer-events:none;
+  background:linear-gradient(#ffffff40,#0000 40%,#00000059),repeating-linear-gradient(90deg,#d9dde3 0 2px,#7d848f 2px 3.5px,#b9bec6 3.5px 5px);opacity:.92}
+.hpCap .hpCrimp{top:0}.hpBody .hpCrimp{bottom:0}
+.hpFoil,.hpIri,.hpWr,.hpSheen{position:absolute;inset:0;pointer-events:none}
+.hpFoil{background:repeating-linear-gradient(125deg,#ffffff0a 0 1px,#0000 1px 3px)}
+.hpIri{mix-blend-mode:color-dodge;opacity:.28;background:linear-gradient(115deg,#ff6ad5,#ffd36a,#6affc3,#6ad5ff,#b36aff,#ff6ad5);background-size:300% 300%;background-position:var(--px) 50%}
+.hpWr{background:linear-gradient(170deg,#0000 22%,#ffffff17 24%,#0000 27%),linear-gradient(12deg,#0000 55%,#ffffff12 57%,#0000 60%),linear-gradient(100deg,#0000 70%,#0000002e 72%,#0000 76%),linear-gradient(80deg,#0000 30%,#0000002b 33%,#0000 36%)}
+.hpSheen{background:linear-gradient(105deg,#0000 calc(var(--px) - 22%),#ffffff4d var(--px),#0000 calc(var(--px) + 22%))}
+.hpBrand{position:absolute;left:0;right:0;top:78px;display:grid;justify-items:center;gap:8px;text-align:center;color:#eef0f3}
+.hpLogo{width:78px;height:78px;filter:drop-shadow(0 4px 10px #000a)}
+.hpBrand b{font:900 34px/1 "Segoe UI Black","Segoe UI",system-ui,sans-serif;letter-spacing:.1em;background:linear-gradient(#ffffff,#c6ccd4 48%,#8a929c 52%,#eef0f3);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 2px #000a)}
+.hpBrand small{font:800 10.5px/1 system-ui,sans-serif;letter-spacing:.32em;opacity:.85}
+.hpEls{display:flex;gap:10px;margin-top:14px}.hpEls .hcE{font-size:30px}
+.hpCnt{margin-top:10px;font:900 12px/1 system-ui,sans-serif;letter-spacing:.2em;padding:6px 12px;border-radius:99px;color:#1f2937;background:linear-gradient(#f4f5f7,#9aa1aa);box-shadow:inset 0 0 0 1px #fff9,0 3px 8px #0008}
+.hpMouth{position:absolute;left:6px;right:6px;top:30px;height:22px;border-radius:50%;background:radial-gradient(closest-side,#000 40%,#0000);opacity:0;transition:opacity .4s}
+.hpPack.torn .hpMouth{opacity:.9}
+.hpTear{position:absolute;left:-14px;right:-14px;top:14px;height:44px;z-index:4;cursor:grab;touch-action:none;outline:none;border-radius:10px}
+.hpTear:active{cursor:grabbing}.hpTear:focus-visible{box-shadow:0 0 0 3px var(--ac)}
+.hpTear .ln{position:absolute;left:14px;right:14px;top:20px;border-top:1.5px dashed #ffffffa6}
+.hpTear .nt{position:absolute;left:14px;top:14px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid #0d0b1a}
+.hpTear .gl{position:absolute;left:14px;top:17px;height:7px;width:calc(var(--t,0) * (100% - 28px));border-radius:4px;background:linear-gradient(90deg,#fff0,#fffde7);filter:blur(1px);opacity:.85}
+.hpTear .tip{position:absolute;right:16px;top:-24px;font:800 11.5px system-ui;letter-spacing:.08em;color:#fff;display:flex;align-items:center;gap:6px;text-shadow:0 1px 3px #000}
+.hpTear .tip svg{width:20px;height:12px;animation:hpNudge 1.2s ease-in-out infinite}@keyframes hpNudge{50%{transform:translateX(6px)}}
+.hpPack.torn .hpTear{display:none}
+.hpCap.fly{animation:hpCapFly .95s cubic-bezier(.35,.1,.6,1) forwards}
+@keyframes hpCapFly{0%{transform:rotate(var(--cr,-10deg)) translateY(-6px)}35%{transform:translate(70px,-70px) rotate(14deg)}100%{transform:translate(230px,260px) rotate(78deg);opacity:0}}
+.hpPack.drop{animation:hpDrop .8s cubic-bezier(.5,0,.75,0) forwards}
+@keyframes hpDrop{to{transform:translateY(520px) rotate(8deg);opacity:0}}
+.hpPack.shake{animation:hpShake .4s ease-in-out}
+@keyframes hpShake{20%{transform:translateX(-4px) rotate(-1.2deg)}40%{transform:translateX(4px) rotate(1.2deg)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.hpGlow{position:absolute;left:12%;right:12%;top:14px;height:60px;border-radius:50%;pointer-events:none;background:radial-gradient(#fff,#fde68a99 40%,#0000 70%);filter:blur(8px);opacity:0}
+.hpPack.torn .hpGlow{animation:hpGlow 1.6s ease-out forwards}
+@keyframes hpGlow{0%{opacity:0;transform:scale(.4)}30%{opacity:1;transform:scale(1.3,2)}100%{opacity:.25;transform:scale(1.6,2.4) translateY(-20px)}}
+/* the stack of cards that comes out of the pack */
+.hpStack{position:absolute;left:50%;top:50%;width:250px;aspect-ratio:63/88;margin:-175px 0 0 -125px;z-index:5;pointer-events:none}
+.hpStack.live{pointer-events:auto}
+.hpStack.rise{animation:hpRise 1s cubic-bezier(.2,.75,.25,1) both}
+@keyframes hpRise{from{transform:translateY(150px) scale(.92);clip-path:inset(0 0 100% 0)}60%{clip-path:inset(0 0 0 0)}to{transform:none}}
+.hpC{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform:translate(calc(var(--k) * 3px),calc(var(--k) * 3px)) rotate(calc(var(--k) * .6deg))}
+.hpC .in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.3,.7,.2,1)}
+.hpC .fa{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.hpC .fa .hcd{--w:100%}
+.hpC .fr{transform:rotateY(180deg)}
+.hpC.on .in{transform:rotateY(180deg) translateZ(40px) scale(1.05)}
+.hpC.hint .bk .hcd{animation:hpHint .5s ease-in-out 2}
+@keyframes hpHint{50%{box-shadow:0 0 0 3px var(--rc,#fff),0 0 34px 8px var(--rc,#fff)}}
+.hpC.r-uncommon{--rc:#e2e8f0}.hpC.r-rare{--rc:#fbbf24}.hpC.r-mythic{--rc:#fb7185}.hpC.holo{--rc:#a78bfa}
+.hpC.on.r-rare .fr .hcd,.hpC.on.r-mythic .fr .hcd,.hpC.on.holo .fr .hcd{box-shadow:0 0 0 2px var(--rc),0 0 40px 6px var(--rc),0 18px 34px #0006}
+.hpC.out{transform:translate(120%,30px) rotate(14deg);opacity:0;transition:transform .55s cubic-bezier(.5,0,.75,0),opacity .55s}
+.hpBurst{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;pointer-events:none;z-index:6;box-shadow:0 0 60px 30px var(--rc,#fff);animation:hpBurst .9s ease-out forwards}
+@keyframes hpBurst{0%{transform:scale(.2);opacity:1}100%{transform:scale(9);opacity:0}}
+.hpSpark{position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;background:var(--rc,#fff);box-shadow:0 0 8px var(--rc,#fff);pointer-events:none;z-index:6;animation:hpSpark .9s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes hpSpark{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+.hpHint{color:var(--dim);font-size:13px;margin:0;text-align:center;min-height:18px}
+.hpTray{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;min-height:0}
+.hpTray .hcd{animation:hpIn .45s cubic-bezier(.2,1.2,.4,1) both}@keyframes hpIn{from{transform:translateY(-30px) scale(.6);opacity:0}}
+.hpBtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){.hpFloat,.hpTear .tip svg{animation:none}}
+</style>
+<script id="huddle-v23-js">
+(()=>{
+/* ---------- card face ---------- */
+const EL=['astral','void','lunar','solar'],LET={A:'astral',V:'void',L:'lunar',S:'solar',C:'any'},RANK={common:0,uncommon:1,rare:2,mythic:3};
+const GL={solar:'<circle cx="12" cy="12" r="4.6"/><path d="M12 2.6v3M12 18.4v3M2.6 12h3M18.4 12h3M5.4 5.4l2.1 2.1M16.5 16.5l2.1 2.1M5.4 18.6l2.1-2.1M16.5 7.5l2.1-2.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',
+  lunar:'<path d="M15.6 3.1A9.2 9.2 0 1 0 20.9 15.7 7.3 7.3 0 1 1 15.6 3.1z"/>',
+  astral:'<path d="M12 2.6c.8 5.4 2.4 7 7.8 7.8-5.4.8-7 2.4-7.8 7.8-.8-5.4-2.4-7-7.8-7.8 5.4-.8 7-2.4 7.8-7.8z"/><circle cx="18.6" cy="18.6" r="1.5"/><circle cx="5.6" cy="19.2" r="1"/>',
+  void:'<circle cx="12" cy="12" r="7.8" fill="none" stroke="#dccbff" stroke-width="1.6" opacity=".85"/><path d="M4.4 9.6c3.2-4.6 11.6-5.2 15.2.2M19.6 14.4c-3.2 4.6-11.6 5.2-15.2-.2" fill="none" stroke="#dccbff" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="3.1"/>',
+  any:'<path d="M12 4.2l2.3 4.7 5.2.8-3.8 3.6.9 5.2-4.6-2.5-4.6 2.5.9-5.2-3.8-3.6 5.2-.8z"/>'};
+const emb=(e,cls='')=>{e=GL[e]?e:'any';const u=((window.HZMA||{}).type||{})[e];
+  return u?`<i class="hcE my ${cls}" title="${e}"><img src="${esc(base+u)}" alt="${e}" draggable="false"></i>`:`<i class="hcE e-${e} ${cls}" title="${e}"><svg viewBox="0 0 24 24" aria-hidden="true">${GL[e]}</svg></i>`};
+window.hzEmblem=emb;
+const artUrl=a=>!a?'':/^u:/.test(a)?(window.hzMyCardArt?hzMyCardArt(a.slice(2)):''):/^\/files\//.test(a)?base+a:'';
+// attack cost typed as letters (S L A V and * for any; a number means that many of the card's own type)
+const costOf=(v,el)=>{let o='';const own={astral:'A',void:'V',lunar:'L',solar:'S'}[el]||'C';for(const t of String(v||'').toLowerCase().match(/\d+|[a-z]+|\*/g)||[]){if(/^\d+$/.test(t))o+=own.repeat(Math.min(5,+t));else if(t=='*'||t=='any')o+='C';else if(/^[avlsc]+$/.test(t))o+=t.toUpperCase()}return o.slice(0,5)};
+// the Create tab keeps a flat draft (a1n, k1c ...); these turn it into a card and back
+window.hzCardShape=d=>{const el=EL.includes(d.el)?d.el:'astral',wr=(e,v,def)=>EL.includes(e)?{e,v:String(v||def).trim()||def}:null;
+  return {...d,el,abil:[[d.a1n,d.a1t]].filter(x=>(x[0]||'').trim()).map(([n,t])=>({n,t:t||''})),atk:[1,2].map(i=>({c:costOf(d['k'+i+'c'],el),n:d['k'+i+'n']||'',d:d['k'+i+'d']||'',t:d['k'+i+'t']||''})).filter(a=>a.n.trim()),
+    weak:wr(d.we,d.wv,'×2'),res:wr(d.re,d.rv,'-30'),ret:Math.max(0,Math.min(5,+d.ret||0))}};
+window.hzCardFlat=c=>{const f={...c},a=(c.abil||[])[0]||{},k=c.atk||[];f.a1n=a.n||'';f.a1t=a.t||'';
+  [0,1].forEach(i=>{const x=k[i]||{};f['k'+(i+1)+'c']=(x.c||'').replace(/C/g,'*');f['k'+(i+1)+'n']=x.n||'';f['k'+(i+1)+'d']=x.d||'';f['k'+(i+1)+'t']=x.t||''});
+  f.we=(c.weak||{}).e||'';f.wv=(c.weak||{}).v||'';f.re=(c.res||{}).e||'';f.rv=(c.res||{}).v||'';f.ret=c.ret||0;f.el=c.el||'astral';return f};
+window.hzCardOut=x=>{const s=hzCardShape(x);return {...s,value:x.value===''||x.value==null?undefined:+x.value,holo:x.holo===true||x.holo==='true',
+  weak:s.weak?s.weak.e+' '+s.weak.v:'',res:s.res?s.res.e+' '+s.res.v:'',atk:s.atk.map(a=>({...a,c:a.c.replace(/C/g,'*')}))}};
+window.hzCard=(c0,sm,extra='')=>{const c=c0&&('a1n' in c0||'k1n' in c0)?hzCardShape(c0):c0||{},el=EL.includes(c.el)?c.el:'astral',u=artUrl(c.art),rar=RANK[c.rarity]!=null?c.rarity:'common';
+  const stage=c.stage||(!c.el&&c.type?c.type:''),abil=c.abil||[],atk=c.atk||[],hp=c.hp!=null&&c.hp!==''?c.hp:'';
+  return `<div class="hcd${sm?' sm':''}${c.holo?' holo':''} el-${el} r-${rar}${extra}" data-card="${esc(c.id||'')}"><div class="hcW">
+    <div class="hcArt"${u?` style="background-image:url('${esc(u)}')"`:''}>${u?'':emb(el,'wm')}</div><div class="hcSh"></div>${c.holo?'<div class="hcHolo"></div>':''}
+    <div class="hcTop">${stage?`<span class="hcSt">${esc(stage)}</span>`:''}<b class="hcNm">${esc(c.name||'Card name')}</b>${hp!==''?`<span class="hcHp"><small>HP</small>${esc(hp)}</span>`:''}${emb(el)}</div>
+    <div class="hcBody">${abil.map(a=>`<div class="hcAb"><div class="hcRow"><span class="hcAbT">Ability</span><b>${esc(a.n)}</b></div>${a.t?`<p>${esc(a.t)}</p>`:''}</div>`).join('')}${atk.map(a=>`<div class="hcAt"><div class="hcRow"><span class="hcCost">${[...(a.c||'')].map(x=>emb(LET[x])).join('')}</span><b>${esc(a.n)}</b><span class="hcDmg">${esc(a.d||'')}</span></div>${a.t?`<p>${esc(a.t)}</p>`:''}</div>`).join('')}${c.text?`<p class="hcTx">${esc(c.text)}</p>`:''}
+      ${c.weak||c.res||c.ret?`<div class="hcWr"><span><small>weakness</small>${c.weak?emb(c.weak.e)+esc(c.weak.v):'–'}</span><span><small>resistance</small>${c.res?emb(c.res.e)+esc(c.res.v):'–'}</span><span><small>retreat</small>${c.ret?Array.from({length:c.ret},()=>emb('any')).join(''):'–'}</span></div>`:''}
+      ${c.flavor?`<p class="hcFl">${esc(c.flavor)}</p>`:''}<div class="hcFt"><span>${c.artist?'Illus. '+esc(c.artist):''}</span><span>${esc(c.set||'')}<i class="hcR ${rar}" title="${rar}"></i></span></div></div></div>
+    ${c.serial?`<span class="hcMeta">#${c.serial} · 1 of 1${c.value?' · worth '+Number(c.value).toLocaleString():''}${c.on?' · '+esc(c.on):''}</span>`:''}</div>`};
+window.hzCardBack=()=>`<div class="hcd hcBk"><div class="hcW"><div class="hcBkIn"><div class="hcBkRing">${EL.map(e=>emb(e)).join('')}</div><div class="hcBkMark"><b>HUDDLE</b><small>TRADING CARD GAME</small></div></div></div></div>`;
+window.hzTcCard=c=>hzCard(c);
+/* ---------- cards tilt toward the pointer, and the border catches the light ---------- */
+let tl=null;const untilt=c=>{c.classList.remove('tilt');['--rx','--ry','--mx','--my','--sx'].forEach(k=>c.style.removeProperty(k))};
+document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.hcd');if(tl&&tl!==c)untilt(tl);tl=c;if(!c||c.closest('.hpC:not(.on)'))return;
+  const r=c.getBoundingClientRect(),x=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)),y=Math.min(1,Math.max(0,(e.clientY-r.top)/r.height)),s=c.style;
+  c.classList.add('tilt');s.setProperty('--rx',((.5-y)*16).toFixed(2)+'deg');s.setProperty('--ry',((x-.5)*20).toFixed(2)+'deg');s.setProperty('--mx',(x*100).toFixed(1)+'%');s.setProperty('--my',(y*100).toFixed(1)+'%');s.setProperty('--sx',((x-.5)*70).toFixed(1)+'%')},{passive:true});
+document.addEventListener('pointerleave',()=>{if(tl){untilt(tl);tl=null}});
+/* ---------- click a card to look at it up close ---------- */
+const cardById=id=>{for(const s of Object.values(window.HZAS||{})){const c=s&&Array.isArray(s.cards)&&s.cards.find(x=>x.id===id);if(c)return c}return null};
+document.addEventListener('click',e=>{const z=document.getElementById('hcZoom');if(z){if(!e.target.closest('#hcZoom .hcd'))z.remove();return}
+  const el=e.target.closest('#hzApp .hcd[data-card]');if(!el||!el.dataset.card||el.closest('.tcPick,.hpSt,#tcPrev'))return;const c=cardById(el.dataset.card);if(!c)return;
+  const d=document.createElement('div');d.id='hcZoom';d.setAttribute('role','dialog');d.setAttribute('aria-label',c.name||'Card');d.innerHTML=hzCard({...c,serial:0});document.body.append(d)},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const z=document.getElementById('hcZoom');if(z){z.remove();e.stopPropagation()}}},true);
+/* ---------- sounds: foil tearing, a card flipping, a rare pull ---------- */
+let ac=null,noise=null;const au=()=>{try{if(!ac){ac=new AudioContext();const b=ac.createBuffer(1,ac.sampleRate*.5,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;noise=b}if(ac.state==='suspended')ac.resume();return ac}catch{return null}};
+const hiss=(dur,freq,vol,type='bandpass')=>{const c=au();if(!c)return;const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain(),t=c.currentTime;s.buffer=noise;f.type=type;f.frequency.value=freq;f.Q.value=.8;
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(f).connect(g).connect(c.destination);s.start(t,Math.random()*.3);s.stop(t+dur+.02)};
+const chime=n=>{const c=au();if(!c)return;const t=c.currentTime;[784,988,1319,1568].slice(0,n).forEach((fq,i)=>{const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=fq;g.gain.setValueAtTime(0,t+i*.09);g.gain.linearRampToValueAtTime(.09,t+i*.09+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.09+.7);o.connect(g).connect(c.destination);o.start(t+i*.09);o.stop(t+i*.09+.75)})};
+/* ---------- the pack ---------- */
+const R=window.HZRENDER,A=(a,x)=>send(Object.assign({t:'app',ch:cur,a},x||{}));
+const left=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return s>=3600?Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m':s>=60?Math.floor(s/60)+'m '+(s%60)+'s':s+'s'};
+const ARROW='<svg viewBox="0 0 22 14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h17M13 2l6 5-6 5"/></svg>';
+const H={ph:'sealed',ch:'',got:[],order:[],i:0,until:0,el:null};
+const data=id=>((window.HZAS[H.ch]||{}).cards||[]).find(c=>c.id===id);
+// a jagged tear line: the cap and the pack share it, so the two torn edges fit together
+let JAG=[];const jag=()=>{JAG=Array.from({length:41},(_,i)=>i%2?2+Math.random()*4:-1-Math.random()*3)};
+const clips=t=>{const n=JAG.length-1,cut=t*100,cap=['0 0','100% 0'],body=[];for(let i=n;i>=0;i--){const x=i/n*100;cap.push(`${x.toFixed(2)}% ${x<=cut?34+JAG[i]:34}px`)}
+  for(let i=0;i<=n;i++){const x=i/n*100;body.push(`${x.toFixed(2)}% ${x<=cut?34+JAG[i]:34}px`)}body.push('100% 100%','0 100%');return [`polygon(${cap.join(',')})`,`polygon(${body.join(',')})`]};
+function packHTML(st,ready){return `<div class="hpPack${ready?'':' locked'}"><div class="hpBody"><div class="hpFoil"></div><div class="hpIri"></div><div class="hpWr"></div><div class="hpSheen"></div>
+    <div class="hpBrand"><img class="hpLogo" src="${esc(window.LOGO||'')}" alt=""><b>HUDDLE</b><small>TRADING CARD GAME</small><div class="hpEls">${EL.map(e=>emb(e)).join('')}</div><span class="hpCnt">${st.pack} CARD${st.pack==1?'':'S'}</span></div>
+    <div class="hpMouth"></div><div class="hpCrimp"></div></div>
+  <div class="hpCap"><div class="hpFoil"></div><div class="hpIri"></div><div class="hpSheen"></div><div class="hpCrimp"></div></div><div class="hpGlow"></div>
+  ${ready?`<div class="hpTear" tabindex="0" role="button" aria-label="Tear the pack open"><span class="nt"></span><span class="ln"></span><span class="gl"></span><span class="tip">TEAR HERE ${ARROW}</span></div>`:''}</div>`}
+function stage(st){if(!H.el){H.el=document.createElement('div');H.el.className='hpSt'}const el=H.el,ready=!st.next&&st.free>0;
+  if(H.ph!=='sealed')return el;const key=ready+'|'+st.free+'|'+st.pack+'|'+(st.next?Math.round((Date.now()+st.next)/6e4):0);if(el.dataset.k===key)return el;el.dataset.k=key;
+  el.innerHTML=`<div class="hpInfo"><b>${st.free?(st.first&&ready?'Your first pack is free':'Huddle pack'):'All cards found'}</b><small>${st.pack} card${st.pack==1?'':'s'} per pack · ${st.free} still sealed · one pack every ${st.cd}h</small></div>
+    <div class="hpScene"><div class="hpFloat">${packHTML(st,ready)}</div><div class="hpStack"></div></div>
+    <p class="hpHint">${ready?'Drag along the top edge to tear the pack open.':st.free?'Next pack in <b data-pku="'+(Date.now()+st.next)+'">'+left(st.next)+'</b>':'Every card has been claimed.'}</p><div class="hpTray"></div><div class="hpBtns"></div>`;
+  jag();const pk=el.querySelector('.hpPack');aim(pk);if(ready)arm(pk);return el}
+// the pack leans toward the pointer and its foil catches the light
+function aim(pk){const sc=pk.closest('.hpScene');sc.onpointermove=e=>{if(pk.classList.contains('drop'))return;const r=sc.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  pk.classList.add('tilt');pk.style.setProperty('--pry',((x-.5)*22).toFixed(1)+'deg');pk.style.setProperty('--prx',((.5-y)*14).toFixed(1)+'deg');pk.style.setProperty('--px',(x*100).toFixed(0)+'%')};
+  sc.onpointerleave=()=>{pk.classList.remove('tilt');pk.style.setProperty('--pry','0deg');pk.style.setProperty('--prx','0deg')}}
+function arm(pk){const tear=pk.querySelector('.hpTear'),cap=pk.querySelector('.hpCap');let x0=null,last=0,t=0,done=false;
+  const set=v=>{t=Math.max(t,Math.min(1,v));const [c,b]=clips(t);pk.style.setProperty('--capClip',c);pk.style.setProperty('--bodyClip',b);tear.style.setProperty('--t',t);cap.style.setProperty('--cr',(-t*9).toFixed(1)+'deg');cap.style.transform=`rotate(${(-t*9).toFixed(1)}deg) translateY(${(-t*5).toFixed(1)}px)`};
+  const finish=()=>{if(done)return;done=true;set(1);hiss(.32,2600,.16);hiss(.5,900,.06,'lowpass');pk.classList.add('torn','shake');cap.classList.add('fly');
+    H.ph='wait';H.ch=cur;H.until=Date.now()+8000;const h=H.el.querySelector('.hpHint');if(h)h.textContent='Opening…';setTimeout(()=>A('open'),420)};
+  tear.onpointerdown=e=>{x0=e.clientX;last=e.clientX;tear.setPointerCapture(e.pointerId);au()};
+  tear.onpointermove=e=>{if(x0==null||done)return;const w=pk.getBoundingClientRect().width,d=Math.abs(e.clientX-last);last=e.clientX;if(d>1.5)hiss(.05+Math.random()*.04,1800+Math.random()*2600,Math.min(.12,.02+d*.006));set((e.clientX-x0)/w*1.08);if(t>=.94)finish()};
+  tear.onpointerup=tear.onpointercancel=()=>{x0=null};
+  tear.onkeydown=e=>{if(e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();au();let v=t;const step=()=>{v+=.06;hiss(.06,2200+Math.random()*2000,.08);set(v);if(v>=.94)finish();else setTimeout(step,28)};step()}}
+// the cards slide out of the pack as a face-down stack; the best card is at the bottom, like a real pack
+function deal(){const el=H.el,need=H.got.length;let tries=0;
+  const go=()=>{const have=H.got.map(data);if(have.some(x=>!x)&&tries++<25)return setTimeout(go,120);
+    H.order=H.got.map((id,i)=>({id,c:data(id)||{},i})).sort((a,b)=>((RANK[a.c.rarity]||0)+(a.c.holo?.5:0))-((RANK[b.c.rarity]||0)+(b.c.holo?.5:0))||a.i-b.i);H.i=0;
+    const stk=el.querySelector('.hpStack'),pk=el.querySelector('.hpPack');if(!stk)return;
+    stk.innerHTML=H.order.map((x,k)=>`<div class="hpC r-${x.c.rarity||'common'}${x.c.holo?' holo':''}" data-id="${esc(x.id)}" style="--k:${H.order.length-1-k};z-index:${H.order.length-k}" tabindex="0" role="button" aria-label="Flip the card"><div class="in"><div class="fa bk">${hzCardBack()}</div><div class="fa fr">${hzCard({...x.c,serial:0})}</div></div></div>`).join('');
+    stk.classList.add('rise');hiss(.6,1400,.05,'lowpass');
+    setTimeout(()=>{if(pk){pk.closest('.hpFloat').style.animation='none';pk.classList.add('drop');setTimeout(()=>pk.remove(),820)}},700);
+    setTimeout(()=>{stk.classList.remove('rise');stk.classList.add('live');H.ph='stack';hint('Tap the card to flip it.');btns(`<button class="hzB" data-hpall>Reveal all</button>`);const top=stk.querySelector('.hpC');if(top)top.focus({preventScroll:true})},1250)};go()}
+const hint=s=>{const h=H.el.querySelector('.hpHint');if(h)h.textContent=s},btns=h=>{const b=H.el.querySelector('.hpBtns');if(b)b.innerHTML=h};
+function tap(){if(H.ph!=='stack')return;const x=H.order[H.i];if(!x)return;const c=H.el.querySelector(`.hpC[data-id="${CSS.escape(x.id)}"]`);if(!c||c.dataset.busy)return;
+  if(!c.classList.contains('on')){const d=data(x.id)||x.c;c.querySelector('.fr').innerHTML=hzCard({...d,serial:0});const big=(RANK[d.rarity]||0)>=2||d.holo;c.dataset.busy=1;
+    const flip=()=>{c.classList.remove('hint');c.classList.add('on');hiss(.09,3200,.07,'highpass');if(big){burst(c);chime(d.rarity==='mythic'||d.holo?4:3)}delete c.dataset.busy;hint(H.i<H.order.length-1?'Tap again for the next card.':'Tap to add it to your collection.')};
+    if(big){c.classList.add('hint');setTimeout(flip,700)}else flip();return}
+  c.classList.add('out');hiss(.18,1200,.05);const d=data(x.id)||x.c,tray=H.el.querySelector('.hpTray');if(tray){tray.insertAdjacentHTML('beforeend',hzCard({...d,serial:0},true));const n=tray.lastElementChild;setTimeout(()=>{n.style.animation='none'},500)}
+  H.i++;setTimeout(()=>c.remove(),560);if(H.i>=H.order.length)finishPack()}
+function burst(c){const s=H.el.querySelector('.hpScene');if(!s)return;const rc=getComputedStyle(c).getPropertyValue('--rc')||'#fff';
+  const b=document.createElement('div');b.className='hpBurst';b.style.setProperty('--rc',rc);s.append(b);setTimeout(()=>b.remove(),950);
+  for(let i=0;i<22;i++){const p=document.createElement('i');p.className='hpSpark';const a=Math.random()*Math.PI*2,r=120+Math.random()*130;p.style.setProperty('--rc',rc);p.style.setProperty('--dx',Math.cos(a)*r+'px');p.style.setProperty('--dy',Math.sin(a)*r+'px');s.append(p);setTimeout(()=>p.remove(),950)}}
+function finishPack(){H.ph='done';hint('Added to your collection.');btns(`<button class="hzB on" data-hpdone>Done</button>`);const s=H.el.querySelector('.hpScene');if(s)s.style.height='0px'}
+function revealAll(){let k=0;const run=()=>{if(H.ph!=='stack')return;const x=H.order[H.i];if(!x)return;const c=H.el.querySelector(`.hpC[data-id="${CSS.escape(x.id)}"]`);if(c&&c.dataset.busy)return setTimeout(run,120);tap();setTimeout(run,c&&c.classList.contains('on')?380:650)};run()}
+const _full=R.cards.full,_ev=R.cards.ev;
+R.cards.full=function(st,m){_full.call(this,st,m);const on=m.body.querySelector('.v4Tabs [data-tab=open][aria-pressed=true]');if(!on)return;
+  if(H.ch&&H.ch!==cur){H.ph='sealed';H.got=[];if(H.el)delete H.el.dataset.k}if(H.ph==='wait'&&Date.now()>H.until){H.ph='sealed';if(H.el)delete H.el.dataset.k}
+  const old=m.body.querySelector('.pkSt')||m.body.querySelector('.v4Wrap>.v4Card');if(old)old.replaceWith(stage(st));
+  if(!H.el.dataset.wired){H.el.dataset.wired=1;
+    H.el.addEventListener('click',e=>{if(e.target.closest('.hpC'))return tap();if(e.target.closest('[data-hpall]'))return revealAll();
+      if(e.target.closest('[data-hpdone]')){H.ph='sealed';H.got=[];delete H.el.dataset.k;const s=window.HZAS[cur];if(s)R.cards.full(s,m)}});
+    H.el.addEventListener('keydown',e=>{if(e.target.closest('.hpC')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();tap()}})}};
+R.cards.ev=function(st,ev,m){if(ev.k==='pack'&&ev.o===oid&&H.ph==='wait'){H.got=ev.got;H.ch=m?m.ch:cur;H.ph='deal';setTimeout(deal,450)}return _ev&&_ev.call(this,st,ev,m)};
+/* a pack the host refused (timer, sold out) goes back to sealed */
+const _on23=on;on=function(d){if(d&&d.t==='perr'&&H.ph==='wait'){H.ph='sealed';if(H.el)delete H.el.dataset.k;const s=window.HZAS[cur];if(s&&$('#hzApp')&&$('#hzApp').dataset.app==='cards')setTimeout(()=>R.cards.full(s,{body:$('#hzApp .hzAB'),act:$('#hzApp .hzAA'),ch:cur}),50)}return _on23.apply(this,arguments)};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
