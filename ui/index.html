@@ -1227,14 +1227,16 @@ const MT=(g,defs='')=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http
   `<rect x="3" y="3" width="90" height="90" rx="24" fill="url(#t)"/><rect x="3.6" y="3.6" width="88.8" height="88.8" rx="23.4" fill="none" stroke="#fff" stroke-opacity=".13" stroke-width="1.2"/>`+
   `<path d="M27 4.5h42a22.5 22.5 0 0 1 22 18" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1.2"/>`+
   `<g fill="none" stroke="#f4f4f5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${g}</g></svg>`);
+// round tiles for the three Home tabs (Friends, Community, Public Showcase)
+const MC=g=>MT(g).replace(encodeURIComponent('<rect x="3" y="3" width="90" height="90" rx="24"'),encodeURIComponent('<rect x="3" y="3" width="90" height="90" rx="45"')).replace(encodeURIComponent('rx="23.4"'),encodeURIComponent('rx="44.4"')).replace(encodeURIComponent('<path d="M27 4.5h42a22.5 22.5 0 0 1 22 18"'),encodeURIComponent('<path d="M24 14a44 44 0 0 1 48 0"'));
 const WF='fill="#f4f4f5" stroke="none"',GF='fill="#7c7c84" stroke="none"',GS='stroke="#7c7c84"',TX=(x,y,s,t,w=800,c='#f4f4f5')=>`<text x="${x}" y="${y}" font-size="${s}" font-weight="${w}" fill="${c}" stroke="none" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif">${t}</text>`;
 const STAR5=(cx,cy,r)=>{let d='';for(let i=0;i<10;i++){const a=Math.PI/5*i-Math.PI/2,q=i%2?r*.45:r;d+=(i?'L':'M')+(cx+q*Math.cos(a)).toFixed(1)+' '+(cy+q*Math.sin(a)).toFixed(1)}return d+'Z'};
 const ART={
   text:MT(`<path d="M41 27 35 69M61 27 55 69M28 41h42M26 55h42"/>`),
   voice:MT(`<path d="M25 40h9l13-11v38L34 56h-9z" ${WF}/><path d="M57 38.5a13 13 0 0 1 0 19"/><path d="M64.5 31a24 24 0 0 1 0 34" ${GS}/>`),
-  friends:MT(`<circle cx="59" cy="35" r="7.5" ${GS}/><path d="M56 49.5c9 0 15.5 6 15.5 14.5" ${GS}/><circle cx="40" cy="38" r="9.5"/><path d="M23.5 70c0-10 7.4-16.5 16.5-16.5S56.5 60 56.5 70"/>`),
-  community:MT(`<path d="M48 29 30 45l8 21h20l8-21zM30 45h36M48 29l-10 37M48 29l10 37" ${GS} stroke-width="3"/>${[[48,29],[30,45],[66,45],[38,66],[58,66]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i?5.5:7}" ${WF}/>`).join('')}`),
-  showcase:MT(`<rect x="25" y="29" width="46" height="40" rx="7"/><path d="${STAR5(48,49.5,12)}" ${WF}/><path d="M36 22l3 5M60 22l-3 5M48 19v6" ${GS} stroke-width="3.5"/>`),
+  friends:MC(`<circle cx="59" cy="35" r="7.5" ${GS}/><path d="M56 49.5c9 0 15.5 6 15.5 14.5" ${GS}/><circle cx="40" cy="38" r="9.5"/><path d="M23.5 70c0-10 7.4-16.5 16.5-16.5S56.5 60 56.5 70"/>`),
+  community:MC(`<path d="M48 29 30 45l8 21h20l8-21zM30 45h36M48 29l-10 37M48 29l10 37" ${GS} stroke-width="3"/>${[[48,29],[30,45],[66,45],[38,66],[58,66]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i?5.5:7}" ${WF}/>`).join('')}`),
+  showcase:MC(`<rect x="25" y="29" width="46" height="40" rx="7"/><path d="${STAR5(48,49.5,12)}" ${WF}/><path d="M36 22l3 5M60 22l-3 5M48 19v6" ${GS} stroke-width="3.5"/>`),
   duo:MT(`<circle cx="41" cy="36" r="9.5"/><path d="M23 70c0-10 8-17 18-17 4 0 7.5 1 10.5 2.8"/><path d="M62 47l11 4v8c0 7-4.6 11.6-11 14-6.4-2.4-11-7-11-14v-8z" ${WF}/><path d="M57.5 59.5l3.2 3.2 6-6.5" stroke="#0a0a0b" stroke-width="3"/>`),
   hufi:MT(`<path d="M41 63V33l25-5v30"/><ellipse cx="35" cy="63" rx="7.5" ry="6" ${WF}/><ellipse cx="60" cy="58" rx="7.5" ry="6" ${WF}/><path d="M41 41l25-5" ${GS} stroke-width="3.5"/>`),
   blackjack:MT(`<rect x="24" y="30" width="28" height="38" rx="5" transform="rotate(-12 38 49)" ${GS}/><rect x="41" y="26" width="29" height="40" rx="5" transform="rotate(8 55 46)" fill="#141416"/>${TX(52,42,11,'A',800)}<path d="M57.5 47c-3 4.6-7.6 6.3-7.6 10.4a3.7 3.7 0 0 0 6.5 2.4L55.5 63h4.2l-.9-3.2a3.7 3.7 0 0 0 6.5-2.4c0-4.1-4.7-5.8-7.8-10.4z" ${WF} transform="rotate(8 57.5 55)"/>`),
@@ -6761,6 +6763,12 @@ const _on23=on;on=function(d){if(d&&d.t==='perr'&&H.ph==='wait'){H.ph='sealed';i
 <style id="huddle-v24">
 /* ---------- Huddle v24: casino-real Blackjack and Roulette, real wood Checkers ---------- */
 /* the app pictures bring their own black tile, so the frames around them stay plain */
+/* the glow around a selected channel's picture follows the tile's rounded corners (the name box used to clip it square) */
+#nav .cn{overflow:clip;overflow-clip-margin:10px}
+#nav .tab.sel img.ci.def{filter:drop-shadow(0 0 5px color-mix(in srgb,var(--ac) 80%,transparent)) drop-shadow(0 0 1px var(--ac))}
+#nav .vi:has(.vm) .vr img.ci.def{filter:drop-shadow(0 0 5px color-mix(in srgb,var(--live) 80%,transparent)) drop-shadow(0 0 1px var(--live))}
+/* the round Friends / Community / Public Showcase pictures sit fully inside their row */
+.tabpic{width:30px!important;height:30px!important;margin:-3px 6px -3px -2px!important}
 .hzAppIc{background:none!important;padding:0!important}
 .hzAH .ic{background:none!important;border-color:transparent!important;box-shadow:none!important;padding:0!important}
 /* chips: clay casino chips with edge spots, an inlay ring and some thickness */
@@ -6953,6 +6961,38 @@ let ckKey='';const _ck=R.checkers&&R.checkers.full;
 if(_ck)R.checkers.full=function(st,m){_ck.call(this,st,m);const k=st.last?st.b+'|'+st.last.f+'>'+st.last.t:'';if(k&&ckKey&&k!==ckKey){const cap=st.last.cap!==undefined||Math.abs((st.last.t>>3)-(st.last.f>>3))===2;clack(.12,.9);if(cap)clack(.26,.7)}ckKey=k};
 })();
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
