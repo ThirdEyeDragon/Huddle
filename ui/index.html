@@ -1260,6 +1260,7 @@ const ART={
   stats:MT(`<path d="M26 26v42h44" ${GS} stroke-width="3.5"/><path d="M32 58l10-12 9 6 15-19"/><circle cx="66" cy="33" r="4.4" ${WF}/>`),
   leaders:MT(`<path d="M37 25h22v12a11 11 0 0 1-22 0z" ${WF}/><path d="M37 29h-6a7 7 0 0 0 7 9M59 29h6a7 7 0 0 1-7 9" stroke-width="3.5"/><path d="M48 49v10"/><path d="M38 70h20v-6a3 3 0 0 0-3-3H41a3 3 0 0 0-3 3z" ${GF}/>`),
   image:MT(`<rect x="24" y="28" width="48" height="40" rx="7"/><circle cx="59" cy="40" r="4.5" ${WF}/><path d="M26 63l14-14 10 10 6-5 14 12" stroke-width="4.5"/>`),
+  merge:MT(`<path d="M27 70h42" ${GS} stroke-width="3.5"/><circle cx="36" cy="58" r="10" ${GF}/><circle cx="58" cy="52" r="16"/><circle cx="41" cy="33" r="7" ${WF}/><path d="M41 22v-3M47 27l2-2M35 27l-2-2" stroke-width="2.6"/>`),
   discord:MT(`<path d="M26 54v9a5 5 0 0 0 5 5h34a5 5 0 0 0 5-5v-9" ${GS}/><path d="M48 25v29M37 44l11 11 11-11"/>`)};
 IC.art=k=>ART[k]||ART.image;
 IC.img=(k,cls)=>`<img class="${cls||'gart'}" src="${ART[k]||ART.image}" alt="" draggable="false">`;
@@ -1388,7 +1389,7 @@ async function connect(name){
   base=cfg.server.replace(/\/+$/,'');
   let sock;try{sock=new WebSocket(base.replace(/^http/,'ws'))}catch{return retry('Server address not valid yet. Retrying…')}
   ws=sock;
-  sock.onopen=()=>send({t:'join',mode:CRED.mode,email:CRED.email,password:CRED.password,token:CRED.token,remember:!!CRED.remember,name,pass:cfg.password,key:KEY,dev:(()=>{try{let v=localStorage.getItem('huddle.dev');if(!/^[\w-]{20,64}$/.test(v||'')){v=crypto.randomUUID();localStorage.setItem('huddle.dev',v)}return v}catch{return ''}})()});
+  sock.onopen=()=>send({t:'join',mode:CRED.mode,email:CRED.email,password:CRED.password,token:CRED.token,remember:!!CRED.remember,name,pass:cfg.password,key:KEY,hw:window.HZHW||'',dev:(()=>{try{let v=localStorage.getItem('huddle.dev');if(!/^[\w-]{20,64}$/.test(v||'')){v=crypto.randomUUID();localStorage.setItem('huddle.dev',v)}return v}catch{return ''}})()});
   sock.onmessage=ev=>{lastRx=Date.now();try{on(JSON.parse(ev.data))}catch(e){console.error(e)}};
   sock.onclose=()=>lost(sock);
 }
@@ -7012,7 +7013,7 @@ const _on25=on;on=function(d){try{return _on25.apply(this,arguments)}finally{try
 const OVL='huddle.ovl',ovOn=()=>LS.get(OVL)!=='0';
 const ovIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M8 21h8M12 17v4"/><rect x="5.5" y="7" width="6.5" height="4.5" rx="1.2" fill="currentColor" stroke="none"/></svg>';
 const ovBtn=()=>{if(!window.api||typeof window.api.overlay!='function')return;const s=document.getElementById('bScr');if(!s||document.getElementById('bOvl'))return;
-  s.insertAdjacentHTML('afterend',`<button id="bOvl" class="cb" type="button" aria-pressed="${ovOn()}" title="">${ovIcon}</button>`);paintOv();
+  s.insertAdjacentHTML('afterend',`<button id="bOvl" class="cb" type="button" aria-pressed="${ovOn()}" title="">${ovIcon}<span>Overlay</span></button>`);paintOv();
   document.getElementById('bOvl').onclick=()=>{LS.set(OVL,ovOn()?'0':'1');paintOv();toast(ovOn()?'In-game overlay on: it shows over full-screen games and apps.':'In-game overlay off.',true)}};
 const paintOv=()=>{const b=document.getElementById('bOvl');if(!b)return;b.setAttribute('aria-pressed',ovOn());b.title=b.ariaLabel=ovOn()?'In-game overlay: on (click to turn off)':'In-game overlay: off (click to turn on)'};
 ovBtn();setInterval(()=>{ovBtn();paintOv()},1500);
@@ -7134,6 +7135,155 @@ document.addEventListener('click',e=>{if(e.target.closest('#bDeaf,#sDeaf'))setTi
 let dz=null;setInterval(()=>{const z=(typeof deaf!='undefined'&&deaf)||(typeof fd!='undefined'&&fd);if(z!==dz){dz=z;try{window.hzHf&&hzHf.vol()}catch{}}},500);
 })();
 </script>
+
+<style id="huddle-v28">
+/* ---------- Huddle v28 ---------- */
+/* Call links window: normal-height buttons, content at the top */
+#modal .pk:has(>.hzIvD){height:auto!important}
+.hzIvD{align-content:start!important}
+.hzIvD .hzCDact{display:flex!important;justify-content:flex-end;align-items:center!important;gap:10px}
+.hzIvD .hzCDact>button{height:auto!important;min-height:0!important;align-self:center!important;padding:10px 18px!important}
+/* disable all animations (low-end PCs) */
+html[data-noanim] *,html[data-noanim] *::before,html[data-noanim] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html[data-noanim] *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html[data-noanim] .hzFx,html[data-noanim] .hcHolo{display:none!important}
+/* voice channel status */
+.vStat{display:block;margin:-2px 0 4px 36px;font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 44px)}
+.vStat::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--live,#3fe0c5);margin-right:6px;vertical-align:1px}
+#sinfo .vStatI{margin-left:8px;font-weight:600;color:var(--dim);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
+#bVst svg{width:20px;height:20px}
+/* Merge Drop */
+.mdW{display:grid;grid-template-columns:auto 230px;gap:18px;justify-content:center;align-items:start;padding:14px}
+@media (max-width:900px){.mdW{grid-template-columns:1fr;justify-items:center}}
+.mdBox{position:relative;border-radius:22px;padding:10px;background:linear-gradient(#2a2a30,#141418);box-shadow:0 20px 50px #000b,inset 0 0 0 1px #ffffff1a}
+.mdBox canvas{display:block;height:min(72vh,620px);width:auto;aspect-ratio:420/600;border-radius:14px;cursor:crosshair;touch-action:none}
+.mdSide{display:grid;gap:10px}
+.mdCard{padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.mdCard small{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:800}
+.mdCard b{font:900 30px/1.2 system-ui}
+.mdTop ol{margin:6px 0 0;padding-left:20px;display:grid;gap:4px;font-size:13px}.mdTop li span{color:var(--dim);float:right}
+.mdChain div{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:8px}.mdChain i{display:inline-block;border-radius:50%;box-shadow:inset -2px -3px 4px #0005,inset 2px 2px 3px #fff5}
+.mdOver{position:absolute;inset:10px;border-radius:14px;display:grid;place-content:center;gap:12px;text-align:center;background:#000b;color:#fff}
+.mdOver[hidden]{display:none}.mdOver b{font:900 40px system-ui}.mdOver p{margin:0;color:#ddd}
+</style>
+<script id="huddle-v28-js">
+(()=>{
+/* ---------- device id for host bans (desktop app only) ---------- */
+try{if(window.api&&typeof window.api.hwid==='function')window.api.hwid().then(v=>{window.HZHW=/^[0-9a-f]{64}$/.test(v||'')?v:''}).catch(()=>{})}catch{}
+/* ---------- click the voice channel you're in: the call view comes back ---------- */
+const lastText={};
+setInterval(()=>{try{const g=typeof sel!='undefined'&&G[sel];const x=g&&g.channels.find(c=>c.id===cur);if(x&&x.type==='text')lastText[g.id]=x.id}catch{}},1000);
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-v]');if(!b||typeof voice=='undefined'||!voice||vch!==b.dataset.v)return;
+  const g=typeof gOf=='function'?gOf(vch):null;if(!g)return;const x=g.channels.find(c=>c.id===cur);if(x&&x.type==='text'&&sel===g.id){$('#stage').scrollIntoView({block:'nearest'});return}
+  e.preventDefault();e.stopImmediatePropagation();const t=lastText[g.id]&&g.channels.some(c=>c.id===lastText[g.id])?lastText[g.id]:(g.channels.find(c=>c.type==='text')||{}).id;
+  if(t)selG(g.id,t);setTimeout(()=>{const st=$('#stage');if(st){st.classList.add('peek');setTimeout(()=>st.classList.remove('peek'),2500)}},150)},true);
+/* ---------- disable all animations ---------- */
+const NA='huddle.noanim',naOn=()=>LS.get(NA)==='1',naApply=()=>{if(naOn())document.documentElement.dataset.noanim='1';else delete document.documentElement.dataset.noanim};naApply();
+new MutationObserver(()=>{const rm=document.getElementById('rm');if(!rm||document.getElementById('noAnim'))return;const l=rm.closest('label');if(!l)return;
+  l.insertAdjacentHTML('afterend',`<label class="tg"><span><b>Disable all animations</b><small>For low-end PCs: stops every animation, transition and blur effect, the card tilt and live profile effects.</small></span><input type="checkbox" role="switch" id="noAnim"${naOn()?' checked':''}></label>`);
+  document.getElementById('noAnim').onchange=e=>{LS.set(NA,e.target.checked?'1':'');naApply()}}).observe(document.getElementById('modal'),{childList:true,subtree:true});
+/* ---------- voice channel status ---------- */
+try{if(Array.isArray(CHP)&&!CHP.some(p=>p[0]==='status'&&p[3]==='voice'))CHP.push(['status','Set voice status','Set the short status line shown under this voice channel (like “Ranked games”).','voice'])}catch{}
+const vstPaint=()=>{const g=typeof sel!='undefined'&&G[sel];document.querySelectorAll('[data-v]').forEach(r=>{const x=g&&g.channels.find(c=>c.id===r.dataset.v);let s=r.nextElementSibling&&r.nextElementSibling.classList.contains('vStat')?r.nextElementSibling:null;
+    if(x&&x.vstatus){if(!s){s=document.createElement('small');s.className='vStat';r.after(s)}if(s.textContent!==x.vstatus)s.textContent=x.vstatus;s.title=x.vstatus}else if(s)s.remove()});
+  const si=document.getElementById('sinfo'),vg=typeof gOf=='function'&&voice&&gOf(vch),vx=vg&&vg.channels.find(c=>c.id===vch);if(si){let i=si.querySelector('.vStatI');const t=vx&&vx.vstatus||'';if(t){if(!i){i=document.createElement('span');i.className='vStatI';si.append(i)}i.textContent=t}else if(i)i.remove()}};
+if(typeof window.side==='function'){const _sd=window.side;window.side=function(){const r=_sd.apply(this,arguments);try{vstPaint()}catch{}return r}}
+setInterval(()=>{try{vstPaint()}catch{}},1500);
+const vstBtn=()=>{const s=document.getElementById('bScr');if(!s||document.getElementById('bVst'))return;const after=document.getElementById('bOvl')||s;
+  after.insertAdjacentHTML('afterend','<button id="bVst" class="cb" type="button" title="Set the voice channel status" aria-label="Set the voice channel status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M15.5 17.5 20 13l1.5 1.5L17 19h-1.5z"/></svg><span>Status</span></button>');
+  document.getElementById('bVst').onclick=()=>{if(!voice)return;const g=gOf(vch),x=g&&g.channels.find(c=>c.id===vch);if(!x)return;
+    modal(`<h3>Voice channel status</h3><p class="hint" style="margin:-4px 0 4px">Shown under <b>${esc(x.name)}</b> for everyone in the server.</p><input id="vstI" maxlength="60" placeholder="e.g. Ranked games, chilling, homework" value="${esc(x.vstatus||'')}"><div class="pact"><button id="gx">Cancel</button><button id="vstC">Clear</button><button class="on" id="vstS">Save</button></div>`,()=>{
+      const go=t=>{send({t:'vstatus',g:g.id,ch:x.id,text:t});closeM()};$('#gx').onclick=closeM;$('#vstC').onclick=()=>go('');$('#vstS').onclick=()=>go($('#vstI').value.trim());$('#vstI').onkeydown=e=>{if(e.key==='Enter')$('#vstS').click()};$('#vstI').focus()})}};
+setInterval(vstBtn,1500);vstBtn();
+/* ---------- Merge Drop ---------- */
+const APPS=window.HZAPPS,R=window.HZRENDER;if(!APPS||!R)return;
+APPS.merge={n:'Merge Drop',d:'Drop circles, merge two of a kind into a bigger one. 8 sizes, real physics, high scores.',c:'#a855f7',slug:'merge-drop'};
+const W=420,H=600,LINE=92,RAD=[15,21,28,36,46,57,70,86],PTS=[1,3,6,10,15,21,28,36],COL=['#f43f5e','#fb923c','#facc15','#4ade80','#22d3ee','#3b82f6','#a855f7','#ec4899'];
+const shade=(h,a)=>{const n=parseInt(h.slice(1),16),f=c=>Math.max(0,Math.min(255,Math.round(c+(a>0?(255-c)*a:c*a))));return `rgb(${f(n>>16)},${f(n>>8&255)},${f(n&255)})`};
+let G0=null;
+function game(cv,onOver){const ctx=cv.getContext('2d');let balls=[],score=0,next=Math.floor(Math.random()*4),cur=Math.floor(Math.random()*3),aim=W/2,cool=0,over=false,overT=0,live=true,fx=[];
+  const pick=()=>{const r=Math.random();return r<.38?0:r<.66?1:r<.86?2:r<.97?3:4};
+  const drop=()=>{if(over||cool>0)return;const r=RAD[cur],x=Math.max(r+2,Math.min(W-r-2,aim));balls.push({x,y:LINE-r-6,px:x,py:LINE-r-6,r,k:cur,t:0});cur=next;next=pick();cool=.45};
+  const merge=(a,b)=>{a.dead=b.dead=true;const x=(a.x+b.x)/2,y=(a.y+b.y)/2,k=a.k+1;
+    if(k>=RAD.length){score+=100;fx.push({x,y,r:RAD[7],k:7,t:0});return}
+    score+=PTS[k];balls.push({x,y,px:x,py:y,r:RAD[k],k,t:1});fx.push({x,y,r:RAD[k],k,t:0})};
+  const step=dt=>{const g=1500*dt*dt;
+    for(const b of balls){const vx=(b.x-b.px)*.992,vy=(b.y-b.py)*.992;b.px=b.x;b.py=b.y;b.x+=vx;b.y+=vy+g;b.t+=dt}
+    for(let it=0;it<8;it++){
+      for(let i=0;i<balls.length;i++){const a=balls[i];if(a.dead)continue;
+        for(let j=i+1;j<balls.length;j++){const b=balls[j];if(b.dead)continue;const dx=b.x-a.x,dy=b.y-a.y,min=a.r+b.r,d2=dx*dx+dy*dy;
+          if(a.k===b.k&&d2<(min+2.5)*(min+2.5)){merge(a,b);break}if(d2>=min*min||d2===0)continue;const d=Math.sqrt(d2),o=(min-d)/d*.5,ma=b.r*b.r/(a.r*a.r+b.r*b.r),mb=1-ma;a.x-=dx*o*ma*2;a.y-=dy*o*ma*2;b.x+=dx*o*mb*2;b.y+=dy*o*mb*2}}
+      for(const b of balls){if(b.dead)continue;if(b.x<b.r){b.x=b.r}if(b.x>W-b.r){b.x=W-b.r}if(b.y>H-b.r){b.y=H-b.r;b.px=b.x-(b.x-b.px)*.6}}}
+    balls=balls.filter(b=>!b.dead);
+    const high=balls.some(b=>b.t>1.2&&b.y-b.r<LINE&&Math.abs(b.y-b.py)<.6);overT=high?overT+dt:0;if(overT>1.6&&!over){over=true;onOver(score)}
+    cool=Math.max(0,cool-dt);fx.forEach(f=>f.t+=dt);fx=fx.filter(f=>f.t<.45)};
+  const orb=(x,y,r,k,a=1)=>{ctx.globalAlpha=a;const c=COL[k],gr=ctx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);gr.addColorStop(0,shade(c,.55));gr.addColorStop(.55,c);gr.addColorStop(1,shade(c,-.45));
+    ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle=gr;ctx.fill();ctx.lineWidth=Math.max(1.5,r*.06);ctx.strokeStyle=shade(c,-.55);ctx.stroke();
+    ctx.beginPath();ctx.ellipse(x-r*.32,y-r*.42,r*.32,r*.18,-.5,0,7);ctx.fillStyle='rgba(255,255,255,.45)';ctx.fill();
+    if(k>=5){ctx.beginPath();ctx.arc(x,y,r*.62,0,7);ctx.strokeStyle='rgba(255,255,255,.22)';ctx.lineWidth=r*.06;ctx.stroke()}ctx.globalAlpha=1};
+  const draw=()=>{const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#1d1b29');bg.addColorStop(1,'#0e0d15');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    ctx.setLineDash([8,8]);ctx.strokeStyle=overT>0?'rgba(248,113,113,.9)':'rgba(255,255,255,.18)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,LINE);ctx.lineTo(W,LINE);ctx.stroke();ctx.setLineDash([]);
+    if(!over){const r=RAD[cur],x=Math.max(r+2,Math.min(W-r-2,aim));ctx.strokeStyle='rgba(255,255,255,.12)';ctx.beginPath();ctx.moveTo(x,LINE);ctx.lineTo(x,H);ctx.stroke();orb(x,LINE-r-6,r,cur,cool>0?.5:1)}
+    for(const b of balls)orb(b.x,b.y,b.r,b.k);for(const f of fx){ctx.beginPath();ctx.arc(f.x,f.y,f.r*(1+f.t*2),0,7);ctx.strokeStyle=`rgba(255,255,255,${.5-f.t})`;ctx.lineWidth=3;ctx.stroke()}};
+  let last=performance.now(),acc=0;const loop=now=>{if(!live||!cv.isConnected){live=false;return}acc+=Math.min(.05,(now-last)/1000);last=now;while(acc>=1/120){step(1/120);acc-=1/120}draw();requestAnimationFrame(loop)};requestAnimationFrame(loop);
+  const pos=e=>{const r=cv.getBoundingClientRect();return (e.clientX-r.left)/r.width*W};
+  cv.onpointermove=e=>{aim=pos(e)};cv.onpointerdown=e=>{aim=pos(e);drop()};
+  return {score:()=>score,next:()=>next,stop:()=>{live=false},key:e=>{if(e.key==='ArrowLeft')aim-=24;else if(e.key==='ArrowRight')aim+=24;else if(e.key===' '||e.key==='Enter'){e.preventDefault();drop()}aim=Math.max(0,Math.min(W,aim))}}}
+const nextDraw=(cv,k)=>{const c=cv.getContext('2d'),r=Math.min(34,RAD[k]);c.clearRect(0,0,80,80);const gr=c.createRadialGradient(40-r*.35,40-r*.4,r*.1,40,40,r);gr.addColorStop(0,shade(COL[k],.55));gr.addColorStop(.55,COL[k]);gr.addColorStop(1,shade(COL[k],-.45));c.beginPath();c.arc(40,40,r,0,7);c.fillStyle=gr;c.fill()};
+R.merge={full(st,m){m.body.className='hzAB';let w=m.body.querySelector('.mdW');
+  if(!w||w.dataset.ch!==m.ch){if(G0)G0.stop();
+    m.body.innerHTML=`<div class="mdW" data-ch="${esc(m.ch)}"><div class="mdBox"><canvas width="${W}" height="${H}" tabindex="0" aria-label="Merge Drop: move to aim, click or press space to drop"></canvas><div class="mdOver" hidden><p>Game over</p><b class="fin">0</b><p class="msg"></p><button class="hzB on" data-mdnew>Play again</button></div></div>
+      <div class="mdSide"><div class="mdCard"><small>Score</small><b class="sc">0</b></div><div class="mdCard"><small>Your best</small><b class="best">0</b></div><div class="mdCard"><small>Next</small><canvas class="nx" width="80" height="80" style="width:60px;height:60px;display:block;margin-top:6px"></canvas></div>
+      <div class="mdCard mdChain"><small>Merge order</small><div>${RAD.map((r,i)=>`<i style="width:${8+i*3}px;height:${8+i*3}px;background:${COL[i]}"></i>`).join('')}</div></div><div class="mdCard mdTop"><small>Top scores</small><ol></ol></div>
+      <p class="v4Mut" style="margin:0;font-size:12.5px">Move to aim, click (or Space) to drop. Two of the same size merge into the next one. Don’t let them stack past the line.</p></div></div>`;
+    w=m.body.querySelector('.mdW');const cv=w.querySelector('canvas'),ov=w.querySelector('.mdOver');
+    const start=()=>{ov.hidden=true;if(G0)G0.stop();G0=game(cv,s=>{ov.hidden=false;ov.querySelector('.fin').textContent=s;const best=+w.querySelector('.best').textContent||0;ov.querySelector('.msg').textContent=s>best?'New best!':'Best: '+best;send({t:'app',ch:m.ch,a:'score',s})});cv.focus()};
+    cv.onkeydown=e=>G0&&G0.key(e);w.addEventListener('click',e=>{if(e.target.closest('[data-mdnew]'))start()});start();
+    const tick=()=>{if(!cv.isConnected||!G0)return;w.querySelector('.sc').textContent=G0.score();nextDraw(w.querySelector('.nx'),G0.next());setTimeout(tick,150)};tick()}
+  w.querySelector('.best').textContent=st.mine||0;
+  w.querySelector('.mdTop ol').innerHTML=(st.top||[]).map(x=>`<li>${esc(x.n)}<span>${x.s}</span></li>`).join('')||'<li style="list-style:none;margin-left:-20px;color:var(--dim)">No scores yet.</li>';
+  m.act.innerHTML=''},ev(){}};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
