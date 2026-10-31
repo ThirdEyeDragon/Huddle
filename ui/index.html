@@ -1399,7 +1399,7 @@ function lost(sock){ // connection dropped: tidy up and reconnect in place (no p
   if(!fatal){if(!was){if(onLogin())wait(true);else status('Can’t reach the server yet. Retrying…')}setTimeout(()=>connect(myName),3000)}}
 function startHeartbeat(){clearInterval(hb);lastRx=Date.now();
   hb=setInterval(()=>{if(!ws)return;
-    if(Date.now()-lastRx>35000){const s=ws;try{s.close()}catch{}lost(s)} // silent/half-dead socket: don't wait for the OS to notice
+    if(Date.now()-lastRx>60000){const s=ws;try{s.close()}catch{}lost(s)} // silent/half-dead socket: don't wait for the OS to notice
     else send({t:'ping'})},10000)}
 function on(d){
   if(d.t=='pong')return;
@@ -4407,12 +4407,13 @@ const thr=(fn,ms)=>{let t=0,pend=null,tm=0;return (...a)=>{const n=Date.now();if
 /* ================= create channel: text, voice or an app ================= */
 chDialog=function(g,pre){
   let kind='text',app='',tpl='';
-  const built=[...new Map((g.channels||[]).filter(c=>c.app=='builder'&&c.bname).map(c=>[c.bname,c])).values()];
+  // your apps: built in this server, plus your own built apps from your other servers (unless they are "Only this server")
+  const built=[...new Map((g.channels||[]).filter(c=>c.app=='builder'&&c.bname&&!c.bhide).map(c=>[c.bname,c])).values()].concat((window.HZLIB||[]).filter(x=>x.g!==g.id&&!(g.channels||[]).some(c=>c.app=='builder'&&c.bname===x.name)).map(x=>({id:x.id,bname:x.name,from:x.gname})));
   const card=(k,e,n,d,c)=>`<button type="button" class="hzCDc" data-k="${k}" style="--c:${c}"><span class="e">${HG.img(e)}</span><span><b>${n}</b><small>${d}</small></span></button>`;
   modal(`<div class="hzCD"><h3>Create channel</h3><p class="sub">Pick a channel type. Apps run right inside the channel for everyone in the server.</p>
     <div class="hzCDrow"><input id="cn" placeholder="channel-name" maxlength="24" autocomplete="off"></div>
     <div class="hzCDl">Channels</div><div class="hzCDg two">${card('text','text','Text','Messages, images, GIFs and polls.','#94a3b8')}${card('voice','voice','Voice','Talk, share your screen and video.','#22c55e')}</div>
-    ${built.length?`<div class="hzCDl">Your apps</div><div class="hzCDg">${built.map(c=>card('tpl:'+c.id,'builder',esc(c.bname),'Built in this server with App Builder','#8b5cf6')).join('')}</div>`:''}<div class="hzCDl">Apps</div><div class="hzCDg">${Object.entries(APPS).map(([k,a])=>card('app:'+k,k,a.n,a.d,a.c)).join('')}</div>
+    ${built.length?`<div class="hzCDl">Your apps</div><div class="hzCDg">${built.map(c=>card('tpl:'+c.id,'builder',esc(c.bname),c.from?'Your app from '+esc(c.from):'Built in this server with App Builder','#8b5cf6').replace('</button>',`<span class="hzCDrm" data-rmapp="${esc(c.id)}" role="button" tabindex="0" title="Remove from Your apps" aria-label="Remove ${esc(c.bname)} from Your apps">✕</span></button>`)).join('')}</div>`:''}<div class="hzCDl">Apps</div><div class="hzCDg">${Object.entries(APPS).map(([k,a])=>card('app:'+k,k,a.n,a.d,a.c)).join('')}</div>
     ${(g.categories||[]).length?'<label class="fl">Category<select id="cc">'+catOpts(g,pre)+'</select></label>':''}
     <label class="tg" id="c18w"><span><b>18+ channel</b><small>Show an adult-content warning before members enter.</small></span><input id="c18" type="checkbox" role="switch"></label>
     <div class="hzCDact"><button id="gx">Cancel</button><button class="on" id="chc">Create</button></div></div>`,()=>{
@@ -5258,7 +5259,7 @@ R.blackjack={full(st,m){m.body.className='hzAB';const h=st.hand,live=h&&!h.done,
     <div class="v4Row">${live?`<button class="hzB on" data-bj="hit">Hit</button><button class="hzB" data-bj="stand">Stand</button>${h.dbl?'<button class="hzB" data-bj="double">Double down</button>':''}`:
       `<div class="chips">${[1,5,10,25,100].map(v=>`<button class="chip" style="--k:${{1:'#64748b',5:'#dc2626',10:'#2563eb',25:'#16a34a',100:'#111'}[v]}" data-chip="${v}" aria-pressed="${v==bjChip}">$${v}</button>`).join('')}</div><input class="v4In" id="bjBet" type="number" min="1" value="${bjChip}" style="width:90px"><button class="hzB on" data-bj="deal">Deal</button>`}</div></div>
     <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Recent hands</h4><div class="v4List">${st.log.slice().reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow">${esc(l.n)} <span class="v4Mut">${l.res}</span></span><b style="color:${l.net>0?'#4ade80':l.net<0?'#f87171':'var(--dim)'}">${l.net>0?'+':l.net<0?'−':''}${money(Math.abs(l.net))}</b></div>`).join('')||'<div class="v4Empty">No hands yet.</div>'}</div></div>${topList(st)}</div></div>
-    <p class="v4Mut" style="text-align:center">Fake money only. Dealer stands on 17, blackjack pays 3 to 2. Blackjack has its own wallet: if you run out, you get a free $10 once a day.</p></div>`});
+    <p class="v4Mut" style="text-align:center">Fake money only. Dealer stands on 17, blackjack pays 3 to 2. Blackjack has its own wallet: if you run out, you get a free $10 every 30 seconds.</p></div>`});
   m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b)return;
     if(b.dataset.chip){bjChip=+b.dataset.chip;$('#bjBet').value=bjChip;m.body.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c==b));return}
     if(b.dataset.refill!==undefined)return A('refill');const a=b.dataset.bj;if(a=='deal')A('deal',{bet:+$('#bjBet').value});else if(a)A(a)}}};
@@ -5279,7 +5280,7 @@ R.roulette={full(st,m){m.body.className='hzAB';const total=Object.values(rlBets)
     <div class="rlHist">${st.log.filter(l=>l.o==oid).slice(-14).reverse().map(l=>`<span style="background:${rlCol(l.num)}">${l.num}</span>`).join('')}</div></div>
     <div style="display:grid;gap:14px;align-content:start"><div class="v4Card"><h4>Your bets <span>${money(total)}</span></h4><div class="rlBoard">${board}</div>
       <div class="v4Row" style="margin-top:12px"><div class="chips">${[1,5,10,25,100].map(v=>`<button class="chip" style="--k:${{1:'#64748b',5:'#dc2626',10:'#2563eb',25:'#16a34a',100:'#111'}[v]}" data-chip="${v}" aria-pressed="${v==rlChip}">$${v}</button>`).join('')}</div><span class="v4Grow"></span><button class="hzB" data-clear>Clear</button><button class="hzB on" data-spin${total?'':' disabled'}>Spin</button></div>
-      <p class="v4Mut" style="margin:10px 0 0">Click the board to stack chips. Numbers pay 35 to 1, dozens 2 to 1, colors and halves 1 to 1. Roulette has its own wallet: run out and you get a free $10 every 5 minutes.</p></div>
+      <p class="v4Mut" style="margin:10px 0 0">Click the board to stack chips. Numbers pay 35 to 1, dozens 2 to 1, colors and halves 1 to 1. Roulette has its own wallet: run out and you get a free $10 every 30 seconds.</p></div>
       <div class="v4Card"><h4>Table</h4><div class="v4List">${st.log.slice(-10).reverse().map(l=>`<div class="v4Li">${avs(l.o,l.n)}<span class="v4Grow">${esc(l.n)}</span><span class="rlHist"><span style="background:${rlCol(l.num)}">${l.num}</span></span><b style="color:${l.pay>l.total?'#4ade80':'#f87171'}">${l.pay>l.total?'+'+money(l.pay-l.total):'−'+money(l.total-l.pay)}</b></div>`).join('')||'<div class="v4Empty">No spins yet.</div>'}</div></div>${topList(st)}</div></div></div>`;
     const w=m.body.querySelector('.rlWheel');if(w){w.style.transition='none';w.style.transform=`rotate(${rlRot}deg)`}});
   m.act.innerHTML='';m.body.onclick=e=>{const b=e.target.closest('button');if(!b||rlSpinning)return;
@@ -5310,7 +5311,7 @@ R.hufi={full(st,m){m.body.className='hzAB';const it=st.q[st.i],g=gNow(),vcN=(st.
     else if(d.upf!==undefined){const f=await pickFile('audio/*');if(!f)return;toast('Uploading '+f.name+'…',true);try{const url=await upApp(f,'aud');const dur=await new Promise(r=>{const a=new Audio();a.preload='metadata';a.onloadedmetadata=()=>r(a.duration||0);a.onerror=()=>r(0);a.src=base+url});A('addf',{url,name:f.name.replace(/\.[^.]+$/,''),dur})}catch(er){toast(er.message)}}}}};
 /* the player: whoever is in the voice channel hears the queue (Spotify through its embed player, files through an audio element) */
 const HF={};let hfSkew=0,hfCur=null,hfAudio=null,hfSrc='';
-const hfVolNow=()=>{let u={};try{u=JSON.parse(LS.get('huddle.uvol')||'{}')}catch{}return Math.max(0,Math.min(1,(+(LS.get('huddle.hfvol')||70))/100*((u['bot:hufi']??100)/100)*(+(LS.get('huddle.outVol')||100))/100))};
+const hfVolNow=()=>{if((typeof deaf!='undefined'&&deaf)||(typeof fd!='undefined'&&fd))return 0;let u={};try{u=JSON.parse(LS.get('huddle.uvol')||'{}')}catch{}return Math.max(0,Math.min(1,(+(LS.get('huddle.hfvol')||70))/100*((u['bot:hufi']??100)/100)*(+(LS.get('huddle.outVol')||100))/100))};
 window.hzHf={cur:()=>hfCur,vol:()=>{if(hfAudio)hfAudio.volume=hfVolNow()}};
 const hfUrl=it=>it.k==='f'?base+it.url:base+'/hufi/a/'+it.id+'?k='+encodeURIComponent(it.key||'');
 const dock=()=>{let d=$('#hufiDock');if(!d){d=document.createElement('div');d.id='hufiDock';d.hidden=true;d.innerHTML=`<div class="hd"><img alt=""><div><b></b><small></small></div><button class="mini" data-d="pp">${IC.pause}</button><button class="mini" data-d="next">${IC.next}</button><button class="mini" data-d="min" title="Hide the volume">${IC.min}</button></div><label class="v4Mut" style="display:grid;gap:4px" id="hfVolL">Music volume<input type="range" min="0" max="100" id="hfVol"></label>`;document.body.append(d);
@@ -5865,6 +5866,7 @@ R.builder={full(st,m){m.body.className='hzAB';const a=st.app;if(!st.edit)bTab='a
       <span class="lbl">Do</span>${r.dos.map((c,j)=>blk(st,'do',c,ACT,'rules.'+i+'.dos.'+j)).join('')||'<span class="v4Mut">Nothing yet</span>'}
       <div class="bkAdd" style="--k:${K.do}">${Object.entries(ACT).map(([k,x])=>`<button data-adddo="${i}:${k}">+ ${esc(x[0])}</button>`).join('')}</div></div>`).join('')}
       <div class="bkAdd" style="--k:${K.when}"><button data-addrule>+ New rule</button></div></div>
+    <label class="tg"><span><b>Only this server</b><small>Off: you can also add this app from Create channel on your other servers.</small></span><input type="checkbox" role="switch" id="bOnly"${(window.HZAS[cur]||{}).only?' checked':''}></label>
     <div class="v4Row" style="justify-content:flex-end"><button class="hzB bad" data-bvreset>Reset all variables</button><button class="hzB" data-bxrev>Discard changes</button><button class="hzB on" data-bsave>Save app</button></div>
     ${st.byName?`<p class="v4Mut" style="margin:0">Last saved by ${esc(st.byName)}. Role blocks use that person’s rank.</p>`:''}${mgrBox(st)}</div>`};
   if(st.edit&&bTab=='build'&&!bDraft)bDraft=JSON.parse(JSON.stringify(a));
@@ -5884,7 +5886,7 @@ R.builder={full(st,m){m.body.className='hzAB';const a=st.app;if(!st.edit)bTab='a
     else if(d.mv||d.rm!==undefined){const p=b.closest('.bkB').dataset.p.split('.');const idx=+p.pop();let arr=D;for(const k of p)arr=arr[k];if(d.rm!==undefined)arr.splice(idx,1);else{const j=idx+ +d.mv;if(j>=0&&j<arr.length)[arr[idx],arr[j]]=[arr[j],arr[idx]]}}
     else if(d.bxrev!==undefined){bDraft=null;bErr='';bTab='app'}
     else if(d.bvreset!==undefined){hzAsk('Reset every variable in this app?').then(y=>y&&A('resetvars'));return}
-    else if(d.bsave!==undefined){bErr='';A('save',{spec:D});bWait=true;setTimeout(()=>{bWait=false},1500);return toast('Saving…',true)}
+    else if(d.bsave!==undefined){bErr='';A('save',{spec:D,only:!!($('#bOnly')&&$('#bOnly').checked)});bWait=true;setTimeout(()=>{bWait=false},1500);return toast('Saving…',true)}
     else return;R.builder.full(st,m)}},
   ev(st,ev){if(ev.k=='reply'&&ev.o==oid)toast(ev.msg,true)}};
 let bWait=false;
@@ -7074,6 +7076,82 @@ const layout=m=>{const t=m.body.querySelector('.bjTable');if(!t)return;const row
 const _bj=R.blackjack.full;R.blackjack.full=function(st,m){_bj.call(this,st,m);try{layout(m)}catch(e){console.error(e)}};
 })();
 </script>
+
+<style id="huddle-v27">
+/* ---------- Huddle v27 ---------- */
+/* Your apps: a small remove button on each */
+.hzCD .hzCDc{position:relative}
+.hzCDrm{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:var(--dim);background:var(--raise);border:1px solid var(--line);opacity:0;transition:opacity .15s}
+.hzCD .hzCDc:hover .hzCDrm,.hzCDrm:focus{opacity:1}.hzCDrm:hover{color:#fff;background:var(--bad,#ef4444)}
+/* mutual servers: a button on the profile card that opens its own window */
+.ppMutBtn{all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--raise);border:1px solid var(--line);font-weight:700;font-size:13.5px}
+.ppMutBtn:hover{border-color:var(--ac)}.ppMutBtn b{margin-left:auto;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--bg);color:var(--dim)}.ppMutBtn em{font-style:normal;color:var(--dim)}
+#ppMut{position:fixed;inset:0;z-index:2147481000;display:grid;place-items:center;background:#0009;animation:ppMutIn .18s ease-out}
+#ppMut>div{width:min(460px,92vw);max-height:min(80vh,720px);display:flex;flex-direction:column;border-radius:20px;background:var(--panel);border:1px solid var(--line);box-shadow:0 30px 80px #000c;overflow:hidden}
+#ppMut header{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line)}#ppMut header h3{margin:0;font-size:16px;flex:1}
+#ppMut header button{all:unset;cursor:pointer;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--dim)}#ppMut header button:hover{background:var(--raise);color:var(--tx)}
+#ppMut .body{overflow:auto;padding:12px 16px 18px;display:grid;gap:10px}
+@keyframes ppMutIn{from{opacity:0}}
+</style>
+<script id="huddle-v27-js">
+(()=>{
+/* ---------- Close goes back one window when this window was opened from another one ---------- */
+const M=document.getElementById('modal'),stack=[];let lastIn=null,restoring=false;
+M.addEventListener('click',e=>{const pk=M.querySelector(':scope>.pk');if(pk&&pk.contains(e.target))lastIn={t:Date.now(),pk}},true);
+new MutationObserver(ms=>{if(restoring)return;for(const m of ms)for(const n of m.removedNodes){if(!(n.classList&&n.classList.contains('pk')))continue;
+  if(lastIn&&lastIn.pk===n&&Date.now()-lastIn.t<1500&&M.querySelector(':scope>.pk')&&M.querySelector(':scope>.pk')!==n){stack.push(n);if(stack.length>8)stack.shift()}else stack.length=0}}).observe(M,{childList:true});
+const isClose=b=>b&&(b.id==='gx'||/^(close|cancel|back)$/i.test((b.textContent||'').trim())||/^close/i.test(b.getAttribute('aria-label')||''));
+M.addEventListener('click',e=>{const b=e.target.closest('button');if(!isClose(b)||!stack.length||!M.querySelector(':scope>.pk')||!M.querySelector(':scope>.pk').contains(b))return;
+  if(window.hzGuard&&window.hzGuard.dirty&&window.hzGuard.dirty())return;e.preventDefault();e.stopImmediatePropagation();
+  const prev=stack.pop();restoring=true;M.replaceChildren(prev);M.style.display='grid';setTimeout(()=>{restoring=false},0);lastIn=null},true);
+/* ---------- mutual servers open in their own window ---------- */
+const MUT={};
+if(typeof window.dmExtra==='function'){const _dx=window.dmExtra;window.dmExtra=function(o){const h=_dx.apply(this,arguments);
+  return String(h).replace(/<section class="ppSec"([^>]*)><h4>(Your servers|Mutual servers)<b>(\d+)<\/b><\/h4>([\s\S]*?)<\/section>/,(all,attrs,title,n,body)=>{MUT[o]={title,body};
+    return `<section class="ppSec"${attrs}><button type="button" class="ppMutBtn" data-mut="${esc(o)}">${title}<b>${n}</b><em>›</em></button></section>`})}}
+const mutOpen=o=>{const x=MUT[o];if(!x)return;let d=document.getElementById('ppMut');if(d)d.remove();d=document.createElement('div');d.id='ppMut';d.setAttribute('role','dialog');d.setAttribute('aria-label',x.title);
+  d.innerHTML=`<div><header><h3>${esc(x.title)} · ${esc((P[o]||{}).name||'')}</h3><button type="button" aria-label="Close">✕</button></header><div class="body">${x.body}</div></div>`;document.body.append(d);
+  d.addEventListener('click',e=>{if(e.target===d||e.target.closest('header button'))d.remove()});d.querySelector('header button').focus()};
+document.addEventListener('click',e=>{const b=e.target.closest('.ppMutBtn');if(b){e.preventDefault();e.stopPropagation();mutOpen(b.dataset.mut)}},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d=document.getElementById('ppMut');if(d){d.remove();e.stopImmediatePropagation()}}},true);
+/* ---------- your built apps from other servers, for Create channel ---------- */
+window.HZLIB=window.HZLIB||[];
+document.addEventListener('click',e=>{const r=e.target.closest('.hzCD [data-rmapp]');if(!r)return;e.preventDefault();e.stopPropagation();
+  hzAsk('Remove this app from Your apps? The channel it came from keeps working.').then(y=>{if(!y)return;send({t:'app',ch:r.dataset.rmapp,a:'bhide'});const c=r.closest('.hzCDc');if(c)c.remove();window.HZLIB=window.HZLIB.filter(x=>x.id!==r.dataset.rmapp)})},true);
+/* ---------- reconnect: back into the same voice call after the connection drops ---------- */
+let rejoin=null;
+if(typeof window.lost==='function'){const _l=window.lost;window.lost=function(sock){if(sock===ws&&voice&&vch)rejoin={ch:vch,t:Date.now()};return _l.apply(this,arguments)}}
+const _on27=on;on=function(d){try{return _on27.apply(this,arguments)}finally{try{
+  if(d&&d.t==='applib'&&Array.isArray(d.list))window.HZLIB=d.list;
+  if(d&&d.t==='init'){send({t:'applib'});if(rejoin&&Date.now()-rejoin.t<5*60e3){const ch=rejoin.ch;rejoin=null;setTimeout(()=>{if(!voice&&typeof joinVoice==='function'&&Object.values(G).some(g=>(g.channels||[]).some(c=>c.id===ch))){joinVoice(ch);toast('Reconnected to your call.',true)}},800)}}
+}catch(e){console.error(e)}}};
+/* ---------- screen share: a viewer's tile picks up the video as soon as frames arrive (no stuck black tile) ---------- */
+setInterval(()=>{try{if(!voice||typeof pcs!=='object')return;for(const id of Object.keys(pcs)){const o=pcs[id];if(!o||!o.stream)continue;const t=document.getElementById('t-'+id),vt=o.stream.getVideoTracks().find(x=>x.readyState==='live'&&!x.muted);
+  if(t&&!!vt!==t.classList.contains('hasv'))tile(id);const v=t&&t.querySelector('video');if(v&&vt&&v.paused)v.play().catch(()=>{})}}catch{}},2000);
+if(typeof window.setVideo==='function'){const _sv=window.setVideo;window.setVideo=function(t){try{if(t&&t._scr&&'contentHint' in t)t.contentHint='detail'}catch{}return _sv.apply(this,arguments)}}
+/* ---------- deafen silences app audio too (Hufi Music) ---------- */
+document.addEventListener('click',e=>{if(e.target.closest('#bDeaf,#sDeaf'))setTimeout(()=>{try{window.hzHf&&hzHf.vol()}catch{}},0)});
+let dz=null;setInterval(()=>{const z=(typeof deaf!='undefined'&&deaf)||(typeof fd!='undefined'&&fd);if(z!==dz){dz=z;try{window.hzHf&&hzHf.vol()}catch{}}},500);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
