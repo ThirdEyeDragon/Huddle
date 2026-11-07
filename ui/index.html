@@ -1262,6 +1262,8 @@ const ART={
   image:MT(`<rect x="24" y="28" width="48" height="40" rx="7"/><circle cx="59" cy="40" r="4.5" ${WF}/><path d="M26 63l14-14 10 10 6-5 14 12" stroke-width="4.5"/>`),
   merge:MT(`<path d="M27 70h42" ${GS} stroke-width="3.5"/><circle cx="36" cy="58" r="10" ${GF}/><circle cx="58" cy="52" r="16"/><circle cx="41" cy="33" r="7" ${WF}/><path d="M41 22v-3M47 27l2-2M35 27l-2-2" stroke-width="2.6"/>`),
   keys:MT(`<rect x="22" y="30" width="52" height="38" rx="6"/><path d="M35 30v38M48 30v38M61 30v38" stroke-width="2.6"/><rect x="31" y="30" width="8" height="21" rx="2" ${WF}/><rect x="44" y="30" width="8" height="21" rx="2" ${WF}/><rect x="57" y="30" width="8" height="21" rx="2" ${WF}/>`),
+  thock:MT(`<path d="M26 58l5-24h34l5 24z" ${GF}/><rect x="32" y="28" width="32" height="25" rx="5" ${WF}/><path d="M24 60h48v5a5 5 0 0 1-5 5H29a5 5 0 0 1-5-5z" ${GS}/><path d="M43 41h10" stroke="#141416" stroke-width="3"/>`),
+  typing:MT(`<path d="M23 63a25 25 0 1 1 50 0"/><path d="M48 63l13-17" stroke-width="4.5"/><circle cx="48" cy="63" r="4.5" ${WF}/><path d="M30 47l3 2.5M48 38v4.5M66 47l-3 2.5" ${GS} stroke-width="3"/>`),
   discord:MT(`<path d="M26 54v9a5 5 0 0 0 5 5h34a5 5 0 0 0 5-5v-9" ${GS}/><path d="M48 25v29M37 44l11 11 11-11"/>`)};
 IC.art=k=>ART[k]||ART.image;
 IC.img=(k,cls)=>`<img class="${cls||'gart'}" src="${ART[k]||ART.image}" alt="" draggable="false">`;
@@ -7633,6 +7635,292 @@ R.merge={full(st,m){m.body.className='hzAB';let w=m.body.querySelector('.dpW');
   m.act.innerHTML=''},ev(){}};
 })();
 </script>
+
+<style id="huddle-v30">
+/* taller sub-windows: lists grow with the window instead of scrolling inside a small box */
+.pk{max-height:94vh}
+#modal .pk:has(#audL){height:94vh;display:flex;flex-direction:column}
+#modal .pk:has(#audL) .audL{flex:1 1 auto;min-height:0}
+.audL{max-height:none!important}
+.cvl,#emlist,.hzInvL,.hzLog,.hzGDtree,.rpList,.pinL,.qsl,#dcl,.gbGifs{max-height:none!important}
+#np{max-height:88vh!important}
+</style>
+
+<style id="huddle-v30t">
+.tyW{max-width:980px;margin:0 auto;padding:22px 18px;display:grid;gap:16px}
+.tyBar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center}
+.tyBar button{border:0;background:var(--panel);color:var(--dim);font:700 13px system-ui;padding:7px 12px;border-radius:9px;cursor:pointer}
+.tyBar button.on{color:var(--tx);background:var(--raise,#ffffff16)}
+.tyBar .sep{width:1px;height:20px;background:var(--line);margin:0 6px}
+.tyLive{display:flex;gap:18px;justify-content:center;font:800 22px ui-monospace,Consolas,monospace;color:var(--ac);min-height:30px}
+.tyLive span{opacity:.9}
+.tyBox{position:relative;height:calc(3 * 2.3em);overflow:hidden;font:500 26px/2.3em ui-monospace,Consolas,"Cascadia Mono",monospace;cursor:text;outline:none}
+.tyIn{position:relative;transition:transform .18s ease;will-change:transform}
+.tyWd{display:inline-block;margin-right:.6em;white-space:nowrap}
+.tyL{color:var(--dim);opacity:.55;transition:color .06s}
+.tyL.c{color:var(--tx);opacity:1}.tyL.x{color:#ff5a6a;opacity:1}.tyL.ex{color:#ff5a6a;opacity:.7}
+.tyWd.bad{text-decoration:underline #ff5a6a 2px;text-underline-offset:6px}
+.tyCaret{position:absolute;left:0;top:0;width:3px;height:1.2em;margin-top:.55em;border-radius:2px;background:var(--ac);transition:transform .09s cubic-bezier(.3,.7,.4,1);will-change:transform}
+.tyCaret.idle{animation:tyBlink 1s steps(1) infinite}
+@keyframes tyBlink{50%{opacity:0}}
+.tyHidden{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.tyHint{text-align:center;color:var(--dim);font-size:13px}
+.tyHint kbd{font:700 11px system-ui;padding:1px 6px;border-radius:5px;background:var(--panel);border:1px solid var(--line)}
+.tyFocus{position:absolute;inset:0;display:grid;place-items:center;font:700 15px system-ui;color:var(--tx);backdrop-filter:blur(4px);background:color-mix(in srgb,var(--bg) 40%,transparent)}
+.tyRes{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center}
+@media (max-width:760px){.tyRes{grid-template-columns:1fr}}
+.tyBig small{display:block;font:800 12px system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.tyBig b{display:block;font:900 56px/1.05 system-ui;color:var(--ac)}
+.tyStats{display:flex;flex-wrap:wrap;gap:22px;justify-content:center}
+.tyStats div small{display:block;font:700 11px system-ui;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.tyStats div b{font:800 22px system-ui}
+.tyRes canvas{width:100%;height:180px;display:block}
+</style>
+<script id="huddle-v30t-js">
+(()=>{const APPS=window.HZAPPS,R=window.HZRENDER;if(!APPS||!R)return;
+APPS.typing={n:'Type',d:'Type real words as fast as you can. Words per minute, accuracy and a speed graph.',c:'#22d3ee',slug:'type'};
+const WORDS=["the","to","for","and","in","is","of","this","with","or","that","if","be","from","not","it","are","by","as","an","on","use","can","when","all","will","only","any","name","which","no","used","using","you","file","code","but","default","should","one","set","also","new","may","has","into","at","have","returns","other","do","current","so","files","string","its","list","run","then","does","each","value","type","command","after","class","create","must","example","user","before","object","more","given","same","description","without","data","your","they","version","first","was","path","these","up","where","like","function","values","than","there","otherwise","check","module","them","available","instead","call","number","what","optional","always","support","whether","error","line","extension","following","specified","method","result","about","need","either","include","both","such","false","read","called","their","make","install","instance","information","output","context","via","how","names","base","single","directory","arguments","already","package","most","some","uses","build","source","specific","argument","project","multiple","running","order","been","environment","we","based","provides","start","returned","text","contains","including","through","provided","just","while","defined","work","every","passed","change","two","format","case","over","different","would","changes","options","within","setting","once","open","prompt","empty","time","supported","message","existing","because","required","request","key","additional","enable","being","those","between","methods","want","types","cannot","input","commands","calls","containing","local","remove","out","provide","character","behavior","features","root","unless","valid","write","supports","never","end","folder","section","possible","full","even","created","explicitly","needed","errors","test","exception","still","match","copy","pass","added","found","mode","find","report","tools","tool","disabled","useful","rather","process","allows","packages","under","during","title","workspace","contain","generated","follow","directly","custom","until","related","session","mapping","content","another","installed","complete","next","functions","named","system","back","raise","standard","were","common","includes","requests","bundled","reference","part","own","handle","search","keep","import","help","agent","objects","parent","way","target","event","against","skill","present","currently","per","variables","access","matches","entry","option","creating","characters","usage","location","resolve","paths","strings","means","needs","cause","modify","raises","attribute","examples","server","workflow","raised","last","parameter","since","matching","interface","appropriate","clear","show","times","extensions","scope","requires","apply","versions","script","takes","state","checks","configured","link","ask","verify","special","sequence","level","exist","above","across","working","terminal","block","global","written","simple","allow","main","contents","missing","flag","avoid","try","calling","relative","tree","lines","explicit","determine","original","attributes","separate","inside","results","keyword","take","override","tests","response","changed","variable","exactly","settings","many","syntax","rules","specify","parse","details","fails","point","classes","enabled","display","select","dictionary","known","field","bytes","modules","dependency","exists","define","internal","structure","index","requested","done","parsing","load","except","parameters","could","basic","runs","right","itself","header","filename","expected","lists","control","pattern","patterns","status","replace","equivalent","sets","size","long","included","outside","form","item","returning","events","items","well","entries","child","scripts","task","intended","references","nested","second","entire","require","cases","relevant","actual","our","connection","below","anything","here","yet","stop","license","execution","whose","steps","immediately","starting","debug","active","selected","ignore","things","longer","exact","perform","print","resolved","might","writing","issues","choose","save","removed","treated","normal","else","keys","protocol","place","adds","language","binary","now","creates","body","why","registry","public","host","model","resulting","particular","implements","fields","identify","direct","latest","chat","users","invalid","later","property","prefix","close","directories","instances","cache","operations","actually","indicates","similar","individual","actions","regular","checking","messages","prefer","program","gets","headers","issue","top","review","future","appear","necessary","old","window","filter","described","implement","handling","continue","testing","makes","changing","usually","properties","length","left","omitted","previous","around","works","maximum","tasks","operation","purpose","adding","specifying","action","sessions","failed","iterable","various","resolution","associated","integer","supplied","callable","raw","invoke","very","document","reports","wait","regardless","listed","validate","reads","send","failure","web","menu","range","shared","shell","allowed","much","execute","effect","warning","fail","helper","inspect","stream","view","correct","final","least","stored","starts","certain","prevent","parts","older","array","publish","able","previously","release","appears","library","general","logic","encoding","installing","optionally","debugging","something","passing","look","recommended","page","repository","template","follows","made","again","extra","info","skip","seconds","sure","learn","small","points","stack","updated","replaced","remote","feature","table","log","editor","exceptions","turn","reading","timeout","delete","making","wants","accepts","short","client","development","agents","manager","real","possibly","constructor","parser","depends","selecting","style","application","software","policy","absolute","confirm","followed","platform","buffer","off","tell","initial","browser","lifecycle","asks","less","refer","exit","handler","external","further","deprecated","clean","filtering","setup","native","loop","having","group","normally","meaning","generic","visible","controls","give","projects","depending","several","executed","applied","specifies","creation","due","arbitrary","modified","according","too","unique","store","reason","trigger","parsed","permission","hooks","expression","addition","hook","manage","closed","network","prompts","workspaces","three","invoked","recent","surface","go","merge","token","private","considered","attempt","typically","represents","accepted","ignored","doing","total","likely","everything","fallback","coding","receive","focus","accept","whole","resources","loaded","better","comments","disable","edit","reported","summarize","know","building","improve","statement","numbers","compatible","large","executable","equal","produce","validation","looking","updates","live","pip","pull","count","invocation","position","memory","address","nothing","underlying","port","ends","branch","configure","sources","skills","leading","displayed","converted","ways","frame","subject","opened","formatted","split","logging","plus","simply","locations","problems","fetch","selection","exported","schema","guidance","questions","compile","elements","virtual","frames","space","enables","flags","kind","escape","sent","legacy","summary","best","minimal","commit","community","implemented","resource","performance","register","successful","removes","shows","proxy","leave","started","insert","trailing","side","important","literal","self","limit","omit","suitable","systems","processing","upgrade","failures","determined","zero","assume","defines","move","width","enough","resolves","compiler","security","silently","preferred","along","append","button","codebase","team","discovery","float","indicate","flow","cleanup","becomes","automatic","shown","my","element","alongside","become","linked","overrides","color","inline","encoded","callback","permissions","exposes","wrapper","cached","overridden","switch","abstract","applies","getting","effective","rename","processes","subset","folders","interpreter","rule","few","understand","indicating","replacement","fully","temporary","down","password","unavailable","ambiguous","profile","tag","console","primary","writes","aliases","generator","byte","newly","gives","modifying","inputs","describe","history","us","properly","thread","concrete","looks","incomplete","taking","servers","skipped","destination","problem","domain","requirement","expressions","remaining","identifier","complex","formatting","subsequent","saving","handles","instruction","whitespace","framework","documents","query","focused","definition","desired","registered","defining","blocks","declared","typing","safe","did","checked","published","manual","record","shape","retry","download","conflict","brand","suggest","imported","iterator","standalone","occurs","terms","stops","upon","builds","trying","force","replacing","completion","built","unsupported","comment","controlled","comes","reporting","approval","proper","bound","generally","saved","printed","alias","imports","container","fall","handled","locally","ready","ones","tab","appended","rights","major","account","recommend","newer","installs","detail","extended","static","wrapped","duplicate","preserved","referenced","pick","minimum","manually","machine","updating","mark","good","copies","fit","links","share","conditions","codes","deleting","let","quick","occur","pair","recursively","yields","lower","collection","keeps","break","reset","matched","depend","capture","though","derived","blocked","displays","had","documented","loading","limited","scoped","removing","generating","draft","logs","discover","markdown","contribute","stage","lookup","represent","affect","interactive","separated","opening","debugger","extend","whenever","tokens","approach","counts","conventions","exec","sections","label","sends","pending","modes","completed","plugin","approved","member","identity","definitions","performed","listing","introduced","especially","condition","taken","beginning","precedence","retrieve","sort","detailed","spaces","plain","push","map","integration","operate","higher","component","explaining","docs","render","infer","workflows","se","prints","thus","yield","receives","processed","handlers","semantics","free","consistent","loads","replaces","ranges","detect","column","signature","quote","ordinary","generates","connect","hard","cover","wrap","submit","offer","migration","sometimes","iteration","integers","providing","unexpected","beyond","act","scheme","detection","resolving","storage","conflicts","caller","embedded","wrong","unknown","date","catch","email","drop","intent","fixing","actionable","frontmatter","often","neither","customize","positional","del","detected","conditional","background","suppress","identified","hidden","causes","correctly","falls","prior","spec","allowing","tries","easy","progress","knowledge","completely","restore","probably","tells","diagnostic","enforce","image","warnings","requiring","unaware","evidence","numeric","pairs","accessible","concise","positive","collect","prevents","failing","rely","stable","sorted","utility","strict","de","put","strategy","covers","hide","editing","who","locate","records","success","slow","say","merged","languages","edits","diagnostics","publishing","si","finally","negative","reach","produces","attached","forward","applicable","guaranteed","together","remain","restart","earlier","unrelated","reflect","copying","high","responses","origin","lets","distinguish","showing","widget","wheel","alone","clang","targets","compare","connected","mean","really","sign","difference","conversion","trace","wish","contained","others","encode","decode","received","management","assumed","differences","remains","convenience","decision","finalized","click","bugs","activation","plan","subagent","chronicle","propose","maps","enter","evaluation","closing","executing","symbols","differs","hash","invoking","easily","waiting","larger","members","alternative","unit","attempts","rest","consumed","algorithm","fresh","visit","specialized","filenames","symlinks","sample","cursor","marked","faster","signal","sync","excluded","managed","provider","commits","auto","que","decide","keywords","libraries","accessed","interpreted","deleted","preserving","double","caused","rich","typed","separately","produced","box","affected","legal","dynamic","meaningful","potential","helps","design","designed","readable","giving","la","routine","platforms","expand","overview","completes","theme","reusable","redirect","area","templates","throw","telemetry","winget"];
+const P0={mode:'time',n:30,punct:false};try{Object.assign(P0,JSON.parse(LS.get('huddle.type.prefs')||'{}'))}catch{}
+const savePrefs=()=>{try{LS.set('huddle.type.prefs',JSON.stringify(P0))}catch{}};
+const bestKey=()=>'huddle.type.best.'+P0.mode+P0.n+(P0.punct?'p':'');
+const pick=()=>WORDS[Math.floor(Math.pow(Math.random(),1.6)*WORDS.length)]||'word';
+function gen(count){const out=[];let s=0,len=6+Math.floor(Math.random()*9);
+  for(let i=0;i<count;i++){let w=pick();if(P0.punct){if(s===0)w=w[0].toUpperCase()+w.slice(1);s++;if(s>=len&&i<count-1){w+=Math.random()<.85?'.':Math.random()<.5?'?':'!';s=0;len=6+Math.floor(Math.random()*9)}else if(Math.random()<.07)w+=','}out.push(w)}
+  if(P0.punct&&out.length&&!/[.?!]$/.test(out[out.length-1]))out[out.length-1]+='.';return out}
+let T=null;
+function reset(m){const n=P0.mode==='time'?400:P0.n;T={words:gen(n),wi:0,typed:[''],start:0,end:0,keys:0,good:0,errs:0,hist:[],m,timer:0,done:false};build(m)}
+function build(m){m.body.className='hzAB';m.act.innerHTML='';
+  m.body.innerHTML=`<div class="tyW" data-ch="${esc(m.ch)}"><div class="tyBar">${[['time',15],['time',30],['time',60],['time',120]].map(([k,v])=>`<button data-md="${k}" data-n="${v}" class="${P0.mode===k&&P0.n===v?'on':''}">${v}s</button>`).join('')}<span class="sep"></span>${[25,50,100].map(v=>`<button data-md="words" data-n="${v}" class="${P0.mode==='words'&&P0.n===v?'on':''}">${v} words</button>`).join('')}<span class="sep"></span><button data-pu class="${P0.punct?'on':''}">Punctuation</button></div>
+    <div class="tyLive"><span class="tyClock">${P0.mode==='time'?P0.n:'0/'+P0.n}</span><span class="tyWpm"></span></div>
+    <div class="tyBox" tabindex="0"><div class="tyIn"></div><div class="tyCaret idle"></div><input class="tyHidden" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Type here"><div class="tyFocus" hidden>Click here or press any key to keep typing</div></div>
+    <div class="tyHint"><kbd>Tab</kbd> restart · personal best <b class="tyBest">${+LS.get(bestKey())||0}</b> wpm</div><div class="tyOut"></div></div>`;
+  const W=m.body.querySelector('.tyW'),box=W.querySelector('.tyBox'),inp=W.querySelector('.tyHidden');
+  W.querySelector('.tyIn').innerHTML=T.words.map((w,i)=>`<span class="tyWd" data-i="${i}">${[...w].map(ch=>`<span class="tyL">${esc(ch)}</span>`).join('')}</span>`).join('');
+  T.box=box;T.inp=inp;T.W=W;place();
+  W.querySelector('.tyBar').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.pu!==undefined)P0.punct=!P0.punct;else{P0.mode=b.dataset.md;P0.n=+b.dataset.n}savePrefs();reset(m)};
+  box.onclick=()=>inp.focus();inp.addEventListener('blur',()=>{if(!T.done&&W.isConnected)W.querySelector('.tyFocus').hidden=false});inp.addEventListener('focus',()=>W.querySelector('.tyFocus').hidden=true);
+  inp.addEventListener('keydown',e=>key(e,m));inp.addEventListener('input',e=>{const v=inp.value;inp.value='';for(const ch of v)if(ch!==' ')typeCh(ch)});
+  setTimeout(()=>inp.focus(),30)}
+const wEl=i=>T.W.querySelector(`.tyWd[data-i="${i}"]`);
+function paintWord(i){const el=wEl(i);if(!el)return;const w=T.words[i],t=T.typed[i]||'';el.querySelectorAll('.ex').forEach(x=>x.remove());const ls=el.querySelectorAll('.tyL');
+  ls.forEach((l,k)=>{l.className='tyL'+(k<t.length?(t[k]===w[k]?' c':' x'):'')});for(let k=w.length;k<t.length;k++)el.insertAdjacentHTML('beforeend',`<span class="tyL ex">${esc(t[k])}</span>`);
+  el.classList.toggle('bad',i<T.wi&&t!==w)}
+function place(){const el=wEl(T.wi);if(!el)return;const t=T.typed[T.wi]||'',ls=el.querySelectorAll('.tyL'),inner=T.W.querySelector('.tyIn'),cr=T.W.querySelector('.tyCaret');
+  let x,y;if(t.length<ls.length){const l=ls[t.length];x=el.offsetLeft+l.offsetLeft;y=el.offsetTop}else{const l=ls[ls.length-1];x=el.offsetLeft+l.offsetLeft+l.offsetWidth;y=el.offsetTop}
+  const lh=parseFloat(getComputedStyle(T.box).lineHeight)||60,line=Math.round(y/lh),shift=Math.max(0,line-1)*lh;inner.style.transform=`translateY(${-shift}px)`;cr.style.transform=`translate(${x}px,${y-shift}px)`;
+  cr.classList.remove('idle');clearTimeout(T.idleT);T.idleT=setTimeout(()=>cr.classList.add('idle'),600)}
+function startIf(){if(T.start)return;T.start=performance.now();T.timer=setInterval(()=>tick(),200)}
+function tick(){if(T.done||!T.W.isConnected){clearInterval(T.timer);return}const s=(performance.now()-T.start)/1000,sec=Math.floor(s);
+  while(T.hist.length<sec){const k=T.hist.length+1;T.hist.push({s:k,wpm:Math.round(cc()/5/(k/60)),raw:Math.round(T.keys/5/(k/60)),e:T.errs})}
+  const c=T.W.querySelector('.tyClock'),w=T.W.querySelector('.tyWpm');if(P0.mode==='time'){c.textContent=Math.max(0,Math.ceil(P0.n-s));if(s>=P0.n)finish()}else c.textContent=T.wi+'/'+P0.n;if(s>1)w.textContent=Math.round(cc()/5/(s/60))+' wpm'}
+const cc=()=>{let n=0;for(let i=0;i<T.wi;i++)if(T.typed[i]===T.words[i])n+=T.words[i].length+1;const t=T.typed[T.wi]||'',w=T.words[T.wi]||'';for(let k=0;k<t.length&&k<w.length;k++)if(t[k]===w[k])n++;else break;return n};
+function typeCh(ch){if(T.done)return;startIf();const w=T.words[T.wi],t=T.typed[T.wi]||'';if(t.length>=w.length+12)return;T.typed[T.wi]=t+ch;T.keys++;if(w[t.length]===ch)T.good++;else T.errs++;paintWord(T.wi);place();
+  if(P0.mode==='words'&&T.wi===T.words.length-1&&T.typed[T.wi]===w){T.wi++;T.typed[T.wi]='';finish()}}
+function key(e,m){if(e.key==='Tab'){e.preventDefault();return reset(m)}if(T.done)return;
+  if(e.key===' '){e.preventDefault();const t=T.typed[T.wi]||'';if(!t)return;startIf();T.keys++;if(t===T.words[T.wi])T.good++;else T.errs++;T.wi++;T.typed[T.wi]='';paintWord(T.wi-1);
+    if(P0.mode==='words'&&T.wi>=T.words.length)return finish();if(P0.mode==='time'&&T.wi>T.words.length-60){const more=gen(200),inner=T.W.querySelector('.tyIn'),off=T.words.length;T.words.push(...more);inner.insertAdjacentHTML('beforeend',more.map((w,i)=>`<span class="tyWd" data-i="${off+i}">${[...w].map(ch=>`<span class="tyL">${esc(ch)}</span>`).join('')}</span>`).join(''))}
+    place();return}
+  if(e.key==='Backspace'){e.preventDefault();let t=T.typed[T.wi]||'';if(!t&&T.wi>0&&T.typed[T.wi-1]!==T.words[T.wi-1]){T.wi--;t=T.typed[T.wi]}
+    T.typed[T.wi]=(e.ctrlKey||e.altKey)?'':t.slice(0,-1);paintWord(T.wi);place()}}
+function finish(){if(T.done)return;T.done=true;clearInterval(T.timer);T.end=performance.now();const s=Math.max(1,(T.end-T.start)/1000),wpm=Math.round(cc()/5/(s/60)),raw=Math.round(T.keys/5/(s/60)),acc=T.keys?Math.round(T.good/T.keys*1000)/10:0;
+  const bk=bestKey(),best=+LS.get(bk)||0,nb=wpm>best;if(nb)try{LS.set(bk,String(wpm))}catch{}
+  const right=T.typed.slice(0,T.wi).filter((t,i)=>t===T.words[i]).length;
+  T.W.querySelector('.tyBox').style.display='none';T.W.querySelector('.tyLive').style.visibility='hidden';
+  T.W.querySelector('.tyOut').innerHTML=`<div class="tyRes"><div class="tyBig"><small>wpm</small><b>${wpm}</b><small style="margin-top:10px">accuracy</small><b>${acc}%</b></div><canvas></canvas></div>
+    <div class="tyStats" style="margin-top:10px"><div><small>raw</small><b>${raw}</b></div><div><small>words right</small><b>${right}/${T.wi}</b></div><div><small>mistakes</small><b>${T.errs}</b></div><div><small>time</small><b>${Math.round(s)}s</b></div><div><small>best</small><b>${Math.max(best,wpm)}${nb?' 🎉':''}</b></div></div>
+    <div style="text-align:center;margin-top:14px"><button class="hzB on" data-again>Next test (Tab)</button></div>`;
+  T.W.querySelector('[data-again]').onclick=()=>reset(T.m);T.inp.focus();chart(T.W.querySelector('.tyRes canvas'))}
+function chart(cv){const h=T.hist.length?T.hist:[{s:1,wpm:0,raw:0,e:0}],r=cv.getBoundingClientRect(),dpr=devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;const c=cv.getContext('2d');c.scale(dpr,dpr);
+  const W=r.width,H=r.height,P=28,mx=Math.max(10,...h.map(x=>Math.max(x.wpm,x.raw)))*1.15,X=i=>P+(W-P-8)*(h.length<2?.5:i/(h.length-1)),Y=v=>H-20-(H-30)*v/mx,css=getComputedStyle(document.body);
+  c.strokeStyle='rgba(128,128,128,.18)';c.fillStyle='rgba(160,160,170,.8)';c.font='11px system-ui';for(let k=0;k<=4;k++){const v=mx*k/4,y=Y(v);c.beginPath();c.moveTo(P,y);c.lineTo(W,y);c.stroke();c.fillText(Math.round(v),2,y+4)}
+  const line=(key,col,w)=>{c.strokeStyle=col;c.lineWidth=w;c.lineJoin='round';c.beginPath();h.forEach((p,i)=>{const x=X(i),y=Y(p[key]);i?c.lineTo(x,y):c.moveTo(x,y)});c.stroke()};
+  line('raw','rgba(160,160,170,.55)',2);line('wpm',css.getPropertyValue('--ac').trim()||'#38bdf8',3);
+  c.fillStyle='#ff5a6a';h.forEach((p,i)=>{const prev=i?h[i-1].e:0;if(p.e>prev){c.beginPath();c.arc(X(i),Y(p.wpm),3.5,0,7);c.fill()}})}
+R.typing={full(st,m){if(T&&T.W&&T.W.isConnected&&T.W.dataset.ch===m.ch)return;reset(m)},ev(){}};
+})();
+</script>
+
+<style id="huddle-v30k">
+.kbW{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1500px;margin:0 auto;user-select:none}
+.kbSide{display:grid;gap:10px;align-content:start;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));order:2}
+.kbCard{padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);display:grid;gap:8px;align-content:start}
+.kbCard h4{margin:0;font:800 11px system-ui;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.kbOpts{display:flex;flex-wrap:wrap;gap:5px}
+.kbOpts button{border:1px solid var(--line);background:none;color:var(--tx);border-radius:9px;padding:6px 10px;font:600 12.5px system-ui;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.kbOpts button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.kbOpts button i{width:12px;height:12px;border-radius:50%;border:1px solid #0004}
+.kbCard label{display:grid;grid-template-columns:70px 1fr 36px;align-items:center;gap:8px;font:600 12px system-ui;color:var(--dim)}
+.kbCard label output{text-align:right;color:var(--tx);font-variant-numeric:tabular-nums}
+.kbCard input[type=range]{width:100%;accent-color:var(--ac)}
+.kbMain{display:grid;gap:14px;align-content:start;min-width:0;order:1}
+.kbStage{display:grid;place-items:center;padding:34px 10px;border-radius:22px;background:radial-gradient(ellipse at 50% 30%,#2a2a33,#0d0d11 70%);overflow:hidden;min-height:330px}
+.kbCase{position:relative;padding:var(--pad);border-radius:calc(var(--u)*.45);background:var(--case);box-shadow:inset 0 2px 0 #ffffff30,inset 0 -6px 12px #0006,0 30px 50px #000c,0 0 70px var(--glow,transparent)}
+.kbPlate{position:relative;border-radius:6px;background:#0b0b0d;box-shadow:inset 0 0 0 1px #000,inset 0 4px 10px #000c}
+.kbK{position:absolute;padding:calc(var(--u)*.04)}
+.kbK .lt{position:absolute;inset:-4%;border-radius:calc(var(--u)*.2);background:var(--lc,#000);filter:blur(calc(var(--u)*.2));opacity:calc(var(--la,0) * .95)}
+.kbK .cap{position:relative;height:100%;border-radius:calc(var(--u)*.12);background:linear-gradient(180deg,color-mix(in srgb,var(--kc) 92%,#fff) 0%,var(--kc) 60%,color-mix(in srgb,var(--kc) 80%,#000) 100%);
+  box-shadow:0 calc(var(--u)*.09) 0 color-mix(in srgb,var(--kc) 55%,#000),0 calc(var(--u)*.11) calc(var(--u)*.12) #0009,inset 0 1px 0 #ffffff40;transition:transform .045s,box-shadow .045s;cursor:pointer}
+.kbK .cap::before{content:'';position:absolute;inset:calc(var(--u)*.1) calc(var(--u)*.12) calc(var(--u)*.2);border-radius:calc(var(--u)*.1);background:linear-gradient(180deg,#ffffff1c,#0000000d)}
+.kbK .lg{position:absolute;left:calc(var(--u)*.17);top:calc(var(--u)*.12);font:700 calc(var(--u)*.27) system-ui;color:var(--kl);white-space:nowrap;text-shadow:0 0 calc(var(--u)*.15) color-mix(in srgb,var(--lc,#0000) calc(var(--la,0) * 100%),transparent)}
+.kbK.big .lg{font-size:calc(var(--u)*.2)}
+.kbK.dn .cap{transform:translateY(calc(var(--u)*.07));box-shadow:0 calc(var(--u)*.02) 0 color-mix(in srgb,var(--kc) 55%,#000),0 calc(var(--u)*.04) calc(var(--u)*.06) #0009,inset 0 1px 0 #ffffff30}
+.kbTest textarea{width:100%;min-height:70px;resize:vertical;font:500 15px system-ui}
+.kbHint{color:var(--dim);font-size:12.5px;margin:0}
+</style>
+<script id="huddle-v30k-js">
+(()=>{const APPS=window.HZAPPS,R=window.HZRENDER;if(!APPS||!R)return;
+APPS.thock={n:'Thock',d:'Build your own mechanical keyboard: layout, case, keycaps, switches with thocky sounds and RGB lighting.',c:'#f59e0b',slug:'thock'};
+/* ---------- layouts (key units) ---------- */
+const row=(ks,y,x0=0)=>{let x=x0;return ks.map(k=>{if(typeof k==='number'){x+=k;return null}const [l,c,w=1,h=1]=k,o={l,c,x,y,w,h};x+=w;return o}).filter(Boolean)};
+const D='1234567890'.split('').map(d=>[d,'Digit'+d]),L=s=>s.split('').map(c=>[c.toUpperCase(),'Key'+c.toUpperCase()]);
+const R0=[['`','Backquote'],...D,['-','Minus'],['=','Equal']],R1=[['Tab','Tab',1.5],...L('qwertyuiop'),['[','BracketLeft'],[']','BracketRight']],R2=[['Caps','CapsLock',1.75],...L('asdfghjkl'),[';','Semicolon'],["'",'Quote']],R3=[['Shift','ShiftLeft',2.25],...L('zxcvbnm'),[',','Comma'],['.','Period'],['/','Slash']];
+const FN=n=>['F'+n,'F'+n],FROW=[['Esc','Escape'],1,FN(1),FN(2),FN(3),FN(4),.5,FN(5),FN(6),FN(7),FN(8),.5,FN(9),FN(10),FN(11),FN(12)];
+const main=(y,v)=>[...row([...R0,['Back','Backspace',2]],y),...row([...R1,['\\','Backslash',1.5]],y+1),...row([...R2,['Enter','Enter',2.25]],y+2),
+  ...row([...R3,['Shift','ShiftRight',v?1.75:2.75]],y+3),...row(v?[['Ctrl','ControlLeft',1.25],['Win','MetaLeft',1.25],['Alt','AltLeft',1.25],['','Space',6.25],['Alt','AltRight'],['Fn','Fn'],['Ctrl','ControlRight']]:[['Ctrl','ControlLeft',1.25],['Win','MetaLeft',1.25],['Alt','AltLeft',1.25],['','Space',6.25],['Alt','AltRight',1.25],['Win','MetaRight',1.25],['Menu','ContextMenu',1.25],['Ctrl','ControlRight',1.25]],y+4)];
+const arrows=(x,y)=>[...row([['↑','ArrowUp']],y,x+1),...row([['←','ArrowLeft'],['↓','ArrowDown'],['→','ArrowRight']],y+1,x)];
+const LAY={
+  '60%':()=>({k:main(0,false),w:15,h:5}),
+  '65%':()=>({k:[...main(0,true),...row([['Del','Delete']],0,15),...row([['PgUp','PageUp']],1,15),...row([['PgDn','PageDown']],2,15),...row([['End','End']],3,15),...arrows(13,3).filter(k=>k.c!=='ArrowUp'),...row([['↑','ArrowUp']],3,14)],w:16,h:5}),
+  '75%':()=>({k:[...row([['Esc','Escape'],FN(1),FN(2),FN(3),FN(4),FN(5),FN(6),FN(7),FN(8),FN(9),FN(10),FN(11),FN(12),['PrtSc','PrintScreen'],['Ins','Insert'],['Del','Delete']],0),
+    ...main(1.25,true),...row([['Home','Home']],1.25,15),...row([['PgUp','PageUp']],2.25,15),...row([['PgDn','PageDown']],3.25,15),...row([['End','End']],4.25,15),...row([['↑','ArrowUp']],4.25,14),...row([['←','ArrowLeft'],['↓','ArrowDown'],['→','ArrowRight']],5.25,13)].filter((k,i,a)=>!(k.c==='ArrowUp'&&a.findIndex(z=>z.c==='ArrowUp')!==i)),w:16,h:6.25}),
+  'TKL':()=>({k:[...row(FROW,0),...row([['PrtSc','PrintScreen'],['ScrLk','ScrollLock'],['Pause','Pause']],0,15.25),...main(1.25,false),
+    ...row([['Ins','Insert'],['Home','Home'],['PgUp','PageUp']],1.25,15.25),...row([['Del','Delete'],['End','End'],['PgDn','PageDown']],2.25,15.25),...arrows(15.25,4.25)],w:18.25,h:6.25}),
+  'Full':()=>{const t=LAY.TKL(),x=18.5,y=1.25;return {k:[...t.k,...row([['Num','NumLock'],['/','NumpadDivide'],['*','NumpadMultiply'],['-','NumpadSubtract']],y,x),
+    ...row([['7','Numpad7'],['8','Numpad8'],['9','Numpad9'],['+','NumpadAdd',1,2]],y+1,x),...row([['4','Numpad4'],['5','Numpad5'],['6','Numpad6']],y+2,x),
+    ...row([['1','Numpad1'],['2','Numpad2'],['3','Numpad3'],['Ent','NumpadEnter',1,2]],y+3,x),...row([['0','Numpad0',2],['.','NumpadDecimal']],y+4,x)],w:22.5,h:6.25}}};
+const MODS=new Set(['Escape','Backspace','Tab','CapsLock','Enter','ShiftLeft','ShiftRight','ControlLeft','ControlRight','MetaLeft','MetaRight','AltLeft','AltRight','ContextMenu','Fn']);
+/* ---------- looks ---------- */
+const CASES={Black:'linear-gradient(160deg,#3a3a40,#16161a)',Silver:'linear-gradient(160deg,#e9e9ee,#9a9aa2)',White:'linear-gradient(160deg,#ffffff,#d4d4da)',Navy:'linear-gradient(160deg,#2b3a67,#121a33)',
+  Pink:'linear-gradient(160deg,#ffc6d9,#e88aa9)',Walnut:'repeating-linear-gradient(100deg,#6b3f22 0 6px,#5a3319 6px 9px,#7a4a28 9px 15px)'};
+const CAPS={Carbon:{a:'#2b2b2f',m:'#1c1c1f',x:'#f97316',l:'#e8e8ea',xl:'#1c1c1f'},Milk:{a:'#f2f0ea',m:'#d9d6cc',x:'#d9d6cc',l:'#5b5b5b',xl:'#5b5b5b'},Retro:{a:'#e8e0cc',m:'#9c9789',x:'#c0392b',l:'#3a3a3a',xl:'#f5efe0'},
+  Ocean:{a:'#d7ecf7',m:'#1e5f8c',x:'#f2b84b',l:'#1e3a52',xl:'#1e3a52'},Sakura:{a:'#fde7ee',m:'#f4a7bd',x:'#e45a84',l:'#7a3b50',xl:'#fff'},Matcha:{a:'#e7ecd9',m:'#7d9a5b',x:'#4f6b35',l:'#3d4a2c',xl:'#f3f6ea'},Midnight:{a:'#14161f',m:'#262a3a',x:'#7c5cff',l:'#a5adcf',xl:'#fff'}};
+/* switches: how each one sounds when pressed (down) and released (up) */
+const SW={Thocky:{f:330,q:1.1,dec:.075,body:120,bodyG:.9,click:0,up:.35,tone:'Deep, muted thock'},Creamy:{f:560,q:.9,dec:.06,body:170,bodyG:.6,click:0,up:.45,tone:'Smooth and soft'},
+  Marbly:{f:900,q:1.6,dec:.05,body:210,bodyG:.45,click:.15,up:.5,tone:'Clacky, like marbles'},Tactile:{f:1300,q:1.2,dec:.045,body:150,bodyG:.5,click:.35,up:.4,tone:'A bump you can hear'},
+  Clicky:{f:3200,q:2,dec:.03,body:180,bodyG:.35,click:1,up:.8,tone:'Sharp click'},Silent:{f:260,q:.6,dec:.04,body:110,bodyG:.25,click:0,up:.05,tone:'Very quiet'}};
+const FX=['Off','Static','Breathing','Wave','Spectrum','Reactive','Ripple','Starlight'];
+const DEF={lay:'65%',cs:'Black',cap:'Carbon',sw:'Thocky',pitch:0,depth:60,foam:50,vol:70,rattle:true,fx:'Wave',col:'#7c5cff',bri:80,spd:50};
+let S={...DEF};try{S={...DEF,...JSON.parse(LS.get('huddle.thock')||'{}')}}catch{}const save=()=>{try{LS.set('huddle.thock',JSON.stringify(S))}catch{}};
+/* ---------- sound ---------- */
+let AC=null,NZ=null;const ac=()=>{try{if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();const n=AC.createBuffer(1,AC.sampleRate,AC.sampleRate),d=n.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;NZ=n}if(AC.state==='suspended')AC.resume()}catch{}return AC};
+const deafNow=()=>(typeof deaf!='undefined'&&deaf)||(typeof fd!='undefined'&&fd)||false;
+function snd(k,up){const c=ac();if(!c)return;const sw=SW[S.sw]||SW.Thocky,t=c.currentTime,big=k.w>=2,vr=1+(Math.random()-.5)*.12,pf=Math.pow(2,S.pitch/12)*vr*(big?.72:1)*(up?1.25:1);
+  const out=c.createGain();out.gain.value=(S.vol/100)*(up?sw.up:1)*(big?1.15:1)*(.9+Math.random()*.2);const foam=c.createBiquadFilter();foam.type='lowpass';foam.frequency.value=12000-S.foam*95;foam.connect(c.destination);out.connect(foam);
+  const nz=(f,q,dec,g,at=0)=>{const s=c.createBufferSource(),bp=c.createBiquadFilter(),e=c.createGain();s.buffer=NZ;bp.type='bandpass';bp.frequency.value=f;bp.Q.value=q;e.gain.setValueAtTime(0,t+at);e.gain.linearRampToValueAtTime(g,t+at+.0015);e.gain.exponentialRampToValueAtTime(.0001,t+at+dec);s.connect(bp);bp.connect(e);e.connect(out);s.start(t+at,Math.random()*.8);s.stop(t+at+dec+.02)};
+  const tone=(f,dec,g)=>{const o=c.createOscillator(),e=c.createGain();o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*.7,t+dec);e.gain.setValueAtTime(g,t);e.gain.exponentialRampToValueAtTime(.0001,t+dec);o.connect(e);e.connect(out);o.start(t);o.stop(t+dec+.02)};
+  const dep=S.depth/100;nz(sw.f*pf,sw.q,sw.dec*(1+dep*.6),.9);tone(sw.body*pf*(1.15-dep*.35),.05+dep*.07,sw.bodyG*(.5+dep));
+  if(sw.click&&!(S.sw==='Tactile'&&up))nz(4200*pf,3,.008,sw.click*.9,up?0:.006);if(S.sw==='Clicky'&&!up)nz(3800*pf,3,.006,.8,.014);
+  if(big&&S.rattle)nz(700*pf,4,.06,.18,.012)}
+/* ---------- lighting ---------- */
+const hsl=(h,s,l)=>`hsl(${(h%360+360)%360} ${s}% ${l}%)`,stars={},rip=[];
+function light(keys,els,t){const b=S.bri/100,sp=.2+S.spd/50,base=S.col;
+  keys.forEach((k,i)=>{const el=els[i];if(!el)return;let c=base,a=0;const cx=k.x+k.w/2,cy=k.y+k.h/2;
+    if(S.fx==='Static'){a=1}else if(S.fx==='Breathing'){a=.15+.85*(.5+.5*Math.sin(t*1.6*sp))}else if(S.fx==='Wave'){c=hsl(cx*16-t*90*sp,95,58);a=1}else if(S.fx==='Spectrum'){c=hsl(t*45*sp,95,58);a=1}
+    else if(S.fx==='Reactive'||S.fx==='Ripple'){for(const r of rip){const age=t-r.t;if(S.fx==='Reactive'){if(r.c===k.c)a=Math.max(a,Math.max(0,1-age*1.2/sp))}else{const d=Math.hypot(cx-r.x,cy-r.y),f=Math.abs(d-age*9*sp);if(f<1.2)a=Math.max(a,(1-f/1.2)*Math.max(0,1-age*.6));c=hsl(r.h+d*12,95,60)}}}
+    else if(S.fx==='Starlight'){const s=stars[k.c]||(stars[k.c]={p:Math.random()*6,r:.6+Math.random()*1.4});a=Math.pow(Math.max(0,Math.sin(t*s.r*sp+s.p)),10)}
+    el.style.setProperty('--lc',c);el.style.setProperty('--la',(a*b).toFixed(3))});
+  while(rip.length&&t-rip[0].t>4)rip.shift()}
+/* ---------- screen ---------- */
+let KB=null;
+function draw(m){const lay=LAY[S.lay](),cap=CAPS[S.cap]||CAPS.Carbon,stage=m.body.querySelector('.kbStage'),avail=Math.max(300,stage.clientWidth-40),u=Math.max(22,Math.min(64,Math.floor((avail-28)/(lay.w+.5))));
+  const kc=k=>k.c==='Escape'||k.c==='Enter'||k.c==='NumpadEnter'?cap.x:MODS.has(k.c)||/^(F\d+|Arrow|Num|Print|Scroll|Pause|Insert|Home|Page|Delete|End)/.test(k.c)?cap.m:cap.a,kl=k=>k.c==='Escape'||k.c==='Enter'||k.c==='NumpadEnter'?cap.xl:cap.l;
+  stage.innerHTML=`<div class="kbCase" style="--u:${u}px;--pad:${Math.round(u*.45)}px;--case:${CASES[S.cs]};--glow:${S.fx==='Off'?'transparent':S.fx==='Static'||S.fx==='Breathing'||S.fx==='Reactive'?S.col+'33':'#7c5cff33'}"><div class="kbPlate" style="width:${lay.w*u}px;height:${lay.h*u}px">${lay.k.map((k,i)=>`<div class="kbK${k.w>=1.75?' big':''}" data-i="${i}" style="left:${k.x*u}px;top:${k.y*u}px;width:${k.w*u}px;height:${k.h*u}px;--kc:${kc(k)};--kl:${kl(k)}"><i class="lt"></i><div class="cap"><span class="lg">${esc(k.l)}</span></div></div>`).join('')}</div></div>`;
+  KB={keys:lay.k,els:[...stage.querySelectorAll('.kbK')],m,byCode:{}};lay.k.forEach((k,i)=>{(KB.byCode[k.c]=KB.byCode[k.c]||[]).push(i)})}
+function press(i,up){if(!KB)return;const k=KB.keys[i],el=KB.els[i];if(!k||!el)return;el.classList.toggle('dn',!up);if(!deafNow())snd(k,up);if(!up)rip.push({x:k.x+k.w/2,y:k.y+k.h/2,t:performance.now()/1000,c:k.c,h:Math.random()*360})}
+const opts=(key,list,lab=v=>v,sw)=>`<div class="kbOpts" data-k="${key}">${list.map(v=>`<button data-v="${esc(v)}" class="${S[key]===v?'on':''}">${sw?`<i style="background:${sw(v)}"></i>`:''}${esc(lab(v))}</button>`).join('')}</div>`;
+const rng=(k,l,min,max)=>`<label>${l}<input type="range" data-r="${k}" min="${min}" max="${max}" value="${S[k]}"><output>${S[k]}</output></label>`;
+R.thock={full(st,m){if(KB&&KB.m===m&&m.body.querySelector('.kbW')&&m.body.querySelector('.kbW').dataset.ch===m.ch)return;m.body.className='hzAB';m.act.innerHTML='';
+  m.body.innerHTML=`<div class="kbW" data-ch="${esc(m.ch)}"><div class="kbSide">
+    <div class="kbCard"><h4>Layout</h4>${opts('lay',Object.keys(LAY))}</div>
+    <div class="kbCard"><h4>Case</h4>${opts('cs',Object.keys(CASES),v=>v,v=>CASES[v])}</div>
+    <div class="kbCard"><h4>Keycaps</h4>${opts('cap',Object.keys(CAPS),v=>v,v=>`linear-gradient(90deg,${CAPS[v].a} 50%,${CAPS[v].m} 50%)`)}</div>
+    <div class="kbCard"><h4>Switches</h4>${opts('sw',Object.keys(SW))}<p class="kbHint kbTone">${esc(SW[S.sw].tone)}</p></div>
+    <div class="kbCard"><h4>Sound tuning</h4>${rng('pitch','Pitch',-12,12)}${rng('depth','Depth',0,100)}${rng('foam','Foam',0,100)}${rng('vol','Volume',0,100)}<label style="grid-template-columns:1fr auto">Stabilizer rattle<input type="checkbox" data-c="rattle"${S.rattle?' checked':''}></label></div>
+    <div class="kbCard"><h4>Lighting</h4>${opts('fx',FX)}<label style="grid-template-columns:70px 1fr">Colour<input type="color" data-col value="${esc(S.col)}"></label>${rng('bri','Brightness',0,100)}${rng('spd','Speed',0,100)}</div>
+    <button class="hzB" data-reset>Reset to default</button></div>
+    <div class="kbMain"><div class="kbStage"></div><div class="kbCard kbTest"><h4>Try it</h4><textarea placeholder="Type here, or anywhere while this app is open. Click keys with the mouse too."></textarea><p class="kbHint">Your build is saved on this computer.</p></div></div></div>`;
+  const W=m.body.querySelector('.kbW');draw(m);
+  W.addEventListener('click',e=>{const b=e.target.closest('.kbOpts button');if(b){const k=b.parentElement.dataset.k;S[k]=b.dataset.v;save();b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));if(k==='sw')W.querySelector('.kbTone').textContent=SW[S.sw].tone;if(k!=='sw')draw(m);if(k==='sw'&&KB)snd(KB.keys[KB.byCode.KeyF?KB.byCode.KeyF[0]:0],false);return}
+    if(e.target.closest('[data-reset]')){S={...DEF};save();KB=null;R.thock.full(st,m)}});
+  W.addEventListener('input',e=>{const t=e.target;if(t.dataset.r){S[t.dataset.r]=+t.value;t.nextElementSibling.textContent=t.value;save()}else if(t.dataset.col!==undefined){S.col=t.value;save()}else if(t.dataset.c){S[t.dataset.c]=t.checked;save()}});
+  const stage=W.querySelector('.kbStage');stage.addEventListener('pointerdown',e=>{const el=e.target.closest('.kbK');if(!el)return;e.preventDefault();const i=+el.dataset.i;press(i,false);const upF=()=>{press(i,true);removeEventListener('pointerup',upF)};addEventListener('pointerup',upF)});
+  let lw=stage.clientWidth;new ResizeObserver(()=>{if(Math.abs(stage.clientWidth-lw)>20){lw=stage.clientWidth;draw(m)}}).observe(stage);
+  const loop=()=>{if(!W.isConnected){KB=null;return}if(KB)light(KB.keys,KB.els,performance.now()/1000);requestAnimationFrame(loop)};requestAnimationFrame(loop)},ev(){}};
+const down=new Set();
+document.addEventListener('keydown',e=>{if(!KB||!KB.els[0]||!KB.els[0].isConnected)return;const c=e.code==='Fn'?'Fn':e.code;if(down.has(c))return;down.add(c);(KB.byCode[c]||[]).forEach(i=>press(i,false))},true);
+document.addEventListener('keyup',e=>{const c=e.code;down.delete(c);if(!KB||!KB.els[0]||!KB.els[0].isConnected)return;(KB.byCode[c]||[]).forEach(i=>press(i,true))},true);
+addEventListener('blur',()=>{down.clear();if(KB)KB.els.forEach(el=>el.classList.remove('dn'))});
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
